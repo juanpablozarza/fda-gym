@@ -1,0 +1,259 @@
+[
+  {
+    "id": "FG-0001",
+    "question": "In what year did the FDA approve the original NDA for GLUCOPHAGE (metformin)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "metformin",
+      "brand_name": "GLUCOPHAGE"
+    }
+  },
+  {
+    "id": "FG-0002",
+    "question": "What brand name is marketed under application NDA020357?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "metformin",
+      "brand_name": "GLUCOPHAGE"
+    }
+  },
+  {
+    "id": "FG-0003",
+    "question": "What is the dosage form of the product under application NDA020357?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "metformin"
+    }
+  },
+  {
+    "id": "FG-0004",
+    "question": "Who is the sponsor of application NDA020357?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "metformin"
+    }
+  },
+  {
+    "id": "FG-0005",
+    "question": "In what year did the FDA approve the original NDA for OZEMPIC (semaglutide)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "OZEMPIC"
+    }
+  },
+  {
+    "id": "FG-0006",
+    "question": "What brand name is marketed under application NDA209637?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "OZEMPIC"
+    }
+  },
+  {
+    "id": "FG-0007",
+    "question": "What is the dosage form of the product under application NDA209637?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "semaglutide"
+    }
+  },
+  {
+    "id": "FG-0008",
+    "question": "Who is the sponsor of application NDA209637?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "semaglutide"
+    }
+  },
+  {
+    "id": "FG-0009",
+    "question": "Does semaglutide's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0010",
+    "question": "Does the FDA label for semaglutide carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0011",
+    "question": "How many serious FAERS reports for semaglutide were received in 2020, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0012",
+    "question": "How many serious FAERS reports for metformin were received in 2024?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metformin",
+      "brand_name": "Metformin Hydrochloride"
+    }
+  },
+  {
+    "id": "FG-0013",
+    "question": "How many serious FAERS reports for semaglutide were received in 2020?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0014",
+    "question": "What is the most-reported adverse reaction in FAERS for metformin among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metformin",
+      "brand_name": "Metformin Hydrochloride"
+    }
+  },
+  {
+    "id": "FG-0015",
+    "question": "What is the most-reported adverse reaction in FAERS for metformin among serious reports received in 2024?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metformin",
+      "brand_name": "Metformin Hydrochloride"
+    }
+  },
+  {
+    "id": "FG-0016",
+    "question": "What is the most-reported adverse reaction in FAERS for metformin?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "metformin",
+      "brand_name": "Metformin Hydrochloride"
+    }
+  },
+  {
+    "id": "FG-0017",
+    "question": "What is the most-reported adverse reaction in FAERS for semaglutide among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0018",
+    "question": "What is the most-reported adverse reaction in FAERS for semaglutide among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0019",
+    "question": "What is the most-reported adverse reaction in FAERS for semaglutide?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0020",
+    "question": "Summarize the contraindications on the WEGOVY label for semaglutide.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "WEGOVY"
+    }
+  }
+]

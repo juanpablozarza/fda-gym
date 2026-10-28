@@ -1,0 +1,48 @@
+{
+  "seed": 1,
+  "split": "public",
+  "id_start": 9101,
+  "n": 93,
+  "by_variant": {
+    "earliest_boxed": 16,
+    "faers_year": 12,
+    "faers_reaction": 18,
+    "boxed_none": 4,
+    "sponsor_faers": 25,
+    "sponsor_drug": 18
+  },
+  "by_type": {
+    "compare": 50,
+    "sponsor_hop": 43
+  },
+  "dropped": {
+    "skip:earliest_boxed": 4,
+    "faers_rank:faers_year:max": 15,
+    "faers_rank:faers_reaction:max": 64,
+    "no_shared_reaction": 19,
+    "not_symmetric": 2526,
+    "holdout:sponsor_faers": 30,
+    "holdout:sponsor_drug": 487,
+    "short:sponsor_drug": 7
+  },
+  "pool": 72,
+  "disjoint": {
+    "train_tasks": 93,
+    "holdout_tasks": 100,
+    "train": {
+      "drugs": 62,
+      "applications": 66,
+      "sponsors": 17
+    },
+    "holdout": {
+      "drugs": 78,
+      "applications": 114,
+      "sponsors": 29
+    },
+    "overlap": {
+      "drugs": [],
+      "applications": [],
+      "sponsors": []
+    }
+  }
+}

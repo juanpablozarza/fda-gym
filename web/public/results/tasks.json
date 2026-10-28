@@ -1,0 +1,4319 @@
+[
+  {
+    "id": "FG-9001",
+    "question": "How many serious adverse event reports listing zorvetinib as primary suspect were received in 2025, and does its current label carry a boxed warning?",
+    "type": "composite",
+    "sources": [
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "zorvetinib",
+      "brand_name": "Zorvenil"
+    }
+  },
+  {
+    "id": "FG-9002",
+    "question": "Does the label for velmorastat list a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "velmorastat",
+      "brand_name": "Velmora"
+    }
+  },
+  {
+    "id": "FG-9003",
+    "question": "How many serious FAERS reports for pemradine were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "pemradine"
+    }
+  },
+  {
+    "id": "FG-0001",
+    "question": "In what year did the FDA approve the original NDA for ZIAGEN (abacavir)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "abacavir",
+      "brand_name": "ZIAGEN"
+    }
+  },
+  {
+    "id": "FG-0002",
+    "question": "What brand name is marketed under application NDA020977?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "abacavir",
+      "brand_name": "ZIAGEN"
+    }
+  },
+  {
+    "id": "FG-0003",
+    "question": "What brand name is marketed under application NDA020978?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "abacavir",
+      "brand_name": "ZIAGEN"
+    }
+  },
+  {
+    "id": "FG-0004",
+    "question": "What is the dosage form of the product under application NDA020977?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0005",
+    "question": "What is the dosage form of the product under application NDA020978?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0006",
+    "question": "Who is the sponsor of application NDA020977?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0007",
+    "question": "Who is the sponsor of application NDA020978?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0008",
+    "question": "In what year did the FDA approve the original NDA for ZYLOPRIM (allopurinol)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "allopurinol",
+      "brand_name": "ZYLOPRIM"
+    }
+  },
+  {
+    "id": "FG-0009",
+    "question": "What brand name is marketed under application NDA016084?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "allopurinol",
+      "brand_name": "ZYLOPRIM"
+    }
+  },
+  {
+    "id": "FG-0010",
+    "question": "What is the dosage form of the product under application NDA016084?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "allopurinol"
+    }
+  },
+  {
+    "id": "FG-0011",
+    "question": "Who is the sponsor of application NDA016084?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "allopurinol"
+    }
+  },
+  {
+    "id": "FG-0012",
+    "question": "In what year did the FDA approve the original NDA for VANRAFIA (atrasentan)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0013",
+    "question": "What brand name is marketed under application NDA219208?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0014",
+    "question": "What is the dosage form of the product under application NDA219208?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "atrasentan"
+    }
+  },
+  {
+    "id": "FG-0015",
+    "question": "Who is the sponsor of application NDA219208?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "atrasentan"
+    }
+  },
+  {
+    "id": "FG-0016",
+    "question": "In what year did the FDA approve the original NDA for TEGRETOL (carbamazepine)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "carbamazepine",
+      "brand_name": "TEGRETOL"
+    }
+  },
+  {
+    "id": "FG-0017",
+    "question": "What brand name is marketed under application NDA016608?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "carbamazepine",
+      "brand_name": "TEGRETOL"
+    }
+  },
+  {
+    "id": "FG-0018",
+    "question": "What is the dosage form of the product under application NDA016608?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0019",
+    "question": "Who is the sponsor of application NDA016608?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0020",
+    "question": "In what year did the FDA approve the original NDA for KEFLEX (cephalexin)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "cephalexin",
+      "brand_name": "KEFLEX"
+    }
+  },
+  {
+    "id": "FG-0021",
+    "question": "What brand name is marketed under application NDA050405?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "cephalexin",
+      "brand_name": "KEFLEX"
+    }
+  },
+  {
+    "id": "FG-0022",
+    "question": "What brand name is marketed under application NDA050406?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "cephalexin",
+      "brand_name": "KEFLEX"
+    }
+  },
+  {
+    "id": "FG-0023",
+    "question": "What is the dosage form of the product under application NDA050405?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0024",
+    "question": "What is the dosage form of the product under application NDA050406?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0025",
+    "question": "Who is the sponsor of application NDA050405?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0026",
+    "question": "Who is the sponsor of application NDA050406?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0027",
+    "question": "In what year did the FDA approve the original NDA for KLONOPIN (clonazepam)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "clonazepam",
+      "brand_name": "KLONOPIN"
+    }
+  },
+  {
+    "id": "FG-0028",
+    "question": "What brand name is marketed under application NDA017533?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "clonazepam",
+      "brand_name": "KLONOPIN"
+    }
+  },
+  {
+    "id": "FG-0029",
+    "question": "What is the dosage form of the product under application NDA017533?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "clonazepam"
+    }
+  },
+  {
+    "id": "FG-0030",
+    "question": "Who is the sponsor of application NDA017533?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "clonazepam"
+    }
+  },
+  {
+    "id": "FG-0031",
+    "question": "In what year did the FDA approve the original NDA for COLCRYS (colchicine)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "colchicine",
+      "brand_name": "COLCRYS"
+    }
+  },
+  {
+    "id": "FG-0032",
+    "question": "What brand name is marketed under application NDA022351?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine",
+      "brand_name": "COLCRYS"
+    }
+  },
+  {
+    "id": "FG-0033",
+    "question": "What brand name is marketed under application NDA022352?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine",
+      "brand_name": "COLCRYS"
+    }
+  },
+  {
+    "id": "FG-0034",
+    "question": "What brand name is marketed under application NDA022353?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine",
+      "brand_name": "COLCRYS"
+    }
+  },
+  {
+    "id": "FG-0035",
+    "question": "What is the dosage form of the product under application NDA022351?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0036",
+    "question": "What is the dosage form of the product under application NDA022352?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0037",
+    "question": "What is the dosage form of the product under application NDA022353?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0038",
+    "question": "Who is the sponsor of application NDA022351?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0039",
+    "question": "Who is the sponsor of application NDA022352?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0040",
+    "question": "Who is the sponsor of application NDA022353?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0041",
+    "question": "In what year did the FDA approve the original NDA for ANTABUSE (disulfiram)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "disulfiram",
+      "brand_name": "ANTABUSE"
+    }
+  },
+  {
+    "id": "FG-0042",
+    "question": "What brand name is marketed under application NDA007883?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "disulfiram",
+      "brand_name": "ANTABUSE"
+    }
+  },
+  {
+    "id": "FG-0043",
+    "question": "What is the dosage form of the product under application NDA007883?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-0044",
+    "question": "Who is the sponsor of application NDA007883?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-0045",
+    "question": "In what year did the FDA approve the original NDA for CYMBALTA (duloxetine)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "duloxetine",
+      "brand_name": "CYMBALTA"
+    }
+  },
+  {
+    "id": "FG-0046",
+    "question": "What brand name is marketed under application NDA021427?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "duloxetine",
+      "brand_name": "CYMBALTA"
+    }
+  },
+  {
+    "id": "FG-0047",
+    "question": "What brand name is marketed under application NDA021733?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "duloxetine",
+      "brand_name": "CYMBALTA"
+    }
+  },
+  {
+    "id": "FG-0048",
+    "question": "What is the dosage form of the product under application NDA021427?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0049",
+    "question": "What is the dosage form of the product under application NDA021733?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0050",
+    "question": "Who is the sponsor of application NDA021427?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0051",
+    "question": "Who is the sponsor of application NDA021733?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0052",
+    "question": "In what year did the FDA approve the original NDA for LOVENOX (enoxaparin)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "enoxaparin",
+      "brand_name": "LOVENOX"
+    }
+  },
+  {
+    "id": "FG-0053",
+    "question": "What is the dosage form of the product under application NDA020164?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "enoxaparin"
+    }
+  },
+  {
+    "id": "FG-0054",
+    "question": "Who is the sponsor of application NDA020164?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "enoxaparin"
+    }
+  },
+  {
+    "id": "FG-0055",
+    "question": "In what year did the FDA approve the original NDA for BYETTA (exenatide)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "BYETTA"
+    }
+  },
+  {
+    "id": "FG-0056",
+    "question": "What brand name is marketed under application NDA021773?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "BYETTA"
+    }
+  },
+  {
+    "id": "FG-0057",
+    "question": "What is the dosage form of the product under application NDA021773?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "exenatide"
+    }
+  },
+  {
+    "id": "FG-0058",
+    "question": "Who is the sponsor of application NDA021773?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "exenatide"
+    }
+  },
+  {
+    "id": "FG-0059",
+    "question": "In what year did the FDA approve the original NDA for SUBLIMAZE PRESERVATIVE FREE (fentanyl)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "SUBLIMAZE PRESERVATIVE FREE"
+    }
+  },
+  {
+    "id": "FG-0060",
+    "question": "What brand name is marketed under application NDA016619?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "SUBLIMAZE PRESERVATIVE FREE"
+    }
+  },
+  {
+    "id": "FG-0061",
+    "question": "What is the dosage form of the product under application NDA016619?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "fentanyl"
+    }
+  },
+  {
+    "id": "FG-0062",
+    "question": "Who is the sponsor of application NDA016619?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "fentanyl"
+    }
+  },
+  {
+    "id": "FG-0063",
+    "question": "In what year did the FDA approve the original NDA for BLUJEPA (gepotidacin)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "BLUJEPA"
+    }
+  },
+  {
+    "id": "FG-0064",
+    "question": "What brand name is marketed under application NDA218230?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "BLUJEPA"
+    }
+  },
+  {
+    "id": "FG-0065",
+    "question": "What is the dosage form of the product under application NDA218230?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "gepotidacin"
+    }
+  },
+  {
+    "id": "FG-0066",
+    "question": "Who is the sponsor of application NDA218230?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "gepotidacin"
+    }
+  },
+  {
+    "id": "FG-0067",
+    "question": "In what year did the FDA approve the original NDA for HALDOL (haloperidol)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "haloperidol",
+      "brand_name": "HALDOL"
+    }
+  },
+  {
+    "id": "FG-0068",
+    "question": "What brand name is marketed under application NDA015921?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "haloperidol",
+      "brand_name": "HALDOL"
+    }
+  },
+  {
+    "id": "FG-0069",
+    "question": "What brand name is marketed under application NDA015922?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "haloperidol",
+      "brand_name": "HALDOL"
+    }
+  },
+  {
+    "id": "FG-0070",
+    "question": "What is the dosage form of the product under application NDA015921?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0071",
+    "question": "What is the dosage form of the product under application NDA015922?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0072",
+    "question": "Who is the sponsor of application NDA015921?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0073",
+    "question": "Who is the sponsor of application NDA015922?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0074",
+    "question": "In what year did the FDA approve the original NDA for GLEEVEC (imatinib)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "GLEEVEC"
+    }
+  },
+  {
+    "id": "FG-0075",
+    "question": "What brand name is marketed under application NDA021335?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "GLEEVEC"
+    }
+  },
+  {
+    "id": "FG-0076",
+    "question": "What is the dosage form of the product under application NDA021335?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "imatinib"
+    }
+  },
+  {
+    "id": "FG-0077",
+    "question": "Who is the sponsor of application NDA021335?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "imatinib"
+    }
+  },
+  {
+    "id": "FG-0078",
+    "question": "In what year did the FDA approve the original NDA for LAMICTAL (lamotrigine)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "lamotrigine",
+      "brand_name": "LAMICTAL"
+    }
+  },
+  {
+    "id": "FG-0079",
+    "question": "What brand name is marketed under application NDA020241?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "lamotrigine",
+      "brand_name": "LAMICTAL"
+    }
+  },
+  {
+    "id": "FG-0080",
+    "question": "What is the dosage form of the product under application NDA020241?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "lamotrigine"
+    }
+  },
+  {
+    "id": "FG-0081",
+    "question": "Who is the sponsor of application NDA020241?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "lamotrigine"
+    }
+  },
+  {
+    "id": "FG-0082",
+    "question": "In what year did the FDA approve the original NDA for ARAVA (leflunomide)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "leflunomide",
+      "brand_name": "ARAVA"
+    }
+  },
+  {
+    "id": "FG-0083",
+    "question": "What brand name is marketed under application NDA020905?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "leflunomide",
+      "brand_name": "ARAVA"
+    }
+  },
+  {
+    "id": "FG-0084",
+    "question": "What is the dosage form of the product under application NDA020905?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0085",
+    "question": "Who is the sponsor of application NDA020905?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0086",
+    "question": "In what year did the FDA approve the original NDA for MEXITIL (mexiletine)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "mexiletine",
+      "brand_name": "MEXITIL"
+    }
+  },
+  {
+    "id": "FG-0087",
+    "question": "What brand name is marketed under application NDA018873?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "mexiletine",
+      "brand_name": "MEXITIL"
+    }
+  },
+  {
+    "id": "FG-0088",
+    "question": "What is the dosage form of the product under application NDA018873?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "mexiletine"
+    }
+  },
+  {
+    "id": "FG-0089",
+    "question": "Who is the sponsor of application NDA018873?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "mexiletine"
+    }
+  },
+  {
+    "id": "FG-0090",
+    "question": "In what year did the FDA approve the original NDA for CYTOTEC (misoprostol)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "misoprostol",
+      "brand_name": "CYTOTEC"
+    }
+  },
+  {
+    "id": "FG-0091",
+    "question": "What brand name is marketed under application NDA019268?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "misoprostol",
+      "brand_name": "CYTOTEC"
+    }
+  },
+  {
+    "id": "FG-0092",
+    "question": "What is the dosage form of the product under application NDA019268?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0093",
+    "question": "Who is the sponsor of application NDA019268?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0094",
+    "question": "In what year did the FDA approve the original NDA for SINGULAIR (montelukast)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "SINGULAIR"
+    }
+  },
+  {
+    "id": "FG-0095",
+    "question": "What brand name is marketed under application NDA020829?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "SINGULAIR"
+    }
+  },
+  {
+    "id": "FG-0096",
+    "question": "What brand name is marketed under application NDA020830?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "SINGULAIR"
+    }
+  },
+  {
+    "id": "FG-0097",
+    "question": "What is the dosage form of the product under application NDA020829?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "montelukast"
+    }
+  },
+  {
+    "id": "FG-0098",
+    "question": "What is the dosage form of the product under application NDA020830?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "montelukast"
+    }
+  },
+  {
+    "id": "FG-0099",
+    "question": "Who is the sponsor of application NDA020829?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "montelukast"
+    }
+  },
+  {
+    "id": "FG-0100",
+    "question": "Who is the sponsor of application NDA020830?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "montelukast"
+    }
+  },
+  {
+    "id": "FG-0101",
+    "question": "In what year did the FDA approve the original NDA for DURAMORPH PF (morphine)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "morphine",
+      "brand_name": "DURAMORPH PF"
+    }
+  },
+  {
+    "id": "FG-0102",
+    "question": "What is the dosage form of the product under application NDA018565?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "morphine"
+    }
+  },
+  {
+    "id": "FG-0103",
+    "question": "Who is the sponsor of application NDA018565?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "morphine"
+    }
+  },
+  {
+    "id": "FG-0104",
+    "question": "In what year did the FDA approve the original NDA for POMALYST (pomalidomide)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pomalidomide",
+      "brand_name": "POMALYST"
+    }
+  },
+  {
+    "id": "FG-0105",
+    "question": "What brand name is marketed under application NDA204026?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pomalidomide",
+      "brand_name": "POMALYST"
+    }
+  },
+  {
+    "id": "FG-0106",
+    "question": "What is the dosage form of the product under application NDA204026?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0107",
+    "question": "Who is the sponsor of application NDA204026?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0108",
+    "question": "In what year did the FDA approve the original NDA for LYRICA (pregabalin)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "pregabalin",
+      "brand_name": "LYRICA"
+    }
+  },
+  {
+    "id": "FG-0109",
+    "question": "What brand name is marketed under application NDA021446?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pregabalin",
+      "brand_name": "LYRICA"
+    }
+  },
+  {
+    "id": "FG-0110",
+    "question": "What brand name is marketed under application NDA021723?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pregabalin",
+      "brand_name": "LYRICA"
+    }
+  },
+  {
+    "id": "FG-0111",
+    "question": "What is the dosage form of the product under application NDA021446?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0112",
+    "question": "What is the dosage form of the product under application NDA021723?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0113",
+    "question": "Who is the sponsor of application NDA021446?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0114",
+    "question": "Who is the sponsor of application NDA021723?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0115",
+    "question": "In what year did the FDA approve the original NDA for PROPYLTHIOURACIL (propylthiouracil)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0116",
+    "question": "What brand name is marketed under application NDA006188?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0117",
+    "question": "What brand name is marketed under application NDA006213?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0118",
+    "question": "What is the dosage form of the product under application NDA006188?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0119",
+    "question": "What is the dosage form of the product under application NDA006213?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0120",
+    "question": "Who is the sponsor of application NDA006188?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0121",
+    "question": "Who is the sponsor of application NDA006213?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0122",
+    "question": "In what year did the FDA approve the original NDA for XARELTO (rivaroxaban)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "rivaroxaban",
+      "brand_name": "XARELTO"
+    }
+  },
+  {
+    "id": "FG-0123",
+    "question": "What brand name is marketed under application NDA022406?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "rivaroxaban",
+      "brand_name": "XARELTO"
+    }
+  },
+  {
+    "id": "FG-0124",
+    "question": "What brand name is marketed under application NDA202439?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "rivaroxaban",
+      "brand_name": "XARELTO"
+    }
+  },
+  {
+    "id": "FG-0125",
+    "question": "What is the dosage form of the product under application NDA022406?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0126",
+    "question": "What is the dosage form of the product under application NDA202439?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0127",
+    "question": "Who is the sponsor of application NDA022406?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0128",
+    "question": "Who is the sponsor of application NDA202439?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0129",
+    "question": "In what year did the FDA approve the original NDA for OZEMPIC (semaglutide)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "OZEMPIC"
+    }
+  },
+  {
+    "id": "FG-0130",
+    "question": "What brand name is marketed under application NDA209637?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "OZEMPIC"
+    }
+  },
+  {
+    "id": "FG-0131",
+    "question": "What is the dosage form of the product under application NDA209637?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "semaglutide"
+    }
+  },
+  {
+    "id": "FG-0132",
+    "question": "Who is the sponsor of application NDA209637?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "semaglutide"
+    }
+  },
+  {
+    "id": "FG-0133",
+    "question": "In what year did the FDA approve the original NDA for NOLVADEX (tamoxifen)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "NOLVADEX"
+    }
+  },
+  {
+    "id": "FG-0134",
+    "question": "What brand name is marketed under application NDA017970?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "NOLVADEX"
+    }
+  },
+  {
+    "id": "FG-0135",
+    "question": "What is the dosage form of the product under application NDA017970?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tamoxifen"
+    }
+  },
+  {
+    "id": "FG-0136",
+    "question": "Who is the sponsor of application NDA017970?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tamoxifen"
+    }
+  },
+  {
+    "id": "FG-0137",
+    "question": "In what year did the FDA approve the original NDA for PARNATE (tranylcypromine)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tranylcypromine",
+      "brand_name": "PARNATE"
+    }
+  },
+  {
+    "id": "FG-0138",
+    "question": "What brand name is marketed under application NDA012342?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tranylcypromine",
+      "brand_name": "PARNATE"
+    }
+  },
+  {
+    "id": "FG-0139",
+    "question": "What is the dosage form of the product under application NDA012342?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0140",
+    "question": "Who is the sponsor of application NDA012342?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0141",
+    "question": "In what year did the FDA approve the original NDA for SABRIL (vigabatrin)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "vigabatrin",
+      "brand_name": "SABRIL"
+    }
+  },
+  {
+    "id": "FG-0142",
+    "question": "What brand name is marketed under application NDA020427?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "vigabatrin",
+      "brand_name": "SABRIL"
+    }
+  },
+  {
+    "id": "FG-0143",
+    "question": "What brand name is marketed under application NDA022006?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "vigabatrin",
+      "brand_name": "SABRIL"
+    }
+  },
+  {
+    "id": "FG-0144",
+    "question": "What is the dosage form of the product under application NDA020427?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0145",
+    "question": "What is the dosage form of the product under application NDA022006?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0146",
+    "question": "Who is the sponsor of application NDA020427?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0147",
+    "question": "Who is the sponsor of application NDA022006?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0148",
+    "question": "In what year did the FDA approve the original NDA for AMBIEN (zolpidem)?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "zolpidem",
+      "brand_name": "AMBIEN"
+    }
+  },
+  {
+    "id": "FG-0149",
+    "question": "What brand name is marketed under application NDA019908?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "zolpidem",
+      "brand_name": "AMBIEN"
+    }
+  },
+  {
+    "id": "FG-0150",
+    "question": "What is the dosage form of the product under application NDA019908?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "zolpidem"
+    }
+  },
+  {
+    "id": "FG-0151",
+    "question": "Who is the sponsor of application NDA019908?",
+    "type": "approval",
+    "sources": [
+      "drug/drugsfda"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "zolpidem"
+    }
+  },
+  {
+    "id": "FG-0152",
+    "question": "Does abacavir's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0153",
+    "question": "Does the FDA label for abacavir carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0154",
+    "question": "Does atrasentan's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0155",
+    "question": "Does the FDA label for atrasentan carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0156",
+    "question": "Does carbamazepine's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0157",
+    "question": "Does the FDA label for carbamazepine carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0158",
+    "question": "Does cephalexin's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0159",
+    "question": "Does colchicine's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0160",
+    "question": "Does exenatide's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "Byetta"
+    }
+  },
+  {
+    "id": "FG-0161",
+    "question": "Does fentanyl's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "Fentanyl Citrate"
+    }
+  },
+  {
+    "id": "FG-0162",
+    "question": "Does the FDA label for fentanyl carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "Fentanyl Citrate"
+    }
+  },
+  {
+    "id": "FG-0163",
+    "question": "Does gepotidacin's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0164",
+    "question": "Does imatinib's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "Imatinib Mesylate"
+    }
+  },
+  {
+    "id": "FG-0165",
+    "question": "Does leflunomide's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0166",
+    "question": "Does the FDA label for leflunomide carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0167",
+    "question": "Does misoprostol's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0168",
+    "question": "Does the FDA label for misoprostol carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0169",
+    "question": "Does the FDA label for pomalidomide carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0170",
+    "question": "Does pregabalin's label carry a boxed warning?",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0171",
+    "question": "Does the FDA label for propylthiouracil carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0172",
+    "question": "Does the FDA label for rivaroxaban carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0173",
+    "question": "Does the FDA label for semaglutide carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0174",
+    "question": "Does the FDA label for tamoxifen carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "Tamoxifen Citrate"
+    }
+  },
+  {
+    "id": "FG-0175",
+    "question": "Does the FDA label for tranylcypromine carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0176",
+    "question": "Does the FDA label for vigabatrin carry a boxed warning? If it does, name the risk.",
+    "type": "boxed_warning",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0177",
+    "question": "How many serious FAERS reports for abacavir were received in 2021, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0178",
+    "question": "How many serious FAERS reports for carbamazepine were received in 2021, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0179",
+    "question": "How many serious FAERS reports for cephalexin were received in 2020, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0180",
+    "question": "How many serious FAERS reports for colchicine were received in 2025, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0181",
+    "question": "How many serious FAERS reports for exenatide were received in 2022, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "Byetta"
+    }
+  },
+  {
+    "id": "FG-0182",
+    "question": "How many serious FAERS reports for fentanyl were received in 2021, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "Fentanyl Citrate"
+    }
+  },
+  {
+    "id": "FG-0183",
+    "question": "How many serious FAERS reports for imatinib were received in 2021, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "Imatinib Mesylate"
+    }
+  },
+  {
+    "id": "FG-0184",
+    "question": "How many serious FAERS reports for leflunomide were received in 2021, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0185",
+    "question": "How many serious FAERS reports for misoprostol were received in 2020, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0186",
+    "question": "How many serious FAERS reports for pomalidomide were received in 2020, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0187",
+    "question": "How many serious FAERS reports for pregabalin were received in 2024, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0188",
+    "question": "How many serious FAERS reports for propylthiouracil were received in 2022, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0189",
+    "question": "How many serious FAERS reports for rivaroxaban were received in 2025, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0190",
+    "question": "How many serious FAERS reports for semaglutide were received in 2020, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0191",
+    "question": "How many serious FAERS reports for tamoxifen were received in 2020, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "Tamoxifen Citrate"
+    }
+  },
+  {
+    "id": "FG-0192",
+    "question": "How many serious FAERS reports for tranylcypromine were received in 2021, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0193",
+    "question": "How many serious FAERS reports for vigabatrin were received in 2020, and does its FDA label carry a boxed warning? Reply with the count, a semicolon, then yes or no.",
+    "type": "composite",
+    "sources": [
+      "drug/event",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0194",
+    "question": "How many serious FAERS reports for abacavir were received in 2021?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0195",
+    "question": "How many serious FAERS reports for allopurinol were received in 2023?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "allopurinol"
+    }
+  },
+  {
+    "id": "FG-0196",
+    "question": "How many serious FAERS reports for atrasentan were received in 2023?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0197",
+    "question": "How many serious FAERS reports for carbamazepine were received in 2021?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0198",
+    "question": "How many serious FAERS reports for cephalexin were received in 2020?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0199",
+    "question": "How many serious FAERS reports for clonazepam were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "clonazepam"
+    }
+  },
+  {
+    "id": "FG-0200",
+    "question": "How many serious FAERS reports for colchicine were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0201",
+    "question": "How many serious FAERS reports for disulfiram were received in 2023?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-0202",
+    "question": "How many serious FAERS reports for duloxetine were received in 2021?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0203",
+    "question": "How many serious FAERS reports for enoxaparin were received in 2022?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "enoxaparin",
+      "brand_name": "Enoxaparin Sodium"
+    }
+  },
+  {
+    "id": "FG-0204",
+    "question": "How many serious FAERS reports for exenatide were received in 2022?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "Byetta"
+    }
+  },
+  {
+    "id": "FG-0205",
+    "question": "How many serious FAERS reports for fentanyl were received in 2021?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "Fentanyl Citrate"
+    }
+  },
+  {
+    "id": "FG-0206",
+    "question": "How many serious FAERS reports for gepotidacin were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0207",
+    "question": "How many serious FAERS reports for haloperidol were received in 2022?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0208",
+    "question": "How many serious FAERS reports for imatinib were received in 2021?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "Imatinib Mesylate"
+    }
+  },
+  {
+    "id": "FG-0209",
+    "question": "How many serious FAERS reports for lamotrigine were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "lamotrigine"
+    }
+  },
+  {
+    "id": "FG-0210",
+    "question": "How many serious FAERS reports for leflunomide were received in 2021?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0211",
+    "question": "How many serious FAERS reports for mexiletine were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "mexiletine",
+      "brand_name": "MEXILETINE HYDROCHLORIDE"
+    }
+  },
+  {
+    "id": "FG-0212",
+    "question": "How many serious FAERS reports for misoprostol were received in 2020?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0213",
+    "question": "How many serious FAERS reports for montelukast were received in 2024?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "montelukast sodium"
+    }
+  },
+  {
+    "id": "FG-0214",
+    "question": "How many serious FAERS reports for morphine were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "morphine",
+      "brand_name": "MORPHINE SULFATE"
+    }
+  },
+  {
+    "id": "FG-0215",
+    "question": "How many serious FAERS reports for pomalidomide were received in 2020?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0216",
+    "question": "How many serious FAERS reports for pregabalin were received in 2024?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0217",
+    "question": "How many serious FAERS reports for propylthiouracil were received in 2022?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0218",
+    "question": "How many serious FAERS reports for rivaroxaban were received in 2025?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0219",
+    "question": "How many serious FAERS reports for semaglutide were received in 2020?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0220",
+    "question": "How many serious FAERS reports for tamoxifen were received in 2020?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "Tamoxifen Citrate"
+    }
+  },
+  {
+    "id": "FG-0221",
+    "question": "How many serious FAERS reports for tranylcypromine were received in 2021?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0222",
+    "question": "How many serious FAERS reports for vigabatrin were received in 2020?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0223",
+    "question": "How many serious FAERS reports for zolpidem were received in 2023?",
+    "type": "faers_count",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "zolpidem",
+      "brand_name": "ZOLPIDEM TARTRATE"
+    }
+  },
+  {
+    "id": "FG-0224",
+    "question": "What is the most-reported adverse reaction in FAERS for abacavir among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0225",
+    "question": "What is the most-reported adverse reaction in FAERS for abacavir among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0226",
+    "question": "What is the most-reported adverse reaction in FAERS for abacavir?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "abacavir"
+    }
+  },
+  {
+    "id": "FG-0227",
+    "question": "What is the most-reported adverse reaction in FAERS for allopurinol among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "allopurinol"
+    }
+  },
+  {
+    "id": "FG-0228",
+    "question": "What is the most-reported adverse reaction in FAERS for allopurinol among serious reports received in 2023?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "allopurinol"
+    }
+  },
+  {
+    "id": "FG-0229",
+    "question": "What is the most-reported adverse reaction in FAERS for allopurinol?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "allopurinol"
+    }
+  },
+  {
+    "id": "FG-0230",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0231",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0232",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among reports received in 2022?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0233",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among reports received in 2023?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0234",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among reports received in 2024?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0235",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0236",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among serious reports received in 2023?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0237",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan among serious reports received in 2024?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0238",
+    "question": "What is the most-reported adverse reaction in FAERS for atrasentan?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0239",
+    "question": "What is the most-reported adverse reaction in FAERS for carbamazepine among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0240",
+    "question": "What is the most-reported adverse reaction in FAERS for carbamazepine among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0241",
+    "question": "What is the most-reported adverse reaction in FAERS for carbamazepine?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "carbamazepine"
+    }
+  },
+  {
+    "id": "FG-0242",
+    "question": "What is the most-reported adverse reaction in FAERS for cephalexin among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0243",
+    "question": "What is the most-reported adverse reaction in FAERS for cephalexin among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0244",
+    "question": "What is the most-reported adverse reaction in FAERS for cephalexin?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "cephalexin"
+    }
+  },
+  {
+    "id": "FG-0245",
+    "question": "What is the most-reported adverse reaction in FAERS for clonazepam among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "clonazepam"
+    }
+  },
+  {
+    "id": "FG-0246",
+    "question": "What is the most-reported adverse reaction in FAERS for clonazepam among serious reports received in 2025?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "clonazepam"
+    }
+  },
+  {
+    "id": "FG-0247",
+    "question": "What is the most-reported adverse reaction in FAERS for clonazepam?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "clonazepam"
+    }
+  },
+  {
+    "id": "FG-0248",
+    "question": "What is the most-reported adverse reaction in FAERS for colchicine among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0249",
+    "question": "What is the most-reported adverse reaction in FAERS for colchicine among serious reports received in 2025?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0250",
+    "question": "What is the most-reported adverse reaction in FAERS for colchicine?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "colchicine"
+    }
+  },
+  {
+    "id": "FG-0251",
+    "question": "What is the most-reported adverse reaction in FAERS for disulfiram among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-0252",
+    "question": "What is the most-reported adverse reaction in FAERS for disulfiram among serious reports received in 2023?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-0253",
+    "question": "What is the most-reported adverse reaction in FAERS for disulfiram?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-0254",
+    "question": "What is the most-reported adverse reaction in FAERS for duloxetine among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0255",
+    "question": "What is the most-reported adverse reaction in FAERS for duloxetine among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0256",
+    "question": "What is the most-reported adverse reaction in FAERS for duloxetine?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-0257",
+    "question": "What is the most-reported adverse reaction in FAERS for enoxaparin among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "enoxaparin",
+      "brand_name": "Enoxaparin Sodium"
+    }
+  },
+  {
+    "id": "FG-0258",
+    "question": "What is the most-reported adverse reaction in FAERS for enoxaparin among serious reports received in 2022?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "enoxaparin",
+      "brand_name": "Enoxaparin Sodium"
+    }
+  },
+  {
+    "id": "FG-0259",
+    "question": "What is the most-reported adverse reaction in FAERS for enoxaparin?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "enoxaparin",
+      "brand_name": "Enoxaparin Sodium"
+    }
+  },
+  {
+    "id": "FG-0260",
+    "question": "What is the most-reported adverse reaction in FAERS for exenatide among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "Byetta"
+    }
+  },
+  {
+    "id": "FG-0261",
+    "question": "What is the most-reported adverse reaction in FAERS for exenatide among serious reports received in 2022?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "Byetta"
+    }
+  },
+  {
+    "id": "FG-0262",
+    "question": "What is the most-reported adverse reaction in FAERS for exenatide?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "exenatide",
+      "brand_name": "Byetta"
+    }
+  },
+  {
+    "id": "FG-0263",
+    "question": "What is the most-reported adverse reaction in FAERS for fentanyl among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "Fentanyl Citrate"
+    }
+  },
+  {
+    "id": "FG-0264",
+    "question": "What is the most-reported adverse reaction in FAERS for fentanyl among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "Fentanyl Citrate"
+    }
+  },
+  {
+    "id": "FG-0265",
+    "question": "What is the most-reported adverse reaction in FAERS for fentanyl?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "Fentanyl Citrate"
+    }
+  },
+  {
+    "id": "FG-0266",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0267",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0268",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among reports received in 2023?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0269",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among reports received in 2024?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0270",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0271",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0272",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among serious reports received in 2023?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0273",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among serious reports received in 2024?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0274",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin among serious reports received in 2025?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0275",
+    "question": "What is the most-reported adverse reaction in FAERS for gepotidacin?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0276",
+    "question": "What is the most-reported adverse reaction in FAERS for haloperidol among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0277",
+    "question": "What is the most-reported adverse reaction in FAERS for haloperidol among serious reports received in 2022?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0278",
+    "question": "What is the most-reported adverse reaction in FAERS for haloperidol?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-0279",
+    "question": "What is the most-reported adverse reaction in FAERS for imatinib among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "Imatinib Mesylate"
+    }
+  },
+  {
+    "id": "FG-0280",
+    "question": "What is the most-reported adverse reaction in FAERS for imatinib among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "Imatinib Mesylate"
+    }
+  },
+  {
+    "id": "FG-0281",
+    "question": "What is the most-reported adverse reaction in FAERS for imatinib?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "Imatinib Mesylate"
+    }
+  },
+  {
+    "id": "FG-0282",
+    "question": "What is the most-reported adverse reaction in FAERS for lamotrigine among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "lamotrigine"
+    }
+  },
+  {
+    "id": "FG-0283",
+    "question": "What is the most-reported adverse reaction in FAERS for lamotrigine among serious reports received in 2025?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "lamotrigine"
+    }
+  },
+  {
+    "id": "FG-0284",
+    "question": "What is the most-reported adverse reaction in FAERS for lamotrigine?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "lamotrigine"
+    }
+  },
+  {
+    "id": "FG-0285",
+    "question": "What is the most-reported adverse reaction in FAERS for leflunomide among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0286",
+    "question": "What is the most-reported adverse reaction in FAERS for leflunomide among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0287",
+    "question": "What is the most-reported adverse reaction in FAERS for leflunomide?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "leflunomide"
+    }
+  },
+  {
+    "id": "FG-0288",
+    "question": "What is the most-reported adverse reaction in FAERS for mexiletine among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "mexiletine",
+      "brand_name": "MEXILETINE HYDROCHLORIDE"
+    }
+  },
+  {
+    "id": "FG-0289",
+    "question": "What is the most-reported adverse reaction in FAERS for mexiletine among serious reports received in 2025?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "mexiletine",
+      "brand_name": "MEXILETINE HYDROCHLORIDE"
+    }
+  },
+  {
+    "id": "FG-0290",
+    "question": "What is the most-reported adverse reaction in FAERS for mexiletine?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "mexiletine",
+      "brand_name": "MEXILETINE HYDROCHLORIDE"
+    }
+  },
+  {
+    "id": "FG-0291",
+    "question": "What is the most-reported adverse reaction in FAERS for misoprostol among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0292",
+    "question": "What is the most-reported adverse reaction in FAERS for misoprostol among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0293",
+    "question": "What is the most-reported adverse reaction in FAERS for misoprostol?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "misoprostol"
+    }
+  },
+  {
+    "id": "FG-0294",
+    "question": "What is the most-reported adverse reaction in FAERS for montelukast among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "montelukast sodium"
+    }
+  },
+  {
+    "id": "FG-0295",
+    "question": "What is the most-reported adverse reaction in FAERS for montelukast among serious reports received in 2024?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "montelukast sodium"
+    }
+  },
+  {
+    "id": "FG-0296",
+    "question": "What is the most-reported adverse reaction in FAERS for montelukast?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "montelukast sodium"
+    }
+  },
+  {
+    "id": "FG-0297",
+    "question": "What is the most-reported adverse reaction in FAERS for morphine among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "morphine",
+      "brand_name": "MORPHINE SULFATE"
+    }
+  },
+  {
+    "id": "FG-0298",
+    "question": "What is the most-reported adverse reaction in FAERS for morphine among serious reports received in 2025?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "morphine",
+      "brand_name": "MORPHINE SULFATE"
+    }
+  },
+  {
+    "id": "FG-0299",
+    "question": "What is the most-reported adverse reaction in FAERS for morphine?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "morphine",
+      "brand_name": "MORPHINE SULFATE"
+    }
+  },
+  {
+    "id": "FG-0300",
+    "question": "What is the most-reported adverse reaction in FAERS for pomalidomide among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0301",
+    "question": "What is the most-reported adverse reaction in FAERS for pomalidomide among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0302",
+    "question": "What is the most-reported adverse reaction in FAERS for pomalidomide?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-0303",
+    "question": "What is the most-reported adverse reaction in FAERS for pregabalin among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0304",
+    "question": "What is the most-reported adverse reaction in FAERS for pregabalin among serious reports received in 2024?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0305",
+    "question": "What is the most-reported adverse reaction in FAERS for pregabalin?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "pregabalin"
+    }
+  },
+  {
+    "id": "FG-0306",
+    "question": "What is the most-reported adverse reaction in FAERS for propylthiouracil among serious reports received in 2022?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0307",
+    "question": "What is the most-reported adverse reaction in FAERS for propylthiouracil?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0308",
+    "question": "What is the most-reported adverse reaction in FAERS for rivaroxaban among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0309",
+    "question": "What is the most-reported adverse reaction in FAERS for rivaroxaban?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-0310",
+    "question": "What is the most-reported adverse reaction in FAERS for semaglutide among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0311",
+    "question": "What is the most-reported adverse reaction in FAERS for semaglutide among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0312",
+    "question": "What is the most-reported adverse reaction in FAERS for semaglutide?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "Ozempic"
+    }
+  },
+  {
+    "id": "FG-0313",
+    "question": "What is the most-reported adverse reaction in FAERS for tamoxifen among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "Tamoxifen Citrate"
+    }
+  },
+  {
+    "id": "FG-0314",
+    "question": "What is the most-reported adverse reaction in FAERS for tamoxifen among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "Tamoxifen Citrate"
+    }
+  },
+  {
+    "id": "FG-0315",
+    "question": "What is the most-reported adverse reaction in FAERS for tamoxifen?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "Tamoxifen Citrate"
+    }
+  },
+  {
+    "id": "FG-0316",
+    "question": "What is the most-reported adverse reaction in FAERS for tranylcypromine among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0317",
+    "question": "What is the most-reported adverse reaction in FAERS for tranylcypromine among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0318",
+    "question": "What is the most-reported adverse reaction in FAERS for tranylcypromine?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "tranylcypromine"
+    }
+  },
+  {
+    "id": "FG-0319",
+    "question": "What is the most-reported adverse reaction in FAERS for vigabatrin among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0320",
+    "question": "What is the most-reported adverse reaction in FAERS for vigabatrin among serious reports received in 2021?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0321",
+    "question": "What is the most-reported adverse reaction in FAERS for vigabatrin?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "vigabatrin"
+    }
+  },
+  {
+    "id": "FG-0322",
+    "question": "What is the most-reported adverse reaction in FAERS for zolpidem among serious reports received in 2020?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "zolpidem",
+      "brand_name": "ZOLPIDEM TARTRATE"
+    }
+  },
+  {
+    "id": "FG-0323",
+    "question": "What is the most-reported adverse reaction in FAERS for zolpidem among serious reports received in 2023?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "zolpidem",
+      "brand_name": "ZOLPIDEM TARTRATE"
+    }
+  },
+  {
+    "id": "FG-0324",
+    "question": "What is the most-reported adverse reaction in FAERS for zolpidem?",
+    "type": "faers_top_reaction",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "zolpidem",
+      "brand_name": "ZOLPIDEM TARTRATE"
+    }
+  },
+  {
+    "id": "FG-0325",
+    "question": "Summarize the contraindications on the ZIAGEN label for abacavir.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "abacavir",
+      "brand_name": "ZIAGEN"
+    }
+  },
+  {
+    "id": "FG-0326",
+    "question": "Summarize the contraindications on the VANRAFIA label for atrasentan.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "atrasentan",
+      "brand_name": "VANRAFIA"
+    }
+  },
+  {
+    "id": "FG-0327",
+    "question": "Summarize the contraindications on the Carbamazepine ER label for carbamazepine.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "carbamazepine",
+      "brand_name": "Carbamazepine ER"
+    }
+  },
+  {
+    "id": "FG-0328",
+    "question": "Summarize the contraindications on the Exenatide label for exenatide.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "exenatide"
+    }
+  },
+  {
+    "id": "FG-0329",
+    "question": "Summarize the contraindications on the FENTANYL TRANSDERMAL label for fentanyl.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "fentanyl",
+      "brand_name": "FENTANYL TRANSDERMAL"
+    }
+  },
+  {
+    "id": "FG-0330",
+    "question": "Summarize the contraindications on the Blujepa label for gepotidacin.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "easy",
+    "entity": {
+      "generic_name": "gepotidacin",
+      "brand_name": "Blujepa"
+    }
+  },
+  {
+    "id": "FG-0331",
+    "question": "Summarize the contraindications on the IMKELDI label for imatinib.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "imatinib",
+      "brand_name": "IMKELDI"
+    }
+  },
+  {
+    "id": "FG-0332",
+    "question": "Summarize the contraindications on the Arava label for leflunomide.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "leflunomide",
+      "brand_name": "Arava"
+    }
+  },
+  {
+    "id": "FG-0333",
+    "question": "Summarize the contraindications on the Cytotec label for misoprostol.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "misoprostol",
+      "brand_name": "Cytotec"
+    }
+  },
+  {
+    "id": "FG-0334",
+    "question": "Summarize the contraindications on the SINGULAIR label for montelukast.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "montelukast",
+      "brand_name": "SINGULAIR"
+    }
+  },
+  {
+    "id": "FG-0335",
+    "question": "Summarize the contraindications on the Opium Tincture Deodorized label for morphine.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "morphine",
+      "brand_name": "Opium Tincture Deodorized"
+    }
+  },
+  {
+    "id": "FG-0336",
+    "question": "Summarize the contraindications on the Pomalyst label for pomalidomide.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "pomalidomide",
+      "brand_name": "Pomalyst"
+    }
+  },
+  {
+    "id": "FG-0337",
+    "question": "Summarize the contraindications on the Propylthiouracil label for propylthiouracil.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "propylthiouracil"
+    }
+  },
+  {
+    "id": "FG-0338",
+    "question": "Summarize the contraindications on the rivaroxaban granule label for rivaroxaban.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "rivaroxaban",
+      "brand_name": "rivaroxaban granule"
+    }
+  },
+  {
+    "id": "FG-0339",
+    "question": "Summarize the contraindications on the WEGOVY label for semaglutide.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "semaglutide",
+      "brand_name": "WEGOVY"
+    }
+  },
+  {
+    "id": "FG-0340",
+    "question": "Summarize the contraindications on the SOLTAMOX label for tamoxifen.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "tamoxifen",
+      "brand_name": "SOLTAMOX"
+    }
+  },
+  {
+    "id": "FG-0341",
+    "question": "Summarize the contraindications on the PARNATE label for tranylcypromine.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "tranylcypromine",
+      "brand_name": "PARNATE"
+    }
+  },
+  {
+    "id": "FG-0342",
+    "question": "Summarize the contraindications on the VIGADRONE label for vigabatrin.",
+    "type": "label_open",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "vigabatrin",
+      "brand_name": "VIGADRONE"
+    }
+  }
+]

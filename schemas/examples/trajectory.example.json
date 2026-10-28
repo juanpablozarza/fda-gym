@@ -1,0 +1,99 @@
+{
+  "id": "run-0001/FG-0001/s0",
+  "run_id": "run-0001",
+  "task_id": "FG-0001",
+  "model": {
+    "name": "openrouter/qwen/qwen-2.5-7b-instruct",
+    "kind": "baseline",
+    "checkpoint_step": null
+  },
+  "seed": 0,
+  "snapshot_version": "2026-10-15",
+  "started_at": "2026-10-15T18:40:00Z",
+  "steps": [
+    {
+      "index": 1,
+      "thought": "Find warfarin labels that have a boxed warning.",
+      "tool": "search_drug_label",
+      "arguments": {
+        "generic_name": "warfarin",
+        "has_section": "boxed_warning"
+      },
+      "output": {
+        "total": 74,
+        "results": [
+          {
+            "set_id": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+            "brand_name": "Warfarin Sodium"
+          }
+        ]
+      },
+      "error": null,
+      "latency_ms": 41
+    },
+    {
+      "index": 2,
+      "thought": null,
+      "tool": "get_label_section",
+      "arguments": {
+        "set_id": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+        "section": "boxed_warning"
+      },
+      "output": {
+        "set_id": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+        "boxed_warning": [
+          "WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding"
+        ]
+      },
+      "error": null,
+      "latency_ms": 37
+    },
+    {
+      "index": 3,
+      "thought": null,
+      "tool": "submit_answer",
+      "arguments": {
+        "answer": "Yes. Bleeding risk: warfarin can cause major or fatal bleeding.",
+        "citations": [
+          {
+            "endpoint": "drug/label",
+            "id": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+            "field": "boxed_warning",
+            "quote": "Warfarin sodium can cause major or fatal bleeding"
+          }
+        ]
+      },
+      "output": null,
+      "error": null,
+      "latency_ms": 0
+    }
+  ],
+  "final_answer": {
+    "answer": "Yes. Bleeding risk: warfarin can cause major or fatal bleeding.",
+    "citations": [
+      {
+        "endpoint": "drug/label",
+        "id": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+        "field": "boxed_warning",
+        "quote": "Warfarin sodium can cause major or fatal bleeding"
+      }
+    ]
+  },
+  "terminated_by": "submit",
+  "reward": {
+    "total": 1.0,
+    "correctness": 1.0,
+    "citation": 1.0,
+    "format": 1.0,
+    "efficiency": 1.0,
+    "citations_valid": 1,
+    "citations_total": 1,
+    "notes": []
+  },
+  "usage": {
+    "prompt_tokens": 1830,
+    "completion_tokens": 142,
+    "cost_usd": 0.0004,
+    "latency_ms": 2210
+  }
+}

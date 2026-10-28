@@ -1,0 +1,18 @@
+{
+  "run_id": "fixture-run",
+  "example": true,
+  "n_trajectories": 3,
+  "models": [
+    {
+      "name": "openrouter/qwen/qwen-2.5-7b-instruct",
+      "kind": "baseline",
+      "detail": "no fine-tune",
+      "mean_reward": 0.48333333333333334,
+      "pass_rate": 0.3333333333333333,
+      "citation_validity": 0.6666666666666666,
+      "mean_tool_calls": 1.6666666666666667,
+      "cost_usd": 0.0013,
+      "ours": false
+    }
+  ]
+}

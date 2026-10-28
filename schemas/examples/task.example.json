@@ -1,0 +1,36 @@
+{
+  "id": "FG-0001",
+  "type": "boxed_warning",
+  "question": "Does the FDA label for warfarin carry a boxed warning, and if so, about what risk?",
+  "sources": ["drug/label"],
+  "entity": { "generic_name": "warfarin", "brand_name": "Coumadin" },
+  "split": "train",
+  "answerable": true,
+  "difficulty": "medium",
+  "difficulty_features": {
+    "sources": 1,
+    "min_tool_calls": 2,
+    "needs_disambiguation": true,
+    "needs_aggregation": false,
+    "needs_normalization": false,
+    "has_constraint": false
+  },
+  "base_pass_rate": null,
+  "gold": {
+    "kind": "boolean",
+    "value": true,
+    "keywords": ["bleeding"]
+  },
+  "gold_citations": [
+    {
+      "endpoint": "drug/label",
+      "ids": ["0cbce382-9c88-4f58-ae0f-532a841e8f95"],
+      "fields": ["boxed_warning"]
+    }
+  ],
+  "oracle_calls": [
+    { "tool": "search_drug_label", "arguments": { "generic_name": "warfarin", "has_section": "boxed_warning" } },
+    { "tool": "get_label_section", "arguments": { "set_id": "0cbce382-9c88-4f58-ae0f-532a841e8f95", "section": "boxed_warning" } }
+  ],
+  "snapshot_version": "2026-10-15"
+}

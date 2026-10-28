@@ -1,0 +1,40 @@
+{
+  "snapshot": "2026-10-15",
+  "visible_chars": 3500,
+  "splits": {
+    "test": {
+      "tasks": 151,
+      "gold_ids": 162,
+      "ids_reachable": 162,
+      "ids_visible": 162,
+      "ids_id_visible_answer_clipped": 0,
+      "tasks_reachable_and_visible": 151,
+      "fraction_ids_reachable": 1.0,
+      "fraction_ids_visible": 1.0,
+      "fraction_tasks_reachable_and_visible": 1.0
+    },
+    "train": {
+      "tasks": 476,
+      "gold_ids": 480,
+      "ids_reachable": 480,
+      "ids_visible": 480,
+      "ids_id_visible_answer_clipped": 0,
+      "tasks_reachable_and_visible": 476,
+      "fraction_ids_reachable": 1.0,
+      "fraction_ids_visible": 1.0,
+      "fraction_tasks_reachable_and_visible": 1.0
+    }
+  },
+  "fg_0002": {
+    "ok": true,
+    "application_number": "NDA020977",
+    "brand_in_result": true,
+    "reward_total": 1.0,
+    "correctness": 1.0,
+    "citation": 1.0,
+    "id_visible": true,
+    "answer_visible": true,
+    "visible_chars": 642
+  },
+  "misses": []
+}

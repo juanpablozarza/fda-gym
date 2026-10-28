@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fdagym.dev/schemas/trajectory.schema.json",
+  "title": "Trajectory",
+  "description": "One episode, one line of results/<run_id>.jsonl. This is what the dashboard replays.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "run_id", "task_id", "model", "seed", "snapshot_version",
+    "started_at", "steps", "final_answer", "terminated_by", "reward", "usage"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "task_id": { "type": "string", "pattern": "^FG-[0-9]{4}$" },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "kind"],
+      "properties": {
+        "name": { "description": "e.g. openrouter/anthropic/claude-haiku, qwen2.5-3b+grpo", "type": "string" },
+        "kind": { "enum": ["reference", "baseline", "trained"] },
+        "checkpoint_step": { "type": ["integer", "null"] }
+      }
+    },
+    "seed": { "type": "integer" },
+    "snapshot_version": { "type": "string" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["index", "tool", "arguments", "output", "latency_ms"],
+        "properties": {
+          "index": { "type": "integer", "minimum": 1 },
+          "thought": { "description": "Model text emitted before the call, if any.", "type": ["string", "null"] },
+          "tool": { "description": "Tool name, or submit_answer for the final step.", "type": "string" },
+          "arguments": { "type": "object" },
+          "output": { "description": "Exactly what the model saw back. Citation grounding checks against this." },
+          "error": { "type": ["string", "null"] },
+          "latency_ms": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
+    "final_answer": {
+      "description": "Parsed submit_answer arguments, or null if the episode never submitted valid JSON.",
+      "oneOf": [
+        { "$ref": "answer.schema.json" },
+        { "type": "null" }
+      ]
+    },
+    "terminated_by": { "enum": ["submit", "max_steps", "error"] },
+    "reward": {
+      "description": "Raw components in [0,1]. Weighted contributions are weight * component; total is their sum.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total", "correctness", "citation", "format", "efficiency", "citations_valid", "citations_total", "notes"],
+      "properties": {
+        "total": { "type": "number", "minimum": 0, "maximum": 1 },
+        "correctness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "citation": { "type": "number", "minimum": 0, "maximum": 1 },
+        "format": { "type": "number", "minimum": 0, "maximum": 1 },
+        "efficiency": { "type": "number", "minimum": 0, "maximum": 1 },
+        "citations_valid": { "type": "integer", "minimum": 0 },
+        "citations_total": { "type": "integer", "minimum": 0 },
+        "grader_version": { "type": "string", "minLength": 1 },
+        "data_version": { "type": "string", "minLength": 1 },
+        "notes": {
+          "description": "Human-readable reasons, e.g. 'correctness gated: no valid citation'. Shown in the dashboard.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt_tokens", "completion_tokens", "latency_ms"],
+      "properties": {
+        "prompt_tokens": { "type": "integer", "minimum": 0 },
+        "completion_tokens": { "type": "integer", "minimum": 0 },
+        "cost_usd": { "type": ["number", "null"], "minimum": 0 },
+        "latency_ms": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}

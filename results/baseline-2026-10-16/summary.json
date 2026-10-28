@@ -1,0 +1,85 @@
+{
+  "skipped": {
+    "label_open": 1,
+    "already_done": 0
+  },
+  "models": {
+    "openrouter/nvidia/nemotron-3.5-lightning:free": {
+      "n": 19,
+      "mean_reward": 0.1,
+      "pass_rate": 0.0,
+      "mean_citation": 0.0,
+      "mean_tools": 0.1053,
+      "cost_usd": 0.0
+    },
+    "openrouter/cohere/north-mini-code:free": {
+      "n": 19,
+      "mean_reward": 0.1,
+      "pass_rate": 0.0,
+      "mean_citation": 0.0,
+      "mean_tools": 0.0,
+      "cost_usd": 0.0
+    },
+    "openrouter/liquid/lfm-2.5-2.6b:free": {
+      "n": 19,
+      "mean_reward": 0.0947,
+      "pass_rate": 0.0,
+      "mean_citation": 0.0,
+      "mean_tools": 2.3158,
+      "cost_usd": 0.0
+    }
+  },
+  "leaderboard": [
+    {
+      "name": "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "kind": "baseline",
+      "mean_reward": 0.1,
+      "pass": 0.0,
+      "citations": 0.0,
+      "tools": 0.1053
+    },
+    {
+      "name": "openrouter/cohere/north-mini-code:free",
+      "kind": "baseline",
+      "mean_reward": 0.1,
+      "pass": 0.0,
+      "citations": 0.0,
+      "tools": 0.0
+    },
+    {
+      "name": "openrouter/liquid/lfm-2.5-2.6b:free",
+      "kind": "baseline",
+      "mean_reward": 0.0947,
+      "pass": 0.0,
+      "citations": 0.0,
+      "tools": 2.3158
+    }
+  ],
+  "run_id": "baseline-2026-10-16",
+  "split": "test",
+  "seeds": [
+    1
+  ],
+  "cost_usd_total": 0.0,
+  "n_trajectories": 57,
+  "n_tasks_run": 19,
+  "n_tasks_skipped_label_open": 1,
+  "requested_models": [
+    "openrouter/openai/gpt-4o-mini",
+    "openrouter/anthropic/claude-3.5-haiku",
+    "openrouter/qwen/qwen-2.5-7b-instruct"
+  ],
+  "openrouter_notes": {
+    "gpt-4o-mini": "slug exists; 402 insufficient credits (account never purchased credits)",
+    "claude-3.5-haiku": "404 No endpoints found",
+    "claude-3-haiku": "404 deprecated 2026-09-10; migrate to anthropic/claude-haiku-4.5",
+    "claude-haiku-4.5": "current Haiku slug; 402 insufficient credits",
+    "qwen-2.5-7b-instruct": "slug exists (not 1.5B); 402 insufficient credits",
+    "qwen2.5-7b-instruct": "400 not a valid model ID",
+    "used": [
+      "openrouter/liquid/lfm-2.5-2.6b:free",
+      "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "openrouter/cohere/north-mini-code:free"
+    ]
+  }
+}

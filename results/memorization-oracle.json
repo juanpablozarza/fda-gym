@@ -1,0 +1,59 @@
+{
+  "known": {
+    "n": 34,
+    "strict": 1.0,
+    "pass": 1.0,
+    "mean_tool_calls": 4.588235294117647
+  },
+  "unseen": {
+    "n": 100,
+    "strict": 1.0,
+    "pass": 1.0,
+    "mean_tool_calls": 4.98
+  },
+  "gap": {
+    "strict": 0.0,
+    "pass": 0.0
+  },
+  "answered_without_looking": {
+    "rate": 0.0,
+    "correct": 134,
+    "without_looking": 0,
+    "known": {
+      "correct": 34,
+      "without_looking": 0,
+      "rate": 0.0
+    },
+    "unseen": {
+      "correct": 100,
+      "without_looking": 0,
+      "rate": 0.0
+    },
+    "rule": "gold value or gold_citation id in a tool output; see fdagym.memorization"
+  },
+  "mean_tool_calls": {
+    "known": 4.588235294117647,
+    "unseen": 4.98
+  },
+  "swapped_facts": {
+    "n": 9,
+    "follow": 9,
+    "follow_rate": 1.0,
+    "original": 0,
+    "original_rate": 0.0,
+    "other": 0
+  },
+  "flags": {
+    "gap": "ok",
+    "answered_without_looking": "ok",
+    "swapped_facts": "ok",
+    "level": "ok"
+  },
+  "auto_stop": false,
+  "thresholds": {
+    "every_n_steps": 10,
+    "gap_warn": 0.15,
+    "no_look_warn": 0.2,
+    "follow_warn": 0.7
+  }
+}

@@ -1,0 +1,183 @@
+# FDA-Gym drug universe: 150 generic names, one per line, as the agent would type it.
+# A phrase search, so "metformin" also matches combination products (metformin + sitagliptin).
+#
+# Three axes, so tasks can cover every difficulty tier and the ~5% unanswerable quota
+# (evidence and counts: learn/01-data.md):
+#   A/B  boxed warning            vs  D  no boxed warning
+#   A    many labels              vs  C/E few labels (disambiguation)
+#   F/G  sparse FAERS slices      so a year-window task can honestly be unanswerable
+#
+# Dropped 2026-10-15, confirmed 404 on drug/label (no SPL at all, so every label task
+# would be vacuous): sotatercept, crinecerfont, vorasidenib.
+# Dropped 2026-10-16: ibuprofen, 1137 labels, over LABEL_LIMIT 1000 (truncated page).
+# Replaced with diclofenac (443 labels, 327 boxed) to keep the NSAID + many-labels axis.
+# Near-duplicates dropped so the list lands on 150 without losing an axis:
+#   trazodone, citalopram, escitalopram, meloxicam, tramadol, hydromorphone,
+#   prasugrel, ticagrelor, dabigatran, atenolol, fluconazole, medroxyprogesterone,
+#   dofetilide, dronedarone.
+#
+# Rerecord: uv run python scripts/snapshot.py data/snapshots/drugs.txt --version <date>
+
+# --- A. Boxed warning + many labels (disambiguation; one request asks for up to 1000) ---
+metformin
+levothyroxine
+bupropion
+sertraline
+fluoxetine
+duloxetine
+venlafaxine
+quetiapine
+lisinopril
+losartan
+diclofenac
+naproxen
+oxycodone
+alprazolam
+lorazepam
+clonazepam
+ciprofloxacin
+levofloxacin
+
+# --- B. Boxed warning + moderate label count ---
+warfarin
+paroxetine
+olanzapine
+risperidone
+aripiprazole
+haloperidol
+lamotrigine
+carbamazepine
+divalproex
+lithium
+clozapine
+zolpidem
+morphine
+methadone
+buprenorphine
+fentanyl
+diazepam
+celecoxib
+methotrexate
+amiodarone
+metoclopramide
+promethazine
+propylthiouracil
+leflunomide
+estradiol
+testosterone
+pioglitazone
+montelukast
+enoxaparin
+clopidogrel
+rivaroxaban
+apixaban
+febuxostat
+tamoxifen
+misoprostol
+furosemide
+metoprolol
+valsartan
+ketoconazole
+isotretinoin
+abacavir
+nevirapine
+sotalol
+felbamate
+vigabatrin
+thioridazine
+nefazodone
+
+# --- C. GLP-1 / diabetes: brand-heavy, few labels, fast-growing FAERS ---
+semaglutide
+liraglutide
+dulaglutide
+tirzepatide
+exenatide
+canagliflozin
+empagliflozin
+dapagliflozin
+sitagliptin
+glipizide
+glimepiride
+insulin glargine
+
+# --- D. No boxed warning, many labels (the "no" answer for boxed_warning tasks) ---
+atorvastatin
+simvastatin
+rosuvastatin
+pravastatin
+amlodipine
+hydrochlorothiazide
+omeprazole
+pantoprazole
+gabapentin
+pregabalin
+topiramate
+levetiracetam
+sumatriptan
+ondansetron
+cetirizine
+loratadine
+famotidine
+tamsulosin
+finasteride
+sildenafil
+tadalafil
+allopurinol
+colchicine
+azithromycin
+amoxicillin
+doxycycline
+cephalexin
+prednisone
+carvedilol
+spironolactone
+varenicline
+donepezil
+
+# --- E. Oncology / specialty: few labels, distinctive warnings, BLA/NDA mix ---
+lenalidomide
+thalidomide
+pomalidomide
+imatinib
+ambrisentan
+bosentan
+fingolimod
+teriflunomide
+tofacitinib
+adalimumab
+pembrolizumab
+natalizumab
+
+# --- F. Approved 2023-2025: sparse or empty FAERS in early years ---
+xanomeline
+resmetirom
+aprocitentan
+zuranolone
+suzetrigine
+ensifentrine
+vadadustat
+acoramidis
+olezarsen
+seladelpar
+elafibranor
+mavorixafor
+revumenib
+lazertinib
+gepotidacin
+sebetralstat
+atrasentan
+
+# --- G. Old, rarely used drugs: sparse FAERS in every year ---
+trientine
+mexiletine
+disulfiram
+pimozide
+perphenazine
+loxapine
+protriptyline
+phenelzine
+tranylcypromine
+methsuximide
+ethosuximide
+pentosan polysulfate

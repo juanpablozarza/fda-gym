@@ -1,0 +1,65 @@
+[project]
+name = "fdagym"
+version = "0.1.0"
+description = "A Gym-style RL environment for regulatory question answering over openFDA"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Juan Pablo Zarza" }]
+dependencies = [
+    "httpx>=0.28.1",
+    "jsonschema>=4.23",
+    "litellm==1.106.2",
+    "python-dotenv>=1.2.4",
+    "rapidfuzz>=3.14.6",
+    "referencing>=0.35",
+    "wandb>=0.19.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/juanpablozarza/fda-gym"
+Repository = "https://github.com/juanpablozarza/fda-gym"
+
+[project.optional-dependencies]
+train = [
+    "torch>=2.6,<2.7",
+    "transformers>=4.51",
+    "trl==0.21.0",
+    "peft>=0.13",
+    "datasets>=3.0",
+]
+# The Modal image and the RunPod setup script both install this list.
+# These are the versions modal_train.py pinned before the extra existed.
+gpu = [
+    "torch==2.6.0",
+    "transformers==4.55.0",
+    "accelerate==1.4.0",
+    "trl==0.21.0",
+    "peft==0.15.2",
+    "datasets==3.5.1",
+    "vllm==0.8.5",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.uv]
+# train stays the loose CPU extra. gpu is the pinned stack the A100 installs.
+# Solving them together would force the CPU extra down to the GPU pins.
+conflicts = [
+    [
+        { extra = "train" },
+        { extra = "gpu" },
+    ],
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "openrouter/nvidia/nemotron-3.5-lightning:free",
+    "kind": "baseline",
+    "mean_reward": 0.1,
+    "pass": 0.0,
+    "citations": 0.0,
+    "tools": 0.1053
+  },
+  {
+    "name": "openrouter/cohere/north-mini-code:free",
+    "kind": "baseline",
+    "mean_reward": 0.1,
+    "pass": 0.0,
+    "citations": 0.0,
+    "tools": 0.0
+  },
+  {
+    "name": "openrouter/liquid/lfm-2.5-2.6b:free",
+    "kind": "baseline",
+    "mean_reward": 0.0947,
+    "pass": 0.0,
+    "citations": 0.0,
+    "tools": 2.3158
+  }
+]

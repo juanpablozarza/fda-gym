@@ -1,0 +1,14 @@
+# Pilot list for the 2026-10-15 snapshot. Not the universe (that is drugs.txt).
+# One of each axis: many-label boxed (warfarin, metformin, lisinopril),
+# few-label brand-heavy (semaglutide, adalimumab), boxed specialty (isotretinoin,
+# montelukast, thioridazine), no boxed warning (atorvastatin), sparse FAERS (xanomeline).
+warfarin
+metformin
+semaglutide
+isotretinoin
+atorvastatin
+montelukast
+lisinopril
+xanomeline
+thioridazine
+adalimumab

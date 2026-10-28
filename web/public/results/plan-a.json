@@ -1,0 +1,74 @@
+{
+  "base_model": "Qwen/Qwen2.5-3B-Instruct",
+  "protocol": "plan-a",
+  "split": "test",
+  "untrained_test_mean": 0.0185,
+  "beats_margin": 0.03,
+  "first_grpo": {
+    "id": "grpo-qwen3b-v2",
+    "train_mean_approx": 0.1,
+    "note": "GRPO v2 started from the base model with no SFT. Train reward stayed on the ~0.10 format floor (572 log rows, last step 230). SFT warm-up then 150 GRPO steps is the run that worked: TEST 0.0185 → 0.575 → 0.839. Same Plan A protocol, greedy: Luna 0.252 / Haiku 0.197. The 3B LoRA beats them at this JSON citation format; it does not beat their tool-calling scores."
+  },
+  "frontier": [
+    {
+      "name": "gpt-6-luna (Plan A)",
+      "hub": "openrouter/openai/gpt-6-luna",
+      "test_mean": 0.2522,
+      "pass_rate": 0.1667,
+      "citation": 0.179,
+      "cost_usd": 0.097744,
+      "n": 324
+    },
+    {
+      "name": "claude-haiku-5.5 (Plan A)",
+      "hub": "openrouter/anthropic/claude-haiku-5.5",
+      "test_mean": 0.1969,
+      "pass_rate": 0.108,
+      "citation": 0.1204,
+      "cost_usd": 0.141331,
+      "n": 324
+    }
+  ],
+  "by_type": [
+    { "type": "approval", "n": 151, "baseline": 0.021, "sft": 0.726, "grpo": 0.86 },
+    { "type": "faers_top_reaction", "n": 101, "baseline": 0.016, "sft": 0.393, "grpo": 0.949 },
+    { "type": "faers_count", "n": 30, "baseline": 0.01, "sft": 0.97, "grpo": 1.0 },
+    { "type": "boxed_warning", "n": 25, "baseline": 0.028, "sft": 0.108, "grpo": 0.41 },
+    { "type": "composite", "n": 17, "baseline": 0.018, "sft": 0.309, "grpo": 0.35 }
+  ],
+  "checkpoints": [
+    {
+      "id": "sft-warmup",
+      "label": "SFT warm-up",
+      "stage": "sft",
+      "hub": "local",
+      "url": "",
+      "detail": "1 LoRA epoch, 984 of 1229 train prompts, 123 steps. Teaches format and copying the answer out of packed records.",
+      "test_mean": 0.5754,
+      "pass_rate": 0.537,
+      "citation": 0.6188
+    },
+    {
+      "id": "grpo-sft150",
+      "label": "GRPO × 150 from SFT",
+      "stage": "grpo",
+      "hub": "local",
+      "url": "",
+      "detail": "Dense-reward GRPO, 150 steps from the SFT adapter. Best adapter. Train mean 0.86; TEST 0.839 / 80.6% pass.",
+      "test_mean": 0.8393,
+      "pass_rate": 0.8056,
+      "citation": 0.8688
+    },
+    {
+      "id": "grpo-v2",
+      "label": "GRPO v2 (no SFT)",
+      "stage": "grpo",
+      "hub": "local",
+      "url": "",
+      "detail": "Negative result. No SFT, train reward stuck at the format floor. No held-out TEST eval. Use GRPO × 150 instead.",
+      "test_mean": null,
+      "pass_rate": null,
+      "citation": null
+    }
+  ]
+}

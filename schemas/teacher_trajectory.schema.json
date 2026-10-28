@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fdagym.dev/schemas/teacher_trajectory.schema.json",
+  "title": "Teacher trajectory",
+  "description": "One multi-turn teacher episode, one JSONL line. The distillation SFT loader reads this; the generator (a separate script) writes it. Messages are role/content turns without ChatML wrappers. The student renderer applies prompt v4 / QwenToolCodec, the same format FDAEnv uses at eval.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "id",
+    "question_id",
+    "template",
+    "variant",
+    "teacher_model",
+    "attempt_index",
+    "messages",
+    "reward",
+    "passed"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique id for this attempt, e.g. teacher/question_id/a0."
+    },
+    "question_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Id of the question in the distill pool (not necessarily FG-NNNN)."
+    },
+    "template": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Task template / type used for stratified sampling (boxed_warning, sponsor_hop, compare, ...)."
+    },
+    "variant": {
+      "type": "string",
+      "description": "Template variant (sponsor_faers, earliest_boxed, ...). Empty string when the template has none."
+    },
+    "teacher_model": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Teacher id as recorded by the generator, e.g. openrouter/anthropic/claude-sonnet-4.5."
+    },
+    "attempt_index": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "0-based retry index for this teacher on this question."
+    },
+    "prompt_version": {
+      "type": "string",
+      "enum": ["v3", "v4"],
+      "description": "Prompt the teacher saw. Distill SFT defaults to v4 and skips a row whose version disagrees."
+    },
+    "tool_budget": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Tool-call budget the teacher was given. Distill SFT defaults to 8."
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 2,
+      "description": "system, user, then assistant/tool turns. Do not wrap content in <|im_start|> / <|im_end|>. Assistant turns are Qwen <tool_call> blocks or {\"tool\",\"arguments\"} JSON. Tool turns are the observation JSON FDAEnv returns (tool, output, error, tool_calls_remaining).",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["role", "content"],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["system", "user", "assistant", "tool"]
+          },
+          "content": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Tool name. Required in practice for role=tool; used when content is not JSON."
+          }
+        }
+      }
+    },
+    "reward": {
+      "$ref": "trajectory.schema.json#/properties/reward",
+      "description": "Strict components from fdagym.rewards.score. The generator must not invent these."
+    },
+    "passed": {
+      "type": "boolean",
+      "description": "Strict pass flag from JP's reward: true iff reward.correctness > 0 (same rule as baseline pass_rate). Distill SFT keeps only passed rows."
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "example": true,
+  "split": "fixture",
+  "n_tasks": 3,
+  "dataset_tasks": 96,
+  "n_seeds": 1,
+  "temperature": 0.2,
+  "snapshot_version": "2026-10-15",
+  "env": "openfda-reg-v0.3",
+  "n_sources": 3,
+  "kpis": {
+    "reward_lift": null,
+    "citation_validity": 0.6666666666666666,
+    "tool_calls_per_task": 1.6666666666666667,
+    "tool_calls_base": null,
+    "gap_to_frontier": null
+  },
+  "models": [
+    {
+      "name": "openrouter/qwen/qwen-2.5-7b-instruct",
+      "kind": "baseline",
+      "detail": "no fine-tune",
+      "mean_reward": 0.48333333333333334,
+      "pass_rate": 0.3333333333333333,
+      "citation_validity": 0.6666666666666666,
+      "mean_tool_calls": 1.6666666666666667,
+      "cost_usd": 0.0013,
+      "ours": false
+    }
+  ]
+}

@@ -1,0 +1,926 @@
+{
+ "[\"drug/label\", \"openfda.generic_name:\\\"warfarin\\\"\", null, 1000]": {
+  "meta": {
+   "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+   "terms": "https://open.fda.gov/terms/",
+   "license": "https://open.fda.gov/license/",
+   "last_updated": "2026-10-14",
+   "results": {
+    "skip": 0,
+    "limit": 1000,
+    "total": 74
+   }
+  },
+  "results": [
+   {
+    "set_id": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+    "id": "b8c33971-54b3-4971-bf7f-1bec66999a29",
+    "effective_time": "20250617",
+    "version": "20",
+    "boxed_warning": [
+     "WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding [see Warnings and Precautions ( 5.1 )] . Perform regular monitoring of INR in all treated patients [see Dosage and Administration ( 2.1 )] . Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy [see Drug Interactions ( 7 )] . Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information ( 17 )] . WARNING: BLEEDING RISK See full prescribing information for complete boxed warning. Warfarin sodium can cause major or fatal bleeding. ( 5.1 ) Perform regular monitoring of INR in all treated patients. ( 2.1 ) Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. ( 7 ) Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding. ( 17 )"
+    ],
+    "indications_and_usage": [
+     "1 INDICATIONS AND USAGE Warfarin sodium tablets are indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE). Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation (AF) and/or cardiac valve replacement. Reduction in the risk of death, recurrent myocardial infarction (MI), and thromboembolic events such as stroke or systemic embolization after myocardial infarction. Limitations of Use Warfarin sodium tablets have no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. Once a thrombus has occurred, however, the goals of anticoagulant treatment are to prevent further extension of the formed clot and to prevent secondary thromboembolic complications that may result in serious and possibly fatal sequelae. Warfarin sodium tablets are a vitamin K antagonist indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism ( 1 ) Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation and/or cardiac valve replacement ( 1 ) Reduction in the risk of death, recurrent myocardial infarction, and thromboembolic events such as stroke or systemic embolization after myocardial infarction ( 1 ) Limitations of Use Warfarin sodium tablets have no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. ( 1 )"
+    ],
+    "contraindications": [
+     "4 CONTRAINDICATIONS Warfarin sodium is contraindicated in: Pregnancy Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism [see Warnings and Precautions ( 5.7 ) and Use in Specific Populations ( 8.1 )] . Warfarin sodium can cause fetal harm when administered to a pregnant woman. Warfarin sodium exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. If warfarin sodium is used during pregnancy or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to a fetus [see Use in Specific Populations ( 8.1 )] . Warfarin sodium is contraindicated in patients with: Hemorrhagic tendencies or blood dyscrasias Recent or contemplated surgery of the central nervous system or eye, or traumatic surgery resulting in large open surfaces [see Warnings and Precautions ( 5.8 )] Bleeding tendencies associated with: \u2212 Active ulceration or overt bleeding of the gastrointestinal, genitourinary, or respiratory tract \u2212 Central nervous system hemorrhage \u2212 Cerebral aneurysms, dissecting aorta \u2212 Pericarditis and pericardial effusions \u2212 Bacterial endocarditis Threatened abortion, eclampsia, and preeclampsia Unsupervised patients with conditions associated with potential high level of non-compliance Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding Hypersensitivity to warfarin or to any other components of this product (e.g., anaphylaxis) [see Adverse Reactions ( 6 )] Major regional or lumbar block anesthesia Malignant hypertension Pregnancy, except in women with mechanical heart valves ( 4 , 5.7 , 8.1 ) Hemorrhagic tendencies or blood dyscrasias ( 4 ) Recent or contemplated surgery of the central nervous system (CNS) or eye, or traumatic surgery resulting in large open surfaces ( 4 , 5.8 ) Bleeding tendencies associated with certain conditions ( 4 ) Threatened abortion, eclampsia, and preeclampsia ( 4 ) Unsupervised patients with potential high levels of non-compliance ( 4 ) Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding ( 4 ) Hypersensitivity to warfarin or any component of the product ( 4 ) Major regional or lumbar block anesthesia ( 4 ) Malignant hypertens"
+    ],
+    "warnings_and_cautions": [
+     "5 WARNINGS AND PRECAUTIONS Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue warfarin sodium and consider alternative anticoagulants if necessary. ( 5.2 ) Calciphylaxis: Fatal and serious cases have occurred. Discontinue warfarin sodium and consider alternative anticoagulation therapy. ( 5.3 ) Acute kidney injury may occur during episodes of excessive anticoagulation and hematuria. ( 5.4 ) Systemic atheroemboli and cholesterol microemboli: Some cases have progressed to necrosis or death. Discontinue warfarin sodium if such emboli occur. ( 5.5 ) Heparin-induced thrombocytopenia (HIT): Initial therapy with warfarin sodium in HIT has resulted in cases of amputation and death. Warfarin sodium may be considered after platelet count has normalized. ( 5.6 ) Pregnant women with mechanical heart valves: Warfarin sodium may cause fetal harm; however, the benefits may outweigh the risks. ( 5.7 ) 5.1 Hemorrhage Warfarin sodium can cause major or fatal bleeding. Bleeding is more likely to occur within the first month. Risk factors for bleeding include high intensity of anticoagulation (INR > 4), age greater than or equal to 65, history of highly variable INRs, history of gastrointestinal bleeding, hypertension, cerebrovascular disease, anemia, malignancy, trauma, renal impairment, certain genetic factors [see Clinical Pharmacology ( 12.5 )] , certain concomitant drugs [see Drug Interactions ( 7 )] , and long duration of warfarin therapy. Perform regular monitoring of INR in all treated patients. Those at high risk of bleeding may benefit from more frequent INR monitoring, careful dose adjustment to desired INR, and a shortest duration of therapy appropriate for the clinical condition. However, maintenance of INR in the therapeutic range does not eliminate the risk of bleeding. Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. Perform more frequent INR monitoring when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs [see Drug Interactions ( 7 )] . Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information ( 17 )] . 5.2 Tissue Necrosis Warfarin sodium can cause necrosis and/or gangrene of skin and other tissues, which is an uncommon but serious risk (<0.1%). Necrosis may be associated with loca"
+    ],
+    "adverse_reactions": [
+     "6 ADVERSE REACTIONS The following serious adverse reactions to warfarin sodium are discussed in greater detail in other sections of the labeling: Hemorrhage [see Boxed Warning, Warnings and Precautions (5.1), and Overdosage ( 10 )] Tissue Necrosis [see Warnings and Precautions ( 5.2 )] Calciphylaxis [see Warnings and Precautions ( 5.3 )] Acute Kidney Injury [see Warnings and Precautions ( 5.4 )] Systemic Atheroemboli and Cholesterol Microemboli [see Warnings and Precautions ( 5.5 )] Limb Ischemia, Necrosis, and Gangrene in Patients with HIT and HITTS [see Warnings and Precautions ( 5.6 )] Other Clinical Settings with Increased Risks [see Warnings and Precautions ( 5.8 )] Other adverse reactions to warfarin sodium include: Immune system disorders: hypersensitivity/allergic reactions (including urticaria and anaphylactic reactions) Vascular disorders: vasculitis Hepatobiliary disorders: hepatitis, elevated liver enzymes. Cholestatic hepatitis has been associated with concomitant administration of warfarin sodium and ticlopidine. Gastrointestinal disorders: nausea, vomiting, diarrhea, taste perversion, abdominal pain, flatulence, bloating Skin disorders: rash, dermatitis (including bullous eruptions), pruritus, alopecia Respiratory disorders: tracheal or tracheobronchial calcification General disorders: chills Most common adverse reactions to warfarin sodium are fatal and nonfatal hemorrhage from any tissue or organ. ( 6 ) To report SUSPECTED ADVERSE REACTIONS, contact Teva at 1-888-838-2872 or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch."
+    ],
+    "drug_interactions": [
+     "7 DRUG INTERACTIONS Concomitant use of drugs that increase bleeding risk, antibiotics, antifungals, botanical (herbal) products, and inhibitors and inducers of CYP2C9, 1A2, or 3A4. ( 7 ) Consult labeling of all concurrently used drugs for complete information about interactions with warfarin sodium or increased risks for bleeding. ( 7 ) 7.1 General Information Drugs may interact with warfarin sodium through pharmacodynamic or pharmacokinetic mechanisms. Pharmacodynamic mechanisms for drug interactions with warfarin sodium are synergism (impaired hemostasis, reduced clotting factor synthesis), competitive antagonism (vitamin K), and alteration of the physiologic control loop for vitamin K metabolism (hereditary resistance). Pharmacokinetic mechanisms for drug interactions with warfarin sodium are mainly enzyme induction, enzyme inhibition, and reduced plasma protein binding. It is important to note that some drugs may interact by more than one mechanism. More frequent INR monitoring should be performed when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs, including drugs intended for short-term use (e.g., antibiotics, antifungals, corticosteroids) [ see Boxed Warning ]. Consult the labeling of all concurrently used drugs to obtain further information about interactions with warfarin sodium or adverse reactions pertaining to bleeding. 7.2 CYP450 Interactions CYP450 isozymes involved in the metabolism of warfarin include CYP2C9, 2C19, 2C8, 2C18, 1A2, and 3A4. The more potent warfarin S -enantiomer is metabolized by CYP2C9 while the R -enantiomer is metabolized by CYP1A2 and 3A4. Inhibitors of CYP2C9, 1A2, and/or 3A4 have the potential to increase the effect (increase INR) of warfarin by increasing the exposure of warfarin. Inducers of CYP2C9, 1A2, and/or 3A4 have the potential to decrease the effect (decrease INR) of warfarin by decreasing the exposure of warfarin. Examples of inhibitors and inducers of CYP2C9, 1A2, and 3A4 are below in Table 2 ; however, this list should not be considered all-inclusive. Consult the labeling of all concurrently used drugs to obtain further information about CYP450 interaction potential. The CYP450 inhibition and induction potential should be considered when starting, stopping, or changing dose of concomitant medications. Closely monitor INR if a concomitant drug is a CYP2C9, 1A2, and/or 3A4 inhibitor or inducer. Table 2: Examples of CYP450 Interactions with Warfarin Enzyme Inhib"
+    ],
+    "pregnancy": [
+     "8.1 Pregnancy Risk Summary Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the benefits of warfarin sodium may outweigh the risks [see Warnings and Precautions ( 5.7 )] . Warfarin sodium can cause fetal harm. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Because these data were not collected in adequate and well-controlled studies, this incidence of major birth defects is not an adequate basis for comparison to the estimated incidences in the control group or the U.S. general population and may not reflect the incidences observed in practice. Consider the benefits and risks of warfarin sodium and possible risks to the fetus when prescribing warfarin sodium to a pregnant woman. Adverse outcomes in pregnancy occur regardless of the health of the mother or the use of medications. The estimated background risk of major birth defects and miscarriage for the indicated population is unknown. In the U.S. general population, the estimated background risk of major birth defects and miscarriage in clinically recognized pregnancies is 2% to 4% and 15% to 20%, respectively. Clinical Considerations Fetal/Neonatal Adverse Reactions In humans, warfarin crosses the placenta, and concentrations in fetal plasma approach the maternal values. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Warfarin embryopathy is characterized by nasal hypoplasia with or without stippled epiphyses (chondrodysplasia punctata) and growth retardation (including low birth weight). Central nervous system and eye abnormalities have also been reported, including dorsal midline dysplasia characterized by agenesis of the corpus callosum, Dandy-Walker malformation, midline cerebellar atrophy, and ventral midline dysplasia characterized by optic atrophy. Mental retardation, blindness, schizencephaly, microcephaly, hydrocephalus, and other adverse pregnancy outcomes have been reported following warfarin exposure during the second and third trimesters of pregnancy [see Contraindications ( 4 )] ."
+    ],
+    "overdosage": [
+     "10 OVERDOSAGE 10.1 Signs and Symptoms Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from superficial injuries, unexplained fall in hemoglobin) is a manifestation of excessive anticoagulation. 10.2 Treatment The treatment of excessive anticoagulation is based on the level of the INR, the presence or absence of bleeding, and clinical circumstances. Reversal of warfarin sodium anticoagulation may be obtained by discontinuing warfarin sodium therapy and, if necessary, by administration of oral or parenteral vitamin K 1 . The use of vitamin K 1 reduces response to subsequent warfarin sodium therapy and patients may return to a pretreatment thrombotic status following the rapid reversal of a prolonged INR. Resumption of warfarin sodium administration reverses the effect of vitamin K, and a therapeutic INR can again be obtained by careful dosage adjustment. If rapid re-anticoagulation is indicated, heparin may be preferable for initial therapy. Prothrombin complex concentrate (PCC), fresh frozen plasma, or activated Factor VII treatment may be considered if the requirement to reverse the effects of warfarin sodium is urgent. A risk of hepatitis and other viral diseases is associated with the use of blood products; PCC and activated Factor VII are also associated with an increased risk of thrombosis. Therefore, these preparations should be used only in exceptional or life-threatening bleeding episodes secondary to warfarin sodium overdosage."
+    ],
+    "description": [
+     "11 DESCRIPTION Warfarin sodium tablets, USP contain warfarin sodium, an anticoagulant that acts by inhibiting vitamin K-dependent coagulation factors. The chemical name of warfarin sodium is 3-(\u03b1-acetonylbenzyl)-4-hydroxycoumarin sodium salt, which is a racemic mixture of the R - and S -enantiomers. Crystalline warfarin sodium is an isopropanol clathrate. Its structural formula may be represented as follows: C 19 H 15 NaO 4 M.W. 330.31 Crystalline warfarin sodium occurs as a white, odorless, crystalline powder that is discolored by light. It is very soluble in water, freely soluble in alcohol, and very slightly soluble in chloroform and ether. Each tablet, for oral administration, contains 1 mg, 2 mg, 2.5 mg, 3 mg, 4 mg, 5 mg, 6 mg, 7.5 mg or 10 mg warfarin sodium, USP. In addition, each tablet contains the following inactive ingredients: colloidal silicon dioxide, croscarmellose sodium, lactose monohydrate, magnesium stearate, and microcrystalline cellulose. The 1 mg also contains FD&C red no. 40. The 2 mg also contains FD&C blue no. 2 aluminum lake and FD&C red no. 40 aluminum lake. The 2.5 mg also contains D&C yellow no. 10 aluminum lake and FD&C blue no. 1 aluminum lake. The 3 mg also contains FD&C yellow no. 6 aluminum lake, FD&C blue no. 2 aluminum lake, FD&C red no. 40 aluminum lake, and D&C yellow no. 10 aluminum lake. The 4 mg also contains FD&C blue no. 1 aluminum lake and FD&C blue no. 2 aluminum lake. The 5 mg also contains FD&C yellow no. 6 aluminum lake, FD&C red no. 40 aluminum lake and D&C yellow no. 10 aluminum lake. The 6 mg also contains D&C yellow no. 10 aluminum lake and FD&C blue no. 1 aluminum lake. The 7.5 mg also contains D&C yellow no. 10 aluminum lake and FD&C yellow no. 6 aluminum lake. Warfarin Structural Formula"
+    ],
+    "openfda": {
+     "brand_name": [
+      "Warfarin Sodium"
+     ],
+     "generic_name": [
+      "WARFARIN SODIUM"
+     ],
+     "manufacturer_name": [
+      "Teva Pharmaceuticals USA, Inc."
+     ]
+    }
+   },
+   {
+    "set_id": "1244c338-9140-425a-bf2a-9da6b4ac0287",
+    "id": "55027266-c106-cf08-e063-6394a90ab4bf",
+    "effective_time": "20260624",
+    "version": "22",
+    "boxed_warning": [
+     "WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding [see Warnings and Precautions ( 5.1 )] . Perform regular monitoring of INR in all treated patients [see Dosage and Administration ( 2.1 )] . Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy [see Drug Interactions ( 7 )] . Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information ( 17 )] . WARNING: BLEEDING RISK See full prescribing information for complete boxed warning. Warfarin sodium can cause major or fatal bleeding. ( 5.1 ) Perform regular monitoring of INR in all treated patients. ( 2.1 ) Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. ( 7 ) Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding. ( 17 )"
+    ],
+    "indications_and_usage": [
+     "1 INDICATIONS AND USAGE Warfarin sodium tablets are indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE). Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation (AF) and/or cardiac valve replacement. Reduction in the risk of death, recurrent myocardial infarction (MI), and thromboembolic events such as stroke or systemic embolization after myocardial infarction. Limitations of Use Warfarin sodium tablets have no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. Once a thrombus has occurred, however, the goals of anticoagulant treatment are to prevent further extension of the formed clot and to prevent secondary thromboembolic complications that may result in serious and possibly fatal sequelae. Warfarin sodium tablets are a vitamin K antagonist indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism ( 1 ) Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation and/or cardiac valve replacement ( 1 ) Reduction in the risk of death, recurrent myocardial infarction, and thromboembolic events such as stroke or systemic embolization after myocardial infarction ( 1 ) Limitations of Use Warfarin sodium tablets have no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. ( 1 )"
+    ],
+    "contraindications": [
+     "4 CONTRAINDICATIONS Warfarin sodium is contraindicated in: Pregnancy Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism [see Warnings and Precautions ( 5.7 ) and Use in Specific Populations ( 8.1 )] . Warfarin sodium can cause fetal harm when administered to a pregnant woman. Warfarin sodium exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. If warfarin sodium is used during pregnancy or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to a fetus [see Use in Specific Populations ( 8.1 )] . Warfarin sodium is contraindicated in patients with: Hemorrhagic tendencies or blood dyscrasias Recent or contemplated surgery of the central nervous system or eye, or traumatic surgery resulting in large open surfaces [see Warnings and Precautions ( 5.8 )] Bleeding tendencies associated with: \u2212 Active ulceration or overt bleeding of the gastrointestinal, genitourinary, or respiratory tract \u2212 Central nervous system hemorrhage \u2212 Cerebral aneurysms, dissecting aorta \u2212 Pericarditis and pericardial effusions \u2212 Bacterial endocarditis Threatened abortion, eclampsia, and preeclampsia Unsupervised patients with conditions associated with potential high level of non-compliance Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding Hypersensitivity to warfarin or to any other components of this product (e.g., anaphylaxis) [see Adverse Reactions ( 6 )] Major regional or lumbar block anesthesia Malignant hypertension Pregnancy, except in women with mechanical heart valves ( 4 , 5.7 , 8.1 ) Hemorrhagic tendencies or blood dyscrasias ( 4 ) Recent or contemplated surgery of the central nervous system (CNS) or eye, or traumatic surgery resulting in large open surfaces ( 4 , 5.8 ) Bleeding tendencies associated with certain conditions ( 4 ) Threatened abortion, eclampsia, and preeclampsia ( 4 ) Unsupervised patients with potential high levels of non-compliance ( 4 ) Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding ( 4 ) Hypersensitivity to warfarin or any component of the product ( 4 ) Major regional or lumbar block anesthesia ( 4 ) Malignant hypertens"
+    ],
+    "warnings_and_cautions": [
+     "5 WARNINGS AND PRECAUTIONS Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue warfarin sodium and consider alternative anticoagulants if necessary. ( 5.2 ) Calciphylaxis: Fatal and serious cases have occurred. Discontinue warfarin sodium and consider alternative anticoagulation therapy. ( 5.3 ) Acute kidney injury may occur during episodes of excessive anticoagulation and hematuria. ( 5.4 ) Systemic atheroemboli and cholesterol microemboli: Some cases have progressed to necrosis or death. Discontinue warfarin sodium if such emboli occur. ( 5.5 ) Heparin-induced thrombocytopenia (HIT): Initial therapy with warfarin sodium in HIT has resulted in cases of amputation and death. Warfarin sodium may be considered after platelet count has normalized. ( 5.6 ) Pregnant women with mechanical heart valves: Warfarin sodium may cause fetal harm; however, the benefits may outweigh the risks. ( 5.7 ) 5.1 Hemorrhage Warfarin sodium can cause major or fatal bleeding. Bleeding is more likely to occur within the first month. Risk factors for bleeding include high intensity of anticoagulation (INR > 4), age greater than or equal to 65, history of highly variable INRs, history of gastrointestinal bleeding, hypertension, cerebrovascular disease, anemia, malignancy, trauma, renal impairment, certain genetic factors [see Clinical Pharmacology ( 12.5 )] , certain concomitant drugs [see Drug Interactions ( 7 )] , and long duration of warfarin therapy. Perform regular monitoring of INR in all treated patients. Those at high risk of bleeding may benefit from more frequent INR monitoring, careful dose adjustment to desired INR, and a shortest duration of therapy appropriate for the clinical condition. However, maintenance of INR in the therapeutic range does not eliminate the risk of bleeding. Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. Perform more frequent INR monitoring when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs [see Drug Interactions ( 7 )] . Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information ( 17 )] . 5.2 Tissue Necrosis Warfarin sodium can cause necrosis and/or gangrene of skin and other tissues, which is an uncommon but serious risk (<0.1%). Necrosis may be associated with loca"
+    ],
+    "adverse_reactions": [
+     "6 ADVERSE REACTIONS The following serious adverse reactions to warfarin sodium are discussed in greater detail in other sections of the labeling: Hemorrhage [see Boxed Warning, Warnings and Precautions (5.1), and Overdosage ( 10 )] Tissue Necrosis [see Warnings and Precautions ( 5.2 )] Calciphylaxis [see Warnings and Precautions ( 5.3 )] Acute Kidney Injury [see Warnings and Precautions ( 5.4 )] Systemic Atheroemboli and Cholesterol Microemboli [see Warnings and Precautions ( 5.5 )] Limb Ischemia, Necrosis, and Gangrene in Patients with HIT and HITTS [see Warnings and Precautions ( 5.6 )] Other Clinical Settings with Increased Risks [see Warnings and Precautions ( 5.8 )] Other adverse reactions to warfarin sodium include: Immune system disorders: hypersensitivity/allergic reactions (including urticaria and anaphylactic reactions) Vascular disorders: vasculitis Hepatobiliary disorders: hepatitis, elevated liver enzymes. Cholestatic hepatitis has been associated with concomitant administration of warfarin sodium and ticlopidine. Gastrointestinal disorders: nausea, vomiting, diarrhea, taste perversion, abdominal pain, flatulence, bloating Skin disorders: rash, dermatitis (including bullous eruptions), pruritus, alopecia Respiratory disorders: tracheal or tracheobronchial calcification General disorders: chills Most common adverse reactions to warfarin sodium are fatal and nonfatal hemorrhage from any tissue or organ. ( 6 ) To report SUSPECTED ADVERSE REACTIONS, contact Teva at 1-888-838-2872 or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch."
+    ],
+    "drug_interactions": [
+     "7 DRUG INTERACTIONS Concomitant use of drugs that increase bleeding risk, antibiotics, antifungals, botanical (herbal) products, and inhibitors and inducers of CYP2C9, 1A2, or 3A4. ( 7 ) Consult labeling of all concurrently used drugs for complete information about interactions with warfarin sodium or increased risks for bleeding. ( 7 ) 7.1 General Information Drugs may interact with warfarin sodium through pharmacodynamic or pharmacokinetic mechanisms. Pharmacodynamic mechanisms for drug interactions with warfarin sodium are synergism (impaired hemostasis, reduced clotting factor synthesis), competitive antagonism (vitamin K), and alteration of the physiologic control loop for vitamin K metabolism (hereditary resistance). Pharmacokinetic mechanisms for drug interactions with warfarin sodium are mainly enzyme induction, enzyme inhibition, and reduced plasma protein binding. It is important to note that some drugs may interact by more than one mechanism. More frequent INR monitoring should be performed when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs, including drugs intended for short-term use (e.g., antibiotics, antifungals, corticosteroids) [ see Boxed Warning ]. Consult the labeling of all concurrently used drugs to obtain further information about interactions with warfarin sodium or adverse reactions pertaining to bleeding. 7.2 CYP450 Interactions CYP450 isozymes involved in the metabolism of warfarin include CYP2C9, 2C19, 2C8, 2C18, 1A2, and 3A4. The more potent warfarin S -enantiomer is metabolized by CYP2C9 while the R -enantiomer is metabolized by CYP1A2 and 3A4. Inhibitors of CYP2C9, 1A2, and/or 3A4 have the potential to increase the effect (increase INR) of warfarin by increasing the exposure of warfarin. Inducers of CYP2C9, 1A2, and/or 3A4 have the potential to decrease the effect (decrease INR) of warfarin by decreasing the exposure of warfarin. Examples of inhibitors and inducers of CYP2C9, 1A2, and 3A4 are below in Table 2 ; however, this list should not be considered all-inclusive. Consult the labeling of all concurrently used drugs to obtain further information about CYP450 interaction potential. The CYP450 inhibition and induction potential should be considered when starting, stopping, or changing dose of concomitant medications. Closely monitor INR if a concomitant drug is a CYP2C9, 1A2, and/or 3A4 inhibitor or inducer. Table 2: Examples of CYP450 Interactions with Warfarin Enzyme Inhib"
+    ],
+    "pregnancy": [
+     "8.1 Pregnancy Risk Summary Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the benefits of warfarin sodium may outweigh the risks [see Warnings and Precautions ( 5.7 )] . Warfarin sodium can cause fetal harm. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Because these data were not collected in adequate and well-controlled studies, this incidence of major birth defects is not an adequate basis for comparison to the estimated incidences in the control group or the U.S. general population and may not reflect the incidences observed in practice. Consider the benefits and risks of warfarin sodium and possible risks to the fetus when prescribing warfarin sodium to a pregnant woman. Adverse outcomes in pregnancy occur regardless of the health of the mother or the use of medications. The estimated background risk of major birth defects and miscarriage for the indicated population is unknown. In the U.S. general population, the estimated background risk of major birth defects and miscarriage in clinically recognized pregnancies is 2% to 4% and 15% to 20%, respectively. Clinical Considerations Fetal/Neonatal Adverse Reactions In humans, warfarin crosses the placenta, and concentrations in fetal plasma approach the maternal values. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Warfarin embryopathy is characterized by nasal hypoplasia with or without stippled epiphyses (chondrodysplasia punctata) and growth retardation (including low birth weight). Central nervous system and eye abnormalities have also been reported, including dorsal midline dysplasia characterized by agenesis of the corpus callosum, Dandy-Walker malformation, midline cerebellar atrophy, and ventral midline dysplasia characterized by optic atrophy. Mental retardation, blindness, schizencephaly, microcephaly, hydrocephalus, and other adverse pregnancy outcomes have been reported following warfarin exposure during the second and third trimesters of pregnancy [see Contraindications ( 4 )] ."
+    ],
+    "overdosage": [
+     "10 OVERDOSAGE 10.1 Signs and Symptoms Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from superficial injuries, unexplained fall in hemoglobin) is a manifestation of excessive anticoagulation. 10.2 Treatment The treatment of excessive anticoagulation is based on the level of the INR, the presence or absence of bleeding, and clinical circumstances. Reversal of warfarin sodium anticoagulation may be obtained by discontinuing warfarin sodium therapy and, if necessary, by administration of oral or parenteral vitamin K 1 . The use of vitamin K 1 reduces response to subsequent warfarin sodium therapy and patients may return to a pretreatment thrombotic status following the rapid reversal of a prolonged INR. Resumption of warfarin sodium administration reverses the effect of vitamin K, and a therapeutic INR can again be obtained by careful dosage adjustment. If rapid re-anticoagulation is indicated, heparin may be preferable for initial therapy. Prothrombin complex concentrate (PCC), fresh frozen plasma, or activated Factor VII treatment may be considered if the requirement to reverse the effects of warfarin sodium is urgent. A risk of hepatitis and other viral diseases is associated with the use of blood products; PCC and activated Factor VII are also associated with an increased risk of thrombosis. Therefore, these preparations should be used only in exceptional or life-threatening bleeding episodes secondary to warfarin sodium overdosage."
+    ],
+    "description": [
+     "11 DESCRIPTION Warfarin sodium tablets, USP contain warfarin sodium, an anticoagulant that acts by inhibiting vitamin K-dependent coagulation factors. The chemical name of warfarin sodium is 3-(\u03b1-acetonylbenzyl)-4-hydroxycoumarin sodium salt, which is a racemic mixture of the R - and S -enantiomers. Crystalline warfarin sodium is an isopropanol clathrate. Its structural formula may be represented as follows: C 19 H 15 NaO 4 M.W. 330.31 Crystalline warfarin sodium occurs as a white, odorless, crystalline powder that is discolored by light. It is very soluble in water, freely soluble in alcohol, and very slightly soluble in chloroform and ether. Each tablet, for oral administration, contains 1 mg, 2 mg, 2.5 mg, 3 mg, 4 mg, 5 mg, 6 mg, 7.5 mg or 10 mg warfarin sodium, USP. In addition, each tablet contains the following inactive ingredients: colloidal silicon dioxide, croscarmellose sodium, lactose monohydrate, magnesium stearate, and microcrystalline cellulose. The 1 mg also contains FD&C red no. 40. The 2 mg also contains FD&C blue no. 2 aluminum lake and FD&C red no. 40 aluminum lake. The 2.5 mg also contains D&C yellow no. 10 aluminum lake and FD&C blue no. 1 aluminum lake. The 3 mg also contains FD&C yellow no. 6 aluminum lake, FD&C blue no. 2 aluminum lake, FD&C red no. 40 aluminum lake, and D&C yellow no. 10 aluminum lake. The 4 mg also contains FD&C blue no. 1 aluminum lake and FD&C blue no. 2 aluminum lake. The 5 mg also contains FD&C yellow no. 6 aluminum lake, FD&C red no. 40 aluminum lake and D&C yellow no. 10 aluminum lake. The 6 mg also contains D&C yellow no. 10 aluminum lake and FD&C blue no. 1 aluminum lake. The 7.5 mg also contains D&C yellow no. 10 aluminum lake and FD&C yellow no. 6 aluminum lake. Warfarin Structural Formula"
+    ],
+    "openfda": {
+     "brand_name": [
+      "Warfarin Sodium"
+     ],
+     "generic_name": [
+      "WARFARIN SODIUM"
+     ],
+     "manufacturer_name": [
+      "REMEDYREPACK INC."
+     ]
+    }
+   },
+   {
+    "set_id": "19a69a72-ac5d-45d5-a94d-a5aaecbe4730",
+    "id": "396ff415-9bf2-8f45-e063-6394a90af63e",
+    "effective_time": "20250708",
+    "version": "13",
+    "boxed_warning": [
+     "WARNING: BLEEDING RISK Warfarin Sodium can cause major or fatal bleeding [see Warnings and Precautions (5.1) ]. Perform regular monitoring of INR in all treated patients [see Dosage and Administration (2.1) ]. Drugs, dietary changes, and other factors affect INR levels achieved with Warfarin Sodium therapy [see Drug Interactions (7) ]. Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information (17) ]. WARNING: BLEEDING RISK See full prescribing information for complete boxed warning. Warfarin Sodium can cause major or fatal bleeding. ( 5.1 ) Perform regular monitoring of INR in all treated patients. ( 2.1 ) Drugs, dietary changes, and other factors affect INR levels achieved with Warfarin Sodium therapy. ( 7 ) Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding. ( 17 )"
+    ],
+    "indications_and_usage": [
+     "1 INDICATIONS AND USAGE JANTOVEN \u00ae is indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE). Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation (AF) and/or cardiac valve replacement. Reduction in the risk of death, recurrent myocardial infarction (MI), and thromboembolic events such as stroke or systemic embolization after myocardial infarction. Limitations of Use Warfarin Sodium has no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. Once a thrombus has occurred, however, the goals of anticoagulant treatment are to prevent further extension of the formed clot and to prevent secondary thromboembolic complications that may result in serious and possibly fatal sequelae. JANTOVEN is a vitamin K antagonist indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism ( 1 ) Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation and/or cardiac valve replacement ( 1 ) Reduction in the risk of death, recurrent myocardial infarction, and thromboembolic events such as stroke or systemic embolization after myocardial infarction ( 1 ) Limitations of Use Warfarin Sodium has no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. ( 1 )"
+    ],
+    "contraindications": [
+     "4 CONTRAINDICATIONS JANTOVEN is contraindicated in: Pregnancy JANTOVEN is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism [see Warnings and Precautions (5.7) and Use in Specific Populations (8.1) ]. JANTOVEN can cause fetal harm when administered to a pregnant woman. JANTOVEN exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. If JANTOVEN is used during pregnancy or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to a fetus [see Use in Specific Populations (8.1) ]. JANTOVEN is contraindicated in patients with: Hemorrhagic tendencies or blood dyscrasias Recent or contemplated surgery of the central nervous system or eye, or traumatic surgery resulting in large open surfaces [see Warnings and Precautions (5.8) ] Bleeding tendencies associated with: Active ulceration or overt bleeding of the gastrointestinal, genitourinary, or respiratory tract Central nervous system hemorrhage Cerebral aneurysms, dissecting aorta Pericarditis and pericardial effusions Bacterial endocarditis Threatened abortion, eclampsia, and preeclampsia Unsupervised patients with conditions associated with potential high level of non-compliance Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding Hypersensitivity to warfarin or to any other components of this product (e.g., anaphylaxis) [see Adverse Reactions (6) ] Major regional or lumbar block anesthesia Malignant hypertension Pregnancy, except in women with mechanical heart valves ( 4 , 5.7 , 8.1 ) Hemorrhagic tendencies or blood dyscrasias ( 4 ) Recent or contemplated surgery of the central nervous system (CNS) or eye, or traumatic surgery resulting in large open surfaces ( 4 , 5.8 ) Bleeding tendencies associated with certain conditions ( 4 ) Threatened abortion, eclampsia, and preeclampsia ( 4 ) Unsupervised patients with potential high levels of non-compliance ( 4 ) Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding ( 4 ) Hypersensitivity to warfarin or any component of the product ( 4 ) Major regional or lumbar block anesthesia ( 4 ) Malignant hypertension ( 4 )"
+    ],
+    "warnings_and_cautions": [
+     "5 WARNINGS AND PRECAUTIONS Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue JANTOVEN and consider alternative anticoagulants if necessary. ( 5.2 ) Calciphylaxis: Fatal and serious cases have occurred. Discontinue JANTOVEN and consider alternative anticoagulation therapy. ( 5.3 ) Acute kidney injury may occur during episodes of excessive anticoagulation and hematuria. ( 5.4 ) Systemic atheroemboli and cholesterol microemboli: Some cases have progressed to necrosis or death. Discontinue JANTOVEN if such emboli occur. ( 5.5 ) Heparin-induced thrombocytopenia (HIT): Initial therapy with Warfarin Sodium in HIT has resulted in cases of amputation and death. Warfarin Sodium may be considered after platelet count has normalized. ( 5.6 ) Pregnant women with mechanical heart valves: Warfarin Sodium may cause fetal harm; however, the benefits may outweigh the risks. ( 5.7 ) 5.1 Hemorrhage JANTOVEN can cause major or fatal bleeding. Bleeding is more likely to occur within the first month. Risk factors for bleeding include high intensity of anticoagulation (INR >4.0), age greater than or equal to 65, history of highly variable INRs, history of gastrointestinal bleeding, hypertension, cerebrovascular disease, anemia, malignancy, trauma, renal impairment, certain genetic factors [see Clinical Pharmacology (12.5) ], certain concomitant drugs [see Drug Interactions (7) ], and long duration of warfarin therapy. Perform regular monitoring of INR in all treated patients. Those at high risk of bleeding may benefit from more frequent INR monitoring, careful dose adjustment to desired INR, and a shortest duration of therapy appropriate for the clinical condition. However, maintenance of INR in the therapeutic range does not eliminate the risk of bleeding. Drugs, dietary changes, and other factors affect INR levels achieved with JANTOVEN therapy. Perform more frequent INR monitoring when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs [see Drug Interactions (7) ]. Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information (17) ]. 5.2 Tissue Necrosis JANTOVEN can cause necrosis and/or gangrene of skin and other tissues, which is an uncommon but serious risk (<0.1%). Necrosis may be associated with local thrombosis and usually appears within a few day"
+    ],
+    "adverse_reactions": [
+     "6 ADVERSE REACTIONS The following serious adverse reactions to JANTOVEN are discussed in greater detail in other sections of the labeling: Hemorrhage [see Boxed Warning , Warnings and Precautions (5.1) , and Overdosage (10) ] Tissue Necrosis [see Warnings and Precautions (5.2) ] Calciphylaxis [see Warnings and Precautions (5.3) ] Acute Kidney Injury [see Warnings and Precautions (5.4) ] Systemic Atheroemboli and Cholesterol Microemboli [see Warnings and Precautions (5.5) ] Limb Ischemia, Necrosis, and Gangrene in Patients with HIT and HITTS [see Warnings and Precautions (5.6) ] Other Clinical Settings with Increased Risks [see Warnings and Precautions (5.8) ] Other adverse reactions to JANTOVEN include: Immune system disorders: hypersensitivity/allergic reactions (including urticaria and anaphylactic reactions) Vascular disorders: vasculitis Hepatobiliary disorders: hepatitis, elevated liver enzymes. Cholestatic hepatitis has been associated with concomitant administration of warfarin sodium and ticlopidine. Gastrointestinal disorders: nausea, vomiting, diarrhea, taste perversion, abdominal pain, flatulence, bloating Skin disorders: rash, dermatitis (including bullous eruptions), pruritus, alopecia Respiratory disorders: tracheal or tracheobronchial calcification General disorders: chills Most common adverse reactions to Warfarin Sodium are fatal and nonfatal hemorrhage from any tissue or organ. ( 6 ) To report SUSPECTED ADVERSE REACTIONS, contact Upsher-Smith Laboratories, LLC at 1-855-899-9180 or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch ."
+    ],
+    "drug_interactions": [
+     "7 DRUG INTERACTIONS Concomitant use of drugs that increase bleeding risk, antibiotics, antifungals, botanical (herbal) products, and inhibitors and inducers of CYP2C9, 1A2, or 3A4. ( 7 ) Consult labeling of all concurrently used drugs for complete information about interactions with JANTOVEN or increased risks for bleeding. ( 7 ) 7.1 General Information Drugs may interact with JANTOVEN through pharmacodynamic or pharmacokinetic mechanisms. Pharmacodynamic mechanisms for drug interactions with JANTOVEN are synergism (impaired hemostasis, reduced clotting factor synthesis), competitive antagonism (vitamin K), and alteration of the physiologic control loop for vitamin K metabolism (hereditary resistance). Pharmacokinetic mechanisms for drug interactions with JANTOVEN are mainly enzyme induction, enzyme inhibition, and reduced plasma protein binding. It is important to note that some drugs may interact by more than one mechanism. More frequent INR monitoring should be performed when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs, including drugs intended for short-term use (e.g., antibiotics, antifungals, corticosteroids) [see Boxed Warning ]. Consult the labeling of all concurrently used drugs to obtain further information about interactions with JANTOVEN or adverse reactions pertaining to bleeding. 7.2 CYP450 Interactions CYP450 isozymes involved in the metabolism of warfarin include CYP2C9, 2C19, 2C8, 2C18, 1A2, and 3A4. The more potent warfarin S -enantiomer is metabolized by CYP2C9 while the R -enantiomer is metabolized by CYP1A2 and 3A4. Inhibitors of CYP2C9, 1A2, and/or 3A4 have the potential to increase the effect (increase INR) of warfarin by increasing the exposure of warfarin. Inducers of CYP2C9, 1A2, and/or 3A4 have the potential to decrease the effect (decrease INR) of warfarin by decreasing the exposure of warfarin. Examples of inhibitors and inducers of CYP2C9, 1A2, and 3A4 are below in Table 2; however, this list should not be considered all-inclusive. Consult the labeling of all concurrently used drugs to obtain further information about CYP450 interaction potential. The CYP450 inhibition and induction potential should be considered when starting, stopping, or changing dose of concomitant medications. Closely monitor INR if a concomitant drug is a CYP2C9, 1A2, and/or 3A4 inhibitor or inducer. Table 2: Examples of CYP450 Interactions with Warfarin Enzyme Inhibitors Inducers CYP2C9 amiodarone, cap"
+    ],
+    "pregnancy": [
+     "8.1 Pregnancy Risk Summary JANTOVEN is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the benefits of JANTOVEN may outweigh the risks [see Warnings and Precautions (5.7) ]. JANTOVEN can cause fetal harm. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Because these data were not collected in adequate and well-controlled studies, this incidence of major birth defects is not an adequate basis for comparison to the estimated incidences in the control group or the U.S. general population and may not reflect the incidences observed in practice. Consider the benefits and risks of JANTOVEN and possible risks to the fetus when prescribing JANTOVEN to a pregnant woman. Adverse outcomes in pregnancy occur regardless of the health of the mother or the use of medications. The estimated background risk of major birth defects and miscarriage for the indicated population is unknown. In the U.S. general population, the estimated background risk of major birth defects and miscarriage in clinically recognized pregnancies is 2% to 4% and 15% to 20%, respectively. Clinical Considerations Fetal/Neonatal Adverse Reactions In humans, warfarin crosses the placenta, and concentrations in fetal plasma approach the maternal values. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Warfarin embryopathy is characterized by nasal hypoplasia with or without stippled epiphyses (chondrodysplasia punctata) and growth retardation (including low birth weight). Central nervous system and eye abnormalities have also been reported, including dorsal midline dysplasia characterized by agenesis of the corpus callosum, Dandy-Walker malformation, midline cerebellar atrophy, and ventral midline dysplasia characterized by optic atrophy. Mental retardation, blindness, schizencephaly, microcephaly, hydrocephalus, and other adverse pregnancy outcomes have been reported following warfarin exposure during the second and third trimesters of pregnancy [see Contraindications (4) ]."
+    ],
+    "overdosage": [
+     "10 OVERDOSAGE 10.1 Signs and Symptoms Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from superficial injuries, unexplained fall in hemoglobin) is a manifestation of excessive anticoagulation. 10.2 Treatment The treatment of excessive anticoagulation is based on the level of the INR, the presence or absence of bleeding, and clinical circumstances. Reversal of JANTOVEN anticoagulation may be obtained by discontinuing JANTOVEN therapy and, if necessary, by administration of oral or parenteral vitamin K 1 . The use of vitamin K 1 reduces response to subsequent JANTOVEN therapy and patients may return to a pretreatment thrombotic status following the rapid reversal of a prolonged INR. Resumption of JANTOVEN administration reverses the effect of vitamin K, and a therapeutic INR can again be obtained by careful dosage adjustment. If rapid re-anticoagulation is indicated, heparin may be preferable for initial therapy. Prothrombin complex concentrate (PCC), fresh frozen plasma, or activated Factor VII treatment may be considered if the requirement to reverse the effects of JANTOVEN is urgent. A risk of hepatitis and other viral diseases is associated with the use of blood products; PCC and activated Factor VII are also associated with an increased risk of thrombosis. Therefore, these preparations should be used only in exceptional or life-threatening bleeding episodes secondary to JANTOVEN overdosage."
+    ],
+    "description": [
+     "11 DESCRIPTION JANTOVEN (Warfarin Sodium Tablets, USP) is an anticoagulant that acts by inhibiting vitamin K-dependent coagulation factors. The chemical name of warfarin sodium is 3-(\u03b1-acetonylbenzyl)-4-hydroxycoumarin sodium salt, which is a racemic mixture of the R - and S -enantiomers. Crystalline warfarin sodium is an isopropanol clathrate. Its empirical formula is C 19 H 15 NaO 4 , and its structural formula is represented by the following: Crystalline warfarin sodium occurs as a white, odorless, crystalline powder that is discolored by light. It is very soluble in water, freely soluble in alcohol, and very slightly soluble in chloroform and ether. JANTOVEN tablets for oral use contain: 1 mg, 2 mg, 2\u00bd mg, 3 mg, 4 mg, 5 mg, 6 mg, 7\u00bd mg or 10 mg of warfarin sodium, USP. They also contain: All strengths: Lactose monohydrate, magnesium stearate, povidone, and pregelatinized starch (corn). 1 mg: FD&C Red #40 Aluminum Lake 2 mg: FD&C Blue #2 Aluminum Lake and FD&C Red #40 Aluminum Lake 2\u00bd mg: D&C Yellow #10 Aluminum Lake and FD&C Blue #1 Aluminum Lake 3 mg: Brown #75 Synthetic Brown Iron Oxide 4 mg: FD&C Blue #1 Aluminum Lake 5 mg: FD&C Yellow #6 Aluminum Lake 6 mg: Yellow #10 Synthetic Yellow Iron Oxide, Black #85 Synthetic Black Iron Oxide and FD&C Blue #1 Aluminum Lake 7\u00bd mg: D&C Yellow #10 Aluminum Lake and FD&C Yellow #6 Aluminum Lake 10 mg: Dye Free Chemical Structure"
+    ],
+    "openfda": {
+     "brand_name": [
+      "Jantoven"
+     ],
+     "generic_name": [
+      "WARFARIN SODIUM"
+     ],
+     "manufacturer_name": [
+      "Upsher-Smith Laboratories, LLC"
+     ]
+    }
+   },
+   {
+    "set_id": "21255cd5-3c2e-4574-9620-9347d14256b3",
+    "id": "39fd1172-a49a-5ea2-e063-6394a90a7e16",
+    "effective_time": "20250715",
+    "version": "14",
+    "boxed_warning": [
+     "WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding [see Warnings and Precautions ( 5.1 )] . Perform regular monitoring of INR in all treated patients [see Dosage and Administration ( 2.1 )] . Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy [see Drug Interactions ( 7 )] . Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information ( 17 )] . WARNING: BLEEDING RISK See full prescribing information for complete boxed warning. Warfarin sodium can cause major or fatal bleeding. ( 5.1 ) Perform regular monitoring of INR in all treated patients. ( 2.1 ) Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. ( 7 ) Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding. ( 17 )"
+    ],
+    "indications_and_usage": [
+     "1 INDICATIONS AND USAGE Warfarin sodium tablets are indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE). Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation (AF) and/or cardiac valve replacement. Reduction in the risk of death, recurrent myocardial infarction (MI), and thromboembolic events such as stroke or systemic embolization after myocardial infarction. Limitations of Use Warfarin sodium tablets have no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. Once a thrombus has occurred, however, the goals of anticoagulant treatment are to prevent further extension of the formed clot and to prevent secondary thromboembolic complications that may result in serious and possibly fatal sequelae. Warfarin sodium tablets are a vitamin K antagonist indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism ( 1 ) Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation and/or cardiac valve replacement ( 1 ) Reduction in the risk of death, recurrent myocardial infarction, and thromboembolic events such as stroke or systemic embolization after myocardial infarction ( 1 ) Limitations of Use Warfarin sodium tablets have no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. ( 1 )"
+    ],
+    "contraindications": [
+     "4 CONTRAINDICATIONS Warfarin sodium is contraindicated in: Pregnancy Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism [see Warnings and Precautions ( 5.7 ) and Use in Specific Populations ( 8.1 )] . Warfarin sodium can cause fetal harm when administered to a pregnant woman. Warfarin sodium exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. If warfarin sodium is used during pregnancy or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to a fetus [see Use in Specific Populations ( 8.1 )] . Warfarin sodium is contraindicated in patients with: Hemorrhagic tendencies or blood dyscrasias Recent or contemplated surgery of the central nervous system or eye, or traumatic surgery resulting in large open surfaces [see Warnings and Precautions ( 5.8 )] Bleeding tendencies associated with: \u2212 Active ulceration or overt bleeding of the gastrointestinal, genitourinary, or respiratory tract \u2212 Central nervous system hemorrhage \u2212 Cerebral aneurysms, dissecting aorta \u2212 Pericarditis and pericardial effusions \u2212 Bacterial endocarditis Threatened abortion, eclampsia, and preeclampsia Unsupervised patients with conditions associated with potential high level of non-compliance Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding Hypersensitivity to warfarin or to any other components of this product (e.g., anaphylaxis) [see Adverse Reactions ( 6 )] Major regional or lumbar block anesthesia Malignant hypertension Pregnancy, except in women with mechanical heart valves ( 4 , 5.7 , 8.1 ) Hemorrhagic tendencies or blood dyscrasias ( 4 ) Recent or contemplated surgery of the central nervous system (CNS) or eye, or traumatic surgery resulting in large open surfaces ( 4 , 5.8 ) Bleeding tendencies associated with certain conditions ( 4 ) Threatened abortion, eclampsia, and preeclampsia ( 4 ) Unsupervised patients with potential high levels of non-compliance ( 4 ) Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding ( 4 ) Hypersensitivity to warfarin or any component of the product ( 4 ) Major regional or lumbar block anesthesia ( 4 ) Malignant hypertens"
+    ],
+    "warnings_and_cautions": [
+     "5 WARNINGS AND PRECAUTIONS Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue warfarin sodium and consider alternative anticoagulants if necessary. ( 5.2 ) Calciphylaxis: Fatal and serious cases have occurred. Discontinue warfarin sodium and consider alternative anticoagulation therapy. ( 5.3 ) Acute kidney injury may occur during episodes of excessive anticoagulation and hematuria. ( 5.4 ) Systemic atheroemboli and cholesterol microemboli: Some cases have progressed to necrosis or death. Discontinue warfarin sodium if such emboli occur. ( 5.5 ) Heparin-induced thrombocytopenia (HIT): Initial therapy with warfarin sodium in HIT has resulted in cases of amputation and death. Warfarin sodium may be considered after platelet count has normalized. ( 5.6 ) Pregnant women with mechanical heart valves: Warfarin sodium may cause fetal harm; however, the benefits may outweigh the risks. ( 5.7 ) 5.1 Hemorrhage Warfarin sodium can cause major or fatal bleeding. Bleeding is more likely to occur within the first month. Risk factors for bleeding include high intensity of anticoagulation (INR > 4), age greater than or equal to 65, history of highly variable INRs, history of gastrointestinal bleeding, hypertension, cerebrovascular disease, anemia, malignancy, trauma, renal impairment, certain genetic factors [see Clinical Pharmacology ( 12.5 )] , certain concomitant drugs [see Drug Interactions ( 7 )] , and long duration of warfarin therapy. Perform regular monitoring of INR in all treated patients. Those at high risk of bleeding may benefit from more frequent INR monitoring, careful dose adjustment to desired INR, and a shortest duration of therapy appropriate for the clinical condition. However, maintenance of INR in the therapeutic range does not eliminate the risk of bleeding. Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. Perform more frequent INR monitoring when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs [see Drug Interactions ( 7 )] . Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information ( 17 )] . 5.2 Tissue Necrosis Warfarin sodium can cause necrosis and/or gangrene of skin and other tissues, which is an uncommon but serious risk (<0.1%). Necrosis may be associated with loca"
+    ],
+    "adverse_reactions": [
+     "6 ADVERSE REACTIONS The following serious adverse reactions to warfarin sodium are discussed in greater detail in other sections of the labeling: Hemorrhage [see Boxed Warning, Warnings and Precautions (5.1), and Overdosage ( 10 )] Tissue Necrosis [see Warnings and Precautions ( 5.2 )] Calciphylaxis [see Warnings and Precautions ( 5.3 )] Acute Kidney Injury [see Warnings and Precautions ( 5.4 )] Systemic Atheroemboli and Cholesterol Microemboli [see Warnings and Precautions ( 5.5 )] Limb Ischemia, Necrosis, and Gangrene in Patients with HIT and HITTS [see Warnings and Precautions ( 5.6 )] Other Clinical Settings with Increased Risks [see Warnings and Precautions ( 5.8 )] Other adverse reactions to warfarin sodium include: Immune system disorders: hypersensitivity/allergic reactions (including urticaria and anaphylactic reactions) Vascular disorders: vasculitis Hepatobiliary disorders: hepatitis, elevated liver enzymes. Cholestatic hepatitis has been associated with concomitant administration of warfarin sodium and ticlopidine. Gastrointestinal disorders: nausea, vomiting, diarrhea, taste perversion, abdominal pain, flatulence, bloating Skin disorders: rash, dermatitis (including bullous eruptions), pruritus, alopecia Respiratory disorders: tracheal or tracheobronchial calcification General disorders: chills Most common adverse reactions to warfarin sodium are fatal and nonfatal hemorrhage from any tissue or organ. ( 6 ) To report SUSPECTED ADVERSE REACTIONS, contact Teva at 1-888-838-2872 or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch."
+    ],
+    "drug_interactions": [
+     "7 DRUG INTERACTIONS Concomitant use of drugs that increase bleeding risk, antibiotics, antifungals, botanical (herbal) products, and inhibitors and inducers of CYP2C9, 1A2, or 3A4. ( 7 ) Consult labeling of all concurrently used drugs for complete information about interactions with warfarin sodium or increased risks for bleeding. ( 7 ) 7.1 General Information Drugs may interact with warfarin sodium through pharmacodynamic or pharmacokinetic mechanisms. Pharmacodynamic mechanisms for drug interactions with warfarin sodium are synergism (impaired hemostasis, reduced clotting factor synthesis), competitive antagonism (vitamin K), and alteration of the physiologic control loop for vitamin K metabolism (hereditary resistance). Pharmacokinetic mechanisms for drug interactions with warfarin sodium are mainly enzyme induction, enzyme inhibition, and reduced plasma protein binding. It is important to note that some drugs may interact by more than one mechanism. More frequent INR monitoring should be performed when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs, including drugs intended for short-term use (e.g., antibiotics, antifungals, corticosteroids) [ see Boxed Warning ]. Consult the labeling of all concurrently used drugs to obtain further information about interactions with warfarin sodium or adverse reactions pertaining to bleeding. 7.2 CYP450 Interactions CYP450 isozymes involved in the metabolism of warfarin include CYP2C9, 2C19, 2C8, 2C18, 1A2, and 3A4. The more potent warfarin S -enantiomer is metabolized by CYP2C9 while the R -enantiomer is metabolized by CYP1A2 and 3A4. Inhibitors of CYP2C9, 1A2, and/or 3A4 have the potential to increase the effect (increase INR) of warfarin by increasing the exposure of warfarin. Inducers of CYP2C9, 1A2, and/or 3A4 have the potential to decrease the effect (decrease INR) of warfarin by decreasing the exposure of warfarin. Examples of inhibitors and inducers of CYP2C9, 1A2, and 3A4 are below in Table 2 ; however, this list should not be considered all-inclusive. Consult the labeling of all concurrently used drugs to obtain further information about CYP450 interaction potential. The CYP450 inhibition and induction potential should be considered when starting, stopping, or changing dose of concomitant medications. Closely monitor INR if a concomitant drug is a CYP2C9, 1A2, and/or 3A4 inhibitor or inducer. Table 2: Examples of CYP450 Interactions with Warfarin Enzyme Inhib"
+    ],
+    "pregnancy": [
+     "8.1 Pregnancy Risk Summary Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the benefits of warfarin sodium may outweigh the risks [see Warnings and Precautions ( 5.7 )] . Warfarin sodium can cause fetal harm. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Because these data were not collected in adequate and well-controlled studies, this incidence of major birth defects is not an adequate basis for comparison to the estimated incidences in the control group or the U.S. general population and may not reflect the incidences observed in practice. Consider the benefits and risks of warfarin sodium and possible risks to the fetus when prescribing warfarin sodium to a pregnant woman. Adverse outcomes in pregnancy occur regardless of the health of the mother or the use of medications. The estimated background risk of major birth defects and miscarriage for the indicated population is unknown. In the U.S. general population, the estimated background risk of major birth defects and miscarriage in clinically recognized pregnancies is 2% to 4% and 15% to 20%, respectively. Clinical Considerations Fetal/Neonatal Adverse Reactions In humans, warfarin crosses the placenta, and concentrations in fetal plasma approach the maternal values. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Warfarin embryopathy is characterized by nasal hypoplasia with or without stippled epiphyses (chondrodysplasia punctata) and growth retardation (including low birth weight). Central nervous system and eye abnormalities have also been reported, including dorsal midline dysplasia characterized by agenesis of the corpus callosum, Dandy-Walker malformation, midline cerebellar atrophy, and ventral midline dysplasia characterized by optic atrophy. Mental retardation, blindness, schizencephaly, microcephaly, hydrocephalus, and other adverse pregnancy outcomes have been reported following warfarin exposure during the second and third trimesters of pregnancy [see Contraindications ( 4 )] ."
+    ],
+    "overdosage": [
+     "10 OVERDOSAGE 10.1 Signs and Symptoms Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from superficial injuries, unexplained fall in hemoglobin) is a manifestation of excessive anticoagulation. 10.2 Treatment The treatment of excessive anticoagulation is based on the level of the INR, the presence or absence of bleeding, and clinical circumstances. Reversal of warfarin sodium anticoagulation may be obtained by discontinuing warfarin sodium therapy and, if necessary, by administration of oral or parenteral vitamin K 1 . The use of vitamin K 1 reduces response to subsequent warfarin sodium therapy and patients may return to a pretreatment thrombotic status following the rapid reversal of a prolonged INR. Resumption of warfarin sodium administration reverses the effect of vitamin K, and a therapeutic INR can again be obtained by careful dosage adjustment. If rapid re-anticoagulation is indicated, heparin may be preferable for initial therapy. Prothrombin complex concentrate (PCC), fresh frozen plasma, or activated Factor VII treatment may be considered if the requirement to reverse the effects of warfarin sodium is urgent. A risk of hepatitis and other viral diseases is associated with the use of blood products; PCC and activated Factor VII are also associated with an increased risk of thrombosis. Therefore, these preparations should be used only in exceptional or life-threatening bleeding episodes secondary to warfarin sodium overdosage."
+    ],
+    "description": [
+     "11 DESCRIPTION Warfarin sodium tablets, USP contain warfarin sodium, an anticoagulant that acts by inhibiting vitamin K-dependent coagulation factors. The chemical name of warfarin sodium is 3-(\u03b1-acetonylbenzyl)-4-hydroxycoumarin sodium salt, which is a racemic mixture of the R - and S -enantiomers. Crystalline warfarin sodium is an isopropanol clathrate. Its structural formula may be represented as follows: C 19 H 15 NaO 4 M.W. 330.31 Crystalline warfarin sodium occurs as a white, odorless, crystalline powder that is discolored by light. It is very soluble in water, freely soluble in alcohol, and very slightly soluble in chloroform and ether. Each tablet, for oral administration, contains 1 mg, 2 mg, 2.5 mg, 3 mg, 4 mg, 5 mg, 6 mg, 7.5 mg or 10 mg warfarin sodium, USP. In addition, each tablet contains the following inactive ingredients: colloidal silicon dioxide, croscarmellose sodium, lactose monohydrate, magnesium stearate, and microcrystalline cellulose. The 1 mg also contains FD&C red no. 40. The 2 mg also contains FD&C blue no. 2 aluminum lake and FD&C red no. 40 aluminum lake. The 2.5 mg also contains D&C yellow no. 10 aluminum lake and FD&C blue no. 1 aluminum lake. The 3 mg also contains FD&C yellow no. 6 aluminum lake, FD&C blue no. 2 aluminum lake, FD&C red no. 40 aluminum lake, and D&C yellow no. 10 aluminum lake. The 4 mg also contains FD&C blue no. 1 aluminum lake and FD&C blue no. 2 aluminum lake. The 5 mg also contains FD&C yellow no. 6 aluminum lake, FD&C red no. 40 aluminum lake and D&C yellow no. 10 aluminum lake. The 6 mg also contains D&C yellow no. 10 aluminum lake and FD&C blue no. 1 aluminum lake. The 7.5 mg also contains D&C yellow no. 10 aluminum lake and FD&C yellow no. 6 aluminum lake. Warfarin Structural Formula"
+    ],
+    "openfda": {
+     "brand_name": [
+      "Warfarin Sodium"
+     ],
+     "generic_name": [
+      "WARFARIN SODIUM"
+     ],
+     "manufacturer_name": [
+      "PD-Rx Pharmaceuticals, Inc."
+     ]
+    }
+   },
+   {
+    "set_id": "2c8f47c6-a180-4ad8-b962-04069d2270cb",
+    "id": "1997af85-ab19-433b-9467-e360932e3edf",
+    "effective_time": "20210729",
+    "version": "1",
+    "boxed_warning": [
+     "WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding [see Warnings and Precautions (5.1) ]. Perform regular monitoring of INR in all treated patients [see Dosage and Administration (2.1) ]. Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy [see Drug Interactions (7) ]. Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information (17) ]. WARNING: BLEEDING RISK See full prescribing information for complete boxed warning. Warfarin sodium can cause major or fatal bleeding. ( 5.1 ) Perform regular monitoring of INR in all treated patients. ( 2.1 ) Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. ( 7 ) Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding. ( 17 )"
+    ],
+    "indications_and_usage": [
+     "1 INDICATIONS AND USAGE Warfarin sodium tablets, USP are indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE). Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation (AF) and/or cardiac valve replacement. Reduction in the risk of death, recurrent myocardial infarction (MI), and thromboembolic events such as stroke or systemic embolization after myocardial infarction. Warfarin sodium is a vitamin K antagonist indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism ( 1 ) Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation and/or cardiac valve replacement ( 1 ) Reduction in the risk of death, recurrent myocardial infarction, and thromboembolic events such as stroke or systemic embolization after myocardial infarction ( 1 ) Limitations of Use Warfarin sodium has no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. ( 1 ) Limitations of Use Warfarin sodium has no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. Once a thrombus has occurred, however, the goals of anticoagulant treatment are to prevent further extension of the formed clot and to prevent secondary thromboembolic complications that may result in serious and possibly fatal sequelae."
+    ],
+    "contraindications": [
+     "4 CONTRAINDICATIONS Warfarin sodium tablets, USP are contraindicated in: Pregnancy Warfarin sodium tablets, USP are contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism [see Warnings and Precautions (5.7) and Use in Specific Populations (8.1) ]. Warfarin sodium can cause fetal harm when administered to a pregnant woman. Warfarin sodium exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. If warfarin sodium is used during pregnancy or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to a fetus [see Use in Specific Populations (8.1) ]. Warfarin sodium tablets, USP are contraindicated in patients with: Hemorrhagic tendencies or blood dyscrasias Recent or contemplated surgery of the central nervous system or eye, or traumatic surgery resulting in large open surfaces [see Warnings and Precautions (5.8) ] Bleeding tendencies associated with: Active ulceration or overt bleeding of the gastrointestinal, genitourinary, or respiratory tract Central nervous system hemorrhage Cerebral aneurysms, dissecting aorta Pericarditis and pericardial effusions Bacterial endocarditis Threatened abortion, eclampsia, and preeclampsia Unsupervised patients with conditions associated with potential high level of non-compliance Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding Hypersensitivity to warfarin or to any other components of this product (e.g., anaphylaxis) [see Adverse Reactions (6) ] Major regional or lumbar block anesthesia Malignant hypertension Pregnancy, except in women with mechanical heart valves ( 4 , 5.7 , 8.1 ) Hemorrhagic tendencies or blood dyscrasias ( 4 ) Recent or contemplated surgery of the central nervous system (CNS) or eye, or traumatic surgery resulting in large open surfaces ( 4 , 5.8 ) Bleeding tendencies associated with certain conditions ( 4 ) Threatened abortion, eclampsia, and preeclampsia ( 4 ) Unsupervised patients with potential high levels of non-compliance ( 4 ) Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding ( 4 ) Hypersensitivity to warfarin or any component of the product ( 4 ) Major regional or lumbar block anesthesia ("
+    ],
+    "warnings_and_cautions": [
+     "5 WARNINGS AND PRECAUTIONS Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue warfarin sodium and consider alternative anticoagulants if necessary. ( 5.2 ) Calciphylaxis: Fatal and serious cases have occurred. Discontinue warfarin sodium and consider alternative anticoagulation therapy. ( 5.3 ) Acute kidney injury may occur during episodes of excessive anticoagulation and hematuria. ( 5.4 ) Systemic atheroemboli and cholesterol microemboli: Some cases have progressed to necrosis or death. Discontinue warfarin sodium if such emboli occur. ( 5.5 ) Heparin-induced thrombocytopenia (HIT): Initial therapy with warfarin sodium in HIT has resulted in cases of amputation and death. Warfarin sodium may be considered after platelet count has normalized. ( 5.6 ) Pregnant women with mechanical heart valves: Warfarin sodium may cause fetal harm; however, the benefits may outweigh the risks. ( 5.7 ) 5.1 Hemorrhage Warfarin sodium can cause major or fatal bleeding. Bleeding is more likely to occur within the first month. Risk factors for bleeding include high intensity of anticoagulation (INR >4.0), age greater than or equal to 65, history of highly variable INRs, history of gastrointestinal bleeding, hypertension, cerebrovascular disease, anemia, malignancy, trauma, renal impairment, certain genetic factors [see Clinical Pharmacology (12.5) ], certain concomitant drugs [see Drug Interactions (7) ], and long duration of warfarin therapy. Perform regular monitoring of INR in all treated patients. Those at high risk of bleeding may benefit from more frequent INR monitoring, careful dose adjustment to desired INR, and a shortest duration of therapy appropriate for the clinical condition. However, maintenance of INR in the therapeutic range does not eliminate the risk of bleeding. Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. Perform more frequent INR monitoring when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs [see Drug Interactions (7) ]. Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [see Patient Counseling Information (17) ]. 5.2 Tissue Necrosis Warfarin sodium can cause necrosis and/or gangrene of skin and other tissues, which is an uncommon but serious risk (<0.1%). Necrosis may be associated with local throm"
+    ],
+    "adverse_reactions": [
+     "6 ADVERSE REACTIONS The following serious adverse reactions to warfarin sodium are discussed in greater detail in other sections of the labeling: Hemorrhage [see Boxed Warning , Warnings and Precautions (5.1) , and Overdosage (10) ] Tissue Necrosis [see Warnings and Precautions (5.2) ] Calciphylaxis [see Warnings and Precautions (5.3) ] Acute Kidney Injury [see Warnings and Precautions (5.4) ] Systemic Atheroemboli and Cholesterol Microemboli [see Warnings and Precautions (5.5) ] Limb Ischemia, Necrosis, and Gangrene in Patients with HIT and HITTS [see Warnings and Precautions (5.6) ] Other Clinical Settings with Increased Risks [see Warnings and Precautions (5.8) ] Other adverse reactions to warfarin sodium include: Immune system disorders: hypersensitivity/allergic reactions (including urticaria and anaphylactic reactions) Vascular disorders: vasculitis Hepatobiliary disorders: hepatitis, elevated liver enzymes. Cholestatic hepatitis has been associated with concomitant administration of warfarin sodium and ticlopidine. Gastrointestinal disorders: nausea, vomiting, diarrhea, taste perversion, abdominal pain, flatulence, bloating Skin disorders: rash, dermatitis (including bullous eruptions), pruritus, alopecia Respiratory disorders: tracheal or tracheobronchial calcification General disorders: chills Most common adverse reactions to warfarin sodium are fatal and nonfatal hemorrhage from any tissue or organ. ( 6 ) To report SUSPECTED ADVERSE REACTIONS, contact Taro Pharmaceuticals U.S.A., Inc., at 1-866-923-4914 or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch ."
+    ],
+    "drug_interactions": [
+     "7 DRUG INTERACTIONS Concomitant use of drugs that increase bleeding risk, antibiotics, antifungals, botanical (herbal) products, and inhibitors and inducers of CYP2C9, 1A2, or 3A4. ( 7 ) Consult labeling of all concurrently used drugs for complete information about interactions with warfarin sodium or increased risks for bleeding. ( 7 ) 7.1 General Information Drugs may interact with warfarin sodium through pharmacodynamic or pharmacokinetic mechanisms. Pharmacodynamic mechanisms for drug interactions with warfarin sodium are synergism (impaired hemostasis, reduced clotting factor synthesis), competitive antagonism (vitamin K), and alteration of the physiologic control loop for vitamin K metabolism (hereditary resistance). Pharmacokinetic mechanisms for drug interactions with warfarin sodium are mainly enzyme induction, enzyme inhibition, and reduced plasma protein binding. It is important to note that some drugs may interact by more than one mechanism. More frequent INR monitoring should be performed when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs, including drugs intended for short-term use (e.g., antibiotics, antifungals, corticosteroids) [see Boxed Warning ]. Consult the labeling of all concurrently used drugs to obtain further information about interactions with warfarin sodium or adverse reactions pertaining to bleeding. 7.2 CYP450 Interactions CYP450 isozymes involved in the metabolism of warfarin include CYP2C9, 2C19, 2C8, 2C18, 1A2, and 3A4. The more potent warfarin S -enantiomer is metabolized by CYP2C9 while the R -enantiomer is metabolized by CYP1A2 and 3A4. Inhibitors of CYP2C9, 1A2, and/or 3A4 have the potential to increase the effect (increase INR) of warfarin by increasing the exposure of warfarin. Inducers of CYP2C9, 1A2, and/or 3A4 have the potential to decrease the effect (decrease INR) of warfarin by decreasing the exposure of warfarin. Examples of inhibitors and inducers of CYP2C9, 1A2, and 3A4 are below in Table 2; however, this list should not be considered all-inclusive. Consult the labeling of all concurrently used drugs to obtain further information about CYP450 interaction potential. The CYP450 inhibition and induction potential should be considered when starting, stopping, or changing dose of concomitant medications. Closely monitor INR if a concomitant drug is a CYP2C9, 1A2, and/or 3A4 inhibitor or inducer. Table 2: Examples of CYP450 Interactions with Warfarin Enzyme Inhibit"
+    ],
+    "pregnancy": [
+     "8.1 Pregnancy Risk Summary Warfarin sodium tablets, USP are contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the benefits of warfarin sodium may outweigh the risks [see Warnings and Precautions (5.7) ]. Warfarin sodium can cause fetal harm. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Because these data were not collected in adequate and well-controlled studies, this incidence of major birth defects is not an adequate basis for comparison to the estimated incidences in the control group or the U.S. general population and may not reflect the incidences observed in practice. Consider the benefits and risks of warfarin sodium and possible risks to the fetus when prescribing warfarin sodium to a pregnant woman. Adverse outcomes in pregnancy occur regardless of the health of the mother or the use of medications. The estimated background risk of major birth defects and miscarriage for the indicated population is unknown. In the U.S. general population, the estimated background risk of major birth defects and miscarriage in clinically recognized pregnancies is 2% to 4% and 15% to 20%, respectively. Clinical Considerations Fetal/Neonatal Adverse Reactions In humans, warfarin crosses the placenta, and concentrations in fetal plasma approach the maternal values. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Warfarin embryopathy is characterized by nasal hypoplasia with or without stippled epiphyses (chondrodysplasia punctata) and growth retardation (including low birth weight). Central nervous system and eye abnormalities have also been reported, including dorsal midline dysplasia characterized by agenesis of the corpus callosum, Dandy-Walker malformation, midline cerebellar atrophy, and ventral midline dysplasia characterized by optic atrophy. Mental retardation, blindness, schizencephaly, microcephaly, hydrocephalus, and other adverse pregnancy outcomes have been reported following warfarin exposure during the second and third trimesters of pregnancy [see Contraindications (4) ]."
+    ],
+    "overdosage": [
+     "10 OVERDOSAGE 10.1 Signs and Symptoms Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from superficial injuries, unexplained fall in hemoglobin) is a manifestation of excessive anticoagulation. 10.2 Treatment The treatment of excessive anticoagulation is based on the level of the INR, the presence or absence of bleeding, and clinical circumstances. Reversal of warfarin sodium anticoagulation may be obtained by discontinuing warfarin sodium therapy and, if necessary, by administration of oral or parenteral vitamin K 1 . The use of vitamin K 1 reduces response to subsequent warfarin sodium therapy and patients may return to a pretreatment thrombotic status following the rapid reversal of a prolonged INR. Resumption of warfarin sodium administration reverses the effect of vitamin K, and a therapeutic INR can again be obtained by careful dosage adjustment. If rapid re-anticoagulation is indicated, heparin may be preferable for initial therapy. Prothrombin complex concentrate (PCC), fresh frozen plasma, or activated Factor VII treatment may be considered if the requirement to reverse the effects of warfarin sodium is urgent. A risk of hepatitis and other viral diseases is associated with the use of blood products; PCC and activated Factor VII are also associated with an increased risk of thrombosis. Therefore, these preparations should be used only in exceptional or life-threatening bleeding episodes secondary to warfarin sodium overdosage."
+    ],
+    "description": [
+     "11 DESCRIPTION Warfarin sodium tablets contain warfarin sodium, an anticoagulant that acts by inhibiting vitamin K-dependent coagulation factors. The chemical name of warfarin sodium is 3-(\u03b1-acetonylbenzyl)-4-hydroxycoumarin sodium salt, which is a racemic mixture of the R - and S -enantiomers. Crystalline warfarin sodium is an isopropanol clathrate. Its empirical formula is C 19 H 15 NaO 4 , and its structural formula is represented by the following: Crystalline warfarin sodium occurs as a white, odorless, crystalline powder that is discolored by light. It is very soluble in water, freely soluble in alcohol, and very slightly soluble in chloroform and ether. Warfarin sodium tablets, USP for oral use also contain: All strengths: Anhydrous lactose, corn starch, and magnesium stearate 1 mg: D&C Red No. 6 Barium Lake 2 mg: FD&C Blue No. 2 Aluminum Lake, FD&C Red No. 40 Aluminum Lake 2.5 mg: D&C Yellow No. 10 Aluminum Lake, FD&C Blue No. 2 Aluminum Lake 3 mg: D&C Yellow No. 10 Aluminum Lake, FD&C Blue No. 2 Aluminum Lake, FD&C Red No. 40 Aluminum Lake 4 mg: FD&C Blue No. 1 Aluminum Lake 5 mg: D&C Red No. 6 Barium Lake, D&C Yellow No. 10 Aluminum Lake 6 mg: D&C Yellow No. 10 Aluminum Lake, FD&C Blue No. 2 Aluminum Lake 7.5 mg: D&C Yellow No. 10 Aluminum Lake 10 mg: Dye Free Chemical Structure"
+    ],
+    "openfda": {
+     "brand_name": [
+      "Warfarin Sodium"
+     ],
+     "generic_name": [
+      "WARFARIN SODIUM"
+     ],
+     "manufacturer_name": [
+      "Aphena Pharma Solutions - Tennessee, LLC"
+     ]
+    }
+   }
+  ]
+ },
+ "[\"drug/drugsfda\", \"products.active_ingredients.name:\\\"semaglutide\\\"\", null, 1000]": {
+  "meta": {
+   "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+   "terms": "https://open.fda.gov/terms/",
+   "license": "https://open.fda.gov/license/",
+   "last_updated": "2026-10-14",
+   "results": {
+    "skip": 0,
+    "limit": 100,
+    "total": 6
+   }
+  },
+  "results": [
+   {
+    "submissions": [
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "29",
+      "submission_status": "AP",
+      "submission_status_date": "20251017",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20200116",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "23",
+      "submission_status": "AP",
+      "submission_status_date": "20241101",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "21",
+      "submission_status": "AP",
+      "submission_status_date": "20241209",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "11",
+      "submission_status": "AP",
+      "submission_status_date": "20220610",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "6",
+      "submission_status": "AP",
+      "submission_status_date": "20210430",
+      "submission_class_code_description": "Manufacturing (CMC)"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "28",
+      "submission_status": "AP",
+      "submission_status_date": "20251017",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "18",
+      "submission_status": "AP",
+      "submission_status_date": "20240124",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "ORIG",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20190920",
+      "submission_class_code_description": "Type 3 - New Dosage Form"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "24",
+      "submission_status": "AP",
+      "submission_status_date": "20251017",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "30",
+      "submission_status": "AP",
+      "submission_status_date": "20260130",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "20",
+      "submission_status": "AP",
+      "submission_status_date": "20241209",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "12",
+      "submission_status": "AP",
+      "submission_status_date": "20230112",
+      "submission_class_code_description": "Labeling"
+     }
+    ],
+    "application_number": "NDA213051",
+    "sponsor_name": "NOVO",
+    "openfda": {
+     "brand_name": [
+      "OZEMPIC",
+      "RYBELSUS"
+     ],
+     "generic_name": [
+      "ORAL SEMAGLUTIDE"
+     ]
+    },
+    "brand_names": [
+     "OZEMPIC",
+     "OZEMPIC",
+     "RYBELSUS",
+     "OZEMPIC",
+     "RYBELSUS",
+     "RYBELSUS"
+    ]
+   },
+   {
+    "submissions": [
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "21",
+      "submission_status": "AP",
+      "submission_status_date": "20230922",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "ORIG",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20171205",
+      "submission_class_code_description": "Type 1 - New Molecular Entity"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "3",
+      "submission_status": "AP",
+      "submission_status_date": "20200116",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20190409",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "38",
+      "submission_status": "AP",
+      "submission_status_date": "20260601",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "44",
+      "submission_status": "AP",
+      "submission_status_date": "20260827",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "32",
+      "submission_status": "AP",
+      "submission_status_date": "20241101",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "8",
+      "submission_status": "AP",
+      "submission_status_date": "20210412",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "20",
+      "submission_status": "AP",
+      "submission_status_date": "20230922",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "12",
+      "submission_status": "AP",
+      "submission_status_date": "20221006",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "4",
+      "submission_status": "AP",
+      "submission_status_date": "20191127",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "39",
+      "submission_status": "AP",
+      "submission_status_date": "20260505",
+      "submission_class_code_description": "Manufacturing (CMC)"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "37",
+      "submission_status": "AP",
+      "submission_status_date": "20251014",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "35",
+      "submission_status": "AP",
+      "submission_status_date": "20251014",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "25",
+      "submission_status": "AP",
+      "submission_status_date": "20250128",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "9",
+      "submission_status": "AP",
+      "submission_status_date": "20220328",
+      "submission_class_code_description": "Efficacy"
+     }
+    ],
+    "application_number": "NDA209637",
+    "sponsor_name": "NOVO",
+    "openfda": {},
+    "brand_names": [
+     "OZEMPIC",
+     "OZEMPIC",
+     "OZEMPIC",
+     "OZEMPIC",
+     "OZEMPIC",
+     "OZEMPIC",
+     "OZEMPIC"
+    ]
+   },
+   {
+    "submissions": [
+     {
+      "submission_type": "ORIG",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20200116",
+      "submission_class_code_description": "Type 9 - New Indication Submitted as Distinct NDA, Consolidated with Original NDA after Approval"
+     }
+    ],
+    "application_number": "NDA213182",
+    "sponsor_name": "NOVO NORDISK INC",
+    "brand_names": [
+     "RYBELSUS",
+     "RYBELSUS"
+    ],
+    "openfda": {}
+   },
+   {
+    "submissions": [
+     {
+      "submission_type": "ORIG",
+      "submission_number": "1",
+      "submission_status": "TA",
+      "submission_status_date": "20260407"
+     }
+    ],
+    "application_number": "ANDA220314",
+    "sponsor_name": "APOTEX INC",
+    "brand_names": [
+     "SEMAGLUTIDE",
+     "SEMAGLUTIDE",
+     "SEMAGLUTIDE"
+    ],
+    "openfda": {}
+   },
+   {
+    "submissions": [
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "11",
+      "submission_status": "AP",
+      "submission_status_date": "20240308",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "6",
+      "submission_status": "AP",
+      "submission_status_date": "20230214",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "26",
+      "submission_status": "AP",
+      "submission_status_date": "20251014",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "ORIG",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20210604",
+      "submission_class_code_description": "Type 10 - New Indication Submitted as Distinct NDA - Not Consolidated"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "24",
+      "submission_status": "AP",
+      "submission_status_date": "20250815",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "30",
+      "submission_status": "AP",
+      "submission_status_date": "20260129",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "7",
+      "submission_status": "AP",
+      "submission_status_date": "20230721",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "5",
+      "submission_status": "AP",
+      "submission_status_date": "20221223",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "29",
+      "submission_status": "AP",
+      "submission_status_date": "20260319",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "3",
+      "submission_status": "AP",
+      "submission_status_date": "20220824",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "33",
+      "submission_status": "AP",
+      "submission_status_date": "20260225",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "25",
+      "submission_status": "AP",
+      "submission_status_date": "20260618",
+      "submission_class_code_description": "Manufacturing (CMC)"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "31",
+      "submission_status": "AP",
+      "submission_status_date": "20260505",
+      "submission_class_code_description": "Manufacturing (CMC)"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "23",
+      "submission_status": "AP",
+      "submission_status_date": "20251121",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "15",
+      "submission_status": "AP",
+      "submission_status_date": "20241127",
+      "submission_class_code_description": "Efficacy"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "21",
+      "submission_status": "AP",
+      "submission_status_date": "20241101",
+      "submission_class_code_description": "Labeling"
+     }
+    ],
+    "application_number": "NDA215256",
+    "sponsor_name": "NOVO",
+    "openfda": {},
+    "brand_names": [
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY HD",
+     "WEGOVY FLEXTOUCH",
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY"
+    ]
+   },
+   {
+    "submissions": [
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "4",
+      "submission_status": "AP",
+      "submission_status_date": "20260225",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "2",
+      "submission_status": "AP",
+      "submission_status_date": "20260129",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "ORIG",
+      "submission_number": "1",
+      "submission_status": "AP",
+      "submission_status_date": "20251222",
+      "submission_class_code_description": "Type 3 - New Dosage Form"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "7",
+      "submission_status": "AP",
+      "submission_status_date": "20260618",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "5",
+      "submission_status": "AP",
+      "submission_status_date": "20260319",
+      "submission_class_code_description": "Labeling"
+     },
+     {
+      "submission_type": "SUPPL",
+      "submission_number": "3",
+      "submission_status": "AP",
+      "submission_status_date": "20260505",
+      "submission_class_code_description": "Labeling"
+     }
+    ],
+    "application_number": "NDA218316",
+    "sponsor_name": "NOVO",
+    "brand_names": [
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY",
+     "WEGOVY"
+    ],
+    "openfda": {}
+   }
+  ]
+ },
+ "[\"drug/event\", \"(patient.drug.openfda.generic_name:\\\"metformin\\\" OR patient.drug.activesubstance.activesubstancename:\\\"metformin\\\")\", \"patient.reaction.reactionmeddrapt.exact\", 10]": {
+  "meta": {
+   "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+   "terms": "https://open.fda.gov/terms/",
+   "license": "https://open.fda.gov/license/",
+   "last_updated": "2026-07-30"
+  },
+  "results": [
+   {
+    "term": "NAUSEA",
+    "count": 32496
+   },
+   {
+    "term": "DIARRHOEA",
+    "count": 30987
+   },
+   {
+    "term": "BLOOD GLUCOSE INCREASED",
+    "count": 29680
+   },
+   {
+    "term": "DRUG INEFFECTIVE",
+    "count": 24525
+   },
+   {
+    "term": "FATIGUE",
+    "count": 23270
+   },
+   {
+    "term": "VOMITING",
+    "count": 21606
+   },
+   {
+    "term": "LACTIC ACIDOSIS",
+    "count": 21519
+   },
+   {
+    "term": "ACUTE KIDNEY INJURY",
+    "count": 21248
+   },
+   {
+    "term": "WEIGHT DECREASED",
+    "count": 18967
+   },
+   {
+    "term": "DYSPNOEA",
+    "count": 18367
+   }
+  ]
+ },
+ "[\"drug/event\", \"(patient.drug.openfda.generic_name:\\\"metformin\\\" OR patient.drug.activesubstance.activesubstancename:\\\"metformin\\\") AND serious:1 AND receivedate:[20250101 TO 20251231]\", \"patient.reaction.reactionmeddrapt.exact\", 10]": {
+  "meta": {
+   "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+   "terms": "https://open.fda.gov/terms/",
+   "license": "https://open.fda.gov/license/",
+   "last_updated": "2026-07-30"
+  },
+  "results": [
+   {
+    "term": "NAUSEA",
+    "count": 1775
+   },
+   {
+    "term": "DIARRHOEA",
+    "count": 1743
+   },
+   {
+    "term": "VOMITING",
+    "count": 1602
+   },
+   {
+    "term": "LACTIC ACIDOSIS",
+    "count": 1565
+   },
+   {
+    "term": "OFF LABEL USE",
+    "count": 1541
+   },
+   {
+    "term": "ACUTE KIDNEY INJURY",
+    "count": 1466
+   },
+   {
+    "term": "FATIGUE",
+    "count": 1030
+   },
+   {
+    "term": "IMPAIRED GASTRIC EMPTYING",
+    "count": 971
+   },
+   {
+    "term": "CONSTIPATION",
+    "count": 886
+   },
+   {
+    "term": "DRUG INEFFECTIVE",
+    "count": 860
+   }
+  ]
+ },
+ "[\"drug/event\", \"(patient.drug.openfda.generic_name:\\\"metformin\\\" OR patient.drug.activesubstance.activesubstancename:\\\"metformin\\\") AND serious:1 AND receivedate:[20250101 TO 20251231]\", null, 1]": {
+  "meta": {
+   "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+   "terms": "https://open.fda.gov/terms/",
+   "license": "https://open.fda.gov/license/",
+   "last_updated": "2026-07-30",
+   "results": {
+    "skip": 0,
+    "limit": 1,
+    "total": 20254
+   }
+  },
+  "results": [
+   {
+    "safetyreportid": "24795605",
+    "receivedate": "20250101"
+   }
+  ]
+ },
+ "[\"drug/event\", \"(patient.drug.openfda.generic_name:\\\"warfarin\\\" OR patient.drug.activesubstance.activesubstancename:\\\"warfarin\\\")\", \"patient.reaction.reactionmeddrapt.exact\", 10]": {
+  "meta": {
+   "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+   "terms": "https://open.fda.gov/terms/",
+   "license": "https://open.fda.gov/license/",
+   "last_updated": "2026-07-30"
+  },
+  "results": [
+   {
+    "term": "INTERNATIONAL NORMALISED RATIO INCREASED",
+    "count": 13307
+   },
+   {
+    "term": "DYSPNOEA",
+    "count": 12449
+   },
+   {
+    "term": "FATIGUE",
+    "count": 8855
+   },
+   {
+    "term": "DIARRHOEA",
+    "count": 8590
+   },
+   {
+    "term": "NAUSEA",
+    "count": 8437
+   },
+   {
+    "term": "DRUG INTERACTION",
+    "count": 8195
+   },
+   {
+    "term": "DIZZINESS",
+    "count": 7205
+   },
+   {
+    "term": "HEADACHE",
+    "count": 7161
+   },
+   {
+    "term": "FALL",
+    "count": 7090
+   },
+   {
+    "term": "DRUG INEFFECTIVE",
+    "count": 6894
+   }
+  ]
+ },
+ "[\"drug/event\", \"(patient.drug.openfda.generic_name:\\\"lecanemab\\\" OR patient.drug.activesubstance.activesubstancename:\\\"lecanemab\\\") AND receivedate:[20200101 TO 20201231]\", null, 1]": {
+  "meta": {
+   "results": {
+    "skip": 0,
+    "limit": 1,
+    "total": 0
+   }
+  },
+  "results": []
+ },
+ "[\"drug/event\", \"(patient.drug.openfda.generic_name:\\\"lecanemab\\\" OR patient.drug.activesubstance.activesubstancename:\\\"lecanemab\\\") AND receivedate:[20200101 TO 20201231]\", \"patient.reaction.reactionmeddrapt.exact\", 10]": {
+  "meta": {
+   "results": {
+    "skip": 0,
+    "limit": 10,
+    "total": 0
+   }
+  },
+  "results": []
+ },
+ "[\"drug/event\", \"(patient.drug.openfda.generic_name:\\\"lecanemab\\\" OR patient.drug.activesubstance.activesubstancename:\\\"lecanemab\\\") AND receivedate:[20240101 TO 20241231]\", null, 1]": {
+  "meta": {
+   "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+   "terms": "https://open.fda.gov/terms/",
+   "license": "https://open.fda.gov/license/",
+   "last_updated": "2026-07-30",
+   "results": {
+    "skip": 0,
+    "limit": 1,
+    "total": 1410
+   }
+  },
+  "results": [
+   {
+    "safetyreportid": "23356692",
+    "receivedate": "20240102"
+   }
+  ]
+ }
+}

@@ -1,0 +1,116 @@
+<!doctype html><html><head><meta charset="utf-8"><title>FDA-Gym B overview</title><style>*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden}
+body{font:14px/1.45 Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}.sm{font-size:12px}.b{font-weight:600}.muted{color:var(--muted)}.ink{color:var(--ink)}.it{font-style:italic;font-weight:400}
+.bg{position:fixed;inset:0;overflow:hidden}.bg i{position:absolute;border-radius:50%;filter:blur(60px)}
+.app{position:relative;display:flex;height:900px;padding:16px;gap:16px}
+.glass{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(var(--blur)) saturate(1.4);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.4);border-radius:var(--r);box-shadow:var(--shadow)}
+.glass2{background:var(--glass2);border:1px solid var(--line2);border-radius:calc(var(--r) - 6px)}
+.side{width:212px;flex:none;padding:18px 12px;display:flex;flex-direction:column;gap:2px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;padding:0 8px 4px}
+.mark{width:18px;height:18px;border-radius:6px;background:var(--acc);box-shadow:inset 0 0 0 4px var(--markin)}
+.env{font-size:11px;color:var(--muted);padding:0 8px 16px}
+.nav{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;color:var(--muted);font-weight:500}
+.nav .ic{width:16px;text-align:center}.nav.on{background:var(--navon);color:var(--ink)}
+.sidefoot{margin-top:auto;padding:12px 10px;border-top:1px solid var(--line2)}
+main{flex:1;display:flex;flex-direction:column;gap:14px;min-width:0;position:relative}
+.top{display:flex;justify-content:space-between;align-items:flex-end;padding:4px 4px 0}
+h1{font-size:24px;font-weight:650;letter-spacing:-.02em}h2{font-size:14px;font-weight:600}
+.acts{display:flex;gap:8px;align-items:center}
+.chip{display:inline-flex;gap:6px;align-items:center;font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--ink2);white-space:nowrap;background:var(--chipbg)}
+.chip.acc,.chip.on{color:var(--accink);border-color:var(--accline);background:var(--accsoft)}
+.btn{font:600 13px Inter,sans-serif;padding:8px 14px;border-radius:10px;border:0;background:var(--acc);color:var(--onacc)}
+.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--ink)}
+.card{padding:16px 18px}.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:12px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.kpi{padding:14px 16px}
+.big{font-size:26px;font-weight:600;letter-spacing:-.02em;margin:2px 0}
+.grid2{display:grid;grid-template-columns:1fr 480px;gap:14px}
+table{width:100%;border-collapse:collapse}th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line2)}
+td{padding:7px 8px;border-bottom:1px solid var(--line3);vertical-align:middle}tr:last-child td{border-bottom:0}
+.num{text-align:right}.rk{color:var(--muted);width:24px}.mname{font-weight:600}
+td.num .rbar{display:inline-block;width:70px;margin-right:10px;vertical-align:middle}
+.rbar{height:6px;border-radius:3px;background:var(--track);overflow:hidden}.rbar span{display:block;height:100%;background:var(--acc);border-radius:3px}
+.rbar span.neg{background:var(--muted)}
+tr.ours{background:var(--rowhi)}tr.base .mname{color:var(--ink2)}
+.legend{display:flex;gap:14px;color:var(--muted);margin:-4px 0 4px}.legend i{display:inline-block;width:18px;height:0;border-top:2px solid var(--acc);vertical-align:middle;margin-right:6px}
+.legend .lg-dash{border-top:2px dashed var(--muted)}
+svg .grid{stroke:var(--line3)}svg .ax{fill:var(--muted);font:11px "JetBrains Mono",monospace}svg .line{fill:none;stroke:var(--acc);stroke-width:2.2;stroke-linejoin:round}
+svg .base{stroke:var(--muted);stroke-dasharray:5 5;stroke-width:1.5}svg .lbl{fill:var(--muted);font:11px "JetBrains Mono",monospace}svg .lbl.strong{fill:var(--accink);font-weight:600}
+svg .dot{fill:var(--acc);stroke:var(--dotring);stroke-width:3}.ag0{stop-color:var(--acc);stop-opacity:.22}.ag1{stop-color:var(--acc);stop-opacity:0}
+.explorer{flex:1}.filters{display:flex;gap:6px;align-items:center}.sep{width:1px;height:18px;background:var(--line2);margin:0 6px}
+.tasks{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.task{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.trow{display:flex;gap:6px;align-items:center}.tq{font-weight:500;font-size:13px;line-height:1.35}
+.caption{position:absolute;right:6px;bottom:-12px;font-size:11px;color:var(--muted);font-family:"JetBrains Mono",monospace}
+.q{padding:14px 18px}.qt{font-size:18px;font-weight:550;letter-spacing:-.01em;margin-top:4px;max-width:1000px}
+.tgrid{display:grid;grid-template-columns:1fr 470px;gap:14px;flex:1;min-height:0}.rcol{display:flex;flex-direction:column;gap:14px}
+.timeline{list-style:none;display:flex;flex-direction:column;gap:10px;position:relative}
+.timeline:before{content:"";position:absolute;left:13px;top:10px;bottom:10px;width:1px;background:var(--line2)}
+.step{display:flex;gap:12px;position:relative}.node{width:27px;height:27px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--nodebg);border:1px solid var(--line2);color:var(--ink)}
+.step.open .node{background:var(--acc);color:var(--onacc);border-color:transparent}
+.sbody{flex:1;padding:9px 12px;min-width:0}.shead{display:flex;gap:12px;align-items:baseline}.fn{font-weight:600;color:var(--accink)}.tog{margin-left:auto;color:var(--accink)}
+.args{color:var(--ink2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.json{margin-top:8px;padding:10px 12px;border-radius:8px;background:var(--codebg);font-size:12px;line-height:1.6;white-space:pre;color:var(--ink);overflow:hidden}
+.json .k{color:var(--accink)}.json .s{color:var(--str)}.json .n{color:var(--ink)}
+.ans{font-size:15px;line-height:1.55}.cite{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 4px;margin-left:2px;border-radius:5px;font:600 11px "JetBrains Mono";background:var(--accsoft);color:var(--accink);vertical-align:2px}
+.cites{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:6px}.cites li{display:flex;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line3)}
+.cites li>div{flex:1}.cn{color:var(--accink);font-weight:600}.ok{color:var(--ok);font-weight:600;white-space:nowrap}
+.rw{display:grid;grid-template-columns:1fr 120px 52px;gap:12px;align-items:center;padding:6px 0;border-top:1px solid var(--line3)}.rw .b{text-align:right}
+.total{font-size:22px;font-weight:700;color:var(--accink)}
+.explorer{flex:none}.grid2{flex:1}.grid2 td{padding:11px 8px}.trow .mono{white-space:nowrap}
+.f-trajectory .card:has(.timeline){overflow:hidden}
+
+.t-b{--bg:#070a10;--ink:#e6edf6;--ink2:#b4c0d0;--muted:#8a97aa;--acc:#5eead4;--accink:#7cf0dc;--onacc:#04201b;--accsoft:rgba(94,234,212,.10);--accline:rgba(94,234,212,.35);
+--glass:rgba(20,27,40,.55);--glass2:rgba(255,255,255,.03);--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.10);--line3:rgba(255,255,255,.06);--blur:20px;--r:12px;
+--shadow:0 1px 0 rgba(255,255,255,.05) inset,0 20px 40px -20px #000;--navon:rgba(255,255,255,.07);--chipbg:rgba(255,255,255,.03);--track:rgba(255,255,255,.08);
+--rowhi:rgba(94,234,212,.05);--dotring:#0b111b;--markin:#0b111b;--nodebg:#0f1520;--codebg:rgba(0,0,0,.35);--str:#c9d4e2;--ok:#5eead4}
+.t-b{font-size:13.5px}.t-b h1{font-family:"JetBrains Mono";font-size:20px;font-weight:600;letter-spacing:-.01em}
+.t-b h2,.t-b th{font-family:"JetBrains Mono";font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+.t-b .big{font-family:"JetBrains Mono"}.t-b .mname{font-family:"JetBrains Mono";font-size:13px;font-weight:500}
+.t-b .bg{background:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0) 0 0/24px 24px}
+.t-b .bg i:nth-child(1){width:520px;height:520px;left:180px;top:-260px;background:#0e7490;opacity:.35}
+.t-b .bg i:nth-child(2){width:480px;height:480px;right:-140px;bottom:-200px;background:#1e3a8a;opacity:.4}
+.t-b .bg i:nth-child(3){display:none}.t-b .btn,.t-b .chip{border-radius:6px}.t-b .qt{font-size:17px;font-weight:500}
+.t-b{--acc:#F5A524;--accink:#FFB84D;--onacc:#1A1003;--ok:#FFB84D;--accsoft:rgba(245,165,36,.10);--accline:rgba(245,165,36,.38);--rowhi:rgba(245,165,36,.05)}
+.t-b .bg i:nth-child(1){background:#7c4a03}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}</style></head><body class="t-b f-overview"><div class="bg" aria-hidden="true"><i></i><i></i><i></i></div><div class="app"><aside class="side glass"><div class="brand"><span class="mark" aria-hidden="true"></span>FDA‑Gym</div>
+<div class="env mono">env: openfda-reg-v0.3</div><a class="nav on"><span class="ic" aria-hidden="true">◧</span>Overview</a><a class="nav"><span class="ic" aria-hidden="true">▤</span>Runs</a><a class="nav"><span class="ic" aria-hidden="true">↳</span>Trajectories</a><a class="nav"><span class="ic" aria-hidden="true">☰</span>Tasks</a><a class="nav"><span class="ic" aria-hidden="true">∿</span>Training</a><a class="nav"><span class="ic" aria-hidden="true">¶</span>Docs</a>
+<div class="sidefoot"><div class="muted sm">Dataset</div><div class="mono sm">1,240 tasks · 3 sources</div><div class="muted sm" style="margin-top:6px">openFDA snapshot</div><div class="mono sm">2026‑09‑30</div></div></aside><main>
+<header class="top"><div><h1>Overview</h1><div class="muted">Held-out split · 312 tasks · 3 seeds · temperature 0.2</div></div>
+<div class="acts"><span class="chip">Split: test</span><span class="chip">Seed avg</span><button class="btn">Run eval</button></div></header>
+<section class="kpis">
+<div class="kpi glass"><div class="muted sm">Reward lift (3B)</div><div class="big mono">+0.36</div><div class="sm muted">0.42 → 0.78 after 800 steps</div></div>
+<div class="kpi glass"><div class="muted sm">Citation validity</div><div class="big mono">95.8%</div><div class="sm muted">records resolved via API</div></div>
+<div class="kpi glass"><div class="muted sm">Tool calls / task</div><div class="big mono">3.6</div><div class="sm muted">down from 6.9 (base)</div></div>
+<div class="kpi glass"><div class="muted sm">Gap to frontier-a</div><div class="big mono">−0.06</div><div class="sm muted">at ~1/100 inference cost</div></div>
+</section>
+<section class="grid2">
+<div class="card glass lb"><div class="ch"><h2>Leaderboard</h2><span class="muted sm">sorted by mean reward</span></div>
+<table><thead><tr><th>#</th><th>Model</th><th></th><th class="num">Mean reward</th><th class="num">Pass</th><th class="num">Citations ✓</th><th class="num">Tools</th></tr></thead><tbody><tr class=""><td class="rk mono">1</td><td><div class="mname">frontier-a</div><div class="muted sm">API · closed</div></td><td><span class="chip">◇ reference</span></td>
+<td class="num"><div class="rbar"><span style="width:84%"></span></div><span class="mono b">0.84</span></td>
+<td class="num mono">81.0%</td><td class="num mono">97.1%</td><td class="num mono">4.1</td></tr><tr class="ours"><td class="rk mono">2</td><td><div class="mname">Qwen2.5-3B + GRPO</div><div class="muted sm">LoRA r=16 · ours</div></td><td><span class="chip acc">● trained</span></td>
+<td class="num"><div class="rbar"><span style="width:78%"></span></div><span class="mono b">0.78</span></td>
+<td class="num mono">74.6%</td><td class="num mono">95.8%</td><td class="num mono">3.6</td></tr><tr class=""><td class="rk mono">3</td><td><div class="mname">frontier-b</div><div class="muted sm">API · closed</div></td><td><span class="chip">◇ reference</span></td>
+<td class="num"><div class="rbar"><span style="width:71%"></span></div><span class="mono b">0.71</span></td>
+<td class="num mono">66.2%</td><td class="num mono">90.4%</td><td class="num mono">5.2</td></tr><tr class="ours"><td class="rk mono">4</td><td><div class="mname">Qwen2.5-1.5B + GRPO</div><div class="muted sm">LoRA r=16 · ours</div></td><td><span class="chip acc">● trained</span></td>
+<td class="num"><div class="rbar"><span style="width:66%"></span></div><span class="mono b">0.66</span></td>
+<td class="num mono">58.9%</td><td class="num mono">88.0%</td><td class="num mono">3.9</td></tr><tr class="base"><td class="rk mono">5</td><td><div class="mname">Qwen2.5-3B base</div><div class="muted sm">no fine-tune</div></td><td><span class="chip">○ baseline</span></td>
+<td class="num"><div class="rbar"><span style="width:42%"></span></div><span class="mono b">0.42</span></td>
+<td class="num mono">35.8%</td><td class="num mono">61.3%</td><td class="num mono">6.9</td></tr></tbody></table></div>
+<div class="card glass"><div class="ch"><h2>Training curve</h2><span class="muted sm">Qwen2.5‑3B · GRPO + LoRA</span></div>
+<div class="legend sm"><span><i class="lg-line"></i>trained</span><span><i class="lg-dash"></i>base</span></div><svg viewBox="0 0 440 300" width="100%" height="300" role="img" aria-label="Mean reward over 800 GRPO steps: base 0.42, trained 0.78">
+<defs><linearGradient id="ar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="ag0"/><stop offset="1" class="ag1"/></linearGradient></defs>
+<line class="grid" x1="40" x2="428" y1="229.3" y2="229.3"/><text class="ax" x="32" y="233.3" text-anchor="end">0.4</text><line class="grid" x1="40" x2="428" y1="144.0" y2="144.0"/><text class="ax" x="32" y="148.0" text-anchor="end">0.6</text><line class="grid" x1="40" x2="428" y1="58.7" y2="58.7"/><text class="ax" x="32" y="62.7" text-anchor="end">0.8</text><text class="ax" x="40.0" y="292" text-anchor="middle">0</text><text class="ax" x="137.0" y="292" text-anchor="middle">200</text><text class="ax" x="234.0" y="292" text-anchor="middle">400</text><text class="ax" x="331.0" y="292" text-anchor="middle">600</text><text class="ax" x="428.0" y="292" text-anchor="middle">800</text><path d="M40.0,224.8 L46.5,206.3 L52.9,198.8 L59.4,190.0 L65.9,184.2 L72.3,168.5 L78.8,159.1 L85.3,161.8 L91.7,151.7 L98.2,157.7 L104.7,139.5 L111.1,135.5 L117.6,124.0 L124.1,122.9 L130.5,128.9 L137.0,123.1 L143.5,114.2 L149.9,122.7 L156.4,111.5 L162.9,113.8 L169.3,111.9 L175.8,110.3 L182.3,95.5 L188.7,104.3 L195.2,100.1 L201.7,95.7 L208.1,85.9 L214.6,97.3 L221.1,89.7 L227.5,86.6 L234.0,79.9 L240.5,79.7 L246.9,77.9 L253.4,85.9 L259.9,82.7 L266.3,82.6 L272.8,73.8 L279.3,72.0 L285.7,83.0 L292.2,81.9 L298.7,80.4 L305.1,79.7 L311.6,75.5 L318.1,73.6 L324.5,77.5 L331.0,80.4 L337.5,74.4 L343.9,74.6 L350.4,71.7 L356.9,66.5 L363.3,69.5 L369.8,71.3 L376.3,69.8 L382.7,68.9 L389.2,75.9 L395.7,65.9 L402.1,67.1 L408.6,65.8 L415.1,66.6 L421.5,70.8 L428.0,70.6 L428.0,272 L40.0,272 Z" fill="url(#ar)"/>
+<line class="base" x1="40" x2="428" y1="220.8" y2="220.8"/><text class="lbl" x="426" y="236.8" text-anchor="end">base 0.42</text>
+<path class="line" d="M40.0,224.8 L46.5,206.3 L52.9,198.8 L59.4,190.0 L65.9,184.2 L72.3,168.5 L78.8,159.1 L85.3,161.8 L91.7,151.7 L98.2,157.7 L104.7,139.5 L111.1,135.5 L117.6,124.0 L124.1,122.9 L130.5,128.9 L137.0,123.1 L143.5,114.2 L149.9,122.7 L156.4,111.5 L162.9,113.8 L169.3,111.9 L175.8,110.3 L182.3,95.5 L188.7,104.3 L195.2,100.1 L201.7,95.7 L208.1,85.9 L214.6,97.3 L221.1,89.7 L227.5,86.6 L234.0,79.9 L240.5,79.7 L246.9,77.9 L253.4,85.9 L259.9,82.7 L266.3,82.6 L272.8,73.8 L279.3,72.0 L285.7,83.0 L292.2,81.9 L298.7,80.4 L305.1,79.7 L311.6,75.5 L318.1,73.6 L324.5,77.5 L331.0,80.4 L337.5,74.4 L343.9,74.6 L350.4,71.7 L356.9,66.5 L363.3,69.5 L369.8,71.3 L376.3,69.8 L382.7,68.9 L389.2,75.9 L395.7,65.9 L402.1,67.1 L408.6,65.8 L415.1,66.6 L421.5,70.8 L428.0,70.6"/><circle class="dot" cx="428.0" cy="70.6" r="4"/>
+<text class="lbl strong" x="420.0" y="60.6" text-anchor="end">GRPO 0.78</text></svg>
+<div class="sm muted">mean reward per step · group size 8 · β=0.04</div></div>
+</section>
+<section class="card glass explorer"><div class="ch"><h2>Tasks</h2>
+<div class="filters"><span class="muted sm">Source</span><span class="chip on">All 1,240</span><span class="chip">Drug labels 520</span><span class="chip">Adverse events 410</span><span class="chip">Approvals 310</span>
+<span class="sep"></span><span class="muted sm">Difficulty</span><span class="chip on">Any</span><span class="chip">Easy</span><span class="chip">Medium</span><span class="chip">Hard</span></div></div>
+<div class="tasks"><div class="task glass2"><div class="trow"><span class="mono sm muted">FG-0412</span><span class="chip">Drug labels</span><span class="chip">●○○ easy</span></div>
+<div class="tq">Does the label for zorvetinib list a boxed warning?</div><div class="trow sm muted">GRPO solve rate <span class="mono b ink">100%</span></div></div><div class="task glass2"><div class="trow"><span class="mono sm muted">FG-1187</span><span class="chip">Adverse events</span><span class="chip">●●○ medium</span></div>
+<div class="tq">Serious FAERS reports for velmorastat received in Q3 2025?</div><div class="trow sm muted">GRPO solve rate <span class="mono b ink">90%</span></div></div><div class="task glass2"><div class="trow"><span class="mono sm muted">FG-2045</span><span class="chip">Approvals</span><span class="chip">●●● hard</span></div>
+<div class="tq">First approval date for any ANDA referencing NDA 21-9xx?</div><div class="trow sm muted">GRPO solve rate <span class="mono b ink">40%</span></div></div><div class="task glass2"><div class="trow"><span class="mono sm muted">FG-0933</span><span class="chip">Drug labels</span><span class="chip">●●○ medium</span></div>
+<div class="tq">Max daily dose of pemradine in renal impairment (CrCl&lt;30)?</div><div class="trow sm muted">GRPO solve rate <span class="mono b ink">70%</span></div></div></div></section>
+<div class="caption">Example data · fictional drugs, models and records</div></main></div></body></html>

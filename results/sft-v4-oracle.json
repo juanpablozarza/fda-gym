@@ -1,0 +1,2255 @@
+{
+  "prompt_version": "v4",
+  "tool_budget": 8,
+  "min_reward": 0.97,
+  "include_hard_train": false,
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "learning_rate": 0.0001,
+  "num_train_epochs": 1.0,
+  "per_device_train_batch_size": 4,
+  "gradient_accumulation_steps": 2,
+  "max_length_tokens": 8192,
+  "stage_mix": {
+    "easy": 512,
+    "medium": 190,
+    "hard": 458
+  },
+  "n_selected": 1160,
+  "n_fit": 1106,
+  "n_drug_holdout": 54,
+  "fit": {
+    "n_kept": 1106,
+    "n_skipped": 0,
+    "by_reason": {},
+    "n_script_failures": 0,
+    "script_failures": [],
+    "n_reward_dropped": 0,
+    "reward_dropped": [],
+    "char_length_max": 10063,
+    "char_length_over_token_limit": 52,
+    "char_length_over_token_limit_ids": [
+      {
+        "task_id": "FG-0820",
+        "chars": 9269
+      },
+      {
+        "task_id": "FG-0823",
+        "chars": 8681
+      },
+      {
+        "task_id": "FG-0831",
+        "chars": 9093
+      },
+      {
+        "task_id": "FG-0833",
+        "chars": 9256
+      },
+      {
+        "task_id": "FG-0839",
+        "chars": 8377
+      },
+      {
+        "task_id": "FG-0848",
+        "chars": 9297
+      },
+      {
+        "task_id": "FG-0858",
+        "chars": 8333
+      },
+      {
+        "task_id": "FG-0863",
+        "chars": 8731
+      },
+      {
+        "task_id": "FG-0866",
+        "chars": 9430
+      },
+      {
+        "task_id": "FG-0868",
+        "chars": 8380
+      },
+      {
+        "task_id": "FG-0874",
+        "chars": 8397
+      },
+      {
+        "task_id": "FG-0876",
+        "chars": 9266
+      },
+      {
+        "task_id": "FG-0883",
+        "chars": 8862
+      },
+      {
+        "task_id": "FG-0888",
+        "chars": 9454
+      },
+      {
+        "task_id": "FG-0900",
+        "chars": 9174
+      },
+      {
+        "task_id": "FG-0905",
+        "chars": 8887
+      },
+      {
+        "task_id": "FG-0916",
+        "chars": 8666
+      },
+      {
+        "task_id": "FG-0922",
+        "chars": 8693
+      },
+      {
+        "task_id": "FG-0821",
+        "chars": 9323
+      },
+      {
+        "task_id": "FG-0824",
+        "chars": 8734
+      },
+      {
+        "task_id": "FG-0832",
+        "chars": 9147
+      },
+      {
+        "task_id": "FG-0834",
+        "chars": 9306
+      },
+      {
+        "task_id": "FG-0840",
+        "chars": 8428
+      },
+      {
+        "task_id": "FG-0849",
+        "chars": 9349
+      },
+      {
+        "task_id": "FG-0859",
+        "chars": 8386
+      },
+      {
+        "task_id": "FG-0864",
+        "chars": 8784
+      },
+      {
+        "task_id": "FG-0875",
+        "chars": 8452
+      },
+      {
+        "task_id": "FG-0877",
+        "chars": 9319
+      },
+      {
+        "task_id": "FG-0884",
+        "chars": 8915
+      },
+      {
+        "task_id": "FG-0889",
+        "chars": 9508
+      },
+      {
+        "task_id": "FG-0901",
+        "chars": 9226
+      },
+      {
+        "task_id": "FG-0906",
+        "chars": 8939
+      },
+      {
+        "task_id": "FG-0915",
+        "chars": 8717
+      },
+      {
+        "task_id": "FG-0921",
+        "chars": 8745
+      },
+      {
+        "task_id": "FG-0926",
+        "chars": 9882
+      },
+      {
+        "task_id": "FG-0928",
+        "chars": 9292
+      },
+      {
+        "task_id": "FG-0933",
+        "chars": 9704
+      },
+      {
+        "task_id": "FG-0934",
+        "chars": 9865
+      },
+      {
+        "task_id": "FG-0938",
+        "chars": 8988
+      },
+      {
+        "task_id": "FG-0945",
+        "chars": 9907
+      },
+      {
+        "task_id": "FG-0953",
+        "chars": 8946
+      },
+      {
+        "task_id": "FG-0955",
+        "chars": 9336
+      },
+      {
+        "task_id": "FG-0957",
+        "chars": 10039
+      },
+      {
+        "task_id": "FG-0959",
+        "chars": 8994
+      },
+      {
+        "task_id": "FG-0962",
+        "chars": 9004
+      },
+      {
+        "task_id": "FG-0963",
+        "chars": 9876
+      },
+      {
+        "task_id": "FG-0968",
+        "chars": 9471
+      },
+      {
+        "task_id": "FG-0971",
+        "chars": 10063
+      },
+      {
+        "task_id": "FG-0979",
+        "chars": 9784
+      },
+      {
+        "task_id": "FG-0983",
+        "chars": 9494
+      },
+      {
+        "task_id": "FG-0988",
+        "chars": 9271
+      },
+      {
+        "task_id": "FG-0992",
+        "chars": 9301
+      }
+    ]
+  },
+  "drug_holdout": {
+    "n_kept": 54,
+    "n_skipped": 0,
+    "by_reason": {},
+    "n_script_failures": 0,
+    "script_failures": [],
+    "n_reward_dropped": 0,
+    "reward_dropped": [],
+    "char_length_max": 8408,
+    "char_length_over_token_limit": 1,
+    "char_length_over_token_limit_ids": [
+      {
+        "task_id": "FG-0987",
+        "chars": 8408
+      }
+    ]
+  },
+  "baked_budget_line": "- You get at most 8 tool calls, then you must submit_answer.",
+  "baked_system_prompt": "You are an FDA-Gym agent. Answer only from tool outputs returned in THIS episode.\nDo not use memorized FDA facts. If a tool result does not contain the answer, call another tool or submit NOT_FOUND.\n\nCall submit_answer when you are done. Its arguments must match schemas/answer.schema.json:\n  {\"answer\": <string|number|boolean>, \"citations\": [{\"endpoint\": \"...\", \"id\": \"...\", \"field\": \"...\", \"quote\": \"...\"}]}\n- endpoint is one of drug/label, drug/event, drug/drugsfda.\n- id is a set_id, application_number, or \"step:<n>\" for FAERS aggregates and empty searches (n is the tool-call index that returned them).\n- field is a path the tool actually returned: boxed_warning, sections, submissions, products, sponsor_name, results, meta.results.total, ...\n- search_approvals accepts application_number (NDA020977, NDA 020977, 020977, or a BLA/ANDA number) as well as generic_name. Use the application number when the question names one.\n- search_approvals returns one page (page starts at 1). NDA and BLA rows come before ANDA, and submissions list only the original approval.\n- quote is copied from that field in THIS episode's tool output (verbatim span, not a paraphrase). Quotes shorter than 4 characters never count.\n- MedDRA reaction terms are uppercase with British spelling; copy the term from results, do not translate it.\n- A missing boxed warning is cited from search_drug_label: id = the label's set_id, field = sections.\n- NOT_FOUND is only correct when the snapshot has no record, and only after you searched.\n- query_adverse_events requires generic_name and mode. mode is top_reactions or count. top_reactions returns at most 10 MedDRA terms (each term and count) in results, under id step:<n>. count returns how many reports match in meta.results.total and leaves results empty, under the same id. serious may only be true; omit it for all reports. year, when set, must be from 2020 through 2025. serious and year filter both modes.\n- You get at most 8 tool calls, then you must submit_answer.",
+  "example_row": {
+    "task_id": "FG-0343",
+    "prompt_version": "v4",
+    "tool_budget": 8,
+    "reward_total": 1.0,
+    "tools": [
+      "search_approvals",
+      "submit_answer"
+    ],
+    "prompt": "<|im_start|>system\nYou are an FDA-Gym agent. Answer only from tool outputs returned in THIS episode.\nDo not use memorized FDA facts. If a tool result does not contain the answer, call another tool or submit NOT_FOUND.\n\nCall submit_answer when you are done. Its arguments must match schemas/answer.schema.json:\n  {\"answer\": <string|number|boolean>, \"citations\": [{\"endpoint\": \"...\", \"id\": \"...\", \"field\": \"...\", \"quote\": \"...\"}]}\n- endpoint is one of drug/label, drug/event, drug/drugsfda.\n- id is a set_id, application_number, or \"step:<n>\" for FAERS aggregates and empty searches (n is the tool-call index that returned them).\n- field is a path the tool actually returned: boxed_warning, sections, submissions, products, sponsor_name, results, meta.results.total, ...\n- search_approvals accepts application_number (NDA020977, NDA 020977, 020977, or a BLA/ANDA number) as well as generic_name. Use the application number when the question names one.\n- search_approvals returns one page (page starts at 1). NDA and BLA rows come before ANDA, and submissions list only the original approval.\n- quote is copied from that field in THIS episode's tool output (verbatim span, not a paraphrase). Quotes shorter than 4 characters never count.\n- MedDRA reaction terms are uppercase with British spelling; copy the term from results, do not translate it.\n- A missing boxed warning is cited from search_drug_label: id = the label's set_id, field = sections.\n- NOT_FOUND is only correct when the snapshot has no record, and only after you searched.\n- query_adverse_events requires generic_name and mode. mode is top_reactions or count. top_reactions returns at most 10 MedDRA terms (each term and count) in results, under id step:<n>. count returns how many reports match in meta.results.total and leaves results empty, under the same id. serious may only be true; omit it for all reports. year, when set, must be from 2020 through 2025. serious and year filter both modes.\n- You get at most 8 tool calls, then you must submit_answer.\n\n# Tools\nFor each function call, return a json object inside <tool_call></tool_call> tags.\n- search_drug_label: List drug-label summaries for one generic name (set_id, brand, manufacturer, effective_time, sections). At most 10 rows per page. has_section keeps labels that contain that section. Section text is not included; call get_label_section for it.\n- get_label_section: Return one section of a label whose set_id was already returned by search_drug_label in this episode. Text longer than 1500 characters is cut, and the output says so.\n- query_adverse_events: FAERS reports for one generic name. mode top_reactions returns the top MedDRA terms; mode count returns how many reports match. serious may only be true (omit it for all reports). year, when set, must be from 2020 through 2025.\n- search_approvals: Drugs@FDA applications. Pass generic_name, or application_number to fetch one application (NDA020977, 'NDA 020977', 020977, or the same shapes for a BLA or ANDA). When application_number is set it selects that application and generic_name is ignored. Each result is one application: NDA and BLA before ANDA, with sponsor_name, brand, products (brand, dosage form, route), and submissions limited to the original approval. n_supplements counts the other submissions. page starts at 1 (the default) and each page fits in the tool response; pass a higher page for the rest. An unknown application number returns an empty result list.\n- submit_answer: Finish the episode. answer is one string, number, or boolean, or the string NOT_FOUND. citations quote a field you were shown. At most 8 citations.\n<|im_end|>\n<|im_start|>user\nIn what year did the FDA approve the original NDA for ATTRUBY (acoramidis)?<|im_end|>\n<|im_start|>assistant\n",
+    "model_spans": [
+      "<tool_call>\n{\"name\": \"search_approvals\", \"arguments\": {\"generic_name\": \"acoramidis\"}}\n</tool_call>",
+      "<tool_call>\n{\"name\": \"submit_answer\", \"arguments\": {\"answer\": 2024, \"citations\": [{\"endpoint\": \"drug/drugsfda\", \"id\": \"NDA216540\", \"field\": \"submissions\", \"quote\": \"[{\\\"submission_type\\\":\"}]}}\n</tool_call>"
+    ]
+  },
+  "hard_train_opt_in": {
+    "prompt_version": "v4",
+    "tool_budget": 8,
+    "min_reward": 0.97,
+    "include_hard_train": true,
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "learning_rate": 0.0001,
+    "num_train_epochs": 1.0,
+    "per_device_train_batch_size": 4,
+    "gradient_accumulation_steps": 2,
+    "max_length_tokens": 8192,
+    "stage_mix": {
+      "easy": 512,
+      "medium": 190,
+      "hard": 458,
+      "hard_train": 881
+    },
+    "n_selected": 2041,
+    "n_fit": 1963,
+    "n_drug_holdout": 78,
+    "fit": {
+      "n_kept": 1963,
+      "n_skipped": 0,
+      "by_reason": {},
+      "n_script_failures": 0,
+      "script_failures": [],
+      "n_reward_dropped": 0,
+      "reward_dropped": [],
+      "char_length_max": 25251,
+      "char_length_over_token_limit": 470,
+      "char_length_over_token_limit_ids": [
+        {
+          "task_id": "FG-0820",
+          "chars": 9269
+        },
+        {
+          "task_id": "FG-0823",
+          "chars": 8681
+        },
+        {
+          "task_id": "FG-0831",
+          "chars": 9093
+        },
+        {
+          "task_id": "FG-0833",
+          "chars": 9256
+        },
+        {
+          "task_id": "FG-0839",
+          "chars": 8377
+        },
+        {
+          "task_id": "FG-0848",
+          "chars": 9297
+        },
+        {
+          "task_id": "FG-0858",
+          "chars": 8333
+        },
+        {
+          "task_id": "FG-0863",
+          "chars": 8731
+        },
+        {
+          "task_id": "FG-0866",
+          "chars": 9430
+        },
+        {
+          "task_id": "FG-0868",
+          "chars": 8380
+        },
+        {
+          "task_id": "FG-0874",
+          "chars": 8397
+        },
+        {
+          "task_id": "FG-0876",
+          "chars": 9266
+        },
+        {
+          "task_id": "FG-0883",
+          "chars": 8862
+        },
+        {
+          "task_id": "FG-0888",
+          "chars": 9454
+        },
+        {
+          "task_id": "FG-0900",
+          "chars": 9174
+        },
+        {
+          "task_id": "FG-0905",
+          "chars": 8887
+        },
+        {
+          "task_id": "FG-0916",
+          "chars": 8666
+        },
+        {
+          "task_id": "FG-0922",
+          "chars": 8693
+        },
+        {
+          "task_id": "FG-0821",
+          "chars": 9323
+        },
+        {
+          "task_id": "FG-0824",
+          "chars": 8734
+        },
+        {
+          "task_id": "FG-0832",
+          "chars": 9147
+        },
+        {
+          "task_id": "FG-0834",
+          "chars": 9306
+        },
+        {
+          "task_id": "FG-0840",
+          "chars": 8428
+        },
+        {
+          "task_id": "FG-0849",
+          "chars": 9349
+        },
+        {
+          "task_id": "FG-0859",
+          "chars": 8386
+        },
+        {
+          "task_id": "FG-0864",
+          "chars": 8784
+        },
+        {
+          "task_id": "FG-0875",
+          "chars": 8452
+        },
+        {
+          "task_id": "FG-0877",
+          "chars": 9319
+        },
+        {
+          "task_id": "FG-0884",
+          "chars": 8915
+        },
+        {
+          "task_id": "FG-0889",
+          "chars": 9508
+        },
+        {
+          "task_id": "FG-0901",
+          "chars": 9226
+        },
+        {
+          "task_id": "FG-0906",
+          "chars": 8939
+        },
+        {
+          "task_id": "FG-0915",
+          "chars": 8717
+        },
+        {
+          "task_id": "FG-0921",
+          "chars": 8745
+        },
+        {
+          "task_id": "FG-0926",
+          "chars": 9882
+        },
+        {
+          "task_id": "FG-0928",
+          "chars": 9292
+        },
+        {
+          "task_id": "FG-0933",
+          "chars": 9704
+        },
+        {
+          "task_id": "FG-0934",
+          "chars": 9865
+        },
+        {
+          "task_id": "FG-0938",
+          "chars": 8988
+        },
+        {
+          "task_id": "FG-0945",
+          "chars": 9907
+        },
+        {
+          "task_id": "FG-0953",
+          "chars": 8946
+        },
+        {
+          "task_id": "FG-0955",
+          "chars": 9336
+        },
+        {
+          "task_id": "FG-0957",
+          "chars": 10039
+        },
+        {
+          "task_id": "FG-0959",
+          "chars": 8994
+        },
+        {
+          "task_id": "FG-0962",
+          "chars": 9004
+        },
+        {
+          "task_id": "FG-0963",
+          "chars": 9876
+        },
+        {
+          "task_id": "FG-0968",
+          "chars": 9471
+        },
+        {
+          "task_id": "FG-0971",
+          "chars": 10063
+        },
+        {
+          "task_id": "FG-0979",
+          "chars": 9784
+        },
+        {
+          "task_id": "FG-0983",
+          "chars": 9494
+        },
+        {
+          "task_id": "FG-0988",
+          "chars": 9271
+        },
+        {
+          "task_id": "FG-0992",
+          "chars": 9301
+        },
+        {
+          "task_id": "FG-8102",
+          "chars": 14944
+        },
+        {
+          "task_id": "FG-8103",
+          "chars": 15596
+        },
+        {
+          "task_id": "FG-8104",
+          "chars": 24667
+        },
+        {
+          "task_id": "FG-8108",
+          "chars": 15125
+        },
+        {
+          "task_id": "FG-8115",
+          "chars": 23416
+        },
+        {
+          "task_id": "FG-8116",
+          "chars": 15276
+        },
+        {
+          "task_id": "FG-8117",
+          "chars": 23775
+        },
+        {
+          "task_id": "FG-8118",
+          "chars": 13056
+        },
+        {
+          "task_id": "FG-8120",
+          "chars": 24653
+        },
+        {
+          "task_id": "FG-8123",
+          "chars": 15187
+        },
+        {
+          "task_id": "FG-8125",
+          "chars": 24407
+        },
+        {
+          "task_id": "FG-8128",
+          "chars": 12452
+        },
+        {
+          "task_id": "FG-8131",
+          "chars": 14901
+        },
+        {
+          "task_id": "FG-8147",
+          "chars": 24499
+        },
+        {
+          "task_id": "FG-8154",
+          "chars": 22411
+        },
+        {
+          "task_id": "FG-8155",
+          "chars": 15016
+        },
+        {
+          "task_id": "FG-8157",
+          "chars": 24930
+        },
+        {
+          "task_id": "FG-8161",
+          "chars": 15214
+        },
+        {
+          "task_id": "FG-8165",
+          "chars": 15297
+        },
+        {
+          "task_id": "FG-8189",
+          "chars": 15466
+        },
+        {
+          "task_id": "FG-8197",
+          "chars": 15667
+        },
+        {
+          "task_id": "FG-8202",
+          "chars": 24194
+        },
+        {
+          "task_id": "FG-8203",
+          "chars": 15364
+        },
+        {
+          "task_id": "FG-8204",
+          "chars": 22557
+        },
+        {
+          "task_id": "FG-8208",
+          "chars": 24830
+        },
+        {
+          "task_id": "FG-8214",
+          "chars": 25062
+        },
+        {
+          "task_id": "FG-8222",
+          "chars": 22384
+        },
+        {
+          "task_id": "FG-8223",
+          "chars": 22718
+        },
+        {
+          "task_id": "FG-8228",
+          "chars": 25072
+        },
+        {
+          "task_id": "FG-8229",
+          "chars": 15547
+        },
+        {
+          "task_id": "FG-8230",
+          "chars": 15441
+        },
+        {
+          "task_id": "FG-8231",
+          "chars": 23849
+        },
+        {
+          "task_id": "FG-8239",
+          "chars": 15596
+        },
+        {
+          "task_id": "FG-8240",
+          "chars": 14931
+        },
+        {
+          "task_id": "FG-8243",
+          "chars": 15265
+        },
+        {
+          "task_id": "FG-8244",
+          "chars": 12481
+        },
+        {
+          "task_id": "FG-8247",
+          "chars": 12665
+        },
+        {
+          "task_id": "FG-8251",
+          "chars": 13545
+        },
+        {
+          "task_id": "FG-8258",
+          "chars": 24657
+        },
+        {
+          "task_id": "FG-8265",
+          "chars": 24496
+        },
+        {
+          "task_id": "FG-8266",
+          "chars": 15333
+        },
+        {
+          "task_id": "FG-8271",
+          "chars": 24863
+        },
+        {
+          "task_id": "FG-8273",
+          "chars": 15480
+        },
+        {
+          "task_id": "FG-8278",
+          "chars": 25234
+        },
+        {
+          "task_id": "FG-8279",
+          "chars": 24068
+        },
+        {
+          "task_id": "FG-8281",
+          "chars": 15505
+        },
+        {
+          "task_id": "FG-8290",
+          "chars": 12764
+        },
+        {
+          "task_id": "FG-8301",
+          "chars": 13255
+        },
+        {
+          "task_id": "FG-8318",
+          "chars": 14980
+        },
+        {
+          "task_id": "FG-8321",
+          "chars": 15431
+        },
+        {
+          "task_id": "FG-8332",
+          "chars": 21240
+        },
+        {
+          "task_id": "FG-8334",
+          "chars": 22168
+        },
+        {
+          "task_id": "FG-8338",
+          "chars": 22195
+        },
+        {
+          "task_id": "FG-8339",
+          "chars": 22466
+        },
+        {
+          "task_id": "FG-8341",
+          "chars": 15094
+        },
+        {
+          "task_id": "FG-8342",
+          "chars": 22007
+        },
+        {
+          "task_id": "FG-8343",
+          "chars": 14757
+        },
+        {
+          "task_id": "FG-8344",
+          "chars": 22093
+        },
+        {
+          "task_id": "FG-8347",
+          "chars": 22117
+        },
+        {
+          "task_id": "FG-8348",
+          "chars": 13543
+        },
+        {
+          "task_id": "FG-8349",
+          "chars": 12623
+        },
+        {
+          "task_id": "FG-8350",
+          "chars": 10780
+        },
+        {
+          "task_id": "FG-8352",
+          "chars": 21857
+        },
+        {
+          "task_id": "FG-8364",
+          "chars": 15064
+        },
+        {
+          "task_id": "FG-8366",
+          "chars": 15176
+        },
+        {
+          "task_id": "FG-8367",
+          "chars": 15267
+        },
+        {
+          "task_id": "FG-8376",
+          "chars": 13081
+        },
+        {
+          "task_id": "FG-8385",
+          "chars": 14863
+        },
+        {
+          "task_id": "FG-8391",
+          "chars": 24442
+        },
+        {
+          "task_id": "FG-8393",
+          "chars": 24500
+        },
+        {
+          "task_id": "FG-8397",
+          "chars": 22233
+        },
+        {
+          "task_id": "FG-8403",
+          "chars": 15161
+        },
+        {
+          "task_id": "FG-8409",
+          "chars": 24628
+        },
+        {
+          "task_id": "FG-8412",
+          "chars": 22250
+        },
+        {
+          "task_id": "FG-8414",
+          "chars": 24920
+        },
+        {
+          "task_id": "FG-8420",
+          "chars": 15184
+        },
+        {
+          "task_id": "FG-8421",
+          "chars": 15311
+        },
+        {
+          "task_id": "FG-8433",
+          "chars": 19181
+        },
+        {
+          "task_id": "FG-8434",
+          "chars": 24718
+        },
+        {
+          "task_id": "FG-8441",
+          "chars": 15171
+        },
+        {
+          "task_id": "FG-8442",
+          "chars": 14909
+        },
+        {
+          "task_id": "FG-8444",
+          "chars": 15130
+        },
+        {
+          "task_id": "FG-8447",
+          "chars": 14915
+        },
+        {
+          "task_id": "FG-8449",
+          "chars": 21444
+        },
+        {
+          "task_id": "FG-8452",
+          "chars": 15213
+        },
+        {
+          "task_id": "FG-8454",
+          "chars": 12300
+        },
+        {
+          "task_id": "FG-8456",
+          "chars": 15092
+        },
+        {
+          "task_id": "FG-8460",
+          "chars": 24147
+        },
+        {
+          "task_id": "FG-8461",
+          "chars": 24391
+        },
+        {
+          "task_id": "FG-8463",
+          "chars": 15268
+        },
+        {
+          "task_id": "FG-8464",
+          "chars": 15121
+        },
+        {
+          "task_id": "FG-8466",
+          "chars": 12647
+        },
+        {
+          "task_id": "FG-8471",
+          "chars": 15123
+        },
+        {
+          "task_id": "FG-8474",
+          "chars": 15083
+        },
+        {
+          "task_id": "FG-8479",
+          "chars": 12914
+        },
+        {
+          "task_id": "FG-8483",
+          "chars": 10851
+        },
+        {
+          "task_id": "FG-8485",
+          "chars": 15785
+        },
+        {
+          "task_id": "FG-8486",
+          "chars": 23619
+        },
+        {
+          "task_id": "FG-8489",
+          "chars": 12971
+        },
+        {
+          "task_id": "FG-8490",
+          "chars": 24867
+        },
+        {
+          "task_id": "FG-8491",
+          "chars": 24921
+        },
+        {
+          "task_id": "FG-8492",
+          "chars": 24584
+        },
+        {
+          "task_id": "FG-8493",
+          "chars": 24668
+        },
+        {
+          "task_id": "FG-8495",
+          "chars": 13797
+        },
+        {
+          "task_id": "FG-8496",
+          "chars": 15714
+        },
+        {
+          "task_id": "FG-8502",
+          "chars": 24610
+        },
+        {
+          "task_id": "FG-8503",
+          "chars": 12878
+        },
+        {
+          "task_id": "FG-8508",
+          "chars": 24964
+        },
+        {
+          "task_id": "FG-8509",
+          "chars": 25098
+        },
+        {
+          "task_id": "FG-8510",
+          "chars": 15614
+        },
+        {
+          "task_id": "FG-8511",
+          "chars": 24832
+        },
+        {
+          "task_id": "FG-8518",
+          "chars": 10236
+        },
+        {
+          "task_id": "FG-8520",
+          "chars": 12454
+        },
+        {
+          "task_id": "FG-8523",
+          "chars": 12389
+        },
+        {
+          "task_id": "FG-8529",
+          "chars": 12796
+        },
+        {
+          "task_id": "FG-8530",
+          "chars": 12333
+        },
+        {
+          "task_id": "FG-8531",
+          "chars": 9861
+        },
+        {
+          "task_id": "FG-8536",
+          "chars": 15367
+        },
+        {
+          "task_id": "FG-8537",
+          "chars": 24119
+        },
+        {
+          "task_id": "FG-8545",
+          "chars": 12691
+        },
+        {
+          "task_id": "FG-8548",
+          "chars": 21452
+        },
+        {
+          "task_id": "FG-8550",
+          "chars": 23970
+        },
+        {
+          "task_id": "FG-8554",
+          "chars": 23933
+        },
+        {
+          "task_id": "FG-8556",
+          "chars": 23509
+        },
+        {
+          "task_id": "FG-8557",
+          "chars": 23472
+        },
+        {
+          "task_id": "FG-8576",
+          "chars": 10067
+        },
+        {
+          "task_id": "FG-8579",
+          "chars": 12858
+        },
+        {
+          "task_id": "FG-8583",
+          "chars": 24803
+        },
+        {
+          "task_id": "FG-8595",
+          "chars": 24485
+        },
+        {
+          "task_id": "FG-8598",
+          "chars": 22270
+        },
+        {
+          "task_id": "FG-8599",
+          "chars": 15211
+        },
+        {
+          "task_id": "FG-8601",
+          "chars": 25079
+        },
+        {
+          "task_id": "FG-8603",
+          "chars": 13354
+        },
+        {
+          "task_id": "FG-8605",
+          "chars": 13052
+        },
+        {
+          "task_id": "FG-8606",
+          "chars": 25056
+        },
+        {
+          "task_id": "FG-8608",
+          "chars": 15664
+        },
+        {
+          "task_id": "FG-8615",
+          "chars": 23832
+        },
+        {
+          "task_id": "FG-8618",
+          "chars": 12589
+        },
+        {
+          "task_id": "FG-8619",
+          "chars": 24749
+        },
+        {
+          "task_id": "FG-8620",
+          "chars": 13716
+        },
+        {
+          "task_id": "FG-8622",
+          "chars": 10862
+        },
+        {
+          "task_id": "FG-8627",
+          "chars": 13307
+        },
+        {
+          "task_id": "FG-8632",
+          "chars": 25116
+        },
+        {
+          "task_id": "FG-8642",
+          "chars": 10795
+        },
+        {
+          "task_id": "FG-8646",
+          "chars": 13418
+        },
+        {
+          "task_id": "FG-8647",
+          "chars": 13408
+        },
+        {
+          "task_id": "FG-8652",
+          "chars": 24773
+        },
+        {
+          "task_id": "FG-8653",
+          "chars": 15345
+        },
+        {
+          "task_id": "FG-8659",
+          "chars": 25002
+        },
+        {
+          "task_id": "FG-8660",
+          "chars": 22217
+        },
+        {
+          "task_id": "FG-8661",
+          "chars": 15036
+        },
+        {
+          "task_id": "FG-8662",
+          "chars": 14828
+        },
+        {
+          "task_id": "FG-8663",
+          "chars": 23632
+        },
+        {
+          "task_id": "FG-8664",
+          "chars": 15307
+        },
+        {
+          "task_id": "FG-8665",
+          "chars": 12634
+        },
+        {
+          "task_id": "FG-8667",
+          "chars": 12873
+        },
+        {
+          "task_id": "FG-8670",
+          "chars": 23955
+        },
+        {
+          "task_id": "FG-8681",
+          "chars": 15409
+        },
+        {
+          "task_id": "FG-8682",
+          "chars": 25048
+        },
+        {
+          "task_id": "FG-8683",
+          "chars": 22588
+        },
+        {
+          "task_id": "FG-8684",
+          "chars": 24850
+        },
+        {
+          "task_id": "FG-8686",
+          "chars": 15461
+        },
+        {
+          "task_id": "FG-8691",
+          "chars": 12736
+        },
+        {
+          "task_id": "FG-8692",
+          "chars": 12908
+        },
+        {
+          "task_id": "FG-8694",
+          "chars": 13051
+        },
+        {
+          "task_id": "FG-8695",
+          "chars": 12737
+        },
+        {
+          "task_id": "FG-8701",
+          "chars": 12803
+        },
+        {
+          "task_id": "FG-8708",
+          "chars": 12507
+        },
+        {
+          "task_id": "FG-8710",
+          "chars": 12450
+        },
+        {
+          "task_id": "FG-8717",
+          "chars": 15356
+        },
+        {
+          "task_id": "FG-8720",
+          "chars": 14994
+        },
+        {
+          "task_id": "FG-8725",
+          "chars": 15378
+        },
+        {
+          "task_id": "FG-8741",
+          "chars": 15324
+        },
+        {
+          "task_id": "FG-8743",
+          "chars": 14854
+        },
+        {
+          "task_id": "FG-8746",
+          "chars": 15018
+        },
+        {
+          "task_id": "FG-8753",
+          "chars": 15305
+        },
+        {
+          "task_id": "FG-8755",
+          "chars": 15414
+        },
+        {
+          "task_id": "FG-8756",
+          "chars": 25194
+        },
+        {
+          "task_id": "FG-8760",
+          "chars": 15177
+        },
+        {
+          "task_id": "FG-8761",
+          "chars": 22351
+        },
+        {
+          "task_id": "FG-8762",
+          "chars": 23853
+        },
+        {
+          "task_id": "FG-8763",
+          "chars": 15584
+        },
+        {
+          "task_id": "FG-8764",
+          "chars": 13751
+        },
+        {
+          "task_id": "FG-8765",
+          "chars": 24721
+        },
+        {
+          "task_id": "FG-8766",
+          "chars": 24160
+        },
+        {
+          "task_id": "FG-8767",
+          "chars": 25251
+        },
+        {
+          "task_id": "FG-8770",
+          "chars": 22342
+        },
+        {
+          "task_id": "FG-8776",
+          "chars": 14987
+        },
+        {
+          "task_id": "FG-8778",
+          "chars": 21471
+        },
+        {
+          "task_id": "FG-8781",
+          "chars": 24982
+        },
+        {
+          "task_id": "FG-8782",
+          "chars": 24615
+        },
+        {
+          "task_id": "FG-8783",
+          "chars": 15153
+        },
+        {
+          "task_id": "FG-8785",
+          "chars": 22374
+        },
+        {
+          "task_id": "FG-8786",
+          "chars": 14960
+        },
+        {
+          "task_id": "FG-8787",
+          "chars": 24890
+        },
+        {
+          "task_id": "FG-8789",
+          "chars": 22240
+        },
+        {
+          "task_id": "FG-8791",
+          "chars": 24674
+        },
+        {
+          "task_id": "FG-8792",
+          "chars": 24623
+        },
+        {
+          "task_id": "FG-8795",
+          "chars": 12657
+        },
+        {
+          "task_id": "FG-8805",
+          "chars": 15629
+        },
+        {
+          "task_id": "FG-8809",
+          "chars": 14809
+        },
+        {
+          "task_id": "FG-8811",
+          "chars": 15053
+        },
+        {
+          "task_id": "FG-8813",
+          "chars": 15030
+        },
+        {
+          "task_id": "FG-8818",
+          "chars": 24985
+        },
+        {
+          "task_id": "FG-8824",
+          "chars": 24701
+        },
+        {
+          "task_id": "FG-8825",
+          "chars": 22296
+        },
+        {
+          "task_id": "FG-8830",
+          "chars": 23682
+        },
+        {
+          "task_id": "FG-8846",
+          "chars": 10001
+        },
+        {
+          "task_id": "FG-8847",
+          "chars": 15885
+        },
+        {
+          "task_id": "FG-8848",
+          "chars": 9978
+        },
+        {
+          "task_id": "FG-8849",
+          "chars": 15925
+        },
+        {
+          "task_id": "FG-8850",
+          "chars": 15904
+        },
+        {
+          "task_id": "FG-8851",
+          "chars": 15943
+        },
+        {
+          "task_id": "FG-8852",
+          "chars": 10811
+        },
+        {
+          "task_id": "FG-8853",
+          "chars": 15886
+        },
+        {
+          "task_id": "FG-8854",
+          "chars": 10772
+        },
+        {
+          "task_id": "FG-8855",
+          "chars": 15841
+        },
+        {
+          "task_id": "FG-8856",
+          "chars": 15881
+        },
+        {
+          "task_id": "FG-8857",
+          "chars": 15948
+        },
+        {
+          "task_id": "FG-8858",
+          "chars": 10835
+        },
+        {
+          "task_id": "FG-8859",
+          "chars": 16616
+        },
+        {
+          "task_id": "FG-8860",
+          "chars": 16598
+        },
+        {
+          "task_id": "FG-8863",
+          "chars": 15903
+        },
+        {
+          "task_id": "FG-8864",
+          "chars": 10772
+        },
+        {
+          "task_id": "FG-8865",
+          "chars": 16593
+        },
+        {
+          "task_id": "FG-8866",
+          "chars": 11524
+        },
+        {
+          "task_id": "FG-8868",
+          "chars": 10285
+        },
+        {
+          "task_id": "FG-8869",
+          "chars": 15497
+        },
+        {
+          "task_id": "FG-8870",
+          "chars": 16123
+        },
+        {
+          "task_id": "FG-8871",
+          "chars": 10406
+        },
+        {
+          "task_id": "FG-8872",
+          "chars": 15512
+        },
+        {
+          "task_id": "FG-8873",
+          "chars": 15473
+        },
+        {
+          "task_id": "FG-8874",
+          "chars": 15450
+        },
+        {
+          "task_id": "FG-8875",
+          "chars": 9635
+        },
+        {
+          "task_id": "FG-8876",
+          "chars": 15560
+        },
+        {
+          "task_id": "FG-8877",
+          "chars": 10469
+        },
+        {
+          "task_id": "FG-8878",
+          "chars": 16185
+        },
+        {
+          "task_id": "FG-8879",
+          "chars": 16210
+        },
+        {
+          "task_id": "FG-8880",
+          "chars": 11181
+        },
+        {
+          "task_id": "FG-8881",
+          "chars": 16162
+        },
+        {
+          "task_id": "FG-8882",
+          "chars": 10468
+        },
+        {
+          "task_id": "FG-8883",
+          "chars": 15472
+        },
+        {
+          "task_id": "FG-8885",
+          "chars": 9612
+        },
+        {
+          "task_id": "FG-8886",
+          "chars": 15537
+        },
+        {
+          "task_id": "FG-8888",
+          "chars": 9893
+        },
+        {
+          "task_id": "FG-8889",
+          "chars": 15707
+        },
+        {
+          "task_id": "FG-8890",
+          "chars": 15769
+        },
+        {
+          "task_id": "FG-8891",
+          "chars": 10605
+        },
+        {
+          "task_id": "FG-8892",
+          "chars": 16419
+        },
+        {
+          "task_id": "FG-8893",
+          "chars": 9892
+        },
+        {
+          "task_id": "FG-8894",
+          "chars": 15706
+        },
+        {
+          "task_id": "FG-8895",
+          "chars": 15746
+        },
+        {
+          "task_id": "FG-8896",
+          "chars": 10789
+        },
+        {
+          "task_id": "FG-8897",
+          "chars": 10766
+        },
+        {
+          "task_id": "FG-8898",
+          "chars": 15617
+        },
+        {
+          "task_id": "FG-8899",
+          "chars": 15679
+        },
+        {
+          "task_id": "FG-8900",
+          "chars": 15657
+        },
+        {
+          "task_id": "FG-8901",
+          "chars": 10726
+        },
+        {
+          "task_id": "FG-8902",
+          "chars": 10605
+        },
+        {
+          "task_id": "FG-8903",
+          "chars": 16392
+        },
+        {
+          "task_id": "FG-8904",
+          "chars": 16330
+        },
+        {
+          "task_id": "FG-8905",
+          "chars": 16329
+        },
+        {
+          "task_id": "FG-8906",
+          "chars": 15656
+        },
+        {
+          "task_id": "FG-8907",
+          "chars": 10766
+        },
+        {
+          "task_id": "FG-8908",
+          "chars": 15719
+        },
+        {
+          "task_id": "FG-8909",
+          "chars": 10695
+        },
+        {
+          "task_id": "FG-8912",
+          "chars": 15767
+        },
+        {
+          "task_id": "FG-8913",
+          "chars": 15762
+        },
+        {
+          "task_id": "FG-8914",
+          "chars": 15763
+        },
+        {
+          "task_id": "FG-8915",
+          "chars": 10508
+        },
+        {
+          "task_id": "FG-8916",
+          "chars": 16475
+        },
+        {
+          "task_id": "FG-8917",
+          "chars": 15802
+        },
+        {
+          "task_id": "FG-8919",
+          "chars": 10672
+        },
+        {
+          "task_id": "FG-8920",
+          "chars": 9838
+        },
+        {
+          "task_id": "FG-8921",
+          "chars": 10346
+        },
+        {
+          "task_id": "FG-8922",
+          "chars": 11179
+        },
+        {
+          "task_id": "FG-8923",
+          "chars": 10506
+        },
+        {
+          "task_id": "FG-8924",
+          "chars": 9696
+        },
+        {
+          "task_id": "FG-8925",
+          "chars": 11219
+        },
+        {
+          "task_id": "FG-8926",
+          "chars": 11179
+        },
+        {
+          "task_id": "FG-8928",
+          "chars": 10506
+        },
+        {
+          "task_id": "FG-8929",
+          "chars": 9798
+        },
+        {
+          "task_id": "FG-8930",
+          "chars": 15762
+        },
+        {
+          "task_id": "FG-8931",
+          "chars": 10694
+        },
+        {
+          "task_id": "FG-8932",
+          "chars": 16479
+        },
+        {
+          "task_id": "FG-8933",
+          "chars": 15767
+        },
+        {
+          "task_id": "FG-8934",
+          "chars": 16474
+        },
+        {
+          "task_id": "FG-8935",
+          "chars": 16416
+        },
+        {
+          "task_id": "FG-8936",
+          "chars": 16417
+        },
+        {
+          "task_id": "FG-8937",
+          "chars": 16456
+        },
+        {
+          "task_id": "FG-8938",
+          "chars": 15824
+        },
+        {
+          "task_id": "FG-8939",
+          "chars": 9794
+        },
+        {
+          "task_id": "FG-8940",
+          "chars": 15761
+        },
+        {
+          "task_id": "FG-8941",
+          "chars": 15801
+        },
+        {
+          "task_id": "FG-8942",
+          "chars": 15744
+        },
+        {
+          "task_id": "FG-8943",
+          "chars": 10693
+        },
+        {
+          "task_id": "FG-8944",
+          "chars": 15704
+        },
+        {
+          "task_id": "FG-8945",
+          "chars": 10730
+        },
+        {
+          "task_id": "FG-8946",
+          "chars": 15806
+        },
+        {
+          "task_id": "FG-8947",
+          "chars": 9791
+        },
+        {
+          "task_id": "FG-8948",
+          "chars": 11337
+        },
+        {
+          "task_id": "FG-8949",
+          "chars": 9856
+        },
+        {
+          "task_id": "FG-8950",
+          "chars": 15802
+        },
+        {
+          "task_id": "FG-8952",
+          "chars": 16412
+        },
+        {
+          "task_id": "FG-8954",
+          "chars": 15758
+        },
+        {
+          "task_id": "FG-8955",
+          "chars": 15820
+        },
+        {
+          "task_id": "FG-8956",
+          "chars": 15757
+        },
+        {
+          "task_id": "FG-8958",
+          "chars": 16413
+        },
+        {
+          "task_id": "FG-8959",
+          "chars": 15700
+        },
+        {
+          "task_id": "FG-8960",
+          "chars": 15763
+        },
+        {
+          "task_id": "FG-8961",
+          "chars": 16475
+        },
+        {
+          "task_id": "FG-8962",
+          "chars": 10666
+        },
+        {
+          "task_id": "FG-8963",
+          "chars": 15739
+        },
+        {
+          "task_id": "FG-8964",
+          "chars": 15797
+        },
+        {
+          "task_id": "FG-8965",
+          "chars": 11379
+        },
+        {
+          "task_id": "FG-8966",
+          "chars": 9846
+        },
+        {
+          "task_id": "FG-8967",
+          "chars": 15792
+        },
+        {
+          "task_id": "FG-8968",
+          "chars": 9905
+        },
+        {
+          "task_id": "FG-8969",
+          "chars": 15872
+        },
+        {
+          "task_id": "FG-8970",
+          "chars": 15815
+        },
+        {
+          "task_id": "FG-8971",
+          "chars": 10738
+        },
+        {
+          "task_id": "FG-8972",
+          "chars": 15854
+        },
+        {
+          "task_id": "FG-8973",
+          "chars": 10558
+        },
+        {
+          "task_id": "FG-8974",
+          "chars": 15809
+        },
+        {
+          "task_id": "FG-8975",
+          "chars": 16464
+        },
+        {
+          "task_id": "FG-8976",
+          "chars": 15810
+        },
+        {
+          "task_id": "FG-8977",
+          "chars": 16522
+        },
+        {
+          "task_id": "FG-8978",
+          "chars": 15849
+        },
+        {
+          "task_id": "FG-8980",
+          "chars": 10676
+        },
+        {
+          "task_id": "FG-8981",
+          "chars": 15791
+        },
+        {
+          "task_id": "FG-8982",
+          "chars": 10781
+        },
+        {
+          "task_id": "FG-8983",
+          "chars": 11431
+        },
+        {
+          "task_id": "FG-8984",
+          "chars": 10718
+        },
+        {
+          "task_id": "FG-8986",
+          "chars": 9695
+        },
+        {
+          "task_id": "FG-8988",
+          "chars": 15883
+        },
+        {
+          "task_id": "FG-8989",
+          "chars": 15820
+        },
+        {
+          "task_id": "FG-8990",
+          "chars": 15860
+        },
+        {
+          "task_id": "FG-8991",
+          "chars": 10769
+        },
+        {
+          "task_id": "FG-8992",
+          "chars": 11459
+        },
+        {
+          "task_id": "FG-8993",
+          "chars": 10746
+        },
+        {
+          "task_id": "FG-8994",
+          "chars": 10770
+        },
+        {
+          "task_id": "FG-8995",
+          "chars": 15760
+        },
+        {
+          "task_id": "FG-8996",
+          "chars": 15697
+        },
+        {
+          "task_id": "FG-8997",
+          "chars": 16410
+        },
+        {
+          "task_id": "FG-8998",
+          "chars": 16472
+        },
+        {
+          "task_id": "FG-8999",
+          "chars": 10586
+        },
+        {
+          "task_id": "FG-9000",
+          "chars": 16533
+        },
+        {
+          "task_id": "FG-9001",
+          "chars": 16449
+        },
+        {
+          "task_id": "FG-9002",
+          "chars": 10746
+        },
+        {
+          "task_id": "FG-9003",
+          "chars": 16409
+        },
+        {
+          "task_id": "FG-9004",
+          "chars": 15736
+        },
+        {
+          "task_id": "FG-9005",
+          "chars": 15799
+        },
+        {
+          "task_id": "FG-9006",
+          "chars": 10815
+        },
+        {
+          "task_id": "FG-9007",
+          "chars": 11465
+        },
+        {
+          "task_id": "FG-9009",
+          "chars": 9919
+        },
+        {
+          "task_id": "FG-9010",
+          "chars": 9919
+        },
+        {
+          "task_id": "FG-9011",
+          "chars": 11466
+        },
+        {
+          "task_id": "FG-9012",
+          "chars": 10793
+        },
+        {
+          "task_id": "FG-9013",
+          "chars": 9959
+        },
+        {
+          "task_id": "FG-9014",
+          "chars": 15493
+        },
+        {
+          "task_id": "FG-9015",
+          "chars": 15555
+        },
+        {
+          "task_id": "FG-9016",
+          "chars": 16205
+        },
+        {
+          "task_id": "FG-9017",
+          "chars": 10458
+        },
+        {
+          "task_id": "FG-9019",
+          "chars": 16137
+        },
+        {
+          "task_id": "FG-9020",
+          "chars": 11130
+        },
+        {
+          "task_id": "FG-9021",
+          "chars": 10457
+        },
+        {
+          "task_id": "FG-9022",
+          "chars": 15463
+        },
+        {
+          "task_id": "FG-9023",
+          "chars": 9585
+        },
+        {
+          "task_id": "FG-9024",
+          "chars": 15487
+        },
+        {
+          "task_id": "FG-9026",
+          "chars": 11130
+        },
+        {
+          "task_id": "FG-9027",
+          "chars": 16136
+        },
+        {
+          "task_id": "FG-9028",
+          "chars": 11170
+        },
+        {
+          "task_id": "FG-9029",
+          "chars": 15492
+        },
+        {
+          "task_id": "FG-9030",
+          "chars": 15424
+        },
+        {
+          "task_id": "FG-9031",
+          "chars": 15532
+        },
+        {
+          "task_id": "FG-9032",
+          "chars": 10457
+        },
+        {
+          "task_id": "FG-9033",
+          "chars": 15464
+        },
+        {
+          "task_id": "FG-9034",
+          "chars": 15526
+        },
+        {
+          "task_id": "FG-9035",
+          "chars": 10594
+        },
+        {
+          "task_id": "FG-9036",
+          "chars": 10572
+        },
+        {
+          "task_id": "FG-9037",
+          "chars": 9699
+        },
+        {
+          "task_id": "FG-9038",
+          "chars": 10532
+        },
+        {
+          "task_id": "FG-9039",
+          "chars": 10595
+        },
+        {
+          "task_id": "FG-9040",
+          "chars": 11307
+        },
+        {
+          "task_id": "FG-9042",
+          "chars": 10634
+        },
+        {
+          "task_id": "FG-9043",
+          "chars": 10566
+        },
+        {
+          "task_id": "FG-9044",
+          "chars": 9853
+        },
+        {
+          "task_id": "FG-9045",
+          "chars": 9893
+        },
+        {
+          "task_id": "FG-9046",
+          "chars": 11400
+        },
+        {
+          "task_id": "FG-9047",
+          "chars": 11439
+        },
+        {
+          "task_id": "FG-9048",
+          "chars": 11439
+        },
+        {
+          "task_id": "FG-9049",
+          "chars": 11399
+        },
+        {
+          "task_id": "FG-9050",
+          "chars": 10726
+        },
+        {
+          "task_id": "FG-9051",
+          "chars": 15518
+        },
+        {
+          "task_id": "FG-9054",
+          "chars": 10490
+        },
+        {
+          "task_id": "FG-9055",
+          "chars": 15557
+        },
+        {
+          "task_id": "FG-9056",
+          "chars": 16249
+        },
+        {
+          "task_id": "FG-9058",
+          "chars": 16167
+        },
+        {
+          "task_id": "FG-9059",
+          "chars": 10385
+        },
+        {
+          "task_id": "FG-9060",
+          "chars": 15517
+        },
+        {
+          "task_id": "FG-9061",
+          "chars": 10424
+        },
+        {
+          "task_id": "FG-9062",
+          "chars": 15537
+        },
+        {
+          "task_id": "FG-9063",
+          "chars": 10267
+        },
+        {
+          "task_id": "FG-9064",
+          "chars": 15536
+        },
+        {
+          "task_id": "FG-9065",
+          "chars": 16168
+        },
+        {
+          "task_id": "FG-9066",
+          "chars": 10447
+        },
+        {
+          "task_id": "FG-9067",
+          "chars": 11100
+        },
+        {
+          "task_id": "FG-9068",
+          "chars": 16207
+        },
+        {
+          "task_id": "FG-9069",
+          "chars": 15494
+        },
+        {
+          "task_id": "FG-9070",
+          "chars": 9591
+        },
+        {
+          "task_id": "FG-9071",
+          "chars": 15576
+        },
+        {
+          "task_id": "FG-9072",
+          "chars": 9908
+        },
+        {
+          "task_id": "FG-9073",
+          "chars": 9845
+        },
+        {
+          "task_id": "FG-9075",
+          "chars": 10718
+        },
+        {
+          "task_id": "FG-9076",
+          "chars": 10781
+        },
+        {
+          "task_id": "FG-9077",
+          "chars": 10558
+        },
+        {
+          "task_id": "FG-9078",
+          "chars": 11392
+        },
+        {
+          "task_id": "FG-9079",
+          "chars": 11391
+        }
+      ]
+    },
+    "drug_holdout": {
+      "n_kept": 78,
+      "n_skipped": 0,
+      "by_reason": {},
+      "n_script_failures": 0,
+      "script_failures": [],
+      "n_reward_dropped": 0,
+      "reward_dropped": [],
+      "char_length_max": 15484,
+      "char_length_over_token_limit": 10,
+      "char_length_over_token_limit_ids": [
+        {
+          "task_id": "FG-0987",
+          "chars": 8408
+        },
+        {
+          "task_id": "FG-8294",
+          "chars": 15365
+        },
+        {
+          "task_id": "FG-8379",
+          "chars": 15223
+        },
+        {
+          "task_id": "FG-8380",
+          "chars": 12521
+        },
+        {
+          "task_id": "FG-8430",
+          "chars": 15043
+        },
+        {
+          "task_id": "FG-8552",
+          "chars": 15484
+        },
+        {
+          "task_id": "FG-8625",
+          "chars": 15173
+        },
+        {
+          "task_id": "FG-8716",
+          "chars": 15282
+        },
+        {
+          "task_id": "FG-8727",
+          "chars": 13606
+        },
+        {
+          "task_id": "FG-8734",
+          "chars": 12664
+        }
+      ]
+    },
+    "baked_budget_line": "- You get at most 8 tool calls, then you must submit_answer."
+  },
+  "bpe": {
+    "tokenizer": "Qwen/Qwen2.5-3B-Instruct",
+    "limit": 8192,
+    "default_rows_over_8192_chars": 53,
+    "default_rows_over_8192_tokens": 0,
+    "default_max_tokens": 2967,
+    "hard_train_rows_over_8192_chars": 480,
+    "hard_train_rows_over_8192_tokens": 26,
+    "hard_train_max_tokens": 8386,
+    "hard_train_max_task_id": "FG-8756",
+    "note": "Character length uses CharTokenizer. Token length is the Qwen2.5-3B tokenizer on the same decoded row. The Modal warm-up drops a row over 8192 tokens."
+  }
+}

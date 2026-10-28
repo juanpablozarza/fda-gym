@@ -1,0 +1,100 @@
+<!doctype html><html><head><meta charset="utf-8"><title>FDA-Gym B trajectory</title><style>*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden}
+body{font:14px/1.45 Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}.sm{font-size:12px}.b{font-weight:600}.muted{color:var(--muted)}.ink{color:var(--ink)}.it{font-style:italic;font-weight:400}
+.bg{position:fixed;inset:0;overflow:hidden}.bg i{position:absolute;border-radius:50%;filter:blur(60px)}
+.app{position:relative;display:flex;height:900px;padding:16px;gap:16px}
+.glass{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(var(--blur)) saturate(1.4);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.4);border-radius:var(--r);box-shadow:var(--shadow)}
+.glass2{background:var(--glass2);border:1px solid var(--line2);border-radius:calc(var(--r) - 6px)}
+.side{width:212px;flex:none;padding:18px 12px;display:flex;flex-direction:column;gap:2px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;padding:0 8px 4px}
+.mark{width:18px;height:18px;border-radius:6px;background:var(--acc);box-shadow:inset 0 0 0 4px var(--markin)}
+.env{font-size:11px;color:var(--muted);padding:0 8px 16px}
+.nav{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;color:var(--muted);font-weight:500}
+.nav .ic{width:16px;text-align:center}.nav.on{background:var(--navon);color:var(--ink)}
+.sidefoot{margin-top:auto;padding:12px 10px;border-top:1px solid var(--line2)}
+main{flex:1;display:flex;flex-direction:column;gap:14px;min-width:0;position:relative}
+.top{display:flex;justify-content:space-between;align-items:flex-end;padding:4px 4px 0}
+h1{font-size:24px;font-weight:650;letter-spacing:-.02em}h2{font-size:14px;font-weight:600}
+.acts{display:flex;gap:8px;align-items:center}
+.chip{display:inline-flex;gap:6px;align-items:center;font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--ink2);white-space:nowrap;background:var(--chipbg)}
+.chip.acc,.chip.on{color:var(--accink);border-color:var(--accline);background:var(--accsoft)}
+.btn{font:600 13px Inter,sans-serif;padding:8px 14px;border-radius:10px;border:0;background:var(--acc);color:var(--onacc)}
+.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--ink)}
+.card{padding:16px 18px}.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:12px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.kpi{padding:14px 16px}
+.big{font-size:26px;font-weight:600;letter-spacing:-.02em;margin:2px 0}
+.grid2{display:grid;grid-template-columns:1fr 480px;gap:14px}
+table{width:100%;border-collapse:collapse}th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line2)}
+td{padding:7px 8px;border-bottom:1px solid var(--line3);vertical-align:middle}tr:last-child td{border-bottom:0}
+.num{text-align:right}.rk{color:var(--muted);width:24px}.mname{font-weight:600}
+td.num .rbar{display:inline-block;width:70px;margin-right:10px;vertical-align:middle}
+.rbar{height:6px;border-radius:3px;background:var(--track);overflow:hidden}.rbar span{display:block;height:100%;background:var(--acc);border-radius:3px}
+.rbar span.neg{background:var(--muted)}
+tr.ours{background:var(--rowhi)}tr.base .mname{color:var(--ink2)}
+.legend{display:flex;gap:14px;color:var(--muted);margin:-4px 0 4px}.legend i{display:inline-block;width:18px;height:0;border-top:2px solid var(--acc);vertical-align:middle;margin-right:6px}
+.legend .lg-dash{border-top:2px dashed var(--muted)}
+svg .grid{stroke:var(--line3)}svg .ax{fill:var(--muted);font:11px "JetBrains Mono",monospace}svg .line{fill:none;stroke:var(--acc);stroke-width:2.2;stroke-linejoin:round}
+svg .base{stroke:var(--muted);stroke-dasharray:5 5;stroke-width:1.5}svg .lbl{fill:var(--muted);font:11px "JetBrains Mono",monospace}svg .lbl.strong{fill:var(--accink);font-weight:600}
+svg .dot{fill:var(--acc);stroke:var(--dotring);stroke-width:3}.ag0{stop-color:var(--acc);stop-opacity:.22}.ag1{stop-color:var(--acc);stop-opacity:0}
+.explorer{flex:1}.filters{display:flex;gap:6px;align-items:center}.sep{width:1px;height:18px;background:var(--line2);margin:0 6px}
+.tasks{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.task{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.trow{display:flex;gap:6px;align-items:center}.tq{font-weight:500;font-size:13px;line-height:1.35}
+.caption{position:absolute;right:6px;bottom:-12px;font-size:11px;color:var(--muted);font-family:"JetBrains Mono",monospace}
+.q{padding:14px 18px}.qt{font-size:18px;font-weight:550;letter-spacing:-.01em;margin-top:4px;max-width:1000px}
+.tgrid{display:grid;grid-template-columns:1fr 470px;gap:14px;flex:1;min-height:0}.rcol{display:flex;flex-direction:column;gap:14px}
+.timeline{list-style:none;display:flex;flex-direction:column;gap:10px;position:relative}
+.timeline:before{content:"";position:absolute;left:13px;top:10px;bottom:10px;width:1px;background:var(--line2)}
+.step{display:flex;gap:12px;position:relative}.node{width:27px;height:27px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--nodebg);border:1px solid var(--line2);color:var(--ink)}
+.step.open .node{background:var(--acc);color:var(--onacc);border-color:transparent}
+.sbody{flex:1;padding:9px 12px;min-width:0}.shead{display:flex;gap:12px;align-items:baseline}.fn{font-weight:600;color:var(--accink)}.tog{margin-left:auto;color:var(--accink)}
+.args{color:var(--ink2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.json{margin-top:8px;padding:10px 12px;border-radius:8px;background:var(--codebg);font-size:12px;line-height:1.6;white-space:pre;color:var(--ink);overflow:hidden}
+.json .k{color:var(--accink)}.json .s{color:var(--str)}.json .n{color:var(--ink)}
+.ans{font-size:15px;line-height:1.55}.cite{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 4px;margin-left:2px;border-radius:5px;font:600 11px "JetBrains Mono";background:var(--accsoft);color:var(--accink);vertical-align:2px}
+.cites{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:6px}.cites li{display:flex;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line3)}
+.cites li>div{flex:1}.cn{color:var(--accink);font-weight:600}.ok{color:var(--ok);font-weight:600;white-space:nowrap}
+.rw{display:grid;grid-template-columns:1fr 120px 52px;gap:12px;align-items:center;padding:6px 0;border-top:1px solid var(--line3)}.rw .b{text-align:right}
+.total{font-size:22px;font-weight:700;color:var(--accink)}
+.explorer{flex:none}.grid2{flex:1}.grid2 td{padding:11px 8px}.trow .mono{white-space:nowrap}
+.f-trajectory .card:has(.timeline){overflow:hidden}
+
+.t-b{--bg:#070a10;--ink:#e6edf6;--ink2:#b4c0d0;--muted:#8a97aa;--acc:#5eead4;--accink:#7cf0dc;--onacc:#04201b;--accsoft:rgba(94,234,212,.10);--accline:rgba(94,234,212,.35);
+--glass:rgba(20,27,40,.55);--glass2:rgba(255,255,255,.03);--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.10);--line3:rgba(255,255,255,.06);--blur:20px;--r:12px;
+--shadow:0 1px 0 rgba(255,255,255,.05) inset,0 20px 40px -20px #000;--navon:rgba(255,255,255,.07);--chipbg:rgba(255,255,255,.03);--track:rgba(255,255,255,.08);
+--rowhi:rgba(94,234,212,.05);--dotring:#0b111b;--markin:#0b111b;--nodebg:#0f1520;--codebg:rgba(0,0,0,.35);--str:#c9d4e2;--ok:#5eead4}
+.t-b{font-size:13.5px}.t-b h1{font-family:"JetBrains Mono";font-size:20px;font-weight:600;letter-spacing:-.01em}
+.t-b h2,.t-b th{font-family:"JetBrains Mono";font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+.t-b .big{font-family:"JetBrains Mono"}.t-b .mname{font-family:"JetBrains Mono";font-size:13px;font-weight:500}
+.t-b .bg{background:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0) 0 0/24px 24px}
+.t-b .bg i:nth-child(1){width:520px;height:520px;left:180px;top:-260px;background:#0e7490;opacity:.35}
+.t-b .bg i:nth-child(2){width:480px;height:480px;right:-140px;bottom:-200px;background:#1e3a8a;opacity:.4}
+.t-b .bg i:nth-child(3){display:none}.t-b .btn,.t-b .chip{border-radius:6px}.t-b .qt{font-size:17px;font-weight:500}
+.t-b{--acc:#F5A524;--accink:#FFB84D;--onacc:#1A1003;--ok:#FFB84D;--accsoft:rgba(245,165,36,.10);--accline:rgba(245,165,36,.38);--rowhi:rgba(245,165,36,.05)}
+.t-b .bg i:nth-child(1){background:#7c4a03}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}</style></head><body class="t-b f-trajectory"><div class="bg" aria-hidden="true"><i></i><i></i><i></i></div><div class="app"><aside class="side glass"><div class="brand"><span class="mark" aria-hidden="true"></span>FDA‑Gym</div>
+<div class="env mono">env: openfda-reg-v0.3</div><a class="nav"><span class="ic" aria-hidden="true">◧</span>Overview</a><a class="nav"><span class="ic" aria-hidden="true">▤</span>Runs</a><a class="nav on"><span class="ic" aria-hidden="true">↳</span>Trajectories</a><a class="nav"><span class="ic" aria-hidden="true">☰</span>Tasks</a><a class="nav"><span class="ic" aria-hidden="true">∿</span>Training</a><a class="nav"><span class="ic" aria-hidden="true">¶</span>Docs</a>
+<div class="sidefoot"><div class="muted sm">Dataset</div><div class="mono sm">1,240 tasks · 3 sources</div><div class="muted sm" style="margin-top:6px">openFDA snapshot</div><div class="mono sm">2026‑09‑30</div></div></aside><main>
+<header class="top"><div><div class="muted sm crumbs">Trajectories / run 14 / <span class="mono">FG-1187 · seed 2</span></div><h1>Trajectory replay</h1></div>
+<div class="acts"><span class="chip acc">● Qwen2.5‑3B + GRPO</span><span class="chip">step 800</span><button class="btn ghost">◀ Prev</button><button class="btn">Next ▶</button></div></header>
+<section class="card glass q"><div class="muted sm">Question · Adverse events + Labels · medium</div>
+<div class="qt">How many serious adverse event reports listing zorvetinib as primary suspect were received in 2025, and does its current label carry a boxed warning?</div></section>
+<section class="tgrid"><div class="card glass"><div class="ch"><h2>Steps</h2><span class="muted sm">4 tool calls · 1.9 s · 2,410 tokens</span></div><ol class="timeline"><li class="step"><div class="node mono">1</div><div class="sbody glass2">
+<div class="shead"><span class="fn mono">search_drug_label</span><span class="muted sm mono">1 label · 42 ms</span><span class="tog sm" aria-hidden="true">▸ result</span></div>
+<div class="args mono sm">{"generic_name": "zorvetinib"}</div></div></li><li class="step open"><div class="node mono">2</div><div class="sbody glass2">
+<div class="shead"><span class="fn mono">get_label_section</span><span class="muted sm mono">200 · 38 ms</span><span class="tog sm" aria-hidden="true">▾ hide result</span></div>
+<div class="args mono sm">{"set_id": "7c1e9a42-…-b31f", "section": "boxed_warning"}</div><pre class="json mono"><span class="k">"set_id"</span>: <span class="s">"7c1e9a42-0d5e-4b8a-9f21-c06e1a7db31f"</span>,
+<span class="k">"version"</span>: <span class="n">4</span>,
+<span class="k">"effective_time"</span>: <span class="s">"20250611"</span>,
+<span class="k">"boxed_warning"</span>: [<span class="s">"WARNING: HEPATOTOXICITY. Zorvenil can cause</span>
+<span class="s">  severe and fatal liver injury. Monitor hepatic…"</span>]</pre></div></li><li class="step open"><div class="node mono">3</div><div class="sbody glass2">
+<div class="shead"><span class="fn mono">query_adverse_events</span><span class="muted sm mono">count 1,284 · 211 ms</span><span class="tog sm" aria-hidden="true">▾ hide result</span></div>
+<div class="args mono sm">{"drug": "zorvetinib", "serious": 1, "receivedate": "[20250101 TO 20251231]"}</div><pre class="json mono"><span class="k">"meta"</span>: { <span class="k">"results"</span>: { <span class="k">"total"</span>: <span class="n">1284</span> } },
+<span class="k">"results[0]"</span>: { <span class="k">"safetyreportid"</span>: <span class="s">"25-US-0418823"</span>,
+  <span class="k">"drugcharacterization"</span>: <span class="s">"1"</span>, <span class="k">"serious"</span>: <span class="s">"1"</span> }</pre></div></li><li class="step"><div class="node mono">4</div><div class="sbody glass2">
+<div class="shead"><span class="fn mono">submit_answer</span><span class="muted sm mono">graded</span><span class="tog sm" aria-hidden="true">▸ result</span></div>
+<div class="args mono sm">{"answer": …, "citations": [3]}</div></div></li></ol></div>
+<div class="rcol"><div class="card glass"><div class="ch"><h2>Final answer</h2><span class="ok sm">✓ exact match</span></div><p class="ans"><b>1,284</b> serious reports in 2025 <span class="cite">2</span><span class="cite">3</span>. <b>Yes</b> — label v4 carries a boxed warning for <b>hepatotoxicity</b> <span class="cite">1</span>.</p>
+<ul class="cites"><li><span class="cn mono">[1]</span><div><div class="mono sm">label · set_id 7c1e9a42 · v4</div><div class="muted sm">boxed_warning</div></div><span class="ok sm">✓ verified</span></li><li><span class="cn mono">[2]</span><div><div class="mono sm">faers · count query · 2025, serious</div><div class="muted sm">1,284 = expected</div></div><span class="ok sm">✓ verified</span></li><li><span class="cn mono">[3]</span><div><div class="mono sm">faers · safetyreportid 25-US-0418823</div><div class="muted sm">primary suspect</div></div><span class="ok sm">✓ verified</span></li></ul></div>
+<div class="card glass"><div class="ch"><h2>Reward</h2><span class="total mono">0.98</span></div><div class="rw"><div><div>Answer match</div><div class="muted sm">exact count + boolean</div></div><div class="rbar"><span style="width:100%" class=""></span></div><span class="mono b">+0.60</span></div><div class="rw"><div><div>Citation validity</div><div class="muted sm">3 / 3 records resolve</div></div><div class="rbar"><span style="width:100%" class=""></span></div><span class="mono b">+0.30</span></div><div class="rw"><div><div>Format</div><div class="muted sm">valid schema</div></div><div class="rbar"><span style="width:100%" class=""></span></div><span class="mono b">+0.10</span></div><div class="rw"><div><div>Tool budget</div><div class="muted sm">4 calls ≤ 6</div></div><div class="rbar"><span style="width:8%" class="neg"></span></div><span class="mono b">-0.02</span></div></div></div></section>
+<div class="caption">Example data · fictional drugs, models and records</div></main></div></body></html>

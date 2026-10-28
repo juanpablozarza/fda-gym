@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fdagym.dev/schemas/task.schema.json",
+  "title": "Task",
+  "description": "One line of data/tasks/{train,test,hard,hard_train,hard_train_holdout}.jsonl. Gold answers come from the snapshot, never from a human. split hard is eval-only. split hard_train is the disjoint training pool for those templates and is not part of the default GRPO mix. split hard_train_holdout is a question-level slice of that pool (same drugs) that training must not load.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "type", "question", "sources", "entity", "split", "answerable",
+    "difficulty", "difficulty_features", "gold", "gold_citations", "oracle_calls", "snapshot_version"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^FG-[0-9]{4}$" },
+    "type": { "enum": ["approval", "boxed_warning", "faers_top_reaction", "faers_count", "label_open", "composite", "compare", "sponsor_hop"] },
+    "question": { "type": "string", "minLength": 10 },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["drug/label", "drug/event", "drug/drugsfda"] }
+    },
+    "entity": {
+      "description": "The drug the task is about. Train/test split is by generic_name, so no drug appears in both.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generic_name"],
+      "properties": {
+        "generic_name": { "type": "string" },
+        "brand_name": { "type": "string" }
+      }
+    },
+    "split": { "enum": ["train", "test", "hard", "hard_train", "hard_train_holdout", "public"] },
+    "answerable": {
+      "description": "false means the correct answer is NOT_FOUND (openFDA has no matching record).",
+      "type": "boolean"
+    },
+    "difficulty": {
+      "description": "Computed from difficulty_features by the rule in docs/difficulty.md. Never hand-typed.",
+      "enum": ["easy", "medium", "hard"]
+    },
+    "difficulty_features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sources", "min_tool_calls", "needs_disambiguation",
+        "needs_aggregation", "needs_normalization", "has_constraint"
+      ],
+      "properties": {
+        "sources": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "min_tool_calls": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "needs_disambiguation": { "type": "boolean" },
+        "needs_aggregation": { "type": "boolean" },
+        "needs_normalization": { "type": "boolean" },
+        "has_constraint": { "type": "boolean" }
+      }
+    },
+    "base_pass_rate": {
+      "description": "Fraction of 8 base-model samples with correctness > 0. null until calibrated.",
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "gold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": { "enum": ["exact", "number", "boolean", "judge"] },
+        "value": {
+          "description": "The answer. For judge tasks, a reference answer the judge sees alongside the rubric.",
+          "type": ["string", "number", "boolean"]
+        },
+        "aliases": {
+          "description": "Other strings that count as exact matches after normalization (e.g. DIARRHEA for DIARRHOEA).",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "keywords": {
+          "description": "For boolean tasks with a topic (boxed_warning): the answer is a string that starts with yes/no matching value and contains at least one keyword (case-insensitive).",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "tolerance": {
+          "description": "For number: relative tolerance for partial credit. 0 means exact only.",
+          "type": "number",
+          "minimum": 0
+        },
+        "rubric": {
+          "description": "For judge: binary criteria, each scored 0 or 1.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "gold_citations": {
+      "description": "Acceptable evidence. A citation is relevant if its endpoint matches and its field is in fields and (ids is empty or its id is in ids).",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["endpoint", "ids", "fields"],
+        "properties": {
+          "endpoint": { "enum": ["drug/label", "drug/event", "drug/drugsfda"] },
+          "ids": {
+            "description": "Accepted record ids (e.g. all 74 warfarin set_ids). Empty means any record returned by a matching query.",
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "fields": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    },
+    "oracle_calls": {
+      "description": "The tool calls (excluding submit_answer) that retrieve the gold evidence, in order. Its length is min_tool_calls. Used by the oracle integration test and to pre-fetch context for single-turn GRPO.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tool", "arguments"],
+        "properties": {
+          "tool": { "enum": ["search_drug_label", "get_label_section", "query_adverse_events", "search_approvals"] },
+          "arguments": { "type": "object" }
+        }
+      }
+    },
+    "snapshot_version": { "type": "string" }
+  }
+}

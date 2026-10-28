@@ -1,0 +1,19 @@
+{
+  "train_tasks": 93,
+  "holdout_tasks": 100,
+  "train": {
+    "drugs": 62,
+    "applications": 66,
+    "sponsors": 17
+  },
+  "holdout": {
+    "drugs": 78,
+    "applications": 114,
+    "sponsors": 29
+  },
+  "overlap": {
+    "drugs": [],
+    "applications": [],
+    "sponsors": []
+  }
+}

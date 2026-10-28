@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fdagym.dev/schemas/answer.schema.json",
+  "title": "Answer",
+  "description": "What the agent passes to submit_answer. The format reward is 1 iff this validates.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["answer", "citations"],
+  "properties": {
+    "answer": {
+      "description": "Single normalized value (string, number, or boolean). Lists like 'A or B' are not accepted as a match. Use the string NOT_FOUND to abstain.",
+      "type": ["string", "number", "boolean"]
+    },
+    "citations": {
+      "type": "array",
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/citation" }
+    }
+  },
+  "$defs": {
+    "citation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["endpoint", "id", "field", "quote"],
+      "properties": {
+        "endpoint": { "enum": ["drug/label", "drug/event", "drug/drugsfda"] },
+        "id": {
+          "description": "Record id: set_id (label), safetyreportid (event), application_number (drugsfda). For an empty search result, the step index of that tool call as 'step:<n>'.",
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "description": "Dotted path in the record, e.g. boxed_warning, submissions, meta.results.total.",
+          "type": "string",
+          "minLength": 1
+        },
+        "quote": { "type": "string", "maxLength": 500 }
+      }
+    }
+  }
+}
