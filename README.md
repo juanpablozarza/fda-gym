@@ -1,30 +1,73 @@
 # FDA-Gym
 
-An RL environment where a model uses tools over a frozen [openFDA](https://open.fda.gov/) snapshot to answer regulatory questions. Answers are scored by an automatic grader.
+A model answers a question about a drug label, a FAERS report, or an FDA approval. It calls tools against a frozen [openFDA](https://open.fda.gov/) snapshot. The grader scores the submitted answer and the trace that produced it.
 
-The published leaderboard split is [`data/tasks/public.jsonl`](data/tasks/public.jsonl). Run it with:
+The published sheet has 93 questions, `FG-9101` through `FG-9193`, in [`data/tasks/public.jsonl`](data/tasks/public.jsonl).
 
-```bash
-uv sync
-uv run python scripts/eval_chat.py --model <openrouter-slug> --split public --run-id public-eval
-```
+## Run a model
 
-Copy `results/<run-id>.jsonl` into `web/public/results/` to show it on the dashboard. See [web/public/results/README.md](web/public/results/README.md).
-
-## Data
-
-Drug labels, FAERS reports, and Drugs@FDA records come from openFDA. The freeze in `data/snapshots/2026-10-15/` is a local copy of those public API responses so the tools and the grader run offline. openFDA data is United States government work. FDA names, application numbers, and label text in the snapshot and in the task files are from that source.
-
-This repository does not include a private evaluation sheet. Training code still runs when that file is absent.
-
-## Setup
-
-Python 3.11 or newer, and [uv](https://docs.astral.sh/uv/).
+You need Python 3.11 or newer and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync
 cp .env.example .env
+```
+
+Put an OpenRouter key in `OPENROUTER_API_KEY`. Then score the published sheet.
+
+```bash
+uv run python scripts/eval_chat.py --model <openrouter-slug> --split public --run-id public-eval
+```
+
+`results/public-eval.jsonl` has one trajectory per line. The `reward` object on each line is the grade. `reward.correctness` above 0 is a pass.
+
+## What a grade means
+
+The total is `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency`. Each term is from 0 to 1.
+
+Format is 1 when the answer matches the schema. Otherwise format is 0, and correctness is 0 with it.
+
+A citation is valid when its id appeared in a tool result from this trajectory, the task accepts that field, and the quote matches the field text. Quotes shorter than 4 characters never count. A field of 12 characters or fewer needs the whole string. The citation score is valid citations divided by citations submitted. No citations scores 0.
+
+Correctness is 1 only when format is 1, at least one citation is valid, and the answer matches the gold. Otherwise correctness is 0. The pass rate is the share of questions with correctness above 0.
+
+Efficiency counts only when correctness is above 0. The same tool call with the same arguments counts once. A trace shorter than the task minimum scores calls divided by that minimum. A longer trace scores the minimum divided by the calls.
+
+Every score includes `grader_version`. The current grader is version 4.
+
+## Tools
+
+The model does not send a raw search string. Each call takes a drug name, a section, a year, an application number, or a sponsor name.
+
+| Tool | What it returns |
+| --- | --- |
+| `search_drug_label` | Label summaries for one generic name. `has_section` keeps labels that contain that section. |
+| `get_label_section` | One section of a label that `search_drug_label` already returned in this episode. |
+| `query_adverse_events` | FAERS reports for one generic name. `top_reactions` lists MedDRA terms. `count` returns how many reports match. |
+| `search_approvals` | Drugs@FDA records. Pass exactly one of `generic_name`, `application_number`, or `sponsor_name`. |
+| `submit_answer` | Ends the episode. The answer is one string, number, or boolean, or `NOT_FOUND`, plus up to 8 citations. |
+
+## See a run
+
+```bash
+cp results/public-eval.jsonl web/public/results/
+cd web && npm install && npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). The overview reads the jsonl files in `web/public/results/`.
+
+## Data
+
+The tools read [`data/snapshots/2026-10-15/`](data/snapshots/2026-10-15/), a freeze of three openFDA endpoints: `drug/label`, `drug/event`, and `drug/drugsfda`. The snapshot is on disk, so scoring and the tests do not call the live API.
+
+openFDA records are United States government work. Names, application numbers, and label text in the snapshot and in the task files come from that source.
+
+`OPENFDA_API_KEY` is only for recording a new snapshot. The tests do not need a key.
+
+## Tests
+
+```bash
 uv run pytest -q
 ```
 
-`.env` is optional for the offline tests. `OPENFDA_API_KEY` is only needed to record a new snapshot. `OPENROUTER_API_KEY` is only needed to score a hosted model.
+MIT license. See [LICENSE](LICENSE).
