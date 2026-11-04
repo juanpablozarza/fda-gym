@@ -30,7 +30,7 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
 
 - Agent tools (names are part of the contract, since the dashboard and training prompts use them): `search_drug_label`,
   `get_label_section`, `query_adverse_events`, `search_approvals`, `submit_answer`.
-- The published leaderboard uses `data/tasks/public.jsonl` (`split: public`, ids from `FG-9101`). Generate it with `scripts/generate_hard.py public` and check it with `scripts/audit_hard.py public`. `hard.jsonl`, `data/tasks/review.md`, and `results/hard-*` stay in this private repo. The public repo is a clean copy with no history from here.
+- The published leaderboard is `data/tasks/public.jsonl` (`split: public`, ids from `FG-9101`).
 
 ## Tracks
 
