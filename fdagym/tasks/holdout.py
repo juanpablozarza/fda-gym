@@ -1,8 +1,14 @@
 """Question-level holdout inside the hard training drugs.
 
-About 10% of ``hard_train`` questions, stratified by variant, become
-``hard_train_holdout``. They keep the same drugs and sponsors. Those questions
-never enter ``mix_hard_train`` or ``in_training_pool``.
+``hard_train_holdout`` is an in-distribution dev set, not a disjoint eval.
+About 10% of generated hard-train questions, stratified by variant, are carved
+out. They keep the same drugs, applications, and sponsors as ``hard_train`` so
+a memorization check can swap facts on known entities. Those questions never
+enter ``mix_hard_train`` or ``in_training_pool``.
+
+Both files are disjoint from the published eval (``public.jsonl``) on drugs,
+application numbers, sponsors, and question text. Sharing drugs with
+``hard_train`` is intentional; sharing anything with ``public`` is not.
 """
 
 from __future__ import annotations

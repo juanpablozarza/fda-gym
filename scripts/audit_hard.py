@@ -35,7 +35,7 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="audit", required=True)
 
-    sub.add_parser("disjointness", help="check held-out drugs, applications, and sponsors")
+    sub.add_parser("disjointness", help="check hard_train against public (plus test/hard when present)")
     sub.add_parser("public", help="check the public sheet against the private hard sheet")
 
     reach = sub.add_parser("reachability", help="re-solve a split through the real tools")
@@ -51,12 +51,13 @@ def _disjointness() -> int:
     from fdagym.agents.baseline import load_split
     from fdagym.openfda import DiskSnapshot
     from fdagym.tasks.disjoint import OverlapError, assert_disjoint
+    from fdagym.tasks.hard_train import load_exclusion_splits
     from fdagym.tasks.holdout import assert_question_holdout
 
     snapshot = DiskSnapshot("2026-10-15")
     train = load_split("hard_train")
     question_holdout = load_split("hard_train_holdout")
-    held_out = [*load_split("hard"), *load_split("test")]
+    held_out = load_exclusion_splits()
     try:
         report = assert_disjoint(train, held_out, snapshot)
         question = assert_disjoint(question_holdout, held_out, snapshot)

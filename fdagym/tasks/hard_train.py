@@ -4,9 +4,11 @@ Reaction-answer compares and boxed_none use the train wording in ``hard_solver``
 so the gold stays a single value. Eval boxed_none keeps ``question_none``.
 
 The pool is whatever is left after ``disjoint.holdout_entities`` removes every drug,
-application number, and sponsor that appears in ``hard.jsonl`` or ``test.jsonl``.
-Gold is recomputed from the snapshot. A task is kept only when the question-only
-solver scores 1.0 inside ``budget`` calls (default 6, today's env cap).
+application number, and sponsor that appears in ``public.jsonl``, plus ``hard.jsonl``
+and ``test.jsonl`` when those files exist. Gold is recomputed from the snapshot. A
+task is kept only when the question-only solver scores 1.0 inside ``budget`` calls
+(default 6, today's env cap). Questions that already appear on an excluded sheet
+are dropped, so the published eval cannot leak into training by text either.
 """
 
 from __future__ import annotations
@@ -35,6 +37,7 @@ from fdagym.tasks.hard_solver import (
     question_reaction,
     question_year_reaction,
 )
+from fdagym.tasks.leaks import clear_leaks, leak_report
 from fdagym.tasks.plan import load_universe
 
 HARD_TRAIN_SEED = 0
@@ -69,7 +72,7 @@ def generate_hard_train(
     max_tasks: int = MAX_TASKS,
     holdout_tasks: list[dict] | None = None,
 ) -> tuple[list[dict], dict]:
-    """Build ``data/tasks/hard_train.jsonl``. ``holdout_tasks`` defaults to hard + test."""
+    """Build ``data/tasks/hard_train.jsonl``. ``holdout_tasks`` defaults to public + test + hard."""
     if holdout_tasks is None:
         holdout_tasks = _load_holdout()
     quotas = dict(_QUOTAS if quotas is None else quotas)
@@ -78,7 +81,7 @@ def generate_hard_train(
     rng = random.Random(seed)
     profiles, pool_notes = _pools(snapshot, cache, holdout)
     dropped: Counter[str] = Counter()
-    seen: set[str] = set()
+    seen: set[str] = {str(task.get("question") or "") for task in holdout_tasks if task.get("question")}
     groups: dict[str, list[dict]] = defaultdict(list)
     _fill_compare(snapshot, cache, profiles, rng, quotas, budget, holdout, seen, dropped, groups)
     _fill_sponsor(snapshot, cache, profiles, rng, quotas, budget, holdout, seen, dropped, groups)
@@ -106,14 +109,28 @@ def generate_hard_train(
     return tasks, report
 
 
-def _load_holdout() -> list[dict]:
+def exclusion_split_names() -> tuple[str, ...]:
+    """Sheets whose entities and questions must not appear in hard_train.
+
+    ``public`` is always excluded so the published eval stays clean. ``hard`` and
+    ``test`` are excluded when those files exist (private checkouts).
+    """
+    return ("public", "hard", "test")
+
+
+def load_exclusion_splits() -> list[dict]:
+    """Tasks whose drugs, applications, sponsors, and questions hard_train must not reuse."""
     from fdagym.agents.baseline import TASKS_DIR, load_split
 
     rows = []
-    for name in ("hard", "test"):
+    for name in exclusion_split_names():
         if (TASKS_DIR / f"{name}.jsonl").exists():
             rows.extend(load_split(name))
     return rows
+
+
+def _load_holdout() -> list[dict]:
+    return load_exclusion_splits()
 
 
 def _pools(snapshot, cache, holdout) -> tuple[list, dict]:
@@ -405,7 +422,79 @@ def _keep(snapshot, cache, question, variant, budget, holdout, dropped):
     if set(found.sponsors) & set(holdout.sponsors):
         dropped[f"heldout-sponsor:{variant}"] += 1
         return None
+    if variant == "sponsor_drug" and _unique_labels_max(snapshot, cache, task, question):
+        dropped[f"labels_max:{variant}"] += 1
+        return None
     return task
+
+
+def _unique_labels_max(snapshot, cache, task: dict, question: str) -> bool:
+    """True when the gold drug is the unique most-labeled name in the question.
+
+    That surface feature is a shortcut the leak detector flags (labels_max).
+    """
+    spec = parse_question(question)
+    names = [drug for drug in spec.get("drugs") or [] if isinstance(drug, str) and drug.strip()]
+    if len(names) < 2:
+        return False
+    counts = {drug.casefold(): _profile(snapshot, cache, drug).label_n for drug in names}
+    if not counts:
+        return False
+    top = max(counts.values())
+    winners = [name for name, count in counts.items() if count == top]
+    answer = ((task.get("entity") or {}).get("generic_name") or "").strip().casefold()
+    return len(winners) == 1 and answer in winners
+
+
+def strip_clear_leaks(snapshot, tasks: list[dict]) -> list[dict]:
+    """Drop sponsor questions until ``leak_report`` has no clear surface shortcut."""
+    from fdagym.tasks.hard import sponsor_surface_caches
+
+    remaining = list(tasks)
+    labels, texts = sponsor_surface_caches(snapshot, remaining)
+    while True:
+        report = leak_report(remaining, label_counts=labels, boxed_texts=texts, train_tasks=remaining)
+        found = clear_leaks(report)
+        if not found:
+            return remaining
+        variant, rule = found[0].split(":")[0].rsplit(" ", 1)
+        victim = None
+        for task in sorted(remaining, key=lambda row: row.get("id") or row["question"], reverse=True):
+            if parse_question(task["question"])["variant"] != variant:
+                continue
+            if _hits_label_rule(task, rule, labels):
+                victim = task
+                break
+        if victim is None:
+            raise RuntimeError(f"could not clear sponsor leak: {found[0]}")
+        remaining.remove(victim)
+
+
+def _hits_label_rule(task: dict, rule: str, labels: dict[str, int]) -> bool:
+    spec = parse_question(task["question"])
+    names = [drug.casefold() for drug in spec.get("drugs") or [] if isinstance(drug, str)]
+    if len(names) < 2:
+        return False
+    counts = {name: labels.get(name, -1) for name in names}
+    values = list(counts.values())
+    answer = ((task.get("entity") or {}).get("generic_name") or "").strip().casefold()
+    if rule == "labels_max":
+        chosen = [name for name, count in counts.items() if count == max(values)]
+    elif rule == "labels_min":
+        chosen = [name for name, count in counts.items() if count == min(values)]
+    elif rule == "labels_mid":
+        distinct = sorted(set(values))
+        if len(distinct) < 3:
+            return False
+        chosen = [name for name, count in counts.items() if count == distinct[1]]
+    else:
+        return False
+    return len(chosen) == 1 and answer in chosen
+
+
+def reassign_ids(tasks: list[dict]) -> list[dict]:
+    """Consecutive ``FG-8101`` ids after a filter drops rows."""
+    return _assign_ids([{key: value for key, value in task.items() if key != "id"} for task in tasks])
 
 
 def _assign_ids(tasks: list[dict]) -> list[dict]:

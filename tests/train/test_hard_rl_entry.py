@@ -43,13 +43,13 @@ def test_hard_mix_weight_zero_is_the_old_path():
 
 def test_real_pool_excludes_holdout_and_hard_eval():
     proof = prove_training_pool(load_split("train"), load_split("hard_train"))
-    assert proof["n_holdout"] == 34
+    assert proof["n_holdout"] == 36
     hard_present = (Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl").exists()
     assert proof["n_hard_eval"] == (100 if hard_present else len(load_split("public")))
     assert proof["leaked"] == []
     assert set(proof["holdout_ids"]).isdisjoint(proof["hard_eval_ids"])
     log = format_pool_exclusion_log(proof)
-    assert '"n_holdout": 34' in log
+    assert '"n_holdout": 36' in log
     assert f'"n_hard_eval": {100 if hard_present else len(load_split("public"))}' in log
     assert proof["holdout_sha256"] in log
     assert proof["hard_eval_sha256"] in log

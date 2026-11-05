@@ -191,7 +191,7 @@ A year hop reads the approval products in the tool output. The ingredient matche
 
 Unflagged commands stay on the old path. `train_tools`, `pipeline_tools`, and the local entrypoint default `hard_train_mix` to `0`, which does not mix. `python scripts/launch_pipeline.py tools` still spawns `pipeline_tools` with only `init_adapter` and `force`. SFT defaults `include_hard_train` to false, so the warm-up is the current train split, same as v3.
 
-A new hard RL run passes `hard_train_mix=0.6` (60% `hard_train`, 40% current train, the 34-question holdout excluded), prompt `v4`, tool budget `8`. Before the first step it logs the holdout and hard-eval sizes, a sha256 of each id list, and the id lists themselves. It raises if any of those ids is in the training pool. The memorization callback is installed on that path and runs every 10 steps. A 3-step dry run therefore logs the exclusion proof and does not yet log a memorization report.
+A new hard RL run passes `hard_train_mix=0.6` (60% `hard_train`, 40% current train, the 36-question holdout excluded), prompt `v4`, tool budget `8`. Before the first step it logs the holdout and hard-eval sizes, a sha256 of each id list, and the id lists themselves. It raises if any of those ids is in the training pool. The memorization callback is installed on that path and runs every 10 steps. A 3-step dry run therefore logs the exclusion proof and does not yet log a memorization report.
 
 SFT hyperparameters are `SFTConfig`, the same as the v3 warm-up: base `Qwen/Qwen2.5-3B-Instruct`, lr `1e-4`, 1 epoch, batch 4, grad accumulation 2, LoRA from `TrainConfig` (r=16, alpha=32), keep reward `>= 0.97`. The CPU audit is `results/sft-v4-oracle.json` (prompt v4, budget 8, keep 0.97):
 
@@ -200,7 +200,7 @@ SFT hyperparameters are `SFTConfig`, the same as the v3 warm-up: base `Qwen/Qwen
 | train fit (5% of drugs held out) | 1,106 | 1,106 | 0 | 0 |
 | drug holdout inside train | 54 | 54 | 0 | 0 |
 
-53 of those rows are longer than 8192 characters. The Qwen2.5-3B tokenizer measures a max of 2,967 tokens on them, so none miss the 8192-token cutoff. `include_hard_train` (off here) keeps all 319 hard-train rows on reward.
+53 of those rows are longer than 8192 characters. The Qwen2.5-3B tokenizer measures a max of 2,967 tokens on them, so none miss the 8192-token cutoff. `include_hard_train` (off here) keeps all 337 hard-train rows on reward.
 
 Example row `FG-0343` (approval, reward 1.0). The prompt baked into the row contains the v4 FAERS line and this budget sentence:
 

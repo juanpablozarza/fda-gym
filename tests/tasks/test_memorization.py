@@ -210,10 +210,10 @@ def test_holdout_questions_never_enter_the_mix(disk):
     train = load_split("hard_train")
     holdout = load_split("hard_train_holdout")
     known = assert_question_holdout(train, holdout, disk)
-    assert known["holdout"] == 34
-    assert known["holdout_by_variant"]["sponsor_count"] == 5
-    assert known["train_drugs"] == 60
-    assert known["holdout_drugs"] == 47
+    assert known["holdout"] == 36
+    assert known["holdout_by_variant"]["sponsor_count"] == 7
+    assert known["train_drugs"] == 69
+    assert known["holdout_drugs"] == 49
     assert known["holdout_sponsors"] <= known["train_sponsors"]
     _again_train, again_hold = carve_known_holdout([*train, *holdout], snapshot=disk)
     assert [task["id"] for task in again_hold] == [task["id"] for task in holdout]

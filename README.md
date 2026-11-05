@@ -62,6 +62,15 @@ Open [http://localhost:3000](http://localhost:3000). The overview reads the json
 
 The tools read [`data/snapshots/2026-10-15/`](data/snapshots/2026-10-15/), a freeze of three openFDA endpoints: `drug/label`, `drug/event`, and `drug/drugsfda`. The snapshot is on disk, so scoring and the tests do not call the live API.
 
+| File | n | Role |
+| --- | --- | --- |
+| [`data/tasks/public.jsonl`](data/tasks/public.jsonl) | 93 | Published eval (`FG-9101`–`FG-9193`). Leaderboard sheet. |
+| [`data/tasks/hard_train.jsonl`](data/tasks/hard_train.jsonl) | 337 | Hard-style training pool (`FG-8101`+). |
+| [`data/tasks/hard_train_holdout.jsonl`](data/tasks/hard_train_holdout.jsonl) | 36 | In-distribution question holdout (~10% of the generated pool, stratified by variant). Same drugs as `hard_train`. Never mixed into training. Used to probe memorization. |
+| [`data/tasks/train.jsonl`](data/tasks/train.jsonl) / [`test.jsonl`](data/tasks/test.jsonl) | 1229 / 342 | Original type mix (boxed warning, FAERS, approvals). Unchanged by the hard-train rebuild. |
+
+`hard_train` and `hard_train_holdout` share no drugs, application numbers, sponsors, or question text with `public.jsonl`. They also share none of those with `test.jsonl`. The holdout is allowed to share drugs with `hard_train`; that is how a fact-swap can test memorization of known entities without leaking the published eval.
+
 openFDA records are United States government work. Names, application numbers, and label text in the snapshot and in the task files come from that source.
 
 `OPENFDA_API_KEY` is only for recording a new snapshot. The tests do not need a key.

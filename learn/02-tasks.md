@@ -274,6 +274,7 @@ To abstain on new drugs. openFDA fills `openfda.generic_name` only for drugs it 
 - **Boxed warnings disagree inside one drug.** Diclofenac is the ibuprofen replacement (443 labels). OTC vs prescription do not agree, so there is no easy yes/no diclofenac task; FG-0836 is the OTC "No" with a scope. Warfarin agrees: 74 labels, keyword `bleeding`, all 74 `set_id`s on FG-0921.
 - **MedDRA is British.** Warfarin's top term `INTERNATIONAL NORMALISED RATIO INCREASED` gets the alias `...NORMALIZED...`.
 - **Do not say "as suspect drug."** A FAERS report is a list of drugs. openFDA does not bind two filters to the same list element. None of the 1571 questions contain "suspect".
+- **`hard_train_holdout` is not a disjoint eval.** It is ~10% of the generated hard-train questions and keeps the same drugs as [`hard_train.jsonl`](../data/tasks/hard_train.jsonl) (337 train / 36 holdout). Both files are disjoint from [`public.jsonl`](../data/tasks/public.jsonl) on drugs, applications, sponsors, and question text. Generation seeds `seen` from the published sheet so the old `FG-8393` / `FG-9171` duplicate cannot come back.
 
 `uv run pytest -q` reported `125 passed`. `uv run ruff check .` reported `All checks passed!` Oracle: 627/627 approval, 131/131 boxed_warning, 86/86 composite, 150/150 faers_count, 490/490 faers_top_reaction; 87 label_open skipped (judge not implemented).
 
