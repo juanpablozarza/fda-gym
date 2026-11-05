@@ -55,7 +55,10 @@ def carve_known_holdout(
         rows = grouped[variant]
         quota = holdout_quota(len(rows), rate)
         for task in _candidate_order(rows, quota):
-            if sum(1 for task_id in chosen if parse_question(by_id[task_id]["question"])["variant"] == variant) >= quota:
+            if (
+                sum(1 for task_id in chosen if parse_question(by_id[task_id]["question"])["variant"] == variant)
+                >= quota
+            ):
                 break
             if _can_hold_out(task, tasks, chosen, universe, maps):
                 chosen.add(task["id"])

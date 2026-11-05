@@ -414,7 +414,9 @@ def main() -> None:
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(f"wrote {jsonl} ({len(TRAJECTORIES)} lines)")
     for t in TRAJECTORIES:
-        print(f"  {t['id']}  R={t['reward']['total']:.2f}  cite={t['reward']['citations_valid']}/{t['reward']['citations_total']}")
+        print(
+            f"  {t['id']}  R={t['reward']['total']:.2f}  cite={t['reward']['citations_valid']}/{t['reward']['citations_total']}"
+        )
 
 
 if __name__ == "__main__":

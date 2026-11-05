@@ -110,7 +110,20 @@ def test_survivors_keep_original_order():
         "task_id": task["id"],
     }
     # The two matching records fit; the junk record in the middle does not.
-    budget = len(json.dumps({"id": "step:1", "results": [early, match], "meta": {"results": {"total": 3}}, "truncated": True, "omitted": 1})) + 40
+    budget = (
+        len(
+            json.dumps(
+                {
+                    "id": "step:1",
+                    "results": [early, match],
+                    "meta": {"results": {"total": 3}},
+                    "truncated": True,
+                    "omitted": 1,
+                }
+            )
+        )
+        + 40
+    )
     text = json.dumps(_clip(pack, budget, task)["output"], ensure_ascii=False)
     assert text.index("EARLY-COMBO") < text.index("NDA020977")
     assert "JUNK-RECORD" not in text

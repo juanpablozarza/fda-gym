@@ -1,4 +1,15 @@
-"""Gym-style episode over a frozen snapshot. Tool calls are capped, then submit_answer is still allowed."""
+"""Tool-use RL environment over a frozen openFDA snapshot.
+
+``FDAEnv`` is not a Gymnasium env. ``reset(task_id)`` returns ``{question, tools}``.
+``step(action, latency_ms=...)`` returns ``(observation, reward, done, info)``.
+Reward stays 0.0 until the episode ends. ``info["trajectory"]`` is set on the
+terminal step.
+
+Tool calls other than ``submit_answer`` are capped at ``tool_budget`` (default 6).
+After that cap, ``submit_answer`` is still accepted. Any other tool ends the
+episode with ``terminated_by="max_steps"``. Invalid JSON is logged as
+``invalid_action``, not as a fake ``submit_answer``.
+"""
 
 import json
 from datetime import UTC, datetime
@@ -10,6 +21,7 @@ from fdagym.tools import TOOLS, EpisodeState, execute
 
 # Baseline and any caller that does not pass ``tool_budget``. Tool-mode runs pass 8.
 TOOL_BUDGET = 6
+SKIP_TYPES = frozenset({"label_open"})
 
 
 class FDAEnv:
@@ -42,6 +54,13 @@ class FDAEnv:
             self.task = self.tasks[task_id]
         except KeyError:
             raise KeyError(task_id) from None
+        kind = self.task.get("type")
+        gold_kind = (self.task.get("gold") or {}).get("kind")
+        if kind in SKIP_TYPES or gold_kind == "judge":
+            raise ValueError(
+                f"{task_id} is type {kind!r} with gold kind {gold_kind!r}; "
+                "FDAEnv does not grade label_open / judge tasks. Filter them before reset."
+            )
         self.state = EpisodeState(self.snapshot)
         self.steps: list[dict] = []
         self.tool_calls = 0
@@ -53,20 +72,29 @@ class FDAEnv:
         self._ready = True
         return {"question": self.task["question"], "tools": TOOLS}
 
-    def step(self, action) -> tuple[dict, float, bool, dict]:
+    def step(self, action, *, latency_ms: float | None = None) -> tuple[dict, float, bool, dict]:
         if not self._ready:
             raise RuntimeError("call reset() before step()")
         if self._done:
             raise RuntimeError("episode already finished")
         parsed, error = _parse_action(action)
+        latency = 0.0 if latency_ms is None else max(0.0, float(latency_ms))
         if parsed is None:
-            return self._end("error", tool="submit_answer", arguments={}, output=None, error=error, thought=None)
+            return self._end(
+                "error",
+                tool="invalid_action",
+                arguments={},
+                output=None,
+                error=error,
+                thought=None,
+                latency_ms=latency,
+            )
         name = parsed["tool"]
         arguments = parsed["arguments"]
         thought = parsed["thought"]
         if name == "submit_answer":
-            return self._submit(arguments, thought)
-        if self.tool_calls >= self.tool_budget:
+            return self._submit(arguments, thought, latency_ms=latency)
+        if budget_exhausted(name, self.tool_calls, self.tool_budget):
             return self._end(
                 "max_steps",
                 tool=name,
@@ -74,21 +102,30 @@ class FDAEnv:
                 output={"error": "tool budget exhausted; call submit_answer"},
                 error="tool budget exhausted",
                 thought=thought,
+                latency_ms=latency,
             )
         self.tool_calls += 1
         index = len(self.steps) + 1
         output, err = execute(self.state, name, arguments, step_index=index)
-        self.steps.append(_step(index, name, arguments, output, err, thought))
+        self.steps.append(_step(index, name, arguments, output, err, thought, latency_ms=latency))
         return self._obs(name, output, err), 0.0, False, {"tool_calls_used": self.tool_calls}
 
-    def _submit(self, arguments: dict, thought: str | None):
+    def _submit(self, arguments: dict, thought: str | None, *, latency_ms: float):
         index = len(self.steps) + 1
         if answer_validator.is_valid(arguments):
             self.final_answer = arguments
-            self.steps.append(_step(index, "submit_answer", arguments, None, None, thought))
+            self.steps.append(_step(index, "submit_answer", arguments, None, None, thought, latency_ms=latency_ms))
             return self._end_done("submit")
         self.steps.append(
-            _step(index, "submit_answer", arguments, None, "submit_answer does not match the schema", thought)
+            _step(
+                index,
+                "submit_answer",
+                arguments,
+                None,
+                "submit_answer does not match the schema",
+                thought,
+                latency_ms=latency_ms,
+            )
         )
         return self._end_done("error")
 
@@ -134,6 +171,11 @@ class FDAEnv:
         }
 
 
+def budget_exhausted(name: str, tool_calls: int, budget: int) -> bool:
+    """True when a non-submit tool would exceed ``budget`` recorded calls."""
+    return name != "submit_answer" and tool_calls >= budget
+
+
 def _parse_action(action) -> tuple[dict | None, str | None]:
     if isinstance(action, str):
         try:
@@ -154,7 +196,7 @@ def _parse_action(action) -> tuple[dict | None, str | None]:
     return {"tool": tool, "arguments": arguments, "thought": thought}, None
 
 
-def _step(index: int, tool: str, arguments: dict, output, error, thought: str | None) -> dict:
+def _step(index: int, tool: str, arguments: dict, output, error, thought: str | None, latency_ms: float = 0) -> dict:
     return {
         "index": index,
         "thought": thought,
@@ -162,5 +204,5 @@ def _step(index: int, tool: str, arguments: dict, output, error, thought: str | 
         "arguments": arguments,
         "output": output,
         "error": error,
-        "latency_ms": 0,
+        "latency_ms": latency_ms,
     }

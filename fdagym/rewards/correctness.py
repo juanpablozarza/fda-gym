@@ -15,8 +15,7 @@ _NO = re.compile(r"^no\b", re.IGNORECASE)
 
 
 class Judge(Protocol):
-    def score(self, *, question: str, answer: str, gold: dict) -> float:
-        """Return a score in [0, 1] for an open answer."""
+    def score(self, *, question: str, answer: str, gold: dict) -> float: ...
 
 
 class UnimplementedJudge:

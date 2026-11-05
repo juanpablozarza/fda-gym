@@ -1,12 +1,12 @@
 """Opt-in 60/40 mix of the hard training split and the current train pool.
 
-``in_training_pool`` still rejects ``compare`` / ``sponsor_hop`` and splits ``hard``
-and ``hard_train``. Default GRPO keeps loading ``data/tasks/train.jsonl`` only.
+``in_training_pool`` still rejects ``compare`` / ``sponsor_hop`` and the
+``hard_train`` split. Default GRPO keeps loading ``data/tasks/train.jsonl`` only.
 Pass the hard-training file here when a run should practice the multi-hop templates
-without ever opening ``data/tasks/hard.jsonl`` as a training row.
+without sampling ``hard_train_holdout`` or ``public`` as a training row.
 
 A new hard RL run passes ``hard_train_mix=0.6``. The known-drug holdout and the
-hard eval are loaded only to prove their ids are absent from that pool.
+published eval are loaded only to prove their ids are absent from that pool.
 """
 
 from __future__ import annotations
@@ -33,7 +33,7 @@ def mix_hard_train(
     """Sample ``n_rows`` tasks. Rows cycle when a side has fewer tasks than its share.
 
     ``hard_tasks`` must already be the training split (``split == "hard_train"``).
-    A row with ``split == "hard"`` or ``split == "hard_train_holdout"``, or an id from the
+    A row with ``split == "hard_train_holdout"`` or ``split == "public"``, or an id from the
     known-drug holdout file, is refused even if the caller relabels the split.
     """
     weights = dict(HARD_TRAIN_MIX if weights is None else weights)
@@ -149,22 +149,14 @@ def pool_exclusion_proof(
 
 
 def prove_training_pool(current_tasks: list[dict], hard_tasks: list[dict]) -> dict:
-    """Load the known-drug holdout and the hard eval, then :func:`pool_exclusion_proof`.
-
-    A checkout without ``hard.jsonl`` uses ``public.jsonl`` as the exclusion set.
-    """
-    from fdagym.agents.baseline import TASKS_DIR, load_split
-
-    def _split(name: str) -> list[dict]:
-        if not (TASKS_DIR / f"{name}.jsonl").exists():
-            return []
-        return load_split(name)
+    """Load the known-drug holdout and the published eval, then :func:`pool_exclusion_proof`."""
+    from fdagym.agents.baseline import load_split
 
     return pool_exclusion_proof(
         current_tasks,
         hard_tasks,
-        _split("hard_train_holdout"),
-        _split("hard") or _split("public"),
+        load_split("hard_train_holdout"),
+        load_split("public"),
     )
 
 
@@ -249,7 +241,7 @@ def _refuse_held_out(hard_tasks: list[dict]) -> None:
     leaked = [
         task
         for task in hard_tasks
-        if task.get("split") in {"hard", "hard_train_holdout"} or task.get("id") in blocked
+        if task.get("split") in {"hard", "hard_train_holdout", "public"} or task.get("id") in blocked
     ]
     if not leaked:
         return
@@ -257,5 +249,5 @@ def _refuse_held_out(hard_tasks: list[dict]) -> None:
     splits = sorted({str(task.get("split")) for task in leaked})
     raise RuntimeError(
         f"refusing eval split {splits} in the hard-training mix ({len(leaked)} rows, e.g. {shown}). "
-        "Load data/tasks/hard_train.jsonl. hard.jsonl and hard_train_holdout.jsonl stay out."
+        "Load data/tasks/hard_train.jsonl. hard_train_holdout.jsonl stays out."
     )

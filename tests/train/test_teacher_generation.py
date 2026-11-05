@@ -65,7 +65,9 @@ def test_messages_are_replayable_action_observation_pairs():
 
 
 def test_teacher_rows_validate_and_derive_pass_from_reward():
-    row = teacher_row(TASK, _trajectory(), teacher_model="openrouter/anthropic/claude-sonnet-4.5", attempt_index=0, tool_budget=8)
+    row = teacher_row(
+        TASK, _trajectory(), teacher_model="openrouter/anthropic/claude-sonnet-4.5", attempt_index=0, tool_budget=8
+    )
     assert row["passed"] is True
     assert row["template"] == "boxed_warning"
     failed = teacher_row(
@@ -161,7 +163,13 @@ def test_generator_runs_the_real_agent_loop_with_v4_budget_prompt(tmp_path):
     row = json.loads((tmp_path / "real-loop.jsonl").read_text())
     assert row["question_id"] == EXAMPLE_TASK["id"]
     assert [message["role"] for message in row["messages"]] == [
-        "system", "user", "assistant", "tool", "assistant", "tool", "assistant"
+        "system",
+        "user",
+        "assistant",
+        "tool",
+        "assistant",
+        "tool",
+        "assistant",
     ]
     parsed = parse_teacher_trajectory(row)
     assert build_distill_rows([parsed], CharTokenizer())["n_kept"] == 1

@@ -29,9 +29,7 @@ def test_irrelevant_field_spammer_scores_format_only():
     obs, _reward, done, _info = env.step(search)
     assert done is False
     rows = obs["output"]["results"]
-    citations = [
-        cite("drug/label", row["set_id"], "effective_time", str(row["effective_time"])) for row in rows
-    ]
+    citations = [cite("drug/label", row["set_id"], "effective_time", str(row["effective_time"])) for row in rows]
     citations.append(cite("drug/label", rows[0]["set_id"], "brand", str(rows[0]["brand"])))
     assert len(citations) == 6
     for _ in range(5):
@@ -132,7 +130,9 @@ def test_abstain_on_an_answerable_task():
         {"tool": "get_label_section", "arguments": {"set_id": WARFARIN_SET, "section": "boxed_warning"}}
     )
     quote = obs["output"]["boxed_warning"][:40]
-    _obs, _reward, _done, info = env.step(submit("NOT_FOUND", [cite("drug/label", WARFARIN_SET, "boxed_warning", quote)]))
+    _obs, _reward, _done, info = env.step(
+        submit("NOT_FOUND", [cite("drug/label", WARFARIN_SET, "boxed_warning", quote)])
+    )
     _expect(info["reward"], 0.35, correctness=0, citation=1, format=1, efficiency=0)
     assert any("answerable" in note for note in info["reward"]["notes"])
 
@@ -199,7 +199,11 @@ def test_worked_example_two_of_three_citations_and_three_calls():
         {
             "tool": "search_drug_label",
             "arguments": {"generic_name": "warfarin"},
-            "output": {"id": "step:1", "results": [{"set_id": "aaa"}, {"set_id": "bbb"}], "meta": {"results": {"total": 2}}},
+            "output": {
+                "id": "step:1",
+                "results": [{"set_id": "aaa"}, {"set_id": "bbb"}],
+                "meta": {"results": {"total": 2}},
+            },
         },
         {
             "tool": "get_label_section",

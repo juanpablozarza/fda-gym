@@ -44,18 +44,16 @@ def test_hard_mix_weight_zero_is_the_old_path():
 def test_real_pool_excludes_holdout_and_hard_eval():
     proof = prove_training_pool(load_split("train"), load_split("hard_train"))
     assert proof["n_holdout"] == 36
-    hard_present = (Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl").exists()
-    assert proof["n_hard_eval"] == (100 if hard_present else len(load_split("public")))
+    assert proof["n_hard_eval"] == len(load_split("public"))
     assert proof["leaked"] == []
     assert set(proof["holdout_ids"]).isdisjoint(proof["hard_eval_ids"])
     log = format_pool_exclusion_log(proof)
     assert '"n_holdout": 36' in log
-    assert f'"n_hard_eval": {100 if hard_present else len(load_split("public"))}' in log
+    assert f'"n_hard_eval": {len(load_split("public"))}' in log
     assert proof["holdout_sha256"] in log
     assert proof["hard_eval_sha256"] in log
     assert proof["holdout_ids"][0] in log
-    if hard_present:
-        assert "FG-8001" in proof["hard_eval_ids"]
+    assert load_split("public")[0]["id"] in proof["hard_eval_ids"]
 
 
 def test_mixed_grpo_env_owns_hard_train_ids():
@@ -80,9 +78,7 @@ def test_mixed_grpo_env_owns_hard_train_ids():
     env_ids = {task["id"] for task in rollout_tasks(current, hard)}
     assert prompt_ids <= env_ids
     assert hard_ids <= env_ids
-    hard_file = Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl"
-    if hard_file.exists():
-        assert env_ids.isdisjoint(task["id"] for task in load_split("hard"))
+    assert env_ids.isdisjoint(task["id"] for task in load_split("public"))
     assert env_ids.isdisjoint(task["id"] for task in load_split("hard_train_holdout"))
     assert {task["id"] for task in rollout_tasks(current, None)} == train_ids
     source = inspect.getsource(run_tool_grpo)
@@ -185,7 +181,7 @@ def test_spawn_plan_is_the_new_hard_run_and_does_not_import_modal():
     }
     evaluation = spawn_plan("eval-hard")
     assert evaluation["function"] == "eval_tools"
-    assert evaluation["kwargs"]["split"] == "hard"
+    assert evaluation["kwargs"]["split"] == "public"
     assert evaluation["kwargs"]["tool_budget"] == 8
     assert evaluation["kwargs"]["prompt_version"] == "v4"
     assert evaluation["kwargs"]["adapter"] == "/vol/runs/sft-qwen3b-tools-v4/adapter"
@@ -229,7 +225,12 @@ def test_modal_hard_path_logs_the_pool_and_wires_memorization():
     spec.loader.exec_module(module)
     args = module._parser().parse_args(["tools", "--init-adapter", "adapter", "--hard-train-mix", "0.6"])
     assert module._kwargs(args) == {"init_adapter": "adapter", "force": False, "hard_train_mix": 0.6}
-    assert "modal" not in {alias.name.split(".")[0] for node in ast.parse(launcher).body if isinstance(node, ast.Import) for alias in node.names}
+    assert "modal" not in {
+        alias.name.split(".")[0]
+        for node in ast.parse(launcher).body
+        if isinstance(node, ast.Import)
+        for alias in node.names
+    }
 
 
 def test_v4_sft_audit_keeps_the_v3_counts():

@@ -20,7 +20,7 @@ def spawn_plan(which: str) -> dict:
     """Return ``{"app", "function", "kwargs"}`` for one deployed function.
 
     ``sft`` is the v4 / budget-8 warm-up from the base 3B, current train split only.
-    ``eval-hard`` scores that adapter on ``data/tasks/hard.jsonl``.
+    ``eval-hard`` scores that adapter on ``data/tasks/public.jsonl``.
     ``grpo-dry`` is a few GRPO steps at the 60/40 mix. Reward weights are not an argument.
     """
     if which == "sft":
@@ -36,7 +36,7 @@ def spawn_plan(which: str) -> dict:
         kwargs = {
             "adapter": ADAPTER,
             "run_id": f"{SFT_RUN_ID}-hard",
-            "split": "hard",
+            "split": "public",
             "tool_budget": HARD_RL_BUDGET,
             "prompt_version": HARD_RL_PROMPT,
         }

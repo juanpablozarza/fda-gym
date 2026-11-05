@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_FILES = (
-    ROOT / "data/tasks/hard.jsonl",
+    ROOT / "data/tasks/public.jsonl",
     ROOT / "data/tasks/hard_train.jsonl",
     ROOT / "data/tasks/hard_train_holdout.jsonl",
 )

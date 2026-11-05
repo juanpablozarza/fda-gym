@@ -176,9 +176,9 @@ def _year_hits(steps, task) -> int:
 def test_hard_train_correct_lookups_gain_the_missed_year_hops():
     """Exact ingredient equality missed salt forms. The shared matcher credits them.
 
-        An earlier pass estimated about 179 of the hard_train questions. Counted
-            on the frozen file, with the approval page the reward actually scores, 66
-            questions gain a year hop that was a miss, and 66 have a higher hop rate.
+    An earlier pass estimated about 179 of the hard_train questions. Counted
+        on the frozen file, with the approval page the reward actually scores, 66
+        questions gain a year hop that was a miss, and 66 have a higher hop rate.
     """
     if not SNAPSHOT.exists():
         pytest.skip("pilot snapshot absent")

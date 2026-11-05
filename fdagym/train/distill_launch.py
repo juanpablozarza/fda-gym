@@ -203,9 +203,7 @@ def dry_tokenize(prepared: dict, tokenizer) -> dict:
         built = build_distill_rows(rows, tokenizer, codec, limits, max_length=config.max_length)
         for row, encoded in zip(built["rows"], built["encoded"], strict=True):
             assert_assistant_only_labels(row, encoded)
-        supervised = [
-            sum(1 for label in row["labels"] if label != IGNORE_INDEX) for row in built["rows"]
-        ]
+        supervised = [sum(1 for label in row["labels"] if label != IGNORE_INDEX) for row in built["rows"]]
         checks[name] = {
             **prepared["reports"][name],
             "n_tokenized": built["n_kept"],

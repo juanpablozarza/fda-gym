@@ -1,6 +1,6 @@
 """Print whether a trained Plan A eval beat its untrained baseline.
 
-    uv run python scripts/compare_runs.py results/baseline-qwen3b results/grpo-qwen3b-eval
+uv run python scripts/compare_runs.py results/baseline-qwen3b results/grpo-qwen3b-eval
 """
 
 from __future__ import annotations

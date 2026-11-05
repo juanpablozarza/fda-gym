@@ -50,7 +50,10 @@ def test_answered_without_looking_uses_hidden_gold_and_citation_ids():
         "divalproex",
         [{"endpoint": "drug/label", "ids": ["abc-set"], "fields": ["boxed_warning"]}],
     )
-    record = {"tool": "search_drug_label", "output": {"results": [{"set_id": "abc-set", "sections": ["boxed_warning"]}]}}
+    record = {
+        "tool": "search_drug_label",
+        "output": {"results": [{"set_id": "abc-set", "sections": ["boxed_warning"]}]},
+    }
     assert looked(label, _traj(True, 1, [record], "divalproex"))
     assert not looked(label, _traj(True, 1, [{"tool": "submit_answer", "output": {"set_id": "abc-set"}}], "divalproex"))
 
@@ -99,7 +102,9 @@ def test_thresholds_warn_and_the_problem_flag_does_not_stop():
     swapped = [(followed, _traj(False, 0.0, [], "NAUSEA"), "NAUSEA")]
     mild = memorization_report(
         known=[(known_task, _traj(True, 1.0, [{"tool": "query_adverse_events", "output": {"note": "kept"}}], "kept"))],
-        unseen=[(unseen_task, _traj(True, 1.0, [{"tool": "query_adverse_events", "output": {"note": "other"}}], "other"))],
+        unseen=[
+            (unseen_task, _traj(True, 1.0, [{"tool": "query_adverse_events", "output": {"note": "other"}}], "other"))
+        ],
         swapped=swapped,
     )
     assert mild["gap"]["strict"] == 0.0
@@ -234,7 +239,9 @@ def test_holdout_questions_never_enter_the_mix(disk):
 
 
 def test_swapped_facts_env_cannot_run_inside_training(disk):
-    task = next(row for row in load_split("hard_train_holdout") if parse_question(row["question"])["variant"] == "sponsor_count")
+    task = next(
+        row for row in load_split("hard_train_holdout") if parse_question(row["question"])["variant"] == "sponsor_count"
+    )
     plan = fact_swap(task)
     assert plan.swapped == plan.original + 17
     plans = select_fact_swaps(load_split("hard_train_holdout"))
@@ -283,9 +290,7 @@ def test_scripted_oracle_on_a_slice_follows_tools(disk):
         next(task for task in holdout if parse_question(task["question"])["variant"] == "sponsor_count"),
         next(task for task in holdout if parse_question(task["question"])["variant"] == "year_reaction"),
     ]
-    if not (Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl").exists():
-        pytest.skip("data/tasks/hard.jsonl stays in the private repo")
-    unseen = load_split("hard")[:2]
+    unseen = [task for task in load_split("public") if task["type"] == "sponsor_hop"][:2]
     report = scripted_oracle_report(disk, known, unseen, tool_budget=8)
     assert report["known"]["n"] == 2
     assert report["unseen"]["n"] == 2

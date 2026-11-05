@@ -28,7 +28,7 @@ def test_sponsor_lookup_oracle_scores_one():
     tasks = _tasks()
     assert [task["id"] for task in tasks] == ["FG-8454", "FG-8455", "FG-8456"]
     taken = set()
-    for name in ("hard.jsonl", "hard_train.jsonl", "hard_train_holdout.jsonl", "train.jsonl", "test.jsonl"):
+    for name in ("hard_train.jsonl", "hard_train_holdout.jsonl", "train.jsonl", "test.jsonl", "public.jsonl"):
         if not (ROOT / "data" / "tasks" / name).exists():
             continue
         for line in (ROOT / "data" / "tasks" / name).read_text().splitlines():

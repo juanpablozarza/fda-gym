@@ -1,35 +1,45 @@
 """Score one model on one task split with a Chat Completions client.
 
-    uv run python scripts/eval_chat.py --model <slug> --split hard --run-id <id>
+    uv run python scripts/eval_chat.py --model openrouter/<slug> --split public --run-id <id>
+
+Splits are the ``*.jsonl`` files in ``data/tasks/``. Pass ``--overwrite`` to replace
+an existing ``results/<run-id>`` directory or jsonl file.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import sys
+from pathlib import Path
 
-import fdagym  # noqa: F401  loads .env
+from fdagym import load_env
 from fdagym.agents.baseline import ROOT, SKIP_TYPES, append_trajectory, load_split
 from fdagym.agents.chat import run_chat_episode
 from fdagym.env import FDAEnv
 from fdagym.openfda import DiskSnapshot
 
+load_env()
 
-def _complete(**kwargs):
-    from litellm import completion
 
-    return completion(**kwargs)
+def available_splits(tasks_dir: Path | None = None) -> list[str]:
+    directory = tasks_dir or (ROOT / "data" / "tasks")
+    return sorted(path.stem for path in directory.glob("*.jsonl") if path.is_file())
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parse(argv)
+    results = ROOT / "results"
+    out = results / f"{args.run_id}.jsonl"
+    run_dir = results / args.run_id
+    if (out.exists() or run_dir.exists()) and not args.overwrite:
+        print(f"refusing to overwrite results/{args.run_id}; pass --overwrite", file=sys.stderr)
+        return 2
     tasks = load_split(args.split)
     runnable = [task for task in tasks if task["type"] not in SKIP_TYPES]
     if args.limit is not None:
         runnable = runnable[: args.limit]
     env = FDAEnv(DiskSnapshot(args.snapshot_version), tasks, run_id=args.run_id, seed=0)
-    results = ROOT / "results"
-    out = results / f"{args.run_id}.jsonl"
     if out.exists():
         out.unlink()
     rewards = []
@@ -51,11 +61,16 @@ def main(argv: list[str] | None = None) -> int:
             flush=True,
         )
     summary = _summary(args.model, args.split, rewards)
-    run_dir = results / args.run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(f"mean_reward={summary['mean_reward']:.4f} pass_rate={summary['pass_rate']:.4f}", flush=True)
     return 0
+
+
+def _complete(**kwargs):
+    from litellm import completion
+
+    return completion(**kwargs)
 
 
 def _summary(model: str, split: str, rewards: list[dict]) -> dict:
@@ -66,10 +81,12 @@ def _summary(model: str, split: str, rewards: list[dict]) -> dict:
 
 
 def _parse(argv: list[str] | None) -> argparse.Namespace:
+    splits = available_splits()
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", required=True)
-    parser.add_argument("--split", required=True, choices=("train", "test", "hard", "public", "sponsor_lookup"))
+    parser.add_argument("--model", required=True, help="LiteLLM model slug, e.g. openrouter/qwen/qwen-2.5-7b-instruct")
+    parser.add_argument("--split", required=True, choices=splits, help=f"one of: {', '.join(splits)}")
     parser.add_argument("--run-id", required=True)
+    parser.add_argument("--overwrite", action="store_true", help="replace an existing results/<run-id>")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--snapshot-version", default="2026-10-15")
     parser.add_argument("--temperature", type=float, default=0.0)

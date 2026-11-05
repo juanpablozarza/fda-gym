@@ -130,7 +130,11 @@ def run_episode(
         info = {}
         for index, action in enumerate(actions):
             call_id = action["_call_id"]
-            payload = {"tool": action["tool"], "arguments": action["arguments"], "thought": thought if index == 0 else None}
+            payload = {
+                "tool": action["tool"],
+                "arguments": action["arguments"],
+                "thought": thought if index == 0 else None,
+            }
             assistant_tool_calls.append(
                 {
                     "id": call_id,
@@ -138,8 +142,7 @@ def run_episode(
                     "function": {"name": action["tool"], "arguments": json.dumps(action["arguments"])},
                 }
             )
-            obs, _reward, done, info = env.step(payload)
-            env.steps[-1]["latency_ms"] = 0 if index else round(latency_ms)
+            obs, _reward, done, info = env.step(payload, latency_ms=0 if index else round(latency_ms))
             tool_messages.append(
                 {"role": "tool", "tool_call_id": call_id, "content": json.dumps(obs.get("output"), default=str)}
             )
@@ -171,7 +174,10 @@ def _call_llm(complete, *, model, messages, tools, temperature, force_submit):
         except llm_errors as exc:
             name = type(exc).__name__
             text = str(exc)
-            retryable = any(token in text for token in ("429", "500", "502", "503", "504", "timeout", "Timeout")) or "RateLimit" in name
+            retryable = (
+                any(token in text for token in ("429", "500", "502", "503", "504", "timeout", "Timeout"))
+                or "RateLimit" in name
+            )
             if retryable and attempt == 0:
                 time.sleep(15)
                 continue
@@ -212,9 +218,7 @@ def _actions_from_response(response, *, force_submit: bool) -> list[dict]:
                 {"tool": "submit_answer", "arguments": dict(FORCED_SUBMIT), "_call_id": "call_forced", "thought": None}
             )
     if not actions:
-        actions.append(
-            {"tool": "submit_answer", "arguments": dict(FORCED_SUBMIT), "_call_id": "call_forced"}
-        )
+        actions.append({"tool": "submit_answer", "arguments": dict(FORCED_SUBMIT), "_call_id": "call_forced"})
     return actions
 
 

@@ -446,13 +446,18 @@ def _api_total(body: dict) -> int | None:
 
 
 def _label_summary(record: dict) -> dict:
-    openfda = record.get("openfda") if isinstance(record.get("openfda"), dict) else {}
+    raw = record.get("openfda")
+    openfda: dict = raw if isinstance(raw, dict) else {}
     return {
         "set_id": record.get("set_id"),
         "brand": _first(openfda.get("brand_name")),
         "manufacturer": _first(openfda.get("manufacturer_name")),
         "effective_time": record.get("effective_time"),
-        "sections": [key for key in record if key not in _SKIP_KEYS and _section_text(record, key) is not None],
+        "sections": [
+            key
+            for key in record
+            if isinstance(key, str) and key not in _SKIP_KEYS and _section_text(record, key) is not None
+        ],
     }
 
 
@@ -471,7 +476,8 @@ def _application_brands(record: dict) -> list[str]:
     for product in record.get("products") or []:
         if isinstance(product, dict):
             brands.extend(_names(product.get("brand_name")))
-    openfda = record.get("openfda") if isinstance(record.get("openfda"), dict) else {}
+    raw_openfda = record.get("openfda")
+    openfda: dict = raw_openfda if isinstance(raw_openfda, dict) else {}
     brands.extend(_names(openfda.get("brand_name")))
     seen: list[str] = []
     for brand in brands:

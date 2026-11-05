@@ -92,7 +92,7 @@ def disk():
 def hard_tasks():
     path = ROOT / "data" / "tasks" / "hard.jsonl"
     if not path.exists():
-        pytest.skip("data/tasks/hard.jsonl stays in the private repo")
+        pytest.skip("optional extra task file is not in this checkout")
     return load_split("hard")
 
 
@@ -365,11 +365,7 @@ def test_eval_entry_points_accept_a_hard_split_without_loading_it_for_training()
 
 
 def test_solver_budget_stops_before_a_six_call_question_finishes(disk, hard_tasks):
-    task = next(
-        item
-        for item in hard_tasks
-        if item["difficulty_features"]["min_tool_calls"] == 6
-    )
+    task = next(item for item in hard_tasks if item["difficulty_features"]["min_tool_calls"] == 6)
     with pytest.raises(Unsolvable, match="tool budget exhausted"):
         solve(disk, task["question"], budget=5)
     solved = solve(disk, task["question"], budget=8)

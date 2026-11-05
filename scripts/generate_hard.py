@@ -89,10 +89,7 @@ def _generate(split: str) -> int:
             _write_json(report_path, report)
             print(str(exc), file=sys.stderr)
             return 1
-        summary = {
-            key: report[key]
-            for key in ("n", "by_type", "by_variant", "min_calls", "pool")
-        }
+        summary = {key: report[key] for key in ("n", "by_type", "by_variant", "min_calls", "pool")}
         summary["universe"] = len(load_universe())
 
     for path, rows in outputs:

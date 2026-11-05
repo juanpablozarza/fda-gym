@@ -93,7 +93,7 @@ The generator records a section read only when the section text is the evidence.
 [generators.py:636](../fdagym/tasks/generators.py#L636) picks the label field.
 
 ```python
-citations=[
+citations = [
     {"endpoint": "drug/event", "ids": [], "fields": ["meta.results.total"]},
     {"endpoint": "drug/label", "ids": ids, "fields": ["boxed_warning" if present else "sections"]},
 ]

@@ -9,7 +9,7 @@
 
 By type (warm-up -> RL score): faers_top_reaction 0.39 -> 0.95, approval 0.73 -> 0.86,
 faers_count 0.97 -> 1.00, boxed_warning 0.11 -> 0.41, composite 0.31 -> 0.35 (0% pass).
-Artifacts (adapters, evals, charts) are saved on the box at `/workspace/bio-rl-artifacts/2026-10-18/`.
+Artifacts (adapters, evals, charts) are saved on the box at `/workspace/fda-gym-artifacts/2026-10-18/`.
 The Modal volume was deleted afterwards to stop storage cost.
 
 ## Lessons
@@ -47,12 +47,12 @@ The API key is only the Modal secret named `wandb`. Do not put it in the repo, i
 # From a laptop that is already `modal` logged in. The value is the key from https://wandb.ai/authorize.
 modal secret create wandb WANDB_API_KEY=...
 # Optional, same secret, if the account default entity is not the one you want:
-# modal secret create wandb WANDB_API_KEY=... WANDB_ENTITY=your-entity WANDB_PROJECT=bio-rl
+# modal secret create wandb WANDB_API_KEY=... WANDB_ENTITY=your-entity WANDB_PROJECT=fda-gym
 ```
 
-`WANDB_PROJECT` defaults to `bio-rl` when the secret and the flag are both empty. Override with `--wandb-project` / `--wandb-entity` on `modal run modal_train.py` or `python scripts/launch_pipeline.py`, or export `WANDB_PROJECT` and `WANDB_ENTITY` before the launcher (it forwards them). A machine with no key (local tests, CI) trains with W&B off. A W&B error mid-run is logged and training continues.
+`WANDB_PROJECT` defaults to `fda-gym` when the secret and the flag are both empty. Override with `--wandb-project` / `--wandb-entity` on `modal run modal_train.py` or `python scripts/launch_pipeline.py`, or export `WANDB_PROJECT` and `WANDB_ENTITY` before the launcher (it forwards them). A machine with no key (local tests, CI) trains with W&B off. A W&B error mid-run is logged and training continues.
 
-Runs show up at `https://wandb.ai/<entity>/bio-rl/runs/<run_id>`. The chart (reward, strict, memorization gap, flags) is local:
+Runs show up at `https://wandb.ai/<entity>/fda-gym/runs/<run_id>`. The chart (reward, strict, memorization gap, flags) is local:
 
 ```bash
 export WANDB_API_KEY=...   # same key, for the API read. Do not commit it.
@@ -124,9 +124,9 @@ GRPO itself starts from the SFT adapter when `grpo-qwen3b-tools/` has no `checkp
 ```bash
 # Run from the track/tool-rollouts checkout (the image packs the directory modal_train.py sits in).
 # Artifacts are on the box, so use absolute paths; no Hugging Face download is needed.
-cd /workspace/bio-rl-pr2
+cd /path/to/fda-gym
 M="env -u MODAL_TOKEN_ID -u MODAL_TOKEN_SECRET $HOME/modal-venv/bin/modal"
-A=/workspace/bio-rl-artifacts/2026-10-19-tools/runs
+A=/workspace/fda-gym-artifacts/2026-10-19-tools/runs
 $M volume create fdagym-checkpoints
 # 1. Base eval summary (strict 0.0086).
 $M volume put fdagym-checkpoints $A/baseline-qwen3b-tools /runs/baseline-qwen3b-tools
@@ -219,7 +219,7 @@ $M/modal deploy modal_train.py
 #    /vol/runs/sft-qwen3b-tools-v4/adapter.
 $M/python scripts/spawn_modal.py sft
 
-# 2. Hard eval of that adapter. Greedy, v4, budget 8, split hard.
+# 2. Eval of that adapter on the published sheet. Greedy, v4, budget 8, split public.
 $M/python scripts/spawn_modal.py eval-hard
 
 # 3. GRPO dry run, 3 steps, mix 0.6, from that adapter. Reward code is not an argument.
@@ -231,7 +231,7 @@ $M/python scripts/spawn_modal.py grpo-dry
 | command | function | kwargs |
 |---|---|---|
 | `sft` | `sft` | `run_id=sft-qwen3b-tools-v4`, `tool_budget=8`, `prompt_version=v4`, `include_hard_train=False` |
-| `eval-hard` | `eval_tools` | `adapter=/vol/runs/sft-qwen3b-tools-v4/adapter`, `run_id=sft-qwen3b-tools-v4-hard`, `split=hard`, `tool_budget=8`, `prompt_version=v4` |
+| `eval-hard` | `eval_tools` | `adapter=/vol/runs/sft-qwen3b-tools-v4/adapter`, `run_id=sft-qwen3b-tools-v4-hard`, `split=public`, `tool_budget=8`, `prompt_version=v4` |
 | `grpo-dry` | `train_tools` | `resume=False`, `run_id=grpo-qwen3b-tools-hard-dry`, `init_adapter=/vol/runs/sft-qwen3b-tools-v4/adapter`, `tool_budget=8`, `prompt_version=v4`, `hard_train_mix=0.6`, `max_steps=3`, `memorization_every=10` |
 
 A full pipeline that uses the mix, instead of the 3-step check, is `python scripts/launch_pipeline.py tools --hard-train-mix 0.6` after the same deploy. Omit the flag to keep today's type mix.
@@ -283,7 +283,7 @@ TRL 0.21 does not implement DAPO dynamic sampling (huggingface/trl#3758 is not i
 2. If the 8 shaped rewards are identical, drop that group and draw another prompt from the **training prompt list**, up to 3 times. A redraw uses seed `global_step + 10007 * round`.
 3. A group that is still tied is masked (`example_mask` 0). Its policy term and its KL term are both left out of the loss, and it is left out of the mean, so it does not shrink the other group in that micro-batch. Across the four accumulation steps, Hugging Face still divides by 4, so a masked micro-batch contributes 0 and the other three are a little smaller than three solo steps. That only happens when the cap is hit.
 
-The resample pool is the prompt rows for this run. It is checked against the published sheet, `hard_train_holdout`, and TEST. Those splits, and the memorization probes that read the holdout, are not filtered and are not drawn. `prove_training_pool` still runs on the unfiltered train and `hard_train` lists. A checkout without the private sheet treats that exclusion list as empty.
+The resample pool is the prompt rows for this run. It is checked against the published sheet, `hard_train_holdout`, and TEST. Those splits, and the memorization probes that read the holdout, are not filtered and are not drawn. `prove_training_pool` still runs on the unfiltered train and `hard_train` lists.
 
 ### The 60/40 mix after the filter
 
@@ -294,12 +294,12 @@ On seed 0 and 600 rows (`tests/train/test_group_sample.py::test_real_hard_prompt
 | | count |
 |---|---|
 | Dropped before the mix | 432, all easy `approval` |
-| Current pool kept | 728 (approval 44, boxed_warning 106, composite 69, faers_count 120, faers_top_reaction 389) |
-| Hard-train rows in the 600 | 360 (compare 220, sponsor_hop 140) |
+| Current pool kept | 659 (approval 44, boxed_warning 106, faers_count 120, faers_top_reaction 389) |
+| Hard-train rows in the 600 | 360 (compare 215, sponsor_hop 145) |
 | Current rows in the 600 | 240 |
-| After the floor (25% of the current slice each) | composite **60**, boxed_warning **60**, faers_top_reaction 83, faers_count 28, approval 9 |
+| After the boxed_warning floor | boxed_warning **60**, faers_top_reaction 129, faers_count 40, approval 11 |
 
-The 60/40 counts do not move. The floor replaces other current rows; it does not replace `hard_train`. `label_open`, TEST, hard eval, and the holdout are not in this table.
+The 60/40 counts do not move. The floor replaces other current rows; it does not replace `hard_train`. `label_open`, TEST, `public`, and the holdout are not in this table.
 
 ### What is logged to W&B
 

@@ -132,9 +132,7 @@ No. A failed episode is missing coverage even if all later tasks finish. [baseli
 </details>
 
 ```python
-failure = append_failure(
-    failures_path, model=model, task_id=task["id"], seed=seed, error=exc
-)
+failure = append_failure(failures_path, model=model, task_id=task["id"], seed=seed, error=exc)
 print(f"FAIL {model} {task['id']} s{seed} {failure['error_type']} (recorded)", flush=True)
 continue
 ```

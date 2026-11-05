@@ -57,7 +57,7 @@ The check is one strip of the environment variable. The key is not a function ar
 <details>
 <summary><b>[recall]</b> What is the project name when neither the flag nor WANDB_PROJECT is set?</summary>
 
-`bio-rl`. `resolve_wandb_target` uses the flag, then the env var, then that default. Entity stays unset so the key's account default is used.
+`fda-gym`. `resolve_wandb_target` uses the flag, then the env var, then that default. Entity stays unset so the key's account default is used.
 </details>
 
 ### 3.2 One run, no repeated steps
@@ -111,13 +111,13 @@ print('enabled', s.enabled, 'report_to', s.report_to, 'project', s.project)
 <details>
 <summary><b>[predict]</b> With no key in the environment, is enabled True or False, and what is report_to?</summary>
 
-False, and `[]`. Project is `bio-rl`. Floor of a resumed run with summary 73 and checkpoint 50 is 73. A run W&B has not seen yet has floor `None`.
+False, and `[]`. Project is `fda-gym`. Floor of a resumed run with summary 73 and checkpoint 50 is 73. A run W&B has not seen yet has floor `None`.
 
 ```
 floor 73
 fresh None
-target ('bio-rl', None)
-enabled False report_to [] project bio-rl
+target ('fda-gym', None)
+enabled False report_to [] project fda-gym
 ```
 </details>
 
@@ -178,7 +178,7 @@ Results are delivered as tarballs in that format. The chart is for the person wa
 <details>
 <summary><b>[transfer]</b> You want a different entity for one dry run. Do you edit modal_train.py?</summary>
 
-No. Pass `--wandb-entity` or export `WANDB_ENTITY` before `scripts/launch_pipeline.py`. The secret can also carry `WANDB_ENTITY`. The project default stays `bio-rl`.
+No. Pass `--wandb-entity` or export `WANDB_ENTITY` before `scripts/launch_pipeline.py`. The secret can also carry `WANDB_ENTITY`. The project default stays `fda-gym`.
 </details>
 
 ---

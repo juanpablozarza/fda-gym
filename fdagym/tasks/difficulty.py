@@ -37,11 +37,6 @@ def tier(f: Features) -> Tier:
     """First match wins: hard, then easy, then medium."""
     if f["sources"] >= 2 or f["min_tool_calls"] >= 4 or (f["needs_aggregation"] and f["has_constraint"]):
         return "hard"
-    if (
-        f["sources"] == 1
-        and f["min_tool_calls"] <= 2
-        and not f["needs_disambiguation"]
-        and not f["needs_aggregation"]
-    ):
+    if f["sources"] == 1 and f["min_tool_calls"] <= 2 and not f["needs_disambiguation"] and not f["needs_aggregation"]:
         return "easy"
     return "medium"

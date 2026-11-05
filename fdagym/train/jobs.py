@@ -768,4 +768,3 @@ def _distill_fit(prepared: dict, runs: Path, on_save, wandb_project: str, wandb_
     (parent / "curve.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     _mark(parent, "done", on_save=on_save)
     return payload
-

@@ -19,6 +19,7 @@ import random
 import re
 from collections import Counter
 from dataclasses import dataclass, field
+from typing import Any
 
 from fdagym.approvals import find_applications
 from fdagym.env import FDAEnv
@@ -52,8 +53,8 @@ from fdagym.tasks.plan import load_universe
 from fdagym.tools import SECTION_LIMIT, EpisodeState
 from fdagym.tools import _section_text as tool_section_text
 
-# No default seed. A private held-out sheet is generated outside this public
-# repo and must read FDAGYM_HARD_SEED / FDAGYM_HARD_ID_START from the environment.
+# No default seed. generate_hard() reads FDAGYM_HARD_SEED / FDAGYM_HARD_ID_START
+# from the environment when those arguments are omitted.
 HARD_SEED_ENV = "FDAGYM_HARD_SEED"
 HARD_ID_START_ENV = "FDAGYM_HARD_ID_START"
 # PUBLIC_SEED rebuilds the already-published public.jsonl (FG-9101..), not a held-out set.
@@ -95,7 +96,7 @@ class Profile:
 
 @dataclass
 class _Cache:
-    snapshot: object
+    snapshot: Any
     bodies: dict = field(default_factory=dict)
 
     def query(self, query):
@@ -194,7 +195,9 @@ def generate_hard(
         rng,
         quotas={"sponsor_faers": _QUOTAS["sponsor_faers"], "sponsor_drug": _QUOTAS["sponsor_drug"]},
         dropped=dropped,
-        accept=lambda question, variant: _accept(snapshot, cache, question, variant, dropped, split=split, holdout=held),
+        accept=lambda question, variant: _accept(
+            snapshot, cache, question, variant, dropped, split=split, holdout=held
+        ),
         named_cap=NAMED_CAP,
         answer_cap=ANSWER_CAP,
         anchor_cap=2,
@@ -229,7 +232,9 @@ def _assign_ids(tasks: list[dict], id_start: int) -> list[dict]:
     return tagged
 
 
-def _compare_tasks(snapshot, cache, profiles, rng, dropped, *, split: str = "hard", holdout=None) -> list[tuple[str, dict]]:
+def _compare_tasks(
+    snapshot, cache, profiles, rng, dropped, *, split: str = "hard", holdout=None
+) -> list[tuple[str, dict]]:
     kept: list[tuple[str, dict]] = []
     used: Counter[str] = Counter()
     seen: set[frozenset[str]] = set()
@@ -403,7 +408,8 @@ def _sample_reaction(snapshot, cache, pool, rng, used, seen, dropped, quota, *, 
         if term is None:
             dropped["no_shared_reaction"] += 1
             continue
-        winner = max(trio, key=lambda profile: dict(profile.top).get(term, -1))
+        reaction = term
+        winner = max(trio, key=lambda profile: dict(profile.top).get(reaction, -1))
         rank = _unfiltered_faers_rank(winner, [profile for profile in trio if profile.name != winner.name])
         if rank_used[rank] >= rank_cap:
             dropped[f"faers_rank:faers_reaction:{rank}"] += 1
@@ -443,8 +449,6 @@ def _shared_term(trio: list[Profile], term_used: Counter[str]) -> str | None:
     return ranked[0][2]
 
 
-
-
 def _reuses_holdout(task: dict, holdout, snapshot) -> bool:
     found = task_entities(task, snapshot)
     return bool(
@@ -474,7 +478,7 @@ def _accept(
     except (Unsolvable, ValueError) as exc:
         dropped[f"task:{variant}:{type(exc).__name__}"] += 1
         return None
-    task["id"] = "FG-8000"
+    task["id"] = "FG-0000"
     task["split"] = split
     if holdout is not None and _reuses_holdout(task, holdout, snapshot):
         dropped[f"holdout:{variant}"] += 1
@@ -540,7 +544,8 @@ def _task(cache, question, variant, gold, solution) -> dict:
         oracle_calls=solution.calls,
         source_count=len(sources),
         needs_disambiguation=True,
-        needs_aggregation=variant in {
+        needs_aggregation=variant
+        in {
             "earliest_boxed",
             "faers_year",
             "faers_reaction",
@@ -555,7 +560,7 @@ def _task(cache, question, variant, gold, solution) -> dict:
 
 
 def _gold_citations(cache, spec, solution) -> list[dict]:
-    extras: dict[tuple[str, str], list[str]] = {}
+    extras: dict[tuple[str, str], list] = {}
     variant = spec["variant"]
     if variant == "earliest_boxed":
         winner = solution.answer
@@ -582,18 +587,21 @@ def _gold_citations(cache, spec, solution) -> list[dict]:
         bucket = grouped.get(key)
         if bucket is None and key in grouped:
             continue
-        grouped.setdefault(key, [])
-        if cite["id"] not in grouped[key]:
-            grouped[key].append(cite["id"])
+        ids_list = grouped.setdefault(key, [])
+        if not isinstance(ids_list, list):
+            continue
+        if cite["id"] not in ids_list:
+            ids_list.append(str(cite["id"]))
     spec_rows = []
-    for (endpoint, path), ids in grouped.items():
-        if ids is None:
+    for (endpoint, path), cited_ids in grouped.items():
+        if cited_ids is None:
             spec_rows.append({"endpoint": endpoint, "ids": [], "fields": [path]})
             continue
+        extra_ids: list[str] = list(cited_ids)
         for extra in extras.get((endpoint, path), []):
-            if extra not in ids:
-                ids.append(extra)
-        spec_rows.append({"endpoint": endpoint, "ids": ids, "fields": [path]})
+            if extra not in extra_ids:
+                extra_ids.append(extra)
+        spec_rows.append({"endpoint": endpoint, "ids": extra_ids, "fields": [path]})
     if not spec_rows:
         raise Unsolvable("no citations")
     return spec_rows
@@ -846,9 +854,7 @@ def _profile(snapshot, cache: _Cache, drug: str) -> Profile:
         profile.label_ok = _labels_fit(snapshot, drug)
     try:
         state = EpisodeState(snapshot)
-        top, _length = run_call(
-            state, "query_adverse_events", {"generic_name": drug, "mode": "top_reactions"}, 1
-        )
+        top, _length = run_call(state, "query_adverse_events", {"generic_name": drug, "mode": "top_reactions"}, 1)
         profile.top = [
             (row["term"], row["count"])
             for row in _rows(top)
@@ -870,9 +876,7 @@ def _profile(snapshot, cache: _Cache, drug: str) -> Profile:
             continue
     try:
         state = EpisodeState(snapshot)
-        counted, _length = run_call(
-            state, "query_adverse_events", {"generic_name": drug, "mode": "count"}, 1
-        )
+        counted, _length = run_call(state, "query_adverse_events", {"generic_name": drug, "mode": "count"}, 1)
         profile.faers_all = _total(counted)
     except Unsolvable:
         profile.faers_all = 0
@@ -931,8 +935,6 @@ def _labels_fit(snapshot, drug: str) -> bool:
         if not row.get("set_id"):
             return False
     return True
-
-
 
 
 def _fill_catalog(cache: _Cache, profile: Profile) -> None:

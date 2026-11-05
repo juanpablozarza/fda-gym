@@ -1,13 +1,14 @@
 """Gold citation ids survive into the prompts GRPO and Plan A eval actually render."""
 
 from fdagym.agents.baseline import load_split
+from fdagym.env import SKIP_TYPES
 from fdagym.openfda import DiskSnapshot
 from fdagym.train.context import assemble_documents
 from fdagym.train.prompt import render_messages
 
 # Question-only needles and a 6,000-character budget, snapshot 2026-10-15.
 # Gold citation ids are not used to rank, so this is the measured floor, not a 95% target.
-CITATION_FLOOR = {"train": (686, 720), "test": (202, 211)}
+CITATION_FLOOR = {"train": (651, 651), "test": (193, 193)}
 
 
 def _citation_ids(task: dict) -> list[str]:
@@ -43,8 +44,8 @@ def _coverage(split: str, tasks: list[dict], snapshot) -> dict:
 
 def test_gold_citation_ids_and_decoys_cover_both_splits():
     snapshot = DiskSnapshot("2026-10-15")
-    train = load_split("train")
-    test = load_split("test")
+    train = [task for task in load_split("train") if task.get("type") not in SKIP_TYPES]
+    test = [task for task in load_split("test") if task.get("type") not in SKIP_TYPES]
     for tasks, split in ((train, "train"), (test, "test")):
         stats = _coverage(split, tasks, snapshot)
         hits, total = CITATION_FLOOR[split]

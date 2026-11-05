@@ -80,21 +80,34 @@ def test_short_quotes_keep_whole_values_and_nausea():
 
     def cited(step, answer, field, quote, task):
         return score(
-            {"steps": [step], "final_answer": {"answer": answer, "citations": [
-                {"endpoint": "drug/event", "id": "step:1", "field": field, "quote": quote}
-            ]}},
+            {
+                "steps": [step],
+                "final_answer": {
+                    "answer": answer,
+                    "citations": [{"endpoint": "drug/event", "id": "step:1", "field": field, "quote": quote}],
+                },
+            },
             task,
         )
 
     assert cited(count, 20254, "meta.results.total", "20254", task_count())["citation"] == 1
     assert cited(count, 20254, "meta.results.total", "1", task_count())["citation"] == 0
-    assert cited(empty, "NOT_FOUND", "meta.results.total", "0", {
-        **task_count(),
-        "id": "FG-0004",
-        "answerable": False,
-        "entity": {"generic_name": "lecanemab"},
-        "gold": {"kind": "exact", "value": "NOT_FOUND"},
-    })["citation"] == 1
+    assert (
+        cited(
+            empty,
+            "NOT_FOUND",
+            "meta.results.total",
+            "0",
+            {
+                **task_count(),
+                "id": "FG-0004",
+                "answerable": False,
+                "entity": {"generic_name": "lecanemab"},
+                "gold": {"kind": "exact", "value": "NOT_FOUND"},
+            },
+        )["citation"]
+        == 1
+    )
     nausea = task_nausea()
     assert cited(reactions, "NAUSEA", "results", "NAUSEA", nausea)["citation"] == 1
 
@@ -130,9 +143,7 @@ def test_boxed_none_accepts_an_empty_boxed_warning_search_for_any_named_drug():
     steps = [_empty_label(index, drug) for index, drug in enumerate(drugs, start=1)]
     final = {
         "answer": "no",
-        "citations": [
-            {"endpoint": "drug/label", "id": "step:2", "field": "meta.results.total", "quote": '"total": 0'}
-        ],
+        "citations": [{"endpoint": "drug/label", "id": "step:2", "field": "meta.results.total", "quote": '"total": 0'}],
     }
     reward = score({"steps": steps, "final_answer": final}, task)
     assert reward["citation"] == 1
@@ -208,7 +219,11 @@ def test_sponsor_step_citation_stays_about_the_answer_drug():
         {
             "tool": "query_adverse_events",
             "arguments": {"generic_name": "velmorastat", "mode": "top_reactions"},
-            "output": {"id": "step:1", "results": [{"term": "HEADACHE", "count": 10}], "meta": {"results": {"total": 1}}},
+            "output": {
+                "id": "step:1",
+                "results": [{"term": "HEADACHE", "count": 10}],
+                "meta": {"results": {"total": 1}},
+            },
         }
     ]
     cite = {"endpoint": "drug/event", "id": "step:1", "field": "results", "quote": "HEADACHE"}

@@ -89,9 +89,7 @@ def test_probe_task_ids_rejects_an_id_outside_the_pool():
 
 
 def test_probe_task_ids_rejects_a_hard_eval_id():
-    if not (Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl").exists():
-        pytest.skip("data/tasks/hard.jsonl stays in the private repo")
-    task_id = load_split("hard")[0]["id"]
+    task_id = load_split("public")[0]["id"]
     with pytest.raises(ValueError, match="eval, holdout, or test"):
         probe_task_ids([task_id], ids_sha256([task_id]))
 
@@ -383,7 +381,9 @@ def test_probe_dispersion_uses_vllm_generator_and_the_spawn_signature():
     assert "hf_token" not in body
     job_src = (ROOT / "fdagym" / "train" / "jobs.py").read_text(encoding="utf-8")
     job_tree = ast.parse(job_src)
-    job = next(node for node in job_tree.body if isinstance(node, ast.FunctionDef) and node.name == "run_probe_dispersion")
+    job = next(
+        node for node in job_tree.body if isinstance(node, ast.FunctionDef) and node.name == "run_probe_dispersion"
+    )
     job_body = ast.get_source_segment(job_src, job)
     assert job_body is not None
     assert "VLLMGenerator(" in job_body

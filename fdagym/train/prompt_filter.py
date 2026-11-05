@@ -1,6 +1,6 @@
 """Pre-run filter for the hard GRPO training prompts.
 
-The private eval sheet when it is present, the published sheet, TEST, the known-drug holdout, and
+The published sheet, TEST, the known-drug holdout, and
 the memorization probes are not inputs here. ``filter_current_tasks`` only sees
 the current train file, and it raises if one of those ids or splits shows up.
 ``hard_train`` is the other side of the 60/40 mix and is not filtered.
@@ -28,7 +28,7 @@ from fdagym.train.curriculum import in_training_pool
 
 # Splits that are measured, not trained. ``hard_train`` is refused here too:
 # this filter only edits the current side of the mix.
-FORBIDDEN_SPLITS = frozenset({"test", "hard", "hard_train", "hard_train_holdout"})
+FORBIDDEN_SPLITS = frozenset({"test", "hard", "hard_train", "hard_train_holdout", "public"})
 PROTECTED_TYPES = ("boxed_warning",)
 
 
@@ -153,13 +153,13 @@ def apply_protected_floor(
 def blocked_eval_ids() -> frozenset[str]:
     """Ids that must never enter a training prompt or a resample draw.
 
-    The private eval sheet when present, the published sheet, the known-drug holdout, and TEST.
+    The published sheet, the known-drug holdout, and TEST.
     Memorization probes read the holdout on their own path and are not filtered here.
     """
     from fdagym.agents.baseline import TASKS_DIR, load_split
 
     found: set[str] = set()
-    for name in ("hard", "public", "hard_train_holdout", "test"):
+    for name in ("public", "hard_train_holdout", "test"):
         if not (TASKS_DIR / f"{name}.jsonl").exists():
             continue
         found.update(task["id"] for task in load_split(name))

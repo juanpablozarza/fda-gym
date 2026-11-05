@@ -16,10 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TASK_FILES = (
     "train.jsonl",
     "test.jsonl",
-    "hard.jsonl",
     "hard_train.jsonl",
     "hard_train_holdout.jsonl",
-    "sponsor_lookup.jsonl",
     "public.jsonl",
 )
 

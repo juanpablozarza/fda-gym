@@ -344,9 +344,7 @@ def proportional_counts(weights: dict[str, int], n: int) -> dict[str, int]:
     return out
 
 
-def unique_first_order(
-    rows: list[TeacherTrajectory], seed: int
-) -> dict[str, list[TeacherTrajectory]]:
+def unique_first_order(rows: list[TeacherTrajectory], seed: int) -> dict[str, list[TeacherTrajectory]]:
     """Per template: one attempt per question (shuffled), then leftover attempts.
 
     Extra attempts are shuffled separately so a size that fits in unique

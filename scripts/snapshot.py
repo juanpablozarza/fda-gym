@@ -113,10 +113,7 @@ def stats(snapshot: DiskSnapshot) -> None:
     flags = [
         row
         for row in rows
-        if row["count"] is None
-        and row["limit"] > 1
-        and row["total"] is not None
-        and row["total"] > row["n_results"]
+        if row["count"] is None and row["limit"] > 1 and row["total"] is not None and row["total"] > row["n_results"]
     ]
     print()
     if not flags:
@@ -137,7 +134,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("drugs", nargs="?", type=Path, help="file with one generic name per line (# comments ok)")
     parser.add_argument("--version", required=True, help="snapshot version, e.g. the recording date 2026-10-20")
-    parser.add_argument("--root", type=Path, default=None, help="directory that contains <version>/ (or FDAGYM_SNAPSHOT_DIR)")
+    parser.add_argument(
+        "--root", type=Path, default=None, help="directory that contains <version>/ (or FDAGYM_SNAPSHOT_DIR)"
+    )
     parser.add_argument("--budget", type=int, help="max network requests this run (default 1000 without a key)")
     parser.add_argument("--stats", action="store_true", help="rewrite manifest.jsonl and print sizes")
     args = parser.parse_args()

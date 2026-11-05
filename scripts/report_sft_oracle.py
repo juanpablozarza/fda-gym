@@ -34,9 +34,7 @@ def audit(snapshot, tasks: list[dict], config: SFTConfig, *, hard_tasks: list[di
     """
     selected, mix = sft_sources(tasks, config, hard_tasks)
     pool = [*tasks, *(hard_tasks or [])] if config.include_hard_train else tasks
-    train_tasks, val_tasks = split_sft_by_drug(
-        selected, fraction=config.val_drug_fraction, seed=config.seed
-    )
+    train_tasks, val_tasks = split_sft_by_drug(selected, fraction=config.val_drug_fraction, seed=config.seed)
     # CharTokenizer is one character per token. The 8192 training context would
     # close a long label page before submit, which is a tokenizer artifact.
     # Score the oracle with room to finish, then report character length against
@@ -159,9 +157,7 @@ def main(argv: list[str] | None = None) -> int:
     report = audit(snapshot, tasks, config)
     if args.include_hard_train:
         hard_tasks = load_split("hard_train")
-        report["hard_train_opt_in"] = audit(
-            snapshot, tasks, SFTConfig(include_hard_train=True), hard_tasks=hard_tasks
-        )
+        report["hard_train_opt_in"] = audit(snapshot, tasks, SFTConfig(include_hard_train=True), hard_tasks=hard_tasks)
         # The opt-in block repeats the train rows. Keep the default example.
         report["hard_train_opt_in"].pop("example_row", None)
         report["hard_train_opt_in"].pop("baked_system_prompt", None)

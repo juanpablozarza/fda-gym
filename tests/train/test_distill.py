@@ -129,7 +129,9 @@ def test_fixture_validates_and_has_oracle_conversations():
     assert any(row.attempt_index > 0 for row in rows)
     teachers = {row.teacher_model for row in rows}
     assert SONNET in teachers and HAIKU in teachers
-    first = next(row for row in rows if row.question_id == "FG-0001" and row.attempt_index == 0 and row.teacher_model == SONNET)
+    first = next(
+        row for row in rows if row.question_id == "FG-0001" and row.attempt_index == 0 and row.teacher_model == SONNET
+    )
     roles = [message["role"] for message in first.messages]
     assert roles[0] == "system"
     assert roles[1] == "user"
@@ -177,13 +179,12 @@ def test_nested_subsets_are_contained_and_stratified():
         for i in range(n):
             rows.append(_synthetic(question_id=f"{template}-{i}", template=template, attempt=0))
             if i < 2:
-                rows.append(
-                    _synthetic(question_id=f"{template}-{i}", template=template, attempt=1, teacher="other")
-                )
+                rows.append(_synthetic(question_id=f"{template}-{i}", template=template, attempt=1, teacher="other"))
     subsets = nested_subsets(rows, "5,10,all", seed=0)
     small = subsets["5"]
     mid = subsets["10"]
     large = subsets["all"]
+
     def ids(group):
         return {row.id for row in group}
 
@@ -277,14 +278,10 @@ def test_assistant_only_loss_matches_oracle_sft_rows():
         assert row["labels"][: len(rollout.prompt_ids)] == [IGNORE_INDEX] * len(rollout.prompt_ids)
         prompt_text = tokenizer.decode(rollout.prompt_ids)
         assert prompt_text.endswith("<|im_start|>assistant\n")
-        supervised = tokenizer.decode(
-            [token for token, bit in zip(encoded.completion_ids, encoded.loss_mask) if bit]
-        )
+        supervised = tokenizer.decode([token for token, bit in zip(encoded.completion_ids, encoded.loss_mask) if bit])
         assert "<tool_call>" in supervised
         assert "<tool_response>" not in supervised
-        masked = tokenizer.decode(
-            [token for token, bit in zip(encoded.completion_ids, encoded.loss_mask) if not bit]
-        )
+        masked = tokenizer.decode([token for token, bit in zip(encoded.completion_ids, encoded.loss_mask) if not bit])
         assert "<tool_response>" in masked
 
 
@@ -422,20 +419,28 @@ def test_curve_csv_and_svg(tmp_path):
         (train_dir / "manifest.json").write_text(json.dumps({"n": int(size) if size != "all" else 14}))
         if extra:
             tasks = [
-                {"id": "FG-8001", "type": "compare", "question": "Of a, b, and c, which drug has a boxed warning on its label? Answer no if none of them do."},
-                {"id": "FG-8050", "type": "sponsor_hop", "question": "Who is the sponsor of the original application for acoramidis?"},
+                {
+                    "id": "FG-C001",
+                    "type": "compare",
+                    "question": "Of a, b, and c, which drug has a boxed warning on its label? Answer no if none of them do.",
+                },
+                {
+                    "id": "FG-S001",
+                    "type": "sponsor_hop",
+                    "question": "Who is the sponsor of the original application for acoramidis?",
+                },
             ]
             (directory / "tasks.json").write_text(json.dumps(tasks))
             lines = [
                 json.dumps(
                     {
-                        "task_id": "FG-8001",
+                        "task_id": "FG-C001",
                         "reward": {"total": reward, "correctness": 1.0 if reward > 0.3 else 0.0},
                     }
                 ),
                 json.dumps(
                     {
-                        "task_id": "FG-8050",
+                        "task_id": "FG-S001",
                         "reward": {"total": 0.1, "correctness": 0.0},
                     }
                 ),

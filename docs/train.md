@@ -156,12 +156,12 @@ uv run python scripts/run_gpu.py train-tools \
   --memorization-every 10 \
   --save-steps 10
 
-# 3. Hard eval of the GRPO adapter. Greedy, split hard.
+# 3. Eval of the GRPO adapter on the published sheet. Greedy, split public.
 uv run python scripts/run_gpu.py eval-tools \
   --runs-dir /workspace/runs \
   --adapter /workspace/runs/grpo-qwen3b-tools-hard-mh1/adapter \
-  --run-id grpo-qwen3b-tools-hard-mh1-hard \
-  --split hard \
+  --run-id grpo-qwen3b-tools-hard-mh1-public \
+  --split public \
   --tool-budget 8 \
   --prompt-version v4
 ```
@@ -195,8 +195,8 @@ A matching probe uses the same `--temperature` and `--pool-types`. The published
 uv run python scripts/run_gpu.py eval-tools \
   --runs-dir /workspace/runs \
   --adapter /workspace/runs/grpo-qwen3b-distill-sft500/adapter \
-  --run-id grpo-qwen3b-distill-sft500-hard \
-  --split hard \
+  --run-id grpo-qwen3b-distill-sft500-public \
+  --split public \
   --tool-budget 8 \
   --prompt-version v4
 ```
@@ -207,7 +207,7 @@ Outputs:
 |---|---|
 | Probe | `/workspace/runs/probe-dispersion-warmup-mh1/` (`rollouts.jsonl`, `probe.json`, `run.json`, `DONE`) |
 | GRPO | `/workspace/runs/grpo-qwen3b-tools-hard-mh1/` (`checkpoint-*`, `adapter`, `mix.json`, `run.json`, `DONE`) |
-| Hard eval | `/workspace/runs/grpo-qwen3b-tools-hard-mh1-hard.jsonl` and `/workspace/runs/grpo-qwen3b-tools-hard-mh1-hard/` (`summary.json`, `run.json`) |
+| Public eval | `/workspace/runs/grpo-qwen3b-tools-hard-mh1-public.jsonl` and `/workspace/runs/grpo-qwen3b-tools-hard-mh1-public/` (`summary.json`, `run.json`) |
 
 `run.json` is the provider-neutral record for every shared tool job. It records the effective job config, source revision, executor, Python/package/CUDA/GPU versions, and each attempt's status and timestamps. Modal writes it under `/vol/runs/<run_id>/`; RunPod writes the same file under `/workspace/runs/<run_id>/`. The only provider-specific parts are the mounted run directory and the save callback (Modal commits its Volume; RunPod writes to disk).
 
@@ -218,8 +218,8 @@ A watcher can poll `DONE` or `FAILED` in the run directory. Copy them off with `
 ```bash
 scp -r root@<pod>:/workspace/runs/probe-dispersion-warmup-mh1 ./results/
 scp -r root@<pod>:/workspace/runs/grpo-qwen3b-tools-hard-mh1 ./results/
-scp -r root@<pod>:/workspace/runs/grpo-qwen3b-tools-hard-mh1-hard ./results/
-scp root@<pod>:/workspace/runs/grpo-qwen3b-tools-hard-mh1-hard.jsonl ./results/
+scp -r root@<pod>:/workspace/runs/grpo-qwen3b-tools-hard-mh1-public ./results/
+scp root@<pod>:/workspace/runs/grpo-qwen3b-tools-hard-mh1-public.jsonl ./results/
 ```
 
 Plan A 7B (`scripts/grpo_singleturn.py --preset 7b`) is unchanged and still waits on the 3B Plan A gate. It is not what this pod setup launches.
@@ -237,7 +237,7 @@ uv run python scripts/sft_distill.py --dry-run
 uv run python scripts/run_gpu.py distill-sft --dry-run --sizes 3,5,all
 ```
 
-On the A100, after `bash scripts/runpod_setup.sh` and after the teacher JSONL is on disk. Starts from the **base 3B** unless `--init-adapter` points at an existing LoRA (for example the mh1 warm-up). `--eval` chains each adapter into the existing `eval-tools` hard split. Copy the JSONL onto the pod; do not point this job at `data/tasks/hard.jsonl` / test / holdout.
+On the A100, after `bash scripts/runpod_setup.sh` and after the teacher JSONL is on disk. Starts from the **base 3B** unless `--init-adapter` points at an existing LoRA (for example the mh1 warm-up). `--eval` chains each adapter into `eval-tools` on `public`. Copy the JSONL onto the pod; do not point this job at `test` or `hard_train_holdout`.
 
 ```bash
 # 1. Train nested adapters. Identical hparams across sizes. Writes
@@ -250,7 +250,7 @@ uv run python scripts/run_gpu.py distill-sft \
   --seed 0 \
   --run-id distill-sft-qwen3b \
   --eval \
-  --eval-split hard \
+  --eval-split public \
   --prompt-version v4 \
   --tool-budget 8
 
@@ -261,8 +261,8 @@ uv run python scripts/run_gpu.py distill-sft \
 uv run python scripts/run_gpu.py eval-tools \
   --runs-dir /workspace/runs \
   --adapter /workspace/runs/distill-sft-qwen3b-n100/adapter \
-  --run-id distill-sft-qwen3b-n100-hard \
-  --split hard \
+  --run-id distill-sft-qwen3b-n100-public \
+  --split public \
   --tool-budget 8 \
   --prompt-version v4
 
@@ -274,7 +274,7 @@ uv run python scripts/distill_curve.py \
   --out /workspace/runs/distill-sft-qwen3b/curve
 ```
 
-`--dry-run` does not load Qwen and does not need CUDA. A few-step GPU smoke uses the same command without `--dry-run` and with `--max-steps 2 --sizes 3 --run-id distill-sft-smoke` (still the 3B, not a tiny random model). `WANDB_API_KEY` logs each size as its own run id (`distill-sft-qwen3b-n100`, …) on project `bio-rl`.
+`--dry-run` does not load Qwen and does not need CUDA. A few-step GPU smoke uses the same command without `--dry-run` and with `--max-steps 2 --sizes 3 --run-id distill-sft-smoke` (still the 3B, not a tiny random model). `WANDB_API_KEY` logs each size as its own run id (`distill-sft-qwen3b-n100`, …) on project `fda-gym`.
 
 Known setup-script issue: `uv sync --group dev` (and some unpinned images) pull `tokenizers==0.23.3` / `huggingface-hub==1.33` which do not match `transformers==4.55`. Distill tests and the CPU dry-run never import those. The A100 job should keep using `uv sync --extra gpu --frozen` from `scripts/runpod_setup.sh`. If that extra is broken on a pod, install `setuptools` and the `[gpu]` pins before training; do not train against the mismatched Hub stack.
 

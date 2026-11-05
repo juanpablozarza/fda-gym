@@ -117,8 +117,12 @@ def rule_rows(
         for names, answer, keyword in rows:
             k = len(names)
             labels = {name: label_counts.get(name, -1) for name in names}
-            _record(rules["labels_max"], names, answer, [name for name in names if labels[name] == max(labels.values())])
-            _record(rules["labels_min"], names, answer, [name for name in names if labels[name] == min(labels.values())])
+            _record(
+                rules["labels_max"], names, answer, [name for name in names if labels[name] == max(labels.values())]
+            )
+            _record(
+                rules["labels_min"], names, answer, [name for name in names if labels[name] == min(labels.values())]
+            )
             distinct = sorted(set(labels.values()))
             if len(distinct) >= 3:
                 mid = distinct[1]

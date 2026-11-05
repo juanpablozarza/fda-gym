@@ -143,7 +143,8 @@ def episode_metrics(rollouts) -> dict[str, float]:
         "rewards/parse_rate": sum(1 for item in rollouts if item.parsed_tool_calls > 0) / n,
         "rewards/turn_parse_rate": parsed / turns if turns else 0.0,
         "episodes/tool_calls_mean": sum(item.parsed_tool_calls for item in rollouts) / n,
-        "episodes/closed_turn_limit": sum(1 for item in rollouts if getattr(item, "closed_by", None) == "turn_limit") / n,
+        "episodes/closed_turn_limit": sum(1 for item in rollouts if getattr(item, "closed_by", None) == "turn_limit")
+        / n,
         "episodes/closed_context": sum(1 for item in rollouts if getattr(item, "closed_by", None) == "context") / n,
     }
     for reason in TERMINATIONS:

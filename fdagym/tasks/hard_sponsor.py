@@ -1,6 +1,6 @@
 """Generation of sponsor-hop questions over comparable drug sets.
 
-This module owns candidate rotation and private-sponsor selection. The caller
+This module owns candidate rotation and unnamed-sponsor selection. The caller
 injects task acceptance, keeping snapshot solving and task formatting in
 ``hard.py``.
 """
@@ -10,6 +10,7 @@ from __future__ import annotations
 import random
 import re
 from collections import Counter, defaultdict
+from collections.abc import Sequence
 from typing import Protocol
 
 from fdagym.tasks.hard_solver import question_sponsor_count, question_sponsor_drug, question_sponsor_faers
@@ -28,6 +29,7 @@ class SponsorProfile(Protocol):
     boxed_text: str | None
     top: list[tuple[str, int]]
     counts: dict[int, int]
+
 
 _KEYWORD_STOP = {
     "warning",
@@ -174,7 +176,7 @@ def _labels_within(left: SponsorProfile, right: SponsorProfile, ratio: float = L
     return max(a, b) / min(a, b) <= ratio
 
 
-def _sponsor_pool(profiles: list[SponsorProfile], variant: str) -> list[SponsorProfile]:
+def _sponsor_pool(profiles: Sequence[SponsorProfile], variant: str) -> list[SponsorProfile]:
     picked = []
     for profile in profiles:
         if variant == "sponsor_count":
@@ -191,7 +193,9 @@ def _sponsor_pool(profiles: list[SponsorProfile], variant: str) -> list[SponsorP
     return picked
 
 
-def _sponsor_index(profiles: list[SponsorProfile], blocked_sponsors: set[str], blocked_apps: set[str]) -> dict[str, list[tuple[str, str]]]:
+def _sponsor_index(
+    profiles: Sequence[SponsorProfile], blocked_sponsors: set[str], blocked_apps: set[str]
+) -> dict[str, list[tuple[str, str]]]:
     index: dict[str, list[tuple[str, str]]] = defaultdict(list)
     for profile in profiles:
         for key, apps in profile.sponsors.items():
@@ -344,7 +348,7 @@ def _insert_slot(members: list[SponsorProfile], answer: str, slot: int, rng: ran
 
 
 def fill_sponsor_tasks(
-    profiles: list[SponsorProfile],
+    profiles: Sequence[SponsorProfile],
     rng: random.Random,
     *,
     quotas: dict[str, int],
@@ -392,7 +396,11 @@ def fill_sponsor_tasks(
         good: list[list[SponsorProfile]] = []
         while len(kept) < quota:
             fresh = _discover_sets(
-                [profile for profile in pool if used_named[profile.name] < named_cap and used_answer[profile.name] < answer_cap],
+                [
+                    profile
+                    for profile in pool
+                    if used_named[profile.name] < named_cap and used_answer[profile.name] < answer_cap
+                ],
                 width,
                 rng,
                 index,
@@ -485,9 +493,11 @@ def fill_sponsor_tasks(
             dropped[f"short:{variant}"] += quota - len(kept)
     return groups
 
+
 def _sponsor_keys(profile: SponsorProfile) -> set[str]:
     """Every sponsor on the snapshot, not only page 1. Hidden later-page matches are ties."""
     return set(profile.all_sponsors or profile.sponsors)
+
 
 def _keyword_ranked(text: str, drugs: list[str]) -> list[str]:
     """Whole words from the warning headline, not hyphen fragments or boilerplate."""

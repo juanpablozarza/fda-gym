@@ -188,7 +188,9 @@ def composite_halves(answer: object, task: dict) -> tuple[float, list[str]] | No
     score = COMPOSITE_HALF * count_ok + COMPOSITE_HALF * flag_ok
     if count_ok and flag_ok:
         score = PUNCT
-    return score, [f"dense composite: count {'ok' if count_ok else 'wrong'}, yes/no {'ok' if flag_ok else 'wrong'}, score {score:.2f}"]
+    return score, [
+        f"dense composite: count {'ok' if count_ok else 'wrong'}, yes/no {'ok' if flag_ok else 'wrong'}, score {score:.2f}"
+    ]
 
 
 def _near(answer: object, task: dict, snapshot: Snapshot | None) -> tuple[float, str] | None:

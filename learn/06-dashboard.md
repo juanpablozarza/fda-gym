@@ -190,7 +190,7 @@ for line in Path("web/public/results/fixture-run.jsonl").read_text().splitlines(
 PY
 ```
 
-Run that from the repo root (`bio-rl-web`), not from `web/`.
+Run that from the repo root, not from `web/`.
 
 <details>
 <summary><b>[predict]</b> FG-9003's tool output total is 412. It answers 1284. Will the first cite id be a safetyreportid or step:1?</summary>

@@ -70,4 +70,3 @@ def score_completion(
         dense=True,
         snapshot=snapshot,
     )
-

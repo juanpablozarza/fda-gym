@@ -118,8 +118,15 @@ The sponsor module works on profile-shaped records and calls the injected `accep
 
 ```python
 def fill_sponsor_tasks(
-    profiles: list[Any], rng: random.Random, *, quotas: dict[str, int],
-    dropped: Counter, accept, named_cap: int, answer_cap: int, anchor_cap: int,
+    profiles: list[Any],
+    rng: random.Random,
+    *,
+    quotas: dict[str, int],
+    dropped: Counter,
+    accept,
+    named_cap: int,
+    answer_cap: int,
+    anchor_cap: int,
 ) -> dict[str, list[dict]]:
     index = _sponsor_index(profiles, blocked_sponsors, blocked_apps)
 ```
@@ -199,7 +206,7 @@ resmetirom unans years [2023]
 ```
 </details>
 
-### 4.3 The hard-eval seed is not in this repo
+### 4.3 `generate_hard()` has no default seed
 
 ```bash
 uv run python -c 'from fdagym.tasks.hard import generate_hard; from fdagym.openfda import DiskSnapshot
@@ -211,10 +218,10 @@ except RuntimeError as exc:
 ```
 
 <details>
-<summary><b>[predict]</b> Does `generate_hard()` with no arguments reprint the private FG-8001..8100 sheet?</summary>
+<summary><b>[predict]</b> Does `generate_hard()` with no arguments write a new eval sheet?</summary>
 
-No. It raises `RuntimeError: FDAGYM_HARD_SEED is unset`. The public checkout has no default seed and no `eval` CLI. Passing a seed still requires you to choose one; the old `HARD_SEED = 0` constant is gone.
-The common wrong answer is that it writes 100 tasks with the old quotas, which is what the seeded generator used to do.
+No. It raises `RuntimeError: FDAGYM_HARD_SEED is unset`. There is no default seed. Passing a seed still requires you to choose one; the old `HARD_SEED = 0` constant is gone.
+The common wrong answer is that it writes 100 tasks with the old quotas, which is what a hardcoded seed used to do.
 </details>
 
 ---

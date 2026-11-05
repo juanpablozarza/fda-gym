@@ -102,8 +102,7 @@ def _sponsor_index(snapshot) -> dict[str, list[dict]]:
                         grouped.setdefault(sponsor, {}).setdefault(drug, set()).add(number)
     index = {
         sponsor: [
-            {"generic_name": drug, "application_numbers": sorted(numbers)}
-            for drug, numbers in sorted(drugs.items())
+            {"generic_name": drug, "application_numbers": sorted(numbers)} for drug, numbers in sorted(drugs.items())
         ]
         for sponsor, drugs in grouped.items()
     }
@@ -129,7 +128,9 @@ def find_applications(snapshot, raw: str) -> list[dict] | None:
 def _iter_approval_records(snapshot) -> Iterable[dict]:
     loader = getattr(snapshot, "drugsfda_records", None)
     if callable(loader):
-        yield from loader()
+        loaded = loader()
+        if isinstance(loaded, list):
+            yield from loaded
         return
     rows = getattr(snapshot, "_rows", None)
     if rows is None:
