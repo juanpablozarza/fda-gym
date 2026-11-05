@@ -65,7 +65,7 @@ The tools read [`data/snapshots/2026-10-15/`](data/snapshots/2026-10-15/), a fre
 | File | n | Role |
 | --- | --- | --- |
 | [`data/tasks/public.jsonl`](data/tasks/public.jsonl) | 93 | Published eval (`FG-9101`–`FG-9193`). Leaderboard sheet. |
-| [`data/tasks/hard_train.jsonl`](data/tasks/hard_train.jsonl) | 337 | Hard-style training pool (`FG-8101`+). |
+| [`data/tasks/hard_train.jsonl`](data/tasks/hard_train.jsonl) | 334 | Hard-style training pool (`FG-8101`+). |
 | [`data/tasks/hard_train_holdout.jsonl`](data/tasks/hard_train_holdout.jsonl) | 36 | In-distribution question holdout (~10% of the generated pool, stratified by variant). Same drugs as `hard_train`. Never mixed into training. Used to probe memorization. |
 | [`data/tasks/train.jsonl`](data/tasks/train.jsonl) / [`test.jsonl`](data/tasks/test.jsonl) | 1229 / 342 | Original type mix (boxed warning, FAERS, approvals). Unchanged by the hard-train rebuild. |
 

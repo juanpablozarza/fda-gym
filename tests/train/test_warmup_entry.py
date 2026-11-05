@@ -18,7 +18,7 @@ from fdagym.train.sft_tools import VAL_DRUG_FRACTION, split_sft_by_drug
 from fdagym.train.tool_config import configure_tool_run
 
 ROOT = Path(__file__).resolve().parents[2]
-WARMUP_SHA = "e9420eb530d16c0e2246d23b99181d60e05b8ea8845f86f4aead3dccce4d7ec4"
+WARMUP_SHA = "971819b19cc0a1b93b6f14540779877682d07bf17673f6c68678fb3526543316"
 MODAL = ROOT / "modal_train.py"
 
 

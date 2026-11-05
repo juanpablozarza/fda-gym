@@ -1,4 +1,4 @@
-"""Drugs, application numbers, and sponsors that a hard-training task must not reuse.
+"""Drugs, application numbers, sponsors, and question text that two sheets must not share.
 
 A string appears in a task when it is in the question, the gold answer, or the hidden
 metadata (entity, oracle arguments, citation ids). A sponsor appears when it is the gold
@@ -6,9 +6,9 @@ of a "Who is the sponsor" question, or the snapshot ``sponsor_name`` of an appli
 cited with that field. A sponsor that only happens to market a named drug, and is never
 cited, does not appear.
 
-Training tasks are also charged for every universe drug that owns an application number
-written in the task. That stops a sibling application from walking back into a held-out
-drug during a tool call.
+Both sides of a disjointness check are charged for every universe drug that owns an
+application number written in the task. That catches a training drug whose sibling
+application is the only thing named on the eval sheet.
 """
 
 from __future__ import annotations
@@ -83,22 +83,26 @@ def approval_maps(snapshot) -> ApprovalMaps:
     return maps
 
 
-def holdout_entities(tasks: list[dict], snapshot) -> EntitySet:
-    """Union of what appears in the held-out tasks. Drugs are surface names only."""
-    maps = approval_maps(snapshot)
-    universe = {drug.casefold() for drug in load_universe()}
+def sheet_entities(tasks: list[dict], snapshot) -> EntitySet:
+    """Union of ``task_entities`` over a sheet. Ownership-expanded on every row."""
     drugs: set[str] = set()
     apps: set[str] = set()
     sponsors: set[str] = set()
     for task in tasks:
-        drugs |= _surface_drugs(task, universe)
-        apps |= _applications(task)
-        sponsors |= _sponsors(task, maps)
+        found = task_entities(task, snapshot)
+        drugs |= set(found.drugs)
+        apps |= set(found.applications)
+        sponsors |= set(found.sponsors)
     return EntitySet(frozenset(drugs), frozenset(apps), frozenset(sponsors))
 
 
+def holdout_entities(tasks: list[dict], snapshot) -> EntitySet:
+    """Same as ``sheet_entities``. Kept so generators and audits keep their names."""
+    return sheet_entities(tasks, snapshot)
+
+
 def task_entities(task: dict, snapshot) -> EntitySet:
-    """What a training task would leak, including drugs that own its application numbers."""
+    """What a task would leak, including drugs that own its application numbers."""
     maps = approval_maps(snapshot)
     universe = {drug.casefold() for drug in load_universe()}
     drugs = _surface_drugs(task, universe)
@@ -110,36 +114,40 @@ def task_entities(task: dict, snapshot) -> EntitySet:
 
 
 def overlaps(train_tasks: list[dict], holdout: EntitySet, snapshot) -> dict[str, set[str]]:
-    drugs: set[str] = set()
-    apps: set[str] = set()
-    sponsors: set[str] = set()
-    for task in train_tasks:
-        found = task_entities(task, snapshot)
-        drugs |= set(found.drugs) & set(holdout.drugs)
-        apps |= set(found.applications) & set(holdout.applications)
-        sponsors |= set(found.sponsors) & set(holdout.sponsors)
-    return {"drugs": drugs, "applications": apps, "sponsors": sponsors}
+    found = sheet_entities(train_tasks, snapshot)
+    return {
+        "drugs": set(found.drugs) & set(holdout.drugs),
+        "applications": set(found.applications) & set(holdout.applications),
+        "sponsors": set(found.sponsors) & set(holdout.sponsors),
+    }
+
+
+def overlapping_questions(left: list[dict], right: list[dict]) -> set[str]:
+    return {str(task.get("question") or "") for task in left if task.get("question")} & {
+        str(task.get("question") or "") for task in right if task.get("question")
+    }
 
 
 def assert_disjoint(train_tasks: list[dict], holdout_tasks: list[dict], snapshot) -> dict:
-    """Raise ``OverlapError`` listing every overlapping drug, application, and sponsor."""
+    """Raise ``OverlapError`` if either sheet leaks an entity or question into the other."""
     if not train_tasks:
         raise RuntimeError("hard_train is empty; refusing a disjointness pass on no tasks")
-    holdout = holdout_entities(holdout_tasks, snapshot)
-    found = overlaps(train_tasks, holdout, snapshot)
+    left = sheet_entities(train_tasks, snapshot)
+    right = sheet_entities(holdout_tasks, snapshot)
+    found = {
+        "drugs": set(left.drugs) & set(right.drugs),
+        "applications": set(left.applications) & set(right.applications),
+        "sponsors": set(left.sponsors) & set(right.sponsors),
+        "questions": overlapping_questions(train_tasks, holdout_tasks),
+    }
     if any(found.values()):
         raise OverlapError(found)
-    train = EntitySet(
-        frozenset().union(*(task_entities(task, snapshot).drugs for task in train_tasks)),
-        frozenset().union(*(task_entities(task, snapshot).applications for task in train_tasks)),
-        frozenset().union(*(task_entities(task, snapshot).sponsors for task in train_tasks)),
-    )
     return {
         "train_tasks": len(train_tasks),
         "holdout_tasks": len(holdout_tasks),
-        "train": _counts(train),
-        "holdout": _counts(holdout),
-        "overlap": {"drugs": [], "applications": [], "sponsors": []},
+        "train": _counts(left),
+        "holdout": _counts(right),
+        "overlap": {"drugs": [], "applications": [], "sponsors": [], "questions": []},
     }
 
 

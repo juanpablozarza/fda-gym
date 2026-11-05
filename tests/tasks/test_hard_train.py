@@ -28,11 +28,11 @@ from fdagym.train.tool_config import ToolTrainConfig
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA = json.loads((ROOT / "schemas" / "task.schema.json").read_text())
 VALIDATOR = Draft202012Validator(SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA)))
-HARD_TRAIN_SHA256 = "6bfaf4d5357569308a3feed0ddf75571e6dd414870015915dd80bc0daa60d3b9"
-HARD_TRAIN_HOLDOUT_SHA256 = "e8b5ee075159af09fd2682c4c5f87b302157ea25eb3647492b2618d3d0f97cd1"
+HARD_TRAIN_SHA256 = "fa80218c2a8a64726349465ea32b102bdc1fce31a25c9c4984ee9f487c67779f"
+HARD_TRAIN_HOLDOUT_SHA256 = "e00c9c7426e40ecad673bd25a4f1a471c9d1f139cc7442de88cba599c1a63096"
 TRAIN_SHA256 = "a6c895f14c3399cfd47de5b0d2ac311bc38e2f853f7de13f24343d588d739a31"
 TEST_SHA256 = "3b52b30c45e19956bf183799f51a7e811a2f981a2777413f6fced837a82ce3ea"
-N_TRAIN = 337
+N_TRAIN = 334
 N_HOLDOUT = 36
 N_TASKS = N_TRAIN + N_HOLDOUT
 ID_START = 8101
@@ -43,7 +43,7 @@ BY_VARIANT = {
     "faers_reaction": 40,
     "faers_year": 38,
     "sponsor_count": 65,
-    "sponsor_drug": 37,
+    "sponsor_drug": 34,
     "sponsor_faers": 36,
     "year_reaction": 38,
 }
@@ -116,7 +116,7 @@ def test_file_matches_schema_and_stays_off_the_eval_ids(hard_train):
             assert isinstance(task["gold"]["value"], int)
     assert {variant: variants.count(variant) for variant in BY_VARIANT} == BY_VARIANT
     assert sum(task["type"] == "compare" for task in hard_train) == 199
-    assert sum(task["type"] == "sponsor_hop" for task in hard_train) == 138
+    assert sum(task["type"] == "sponsor_hop" for task in hard_train) == 135
     holdout_variants = []
     for task in holdout:
         VALIDATOR.validate(task)
@@ -236,9 +236,9 @@ def test_real_file_is_disjoint_and_a_planted_overlap_is_loud(disk, hard_train):
     holdout = load_split("hard_train_holdout")
     excluded = load_exclusion_splits()
     report = assert_disjoint(hard_train, public, disk)
-    assert report["overlap"] == {"drugs": [], "applications": [], "sponsors": []}
-    assert report["train"]["drugs"] == 69
-    assert report["holdout"]["drugs"] == 61
+    assert report["overlap"] == {"drugs": [], "applications": [], "sponsors": [], "questions": []}
+    assert report["train"]["drugs"] == 68
+    assert report["holdout"]["drugs"] == 62
     assert report["train_tasks"] == N_TRAIN
     assert_disjoint(holdout, public, disk)
     assert_disjoint(hard_train, excluded, disk)
@@ -293,7 +293,7 @@ def test_sixty_forty_mix_is_opt_in(hard_train):
 def test_question_only_solver_reaches_every_task_at_6_and_8(disk, hard_train):
     both = [*hard_train, *load_split("hard_train_holdout")]
     report = check_reachability(disk, both, [6, 8])
-    assert report["min_calls"] == {"3": 90, "4": 86, "5": 72, "6": 125}
+    assert report["min_calls"] == {"3": 90, "4": 86, "5": 72, "6": 122}
     assert [row["solved"] for row in report["by_budget"]] == [N_TASKS, N_TASKS]
     assert report["budgets"] == [6, 8]
     six = next(task for task in hard_train if task["difficulty_features"]["min_tool_calls"] == 6)
