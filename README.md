@@ -14,10 +14,13 @@ Python 3.11+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync --group dev
+uv run python scripts/demo_public_episode.py
 uv run pytest -q
 ```
 
 That is the smoke run. It uses the committed snapshot and never calls live openFDA or an LLM.
+
+The demo replays one published task (`FG-9101`, a 3-call FAERS compare) through `FDAEnv` on freeze `2026-10-15`. After every hop it prints the tool, a truncated observation, and the grader breakdown (`correctness` / `citation` / `format` / `efficiency` / `total` / `grader_version`). Partial scores before `submit_answer` stay at 0; the honest oracle should end at total 1.0. Override the row with `--task-id FG-9101`–`FG-9193`. No GPU, no `OPENROUTER_API_KEY`. This is one episode, not a 93-row model eval.
 
 Score a Chat Completions model on the published sheet (needs `OPENROUTER_API_KEY` in `.env`):
 
