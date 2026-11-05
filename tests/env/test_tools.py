@@ -144,7 +144,7 @@ def test_count_hides_the_incidental_report_and_keeps_the_total():
 def test_approvals_expose_products_so_dosage_form_can_be_cited():
     query = queries.approvals_search("exampledrug")
     record = {
-        "application_number": "NDA1",
+        "application_number": "NDA000001",
         "sponsor_name": "Example",
         "products": [
             {
@@ -159,21 +159,29 @@ def test_approvals_expose_products_so_dosage_form_can_be_cited():
     snap = MapSnapshot({(query.endpoint, query.search, query.count, query.limit): {"results": [record]}})
     output, error = execute(EpisodeState(snap), "search_approvals", {"generic_name": "exampledrug"}, step_index=1)
     assert error is None
-    assert output["results"][0]["products"][0]["dosage_form"] == "TABLET"
-    assert output["results"][0]["products"][0]["brand_name"] == "EXAMPLE"
-    assert output["results"][0]["submissions"][0]["submission_status_date"] == "20200102"
+    assert output["results"][0]["original_approval"] == "20200102"
+    assert output["results"][0]["products"] == [{"active_ingredients": [{"name": "EXAMPLEDRUG"}]}]
+    detail, error = execute(EpisodeState(snap), "search_approvals", {"application_number": "NDA000001"}, step_index=2)
+    assert error is None
+    assert detail["results"][0]["products"][0]["dosage_form"] == "TABLET"
+    assert detail["results"][0]["products"][0]["brand_name"] == "EXAMPLE"
+    assert detail["results"][0]["submissions"][0]["submission_status_date"] == "20200102"
 
 
 def test_approvals_read_brand_from_products_when_openfda_is_missing():
     query = queries.approvals_search("exampledrug")
     record = {
-        "application_number": "NDA1",
+        "application_number": "NDA000001",
         "sponsor_name": "Example",
         "products": [{"brand_name": "EXAMPLE"}],
         "submissions": [{"submission_type": "ORIG", "submission_status_date": "20200102"}],
     }
     snap = MapSnapshot({(query.endpoint, query.search, query.count, query.limit): {"results": [record]}})
-    output, error = execute(EpisodeState(snap), "search_approvals", {"generic_name": "exampledrug"}, step_index=1)
+    listed, error = execute(EpisodeState(snap), "search_approvals", {"generic_name": "exampledrug"}, step_index=1)
+    assert error is None
+    assert listed["results"][0]["sponsor_name"] == "Example"
+    assert "brand" not in listed["results"][0]
+    output, error = execute(EpisodeState(snap), "search_approvals", {"application_number": "NDA000001"}, step_index=2)
     assert error is None
     assert output["results"][0]["brand"] == ["EXAMPLE"]
     assert snap.calls[0][1] == query.search

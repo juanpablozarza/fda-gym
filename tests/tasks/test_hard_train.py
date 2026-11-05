@@ -31,10 +31,10 @@ SCHEMA = load_schema("task.schema.json")
 VALIDATOR = Draft202012Validator(
     SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA))
 )
-HARD_TRAIN_SHA256 = "fa80218c2a8a64726349465ea32b102bdc1fce31a25c9c4984ee9f487c67779f"
-HARD_TRAIN_HOLDOUT_SHA256 = "e00c9c7426e40ecad673bd25a4f1a471c9d1f139cc7442de88cba599c1a63096"
-TRAIN_SHA256 = "a6c895f14c3399cfd47de5b0d2ac311bc38e2f853f7de13f24343d588d739a31"
-TEST_SHA256 = "3b52b30c45e19956bf183799f51a7e811a2f981a2777413f6fced837a82ce3ea"
+HARD_TRAIN_SHA256 = "e43533ef78f8c68b449579832b4dc59e7b8b1f6e07c657bf19a47ba573a585e1"
+HARD_TRAIN_HOLDOUT_SHA256 = "2e7f9f538e561d3c0def58d4288f9953ac11a13c697fa61eedf95a70341565c9"
+TRAIN_SHA256 = "1d468b230af2941963871689b20be10badb831a434213a7ef0f215f2fc509179"
+TEST_SHA256 = "7807a9f27f609a915f1ac8ae1eefa35b6fcd94f3989a368ce57d242d61f33537"
 N_TRAIN = 334
 N_HOLDOUT = 36
 N_TASKS = N_TRAIN + N_HOLDOUT
@@ -109,12 +109,15 @@ def test_file_matches_schema_and_stays_off_the_eval_ids(hard_train):
         assert task["entity"]["generic_name"] in spec["drugs"]
         calls = task["difficulty_features"]["min_tool_calls"]
         assert calls == len(task["oracle_calls"])
-        assert 3 <= calls <= 6
+        assert 3 <= calls <= 8
         if spec["variant"] == "boxed_none":
             assert task["gold"] == {"kind": "boolean", "value": False}
         if spec["variant"] == "sponsor_count":
             assert task["gold"]["kind"] == "number"
             assert isinstance(task["gold"]["value"], int)
+        if spec["variant"] in {"sponsor_faers", "sponsor_drug"}:
+            tools = {call["tool"] for call in task["oracle_calls"]}
+            assert tools.isdisjoint({"search_drug_label", "get_label_section"})
     assert {variant: variants.count(variant) for variant in BY_VARIANT} == BY_VARIANT
     assert sum(task["type"] == "compare" for task in hard_train) == 199
     assert sum(task["type"] == "sponsor_hop" for task in hard_train) == 135
@@ -122,8 +125,12 @@ def test_file_matches_schema_and_stays_off_the_eval_ids(hard_train):
     for task in holdout:
         VALIDATOR.validate(task)
         require_oracle_calls(task)
-        holdout_variants.append(parse_question(task["question"])["variant"])
+        spec = parse_question(task["question"])
+        holdout_variants.append(spec["variant"])
         assert task["split"] == "hard_train_holdout"
+        if spec["variant"] in {"sponsor_faers", "sponsor_drug"}:
+            tools = {call["tool"] for call in task["oracle_calls"]}
+            assert tools.isdisjoint({"search_drug_label", "get_label_section"})
     assert {variant: holdout_variants.count(variant) for variant in HOLDOUT_BY_VARIANT} == HOLDOUT_BY_VARIANT
 
 
@@ -293,11 +300,13 @@ def test_sixty_forty_mix_is_opt_in(hard_train):
 def test_question_only_solver_reaches_every_task_at_6_and_8(disk, hard_train):
     both = [*hard_train, *load_split("hard_train_holdout")]
     report = check_reachability(disk, both, [6, 8])
-    assert report["min_calls"] == {"3": 90, "4": 86, "5": 72, "6": 122}
+    assert report["min_calls"] == {"3": 90, "4": 164, "5": 72, "6": 44}
+    # Named-sponsor oracles are 4; original_approval on the summary keeps year hops at 6.
     assert [row["solved"] for row in report["by_budget"]] == [N_TASKS, N_TASKS]
     assert report["budgets"] == [6, 8]
-    six = next(task for task in hard_train if task["difficulty_features"]["min_tool_calls"] == 6)
-    solved = solve(disk, six["question"], budget=8)
-    assert solved.n_calls == 6
+    need = max(task["difficulty_features"]["min_tool_calls"] for task in hard_train)
+    longest = next(task for task in hard_train if task["difficulty_features"]["min_tool_calls"] == need)
+    solved = solve(disk, longest["question"], budget=8)
+    assert solved.n_calls == need
     with pytest.raises(Unsolvable, match="budget"):
-        solve(disk, six["question"], budget=5)
+        solve(disk, longest["question"], budget=need - 1)

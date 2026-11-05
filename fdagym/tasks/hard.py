@@ -9,7 +9,7 @@ Two templates, both answered from the frozen snapshot:
 ``search_approvals`` cannot filter by sponsor, so the sponsor question names the
 candidate drugs. The reference solver in ``hard_solver`` is what decides that a
 question is reachable; this module only proposes candidates and keeps the ones
-the solver settles inside 6 calls.
+the solver settles inside ``BUDGET`` calls.
 """
 
 from __future__ import annotations
@@ -564,10 +564,10 @@ def _gold_citations(cache, spec, solution) -> list[dict]:
     variant = spec["variant"]
     if variant == "earliest_boxed":
         winner = solution.answer
-        extras[("drug/drugsfda", "submissions")] = _year_apps(cache, winner)
+        extras[("drug/drugsfda", _year_cite_field(solution))] = _year_apps(cache, winner)
         extras[("drug/label", "sections")] = _boxed_ids(cache, winner)
     elif variant == "earliest_reaction":
-        extras[("drug/drugsfda", "submissions")] = _year_apps(cache, _event_drug(solution))
+        extras[("drug/drugsfda", _year_cite_field(solution))] = _year_apps(cache, _event_drug(solution))
     elif variant == "boxed_none":
         ids: list[str] = []
         for drug in spec["drugs"]:
@@ -608,7 +608,7 @@ def _gold_citations(cache, spec, solution) -> list[dict]:
 
 
 def _reward(snapshot, task, solution) -> dict:
-    env = FDAEnv(snapshot, [task], run_id="hard-ref", seed=0)
+    env = FDAEnv(snapshot, [task], run_id="hard-ref", seed=0, tool_budget=max(8, len(solution.calls)))
     env.reset(task["id"])
     for call in solution.calls:
         _obs, _reward, done, _info = env.step({"tool": call["tool"], "arguments": call["arguments"]})
@@ -687,6 +687,14 @@ def _snapshot_answer(cache: _Cache, question: str):
     if re.search(r"\bor\b", rows[0][0], re.IGNORECASE):
         raise Unsolvable("top term contains or")
     return rows[0][0]
+
+
+def _year_cite_field(solution) -> str:
+    """Field the solver cited for the original-approval year."""
+    for cite in solution.citations:
+        if cite.get("endpoint") == "drug/drugsfda" and cite.get("field") in {"original_approval", "submissions"}:
+            return cite["field"]
+    return "original_approval"
 
 
 def _event_drug(solution) -> str:

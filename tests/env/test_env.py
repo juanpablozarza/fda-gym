@@ -53,7 +53,7 @@ def test_local_tasks_match_the_task_schema():
         check.validate(task)
 
 
-def test_submit_still_works_after_six_tool_calls():
+def test_submit_still_works_after_the_tool_budget():
     env = FDAEnv(JsonSnapshot(), ALL_TASKS)
     env.reset("FG-0001")
     action = {"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}
@@ -93,7 +93,7 @@ def test_configured_budget_of_eight_still_accepts_submit_and_rejects_the_ninth_c
         FDAEnv(JsonSnapshot(), ALL_TASKS, tool_budget=0)
 
 
-def test_seventh_tool_call_stops_without_running_the_tool():
+def test_call_past_the_budget_stops_without_running_the_tool():
     env = FDAEnv(JsonSnapshot(), ALL_TASKS)
     env.reset("FG-0001")
     action = {"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}

@@ -205,7 +205,7 @@ done True total 1.0
 ]
 ```
 
-`reset` returns the question and the five tool schemas. `step` returns `(observation, reward, done, info)`. Reward stays 0 until the episode ends. The budget of 6 is in [env.py:54](../fdagym/env.py#L54): a seventh tool call ends the episode, and `submit_answer` is still accepted after six calls.
+`reset` returns the question and the five tool schemas. `step` returns `(observation, reward, done, info)`. Reward stays 0 until the episode ends. The budget of 8 is `TOOL_BUDGET` in [env.py](../fdagym/env.py): a ninth tool call ends the episode, and `submit_answer` is still accepted after eight calls.
 
 ### 4.2 The attack file
 
@@ -282,12 +282,12 @@ Revert with `git checkout -- fdagym/rewards/correctness.py`.
 Relative error is 1013/20254, about 0.0500, so the score is about 0.500. The reward code should not invent "10% is close enough". A count task and a year task do not want the same window. `test_number_is_exact_and_partial_inside_tolerance` locks the line. 18000 is about 11% low on this count, so tolerance 0.1 rejects it. The union search moved the 2025 serious total from 18629 to 20254.
 </details>
 
-**The seventh tool call ends the episode.** `submit_answer` still works once six calls have run. The other option was to keep returning errors forever and wait. A replay needs a `terminated_by`. [env.py:54](../fdagym/env.py#L54).
+**The ninth tool call ends the episode.** `submit_answer` still works once eight calls have run. The other option was to keep returning errors forever and wait. A replay needs a `terminated_by`. [`TOOL_BUDGET` in env.py](../fdagym/env.py).
 
 <details>
-<summary><b>[why]</b> The trainer uses six tools and then calls a seventh tool instead of submit_answer. Which terminated_by should the replay show?</summary>
+<summary><b>[why]</b> The trainer uses eight tools and then calls a ninth tool instead of submit_answer. Which terminated_by should the replay show?</summary>
 
-`max_steps`. The trajectory records the refusal and a format score of 0, because there is no answer. `test_seventh_tool_call_stops_without_running_the_tool` checks that the seventh call does not hit the snapshot. If the trainer submits after six calls, `terminated_by` is `submit`.
+`max_steps`. The trajectory records the refusal and a format score of 0, because there is no answer. `test_call_past_the_budget_stops_without_running_the_tool` checks that the extra call does not hit the snapshot. If the trainer submits after eight calls, `terminated_by` is `submit`.
 </details>
 
 **Spellings live on the task.** `diarrhea` matches only when `gold.aliases` says so. A US/UK dictionary inside the reward was the other option. The generator sees the snapshot term and can attach the alias. A hidden list would change scores without a task diff.

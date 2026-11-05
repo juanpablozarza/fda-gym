@@ -142,15 +142,17 @@ def test_over_cap_prompt_stays_at_8192_and_launch_rejects_it():
         assert_prompts_fit(rows, fitted)
 
 
-def test_stage1_pool_resolves_to_8192():
+def test_stage1_pool_fits_4096_after_approval_summaries():
     snapshot = DiskSnapshot("2026-10-15")
     rows, _mix = build_rows(snapshot, load_split("train"), TrainConfig(stage=1))
     fitted, stats = fit_context(TrainConfig(stage=1), rows)
     needed = stats["measured_prompt_tokens"] + fitted.max_completion_length
     assert rows
-    assert 4096 < needed <= 8192, stats
-    assert fitted.vllm_max_model_len == 8192
-    assert stats["vllm_max_model_len"] == 8192
+    # Generic-name approval pages are summaries, so the longest stage-1 prompt
+    # no longer needs the 8192 window. fit_context still rounds up to 4096.
+    assert needed <= 4096, stats
+    assert fitted.vllm_max_model_len == 4096
+    assert stats["vllm_max_model_len"] == 4096
     assert stats["fits"] is True
     assert fitted.max_pack_chars == 6000
     assert_prompts_fit(rows, fitted)

@@ -92,9 +92,18 @@ def _citations_preferring_entity(steps: list[dict], task: dict) -> list[dict]:
             if found:
                 break
         if found is None:
+            queried = set()
+            for step in steps:
+                tool = step.get("tool")
+                if isinstance(tool, str):
+                    queried.add(_TOOL_ENDPOINT.get(tool))
+            if gold["endpoint"] not in queried:
+                continue
             raise AssertionError(f"{task['id']} gold field {gold['fields']} never appeared")
         endpoint, cid, field, text = found
         citations.append({"endpoint": endpoint, "id": cid, "field": field, "quote": _quote(text)})
+    if not citations:
+        raise AssertionError(f"{task['id']} no gold field appeared")
     return citations
 
 

@@ -42,7 +42,7 @@ Call submit_answer when you are done. Its arguments must match schemas/answer.sc
 - id is a set_id, application_number, or "step:<n>" for FAERS aggregates and empty searches (n is the tool-call index that returned them).
 - field is a path the tool actually returned: boxed_warning, sections, submissions, products, sponsor_name, results, meta.results.total, ...
 - search_approvals accepts application_number (NDA020977, NDA 020977, 020977, or a BLA/ANDA number) as well as generic_name. Use the application number when the question names one.
-- search_approvals returns one page (page starts at 1). NDA and BLA rows come before ANDA, and submissions list only the original approval.
+- search_approvals by generic_name returns one summary page (application_number, sponsor_name, original_approval, ingredient groups). Call it again with application_number to read products and submissions. page starts at 1. NDA and BLA rows come before ANDA.
 - quote is copied from that field in THIS episode's tool output (verbatim span, not a paraphrase). Quotes shorter than 4 characters never count.
 - MedDRA reaction terms are uppercase with British spelling; copy the term from results, do not translate it.
 - A missing boxed warning is cited from search_drug_label: id = the label's set_id, field = sections.
@@ -554,7 +554,9 @@ def _consume_turn(episode, generation, limit, tokenizer, codec, limits: RolloutL
     observation, done = _apply_step(episode, action if action is not None else text)
     if done or observation is None:
         return
-    if not _append_tool(episode, observation, tokenizer, codec, limits):
+    if not _append_tool(episode, observation, tokenizer, codec, limits) and not _append_omitted(
+        episode, observation, tokenizer, codec, limits
+    ):
         _end_unfinished(episode, tokenizer, codec, limits, reason="context")
 
 
@@ -600,6 +602,26 @@ def _apply_step(episode, action) -> tuple[dict | None, bool]:
         episode.terminated_by = episode.env.terminated_by
         return None, True
     return _observation, False
+
+
+def _append_omitted(episode, observation, tokenizer, codec, limits: RolloutLimits) -> bool:
+    """One line instead of an empty submit. The next turn can still call submit_answer."""
+    note = {
+        "tool": observation.get("tool") if isinstance(observation, dict) else None,
+        "output": None,
+        "error": (
+            "Tool result omitted because it does not fit in the context window. "
+            "Call submit_answer with the evidence you already have."
+        ),
+        "tool_calls_remaining": observation.get("tool_calls_remaining") if isinstance(observation, dict) else None,
+    }
+    text = codec.tool_message(note, max_chars=limits.max_tool_chars)
+    token_ids = list(tokenizer.encode(text))
+    if not token_ids or len(token_ids) > episode.room(limits):
+        return False
+    episode.spans.append(Span("tool", tuple(token_ids), text))
+    episode.logprobs.extend([None] * len(token_ids))
+    return True
 
 
 def _end_unfinished(episode, tokenizer, codec, limits: RolloutLimits, *, reason: str) -> None:

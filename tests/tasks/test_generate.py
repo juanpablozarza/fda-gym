@@ -191,6 +191,7 @@ def test_queries_follow_oracle_calls_not_question_text():
 
     calls = [{"tool": "search_approvals", "arguments": {"generic_name": "warfarin"}}]
     assert queries_for_oracle(calls) == [approvals_search("warfarin")]
+    assert queries_for_oracle([{"tool": "search_approvals", "arguments": {"application_number": "NDA020977"}}]) == []
 
 
 def test_boxed_yes_no_is_balanced_within_each_split(tasks):
@@ -395,6 +396,45 @@ def test_combination_application_cannot_set_the_approval_year():
     missing = next(task for task in candidates if task["answerable"] is False)
     assert missing["gold"]["value"] == "NOT_FOUND"
     assert str(year) in missing["question"]
+
+
+def test_same_year_winner_apps_keep_one_detail_hop():
+    """Citing one application's submissions is enough; extra winner apps are unused."""
+    drug = "exampledrug"
+    mapping = {}
+    _put(
+        mapping,
+        approvals_search(drug),
+        {
+            "results": [
+                {
+                    "application_number": "NDA000001",
+                    "sponsor_name": "EXAMPLE",
+                    "products": [{"brand_name": "EXAMPLE", "active_ingredients": [{"name": "EXAMPLEDRUG"}]}],
+                    "submissions": [
+                        {"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "19950301"}
+                    ],
+                },
+                {
+                    "application_number": "NDA000002",
+                    "sponsor_name": "EXAMPLE",
+                    "products": [{"brand_name": "EXAMPLE", "active_ingredients": [{"name": "EXAMPLEDRUG"}]}],
+                    "submissions": [
+                        {"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "19950301"}
+                    ],
+                },
+            ]
+        },
+    )
+    tasks = list(_candidates(MemorySnapshot(mapping, "toy"), drug, GenConfig()))
+    approval = next(task for task in tasks if task["type"] == "approval" and "year" in task["question"])
+    assert approval["gold"]["value"] == 1995
+    assert approval["gold_citations"][0]["ids"] == ["NDA000001", "NDA000002"]
+    assert approval["oracle_calls"] == [
+        {"tool": "search_approvals", "arguments": {"generic_name": drug}},
+        {"tool": "search_approvals", "arguments": {"application_number": "NDA000001"}},
+    ]
+    assert approval["difficulty_features"]["min_tool_calls"] == 2
 
 
 def test_tied_top_reaction_is_not_emitted():

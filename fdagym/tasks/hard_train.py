@@ -7,8 +7,9 @@ The pool is whatever is left after ``disjoint.sheet_entities`` removes every dru
 application number, and sponsor that appears in ``public.jsonl`` and ``test.jsonl``.
 Owner drugs of cited application numbers are excluded too, so a training drug cannot
 walk into an eval application. Gold is recomputed from the snapshot. A task is kept
-only when the question-only solver scores 1.0 inside ``budget`` calls (default 6,
-today's env cap). Questions that already appear on an excluded sheet are dropped.
+only when the question-only solver scores 1.0 inside ``budget`` calls (default
+``TOOL_BUDGET``, today's env cap of 8). Questions that already appear on an
+excluded sheet are dropped.
 """
 
 from __future__ import annotations

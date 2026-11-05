@@ -21,8 +21,16 @@ def test_public_sheet_is_its_own_split():
     assert [task["id"] for task in tasks] == [f"FG-{9101 + offset:04d}" for offset in range(93)]
     assert {task["split"] for task in tasks} == {"public"}
     assert {task["type"] for task in tasks} <= {"compare", "sponsor_hop"}
+    named_sponsor = 0
     for task in tasks:
-        parse_question(task["question"])
+        spec = parse_question(task["question"])
+        if spec["variant"] not in {"sponsor_faers", "sponsor_drug"}:
+            continue
+        tools = {call["tool"] for call in task["oracle_calls"]}
+        assert tools.isdisjoint({"search_drug_label", "get_label_section"})
+        assert task["difficulty_features"]["min_tool_calls"] == len(task["oracle_calls"]) == 4
+        named_sponsor += 1
+    assert named_sponsor > 0
 
 
 def test_published_splits_share_no_entities_or_questions():

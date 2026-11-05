@@ -54,8 +54,8 @@ SCHEMA = load_schema("task.schema.json")
 VALIDATOR = Draft202012Validator(
     SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA))
 )
-TRAIN_SHA256 = "a6c895f14c3399cfd47de5b0d2ac311bc38e2f853f7de13f24343d588d739a31"
-TEST_SHA256 = "3b52b30c45e19956bf183799f51a7e811a2f981a2777413f6fced837a82ce3ea"
+TRAIN_SHA256 = "1d468b230af2941963871689b20be10badb831a434213a7ef0f215f2fc509179"
+TEST_SHA256 = "7807a9f27f609a915f1ac8ae1eefa35b6fcd94f3989a368ce57d242d61f33537"
 QUOTAS = {
     "earliest_boxed": 16,
     "faers_year": 12,
@@ -125,7 +125,7 @@ def test_hard_file_matches_the_schema_and_stays_out_of_the_old_ids(hard_tasks):
         assert task["gold"]["value"] != "NOT_FOUND"
         assert task["snapshot_version"] == "2026-10-15"
         assert task["base_pass_rate"] is None
-        assert 1 <= task["difficulty_features"]["min_tool_calls"] <= 6
+        assert 1 <= task["difficulty_features"]["min_tool_calls"] <= 8
         assert task["entity"]["generic_name"] in spec["drugs"]
         assert all("," not in drug for drug in spec["drugs"])
         if spec["variant"] == "boxed_none":
@@ -139,6 +139,9 @@ def test_hard_file_matches_the_schema_and_stays_out_of_the_old_ids(hard_tasks):
         if spec["variant"] in {"faers_reaction", "sponsor_faers"}:
             event = [row for row in task["gold_citations"] if row["endpoint"] == "drug/event"]
             assert event and event[0]["ids"] == [] and event[0]["fields"] == ["results"]
+        if spec["variant"] in {"sponsor_faers", "sponsor_drug"}:
+            tools = {call["tool"] for call in task["oracle_calls"]}
+            assert tools.isdisjoint({"search_drug_label", "get_label_section"})
     assert len(set(questions)) == 100
     assert {variant: variants.count(variant) for variant in QUOTAS} == QUOTAS
     assert sum(task["type"] == "compare" for task in hard_tasks) == 50
@@ -379,7 +382,7 @@ def test_snapshot_gold_is_unique_and_the_question_only_solver_scores(disk, hard_
         solution = solve(disk, task["question"])
         assert same_answer(solution.answer, gold), task["id"]
         assert solution.calls == task["oracle_calls"], task["id"]
-        assert solution.n_calls <= 6
+        assert solution.n_calls <= 8
         assert all(length <= 3500 for length in solution.observation_chars)
         reward = _play(disk, task, solution)
         assert reward["total"] == 1.0, (task["id"], reward["notes"][:6])

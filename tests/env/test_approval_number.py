@@ -135,7 +135,8 @@ def test_generic_name_search_puts_the_nda_before_the_anda_and_keeps_only_the_ori
     output, error = execute(EpisodeState(snap), "search_approvals", {"generic_name": "exampledrug"}, step_index=1)
     assert error is None
     assert [row["application_number"] for row in output["results"]] == ["NDA000002", "ANDA000001"]
-    assert [sub["submission_type"] for sub in output["results"][0]["submissions"]] == ["ORIG"]
+    assert "submissions" not in output["results"][0]
+    assert output["results"][0]["original_approval"]
     assert output["meta"]["results"]["total"] == 2
     assert snap.calls
 

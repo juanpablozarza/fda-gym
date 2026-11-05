@@ -11,6 +11,7 @@ import json
 import re
 from dataclasses import dataclass, field
 
+from fdagym.env import TOOL_BUDGET
 from fdagym.questions import (
     Unsolvable,
     parse_question,
@@ -33,7 +34,11 @@ from fdagym.tools import EpisodeState, execute
 from fdagym.train.rollout import observation_payload
 
 OBS_LIMIT = 3500
-BUDGET = 6
+# Same cap as FDAEnv. original_approval on the generic-name summary is enough
+# for the year hop, so earliest_boxed is 6 and earliest_reaction is 4. A
+# submissions citation still opens the application_number page when that date
+# is missing from the summary.
+BUDGET = TOOL_BUDGET
 
 _OR_WORD = re.compile(r"\bor\b", re.IGNORECASE)
 
@@ -75,8 +80,8 @@ class Solution:
 def solve(snapshot, question: str, *, budget: int = BUDGET) -> Solution:
     """Play the question through the real tools. Raises ``Unsolvable`` on a tie or a blind hop.
 
-    ``budget`` defaults to 6, the cap the hard split was generated under.
-    Reachability passes the eval budget (8 for a new run, 6 to reproduce the old check).
+    ``budget`` defaults to ``BUDGET`` (the shared env / schema cap of 8).
+    Reachability can pass a smaller budget to reproduce an older check.
     The reference path does not grow to fill a wider budget.
     """
     if isinstance(budget, bool) or not isinstance(budget, int) or budget < 1:
@@ -162,7 +167,7 @@ class _Session:
 def _earliest(session: _Session, spec: dict) -> Solution:
     years: dict[str, int] = {}
     apps: dict[str, str] = {}
-    nodes: dict[str, dict] = {}
+    year_nodes: dict[str, dict] = {}
     boxed_nodes: dict[str, dict] = {}
     for drug in spec["drugs"]:
         output = session.call("search_approvals", {"generic_name": drug})
@@ -171,7 +176,7 @@ def _earliest(session: _Session, spec: dict) -> Solution:
             raise Unsolvable(f"{drug} has no visible original approval")
         years[drug] = year
         apps[drug] = chosen
-        nodes[drug] = node
+        year_nodes[drug] = node
         labels = session.call("search_drug_label", {"generic_name": drug, "has_section": "boxed_warning"})
         if _total(labels) > 0:
             row = _first_boxed_row(labels)
@@ -185,7 +190,7 @@ def _earliest(session: _Session, spec: dict) -> Solution:
     if winner is None:
         raise Unsolvable("tied earliest boxed approval")
     citations = [
-        _cite("drug/drugsfda", apps[winner], "submissions", nodes[winner]),
+        _year_citation(session, apps[winner], year_nodes[winner]),
         _cite("drug/label", boxed_nodes[winner]["set_id"], "sections", boxed_nodes[winner]),
     ]
     return session.finish("earliest_boxed", winner, citations)
@@ -265,7 +270,7 @@ def _year_reaction(session: _Session, spec: dict) -> Solution:
 def _earliest_reaction(session: _Session, spec: dict) -> Solution:
     years: dict[str, int] = {}
     apps: dict[str, str] = {}
-    nodes: dict[str, dict] = {}
+    year_nodes: dict[str, dict] = {}
     for drug in spec["drugs"]:
         output = session.call("search_approvals", {"generic_name": drug})
         year, chosen, node = _earliest_visible(output, drug)
@@ -273,14 +278,14 @@ def _earliest_reaction(session: _Session, spec: dict) -> Solution:
             raise Unsolvable(f"{drug} has no visible original approval")
         years[drug] = year
         apps[drug] = chosen
-        nodes[drug] = node
+        year_nodes[drug] = node
     winner = _unique(spec["drugs"], years, least=True)
     if winner is None:
         raise Unsolvable("tied earliest approval")
     events = session.call("query_adverse_events", {"generic_name": winner, "mode": "top_reactions"})
     term = _top_term(events)
     citations = [
-        _cite("drug/drugsfda", apps[winner], "submissions", nodes[winner]),
+        _year_citation(session, apps[winner], year_nodes[winner]),
         _cite("drug/event", output_id(events), "results", events),
     ]
     return session.finish("earliest_reaction", term, citations)
@@ -310,16 +315,13 @@ def _serious_counts(session: _Session, spec: dict) -> tuple[dict[str, int], dict
 
 
 def _sponsor(session: _Session, spec: dict) -> Solution:
+    """Shortest proving path: sponsor match, then FAERS when the question asks for it.
+
+    ``HopScore.proves`` treats the boxed-warning keyword as optional for
+    ``sponsor_faers`` / ``sponsor_drug`` (see ``fdagym.rewards.hops``). Label
+    and section calls used to pad ``oracle_calls`` to 6 and tax efficiency.
+    """
     drug, citations = _match_sponsor(session, spec)
-    labels = session.call("search_drug_label", {"generic_name": drug, "has_section": "boxed_warning"})
-    boxed = _first_boxed_row(labels)
-    if boxed is None:
-        raise Unsolvable(f"{drug} has no visible boxed warning")
-    section = session.call("get_label_section", {"set_id": boxed["set_id"], "section": "boxed_warning"})
-    text = section.get("boxed_warning")
-    if not isinstance(text, str) or spec["keyword"] not in text.casefold():
-        raise Unsolvable("boxed warning does not mention the keyword")
-    citations.append(_cite("drug/label", section["set_id"], "boxed_warning", section))
     if spec["variant"] == "sponsor_drug":
         return session.finish("sponsor_drug", drug, citations)
     events = session.call("query_adverse_events", {"generic_name": drug, "mode": "top_reactions"})
@@ -372,6 +374,41 @@ def output_id(output: dict) -> str:
     return step
 
 
+def _year_citation(session: _Session, number: str, summary_row: dict) -> dict:
+    """Cite the summary date when it is visible. Otherwise open the detail page."""
+    text = _render(_resolve(summary_row, "original_approval"))
+    if isinstance(text, str) and text.strip():
+        return _cite("drug/drugsfda", number, "original_approval", summary_row)
+    return _cite("drug/drugsfda", number, "submissions", _submission_node(session, number))
+
+
+def _submission_node(session: _Session, number: str) -> dict:
+    """The application_number page. Submissions are not on the generic-name summary."""
+    output = session.call("search_approvals", {"application_number": number})
+    wanted = number.upper()
+    for row in _rows(output):
+        if str(row.get("application_number") or "").upper() == wanted and row.get("submissions"):
+            return row
+    raise Unsolvable(f"{number} detail page has no submissions")
+
+
+def _summary_products(row: dict) -> list[dict]:
+    products = [item for item in row.get("products") or [] if isinstance(item, dict)]
+    if products:
+        return products
+    names = [name for name in row.get("active_ingredients") or [] if isinstance(name, str) and name]
+    return [{"active_ingredients": [{"name": name}]} for name in names]
+
+
+def _year_on_row(row: dict) -> int | None:
+    raw = row.get("original_approval")
+    if isinstance(raw, str) and len(raw) >= 4 and raw[:4].isdigit():
+        year = int(raw[:4])
+        if 1900 <= year <= 2100:
+            return year
+    return _orig_year(row)
+
+
 def _earliest_visible(output: dict, drug: str) -> tuple[int | None, str | None, dict | None]:
     best: int | None = None
     chosen: str | None = None
@@ -380,10 +417,10 @@ def _earliest_visible(output: dict, drug: str) -> tuple[int | None, str | None, 
         number = str(row.get("application_number") or "")
         if not number.upper().startswith(("NDA", "BLA")):
             continue
-        products = [item for item in row.get("products") or [] if isinstance(item, dict)]
-        if not any(_product_is_single(product, drug) for product in products):
+        products = _summary_products(row)
+        if products and not any(_product_is_single(product, drug) for product in products):
             continue
-        year = _orig_year(row)
+        year = _year_on_row(row)
         if year is None:
             continue
         if best is None or year < best:

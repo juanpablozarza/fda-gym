@@ -134,10 +134,13 @@ def task_approval() -> dict:
         "split": "test",
         "answerable": True,
         "difficulty": "easy",
-        "difficulty_features": _features(),
+        "difficulty_features": _features(min_tool_calls=2),
         "gold": {"kind": "exact", "value": "2017", "aliases": ["2017-12-05"]},
         "gold_citations": [{"endpoint": "drug/drugsfda", "ids": ["NDA209637"], "fields": ["submissions"]}],
-        "oracle_calls": [{"tool": "search_approvals", "arguments": {"generic_name": "semaglutide"}}],
+        "oracle_calls": [
+            {"tool": "search_approvals", "arguments": {"generic_name": "semaglutide"}},
+            {"tool": "search_approvals", "arguments": {"application_number": "NDA209637"}},
+        ],
         "snapshot_version": "2026-10-15",
     }
 

@@ -498,6 +498,12 @@ def _visible_year(row: dict, drug: str) -> int | None:
     if not number.upper().startswith(("NDA", "BLA")):
         return None
     products = [item for item in row.get("products") or [] if isinstance(item, dict)]
+    if not products:
+        products = [
+            {"active_ingredients": [{"name": name}]}
+            for name in row.get("active_ingredients") or []
+            if isinstance(name, str) and name
+        ]
     if (
         products
         and _ingredient_names_present(products)
@@ -505,6 +511,11 @@ def _visible_year(row: dict, drug: str) -> int | None:
     ):
         return None
     years = []
+    raw = row.get("original_approval")
+    if isinstance(raw, str) and len(raw) >= 4 and raw[:4].isdigit():
+        year = int(raw[:4])
+        if 1900 <= year <= 2100:
+            years.append(year)
     for sub in row.get("submissions") or []:
         if not isinstance(sub, dict):
             continue
