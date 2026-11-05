@@ -8,13 +8,13 @@ the titles the stuffing check needs.
 
 import json
 import re
-from pathlib import Path
+from importlib.resources import files
 
 from fdagym.queries import label_search
 from fdagym.snapshot import Snapshot, SnapshotMiss
 
 MAX_TOPICS = 2
-TOPICS_PATH = Path(__file__).with_name("boxed_topics.json")
+TOPICS_PATH = files("fdagym.rewards").joinpath("boxed_topics.json")
 
 # Key is matched inside a heading. Values are extra ways an answer can name that topic.
 _LEXICON = (
@@ -60,7 +60,7 @@ def build_topics(snapshot: Snapshot, generic_names: list[str]) -> list[dict]:
 
 
 def load_topics() -> list[dict]:
-    return json.loads(TOPICS_PATH.read_text())
+    return json.loads(TOPICS_PATH.read_text(encoding="utf-8"))
 
 
 def topics_named(answer: str, topics: list[dict] | None = None) -> list[str]:

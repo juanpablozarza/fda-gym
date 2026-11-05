@@ -1,7 +1,6 @@
 """Hard eval split: schema, unique gold, question-only reachability, and no training leak."""
 
 import hashlib
-import json
 from pathlib import Path
 
 import pytest
@@ -10,6 +9,7 @@ from referencing import Registry, Resource
 
 from fdagym.agents.baseline import load_split
 from fdagym.env import FDAEnv
+from fdagym.schemas import load as load_schema
 from fdagym.tasks.hard import (
     ANSWER_CAP,
     HARD_ID_START_ENV,
@@ -50,7 +50,7 @@ from fdagym.tasks.hard_sponsor import (
 from fdagym.tasks.validate import require_oracle_calls
 
 ROOT = Path(__file__).resolve().parents[2]
-SCHEMA = json.loads((ROOT / "schemas" / "task.schema.json").read_text())
+SCHEMA = load_schema("task.schema.json")
 VALIDATOR = Draft202012Validator(
     SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA))
 )

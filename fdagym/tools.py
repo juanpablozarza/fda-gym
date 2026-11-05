@@ -3,13 +3,13 @@
 import json
 import re
 from dataclasses import dataclass, field
-from pathlib import Path
 
 from jsonschema import Draft202012Validator, ValidationError
 
 from fdagym import queries
 from fdagym.approvals import find_applications, parse_application_number
 from fdagym.queries import Query
+from fdagym.schemas import load as load_schema
 from fdagym.snapshot import Snapshot, SnapshotMiss
 
 PAGE_SIZE = 10
@@ -27,7 +27,7 @@ _SUBMISSION_KEYS = (
     "submission_class_code_description",
 )
 
-_ANSWER = json.loads((Path(__file__).resolve().parents[1] / "schemas" / "answer.schema.json").read_text())
+_ANSWER = load_schema("answer.schema.json")
 
 
 def _object(properties: dict, required: list[str]) -> dict:

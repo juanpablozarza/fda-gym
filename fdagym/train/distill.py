@@ -21,14 +21,15 @@ from fdagym.train.rollout import DEFAULT_PROMPT_VERSION, DEFAULT_TOOL_BUDGET, PR
 from fdagym.train.sft_config import SFTConfig
 
 _ROOT = Path(__file__).resolve().parents[2]
-_SCHEMAS = _ROOT / "schemas"
 _FIXTURE = _ROOT / "tests" / "train" / "fixtures" / "teacher_trajectories.jsonl"
 DEFAULT_SIZES = ("100", "250", "500", "1000", "all")
 DEFAULT_RUN_ID = "distill-sft-qwen3b"
 
 
 def _load_schema(name: str) -> dict:
-    return json.loads((_SCHEMAS / name).read_text(encoding="utf-8"))
+    from fdagym.schemas import load
+
+    return load(name)
 
 
 def teacher_trajectory_validator() -> Draft202012Validator:

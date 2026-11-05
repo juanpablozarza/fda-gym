@@ -1,5 +1,10 @@
-from pathlib import Path
+"""FDA-Gym: a tool-use RL environment over a frozen openFDA snapshot."""
 
-from dotenv import load_dotenv
+from __future__ import annotations
 
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+
+def load_env() -> None:
+    """Load a cwd ``.env`` if present. Call from scripts; importing ``fdagym`` does not."""
+    from dotenv import load_dotenv
+
+    load_dotenv()

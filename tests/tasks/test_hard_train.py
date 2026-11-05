@@ -9,6 +9,7 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 from fdagym.agents.baseline import load_split
+from fdagym.schemas import load as load_schema
 from fdagym.tasks.disjoint import OverlapError, assert_disjoint
 from fdagym.tasks.hard_solver import (
     Unsolvable,
@@ -26,7 +27,7 @@ from fdagym.train.hard_mix import HARD_TRAIN_MIX, mix_hard_train
 from fdagym.train.tool_config import ToolTrainConfig
 
 ROOT = Path(__file__).resolve().parents[2]
-SCHEMA = json.loads((ROOT / "schemas" / "task.schema.json").read_text())
+SCHEMA = load_schema("task.schema.json")
 VALIDATOR = Draft202012Validator(SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA)))
 HARD_TRAIN_SHA256 = "fa80218c2a8a64726349465ea32b102bdc1fce31a25c9c4984ee9f487c67779f"
 HARD_TRAIN_HOLDOUT_SHA256 = "e00c9c7426e40ecad673bd25a4f1a471c9d1f139cc7442de88cba599c1a63096"

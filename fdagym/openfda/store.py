@@ -31,7 +31,46 @@ from fdagym.openfda.trim import trim_response
 from fdagym.queries import Query
 from fdagym.snapshot import Endpoint, SnapshotMiss
 
-DEFAULT_ROOT = Path(__file__).resolve().parents[2] / "data" / "snapshots"
+SNAPSHOT_ENV = "FDAGYM_SNAPSHOT_DIR"
+SNAPSHOT_VERSION = "2026-10-15"
+SNAPSHOT_MISSING = """FDA-Gym snapshot directory not found.
+
+The installed wheel does not ship the 2026-10-15 openFDA freeze. Point FDA-Gym at a checkout:
+
+  export FDAGYM_SNAPSHOT_DIR=/path/to/fda-gym/data/snapshots
+  python -m fdagym.openfda
+
+Or clone https://github.com/juanpablozarza/fda-gym and run from that tree (data/snapshots/2026-10-15).
+DiskSnapshot(version, root=...) also accepts the directory that contains 2026-10-15/.
+"""
+
+
+def discover_snapshot_root() -> Path | None:
+    """``FDAGYM_SNAPSHOT_DIR``, else a git checkout's ``data/snapshots`` walked from cwd."""
+    env = os.environ.get(SNAPSHOT_ENV)
+    if env:
+        return Path(env)
+    here = Path.cwd().resolve()
+    for candidate in [here, *here.parents]:
+        path = candidate / "data" / "snapshots"
+        if path.is_dir():
+            return path
+    return None
+
+
+def resolve_snapshot_root(root: Path | str | None = None) -> Path:
+    if root is not None:
+        return Path(root)
+    found = discover_snapshot_root()
+    if found is not None:
+        return found
+    raise FileNotFoundError(SNAPSHOT_MISSING)
+
+
+def __getattr__(name: str):
+    if name == "DEFAULT_ROOT":
+        return resolve_snapshot_root()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def query_key(endpoint: Endpoint, search: str | None, count: str | None, limit: int, skip: int = 0) -> str:
@@ -59,9 +98,9 @@ def _read_text(path: Path) -> str:
 class DiskSnapshot:
     """Offline by default. Pass a client to record misses (used only by scripts/snapshot.py)."""
 
-    def __init__(self, version: str, root: Path = DEFAULT_ROOT, client: OpenFDAClient | None = None):
+    def __init__(self, version: str, root: Path | str | None = None, client: OpenFDAClient | None = None):
         self.version = version
-        self.dir = Path(root) / version
+        self.dir = resolve_snapshot_root(root) / version
         self.client = client
 
     def path(self, key: str) -> Path:

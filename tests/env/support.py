@@ -4,12 +4,13 @@ import json
 from pathlib import Path
 
 from fdagym.env import FDAEnv
+from fdagym.schemas import load as load_schema
 from fdagym.snapshot import SnapshotMiss
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = Path(__file__).parent / "fixtures" / "openfda.json"
 WARFARIN_SET = "0cbce382-9c88-4f58-ae0f-532a841e8f95"
-EXAMPLE_TASK = json.loads((ROOT / "schemas" / "examples" / "task.example.json").read_text())
+EXAMPLE_TASK = load_schema("examples/task.example.json")
 
 
 class JsonSnapshot:

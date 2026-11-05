@@ -1,5 +1,9 @@
 # Changelog
 
+## Installable wheel
+
+`schemas/` now lives at `fdagym/schemas/` and is loaded with `importlib.resources`. Importing `fdagym` does not read `.env` or `data/` via `Path.parents`. `DiskSnapshot` takes `root=` or `FDAGYM_SNAPSHOT_DIR` (`python -m fdagym.openfda`). `parse_question` / `Unsolvable` live in `fdagym.questions` so `fdagym.rewards` no longer imports `fdagym.train`.
+
 ## Symmetric disjointness
 
 `assert_disjoint` now expands both sheets: a drug that owns an application number cited on the other sheet is an overlap. `hard_train.jsonl` (334) and `hard_train_holdout.jsonl` (36) were rebuilt on the `2026-10-15` freeze so the check is 0/0/0/0 both ways against `public.jsonl`. GitHub Actions pins `astral-sh/setup-uv` at v10.3.3.

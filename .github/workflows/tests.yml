@@ -20,3 +20,12 @@ jobs:
         run: uv sync --frozen --group dev
       - name: Test
         run: uv run pytest -q
+      - name: Wheel smoke
+        run: |
+          uv build --wheel
+          WHEEL=$(ls dist/*.whl)
+          TMP=$(mktemp -d /tmp/fdagym-wheel-XXXX)
+          uv venv "$TMP/venv"
+          uv pip install --python "$TMP/venv/bin/python" "$WHEEL"
+          cd "$TMP"
+          "$TMP/venv/bin/python" -c "import fdagym, fdagym.env, fdagym.rewards"
