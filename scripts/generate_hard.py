@@ -5,14 +5,9 @@
 
 Both commands are CPU-only and leave the core train/test task files untouched.
 ``train`` writes ``hard_train.jsonl`` and ``hard_train_holdout.jsonl`` from drugs that
-do not appear on ``public.jsonl`` (plus ``test.jsonl`` and ``hard.jsonl`` when those
-files exist). The holdout is a ~10% in-distribution question carve, not a disjoint eval.
-``public`` writes ``data/tasks/public.jsonl`` from the drugs the private hard sheet does not use.
-
-The private hard-eval sheet (formerly ``eval``) is not generated from this public repo.
-A checkout that still has the generator can pass ``seed``/``id_start`` into
-``fdagym.tasks.hard.generate_hard`` only via ``FDAGYM_HARD_SEED`` and
-``FDAGYM_HARD_ID_START``; there is no default seed.
+do not appear on ``public.jsonl`` or ``test.jsonl``. Owner drugs of cited applications
+are excluded too. The holdout is a ~10% in-distribution question carve, not a disjoint eval.
+``public`` writes ``data/tasks/public.jsonl``.
 """
 
 from __future__ import annotations
@@ -65,19 +60,20 @@ def _generate(split: str) -> int:
     else:
         from fdagym.tasks.disjoint import OverlapError, assert_disjoint
         from fdagym.tasks.hard_train import (
+            carve_clean_holdout,
             generate_hard_train,
             load_exclusion_splits,
-            reassign_ids,
             strip_clear_leaks,
         )
-        from fdagym.tasks.holdout import assert_question_holdout, carve_known_holdout
+        from fdagym.tasks.holdout import assert_question_holdout
         from fdagym.tasks.plan import load_universe
 
         generated, report = generate_hard_train(snapshot)
         n_before = len(generated)
-        generated = reassign_ids(strip_clear_leaks(snapshot, generated))
+        generated = strip_clear_leaks(snapshot, generated)
         report["stripped_leaks"] = n_before - len(generated)
-        tasks, question_holdout = carve_known_holdout(generated, snapshot=snapshot)
+        tasks, question_holdout = carve_clean_holdout(snapshot, generated)
+        report["stripped_after_carve"] = n_before - report["stripped_leaks"] - len(tasks) - len(question_holdout)
         report["question_holdout"] = assert_question_holdout(tasks, question_holdout, snapshot)
         outputs = [
             (ROOT / "data" / "tasks" / "hard_train.jsonl", tasks),

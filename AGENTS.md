@@ -35,7 +35,7 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
 - Agent tools (names are part of the contract, since the dashboard and training prompts use them): `search_drug_label`,
   `get_label_section`, `query_adverse_events`, `search_approvals`, `submit_answer`.
 - The published leaderboard is `data/tasks/public.jsonl` (`split: public`, ids from `FG-9101`).
-- Splits: `public.jsonl` is the published eval (93 tasks, `FG-9101`–`FG-9193`). `hard_train.jsonl` (337) is the hard-style training pool. `hard_train_holdout.jsonl` (36) is an in-distribution ~10% question carve of that pool: same drugs as `hard_train`, never mixed into training, used for memorization probes. Both training files are disjoint from `public.jsonl` (and from `test.jsonl`) on drugs, application numbers, sponsors, and question text. Sharing drugs between `hard_train` and the holdout is intentional; sharing anything with `public` is not. Regeneration: `uv run python scripts/generate_hard.py train`.
+- Splits: `public.jsonl` is the published eval (93 tasks, `FG-9101`–`FG-9193`). `hard_train.jsonl` (334) is the hard-style training pool. `hard_train_holdout.jsonl` (36) is an in-distribution ~10% question carve of that pool: same drugs as `hard_train`, never mixed into training, used for memorization probes. Both training files are disjoint from `public.jsonl` (and from `test.jsonl`) on drugs, application numbers, sponsors, and question text. Sharing drugs between `hard_train` and the holdout is intentional; sharing anything with `public` is not. Regeneration: `uv run python scripts/generate_hard.py train`.
 
 ## Tracks
 

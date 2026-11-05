@@ -1,7 +1,7 @@
 """Rebuild the multi-hop SFT warm-up id list. CPU only. Does not start Modal.
 
 The list this repo trains on is ``data/warmup/mh1_ids.txt``. Its sha256 is the
-sorted ids joined by newlines (``e9420eb530d16c0e…``). This script writes a new
+sorted ids joined by newlines (``971819b19cc0a1b9…``). This script writes a new
 directory. It does not edit ``data/tasks`` or that committed file.
 
     uv run --extra train python scripts/build_warmup.py --tokenizer /path/to/tokenizer.json

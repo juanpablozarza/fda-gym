@@ -25,29 +25,29 @@
   },
   "pool": {
     "universe": 150,
-    "held_out_by_name": 81,
-    "remaining": 69,
-    "with_visible_year": 68,
-    "boxed_with_year": 50,
+    "held_out_by_name": 82,
+    "remaining": 68,
+    "with_visible_year": 67,
+    "boxed_with_year": 49,
     "one_page": 15,
     "label_ok_unboxed": 9,
-    "page1_sponsors_shared": 43,
-    "page1_sponsor_drugs": 56
+    "page1_sponsors_shared": 42,
+    "page1_sponsor_drugs": 55
   },
   "holdout": {
-    "drugs": 81,
+    "drugs": 82,
     "applications": 102,
     "sponsors": 41,
     "tasks": 435
   },
   "dropped": {
-    "faers_rank:faers_year:max": 127,
-    "faers_rank:year_reaction:max": 57,
-    "faers_rank:faers_reaction:max": 124,
-    "not_symmetric": 1745,
-    "labels_max:sponsor_drug": 181,
+    "faers_rank:faers_year:max": 103,
+    "faers_rank:year_reaction:max": 110,
+    "faers_rank:faers_reaction:max": 108,
+    "not_symmetric": 1720,
+    "labels_max:sponsor_drug": 77,
     "heldout-drug:sponsor_drug": 3,
-    "heldout-drug:sponsor_count": 2
+    "heldout-drug:sponsor_count": 8
   },
   "quotas": {
     "earliest_boxed": 44,
@@ -60,9 +60,10 @@
     "faers_reaction": 44,
     "boxed_none": 4
   },
-  "stripped_leaks": 3,
+  "stripped_leaks": 4,
+  "stripped_after_carve": 2,
   "question_holdout": {
-    "train": 337,
+    "train": 334,
     "holdout": 36,
     "holdout_by_variant": {
       "boxed_none": 1,
@@ -75,28 +76,29 @@
       "sponsor_faers": 4,
       "year_reaction": 4
     },
-    "train_drugs": 69,
-    "holdout_drugs": 49,
-    "train_sponsors": 28,
-    "holdout_sponsors": 13
+    "train_drugs": 68,
+    "holdout_drugs": 51,
+    "train_sponsors": 27,
+    "holdout_sponsors": 11
   },
   "disjoint": {
-    "train_tasks": 337,
+    "train_tasks": 334,
     "holdout_tasks": 435,
     "train": {
-      "drugs": 69,
-      "applications": 139,
-      "sponsors": 28
+      "drugs": 68,
+      "applications": 131,
+      "sponsors": 27
     },
     "holdout": {
-      "drugs": 81,
+      "drugs": 82,
       "applications": 102,
       "sponsors": 41
     },
     "overlap": {
       "drugs": [],
       "applications": [],
-      "sponsors": []
+      "sponsors": [],
+      "questions": []
     }
   },
   "holdout_disjoint": {
@@ -104,18 +106,19 @@
     "holdout_tasks": 435,
     "train": {
       "drugs": 55,
-      "applications": 54,
-      "sponsors": 13
+      "applications": 44,
+      "sponsors": 11
     },
     "holdout": {
-      "drugs": 81,
+      "drugs": 82,
       "applications": 102,
       "sponsors": 41
     },
     "overlap": {
       "drugs": [],
       "applications": [],
-      "sponsors": []
+      "sponsors": [],
+      "questions": []
     }
   }
 }

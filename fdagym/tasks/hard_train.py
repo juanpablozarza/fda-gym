@@ -3,12 +3,12 @@
 Reaction-answer compares and boxed_none use the train wording in ``hard_solver``
 so the gold stays a single value. Eval boxed_none keeps ``question_none``.
 
-The pool is whatever is left after ``disjoint.holdout_entities`` removes every drug,
-application number, and sponsor that appears in ``public.jsonl``, plus ``hard.jsonl``
-and ``test.jsonl`` when those files exist. Gold is recomputed from the snapshot. A
-task is kept only when the question-only solver scores 1.0 inside ``budget`` calls
-(default 6, today's env cap). Questions that already appear on an excluded sheet
-are dropped, so the published eval cannot leak into training by text either.
+The pool is whatever is left after ``disjoint.sheet_entities`` removes every drug,
+application number, and sponsor that appears in ``public.jsonl`` and ``test.jsonl``.
+Owner drugs of cited application numbers are excluded too, so a training drug cannot
+walk into an eval application. Gold is recomputed from the snapshot. A task is kept
+only when the question-only solver scores 1.0 inside ``budget`` calls (default 6,
+today's env cap). Questions that already appear on an excluded sheet are dropped.
 """
 
 from __future__ import annotations
@@ -72,7 +72,7 @@ def generate_hard_train(
     max_tasks: int = MAX_TASKS,
     holdout_tasks: list[dict] | None = None,
 ) -> tuple[list[dict], dict]:
-    """Build ``data/tasks/hard_train.jsonl``. ``holdout_tasks`` defaults to public + test + hard."""
+    """Build ``data/tasks/hard_train.jsonl``. ``holdout_tasks`` defaults to public + test."""
     if holdout_tasks is None:
         holdout_tasks = _load_holdout()
     quotas = dict(_QUOTAS if quotas is None else quotas)
@@ -110,12 +110,8 @@ def generate_hard_train(
 
 
 def exclusion_split_names() -> tuple[str, ...]:
-    """Sheets whose entities and questions must not appear in hard_train.
-
-    ``public`` is always excluded so the published eval stays clean. ``hard`` and
-    ``test`` are excluded when those files exist (private checkouts).
-    """
-    return ("public", "hard", "test")
+    """Sheets whose entities and questions must not appear in hard_train."""
+    return ("public", "test")
 
 
 def load_exclusion_splits() -> list[dict]:
@@ -446,14 +442,18 @@ def _unique_labels_max(snapshot, cache, task: dict, question: str) -> bool:
     return len(winners) == 1 and answer in winners
 
 
-def strip_clear_leaks(snapshot, tasks: list[dict]) -> list[dict]:
+def strip_clear_leaks(
+    snapshot, tasks: list[dict], *, train_tasks: list[dict] | None = None
+) -> list[dict]:
     """Drop sponsor questions until ``leak_report`` has no clear surface shortcut."""
     from fdagym.tasks.hard import sponsor_surface_caches
 
     remaining = list(tasks)
-    labels, texts = sponsor_surface_caches(snapshot, remaining)
+    cache_rows = remaining if train_tasks is None else [*remaining, *train_tasks]
+    labels, texts = sponsor_surface_caches(snapshot, cache_rows)
     while True:
-        report = leak_report(remaining, label_counts=labels, boxed_texts=texts, train_tasks=remaining)
+        scored_train = remaining if train_tasks is None else train_tasks
+        report = leak_report(remaining, label_counts=labels, boxed_texts=texts, train_tasks=scored_train)
         found = clear_leaks(report)
         if not found:
             return remaining
@@ -468,6 +468,31 @@ def strip_clear_leaks(snapshot, tasks: list[dict]) -> list[dict]:
         if victim is None:
             raise RuntimeError(f"could not clear sponsor leak: {found[0]}")
         remaining.remove(victim)
+
+
+def carve_clean_holdout(snapshot, tasks: list[dict], *, rounds: int = 20) -> tuple[list[dict], list[dict]]:
+    """Carve the question holdout, then drop rows until both sheets pass ``leak_report``."""
+    from fdagym.tasks.hard import sponsor_surface_caches
+    from fdagym.tasks.holdout import carve_known_holdout
+    from fdagym.tasks.leaks import clear_leaks, leak_report
+
+    remaining = list(tasks)
+    for _ in range(rounds):
+        remaining = reassign_ids(remaining)
+        train, holdout = carve_known_holdout(remaining, snapshot=snapshot)
+        labels, texts = sponsor_surface_caches(snapshot, [*train, *holdout])
+        train_leaks = clear_leaks(leak_report(train, label_counts=labels, boxed_texts=texts, train_tasks=train))
+        hold_leaks = clear_leaks(
+            leak_report(holdout, label_counts=labels, boxed_texts=texts, train_tasks=train)
+        )
+        if not train_leaks and not hold_leaks:
+            return train, holdout
+        if train_leaks:
+            train = strip_clear_leaks(snapshot, train)
+        if hold_leaks:
+            holdout = strip_clear_leaks(snapshot, holdout, train_tasks=train)
+        remaining = [*train, *holdout]
+    raise RuntimeError("could not clear sponsor leaks after holdout carve")
 
 
 def _hits_label_rule(task: dict, rule: str, labels: dict[str, int]) -> bool:

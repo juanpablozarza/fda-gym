@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-05 symmetric disjointness
+
+`assert_disjoint` now expands both sheets: a drug that owns an application number cited on the other sheet is an overlap. `hard_train.jsonl` (334) and `hard_train_holdout.jsonl` (36) were rebuilt on the `2026-10-15` freeze so the check is 0/0/0/0 both ways against `public.jsonl`. GitHub Actions pins `astral-sh/setup-uv` at v10.3.3.
+
 ## 2026-11-05 hard_train decontamination
 
 `hard_train.jsonl` (337) and `hard_train_holdout.jsonl` (36) were rebuilt so they share no drugs, application numbers, sponsors, or question text with `public.jsonl`. The previous files overlapped the published sheet on 51 drugs and one question (old `FG-8393` = `FG-9171`). `hard_train_holdout` remains an in-distribution ~10% question carve of the same pool, not a disjoint eval. `tests/tasks/test_public.py` now always checks the three files.
