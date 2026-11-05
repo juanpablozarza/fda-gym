@@ -260,7 +260,12 @@ def _approvals(state: EpisodeState, arguments: dict, step_index: int) -> tuple[d
         records = [record for record in body.get("results") or [] if isinstance(record, dict)]
     total = len(records)
     compact = [_compact_approval(record) for record in _sort_approvals(records)]
-    pages = _approval_pages(compact, total)
+    groups = _approval_pages(compact, total)
+    # A generic search stays a short summary of the same applications. The detail
+    # call is search_approvals with application_number, and it counts as its own tool call.
+    pages = (
+        groups if "application_number" in arguments else [[_summary_approval(row) for row in group] for group in groups]
+    )
     page = int(arguments.get("page", 1))
     shown = pages[page - 1] if 1 <= page <= len(pages) else []
     output = _aggregate(step_index, shown, total, page=page, page_size=len(shown))
@@ -300,6 +305,40 @@ def _orig_sort_date(record: dict) -> str:
 def _app_number(record: dict) -> str:
     number = record.get("application_number")
     return number.upper() if isinstance(number, str) else ""
+
+
+def _summary_approval(compact: dict) -> dict:
+    """List page: sponsor, year, and ingredient groups. Products and submissions are a second call."""
+    approved = []
+    undated_status = []
+    for sub in compact.get("submissions") or []:
+        if str(sub.get("submission_type", "")).upper() != "ORIG":
+            continue
+        raw = sub.get("submission_status_date")
+        if not isinstance(raw, str) or not raw:
+            continue
+        status = str(sub.get("submission_status", "")).upper()
+        if status in {"AP", "APPROVED"}:
+            approved.append(raw)
+        elif not status:
+            undated_status.append(raw)
+    dates = approved or undated_status
+    date = min(dates) if dates else None
+    products = []
+    for product in compact.get("products") or []:
+        names = []
+        for item in product.get("active_ingredients") or []:
+            name = item.get("name") if isinstance(item, dict) else None
+            if isinstance(name, str) and name and name not in names:
+                names.append(name)
+        if names:
+            products.append({"active_ingredients": [{"name": name} for name in names]})
+    return {
+        "application_number": compact.get("application_number"),
+        "sponsor_name": compact.get("sponsor_name"),
+        "original_approval": date,
+        "products": products,
+    }
 
 
 def _compact_approval(record: dict) -> dict:

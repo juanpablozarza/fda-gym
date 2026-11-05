@@ -16,10 +16,40 @@ from pathlib import Path
 from fdagym import load_env
 from fdagym.agents.baseline import ROOT, SKIP_TYPES, append_trajectory, load_split
 from fdagym.agents.chat import run_chat_episode
-from fdagym.env import FDAEnv
+from fdagym.env import TOOL_BUDGET, FDAEnv
 from fdagym.openfda import DiskSnapshot
 
 load_env()
+
+
+def snapshot_version_for(task: dict, fallback: str) -> str:
+    """Prefer the task's freeze; the CLI default is only for rows that omit it."""
+    version = task.get("snapshot_version")
+    if isinstance(version, str) and version:
+        return version
+    return fallback
+
+
+def env_for_task(
+    task: dict,
+    tasks: list[dict],
+    *,
+    run_id: str,
+    fallback_snapshot: str,
+    cache: dict[str, FDAEnv],
+) -> FDAEnv:
+    version = snapshot_version_for(task, fallback_snapshot)
+    env = cache.get(version)
+    if env is None:
+        env = FDAEnv(
+            DiskSnapshot(version),
+            tasks,
+            run_id=run_id,
+            seed=0,
+            tool_budget=TOOL_BUDGET,
+        )
+        cache[version] = env
+    return env
 
 
 def available_splits(tasks_dir: Path | None = None) -> list[str]:
@@ -39,11 +69,18 @@ def main(argv: list[str] | None = None) -> int:
     runnable = [task for task in tasks if task["type"] not in SKIP_TYPES]
     if args.limit is not None:
         runnable = runnable[: args.limit]
-    env = FDAEnv(DiskSnapshot(args.snapshot_version), tasks, run_id=args.run_id, seed=0)
     if out.exists():
         out.unlink()
     rewards = []
+    envs: dict[str, FDAEnv] = {}
     for task in runnable:
+        env = env_for_task(
+            task,
+            tasks,
+            run_id=args.run_id,
+            fallback_snapshot=args.snapshot_version,
+            cache=envs,
+        )
         trajectory = run_chat_episode(
             env,
             task["id"],
@@ -88,7 +125,11 @@ def _parse(argv: list[str] | None) -> argparse.Namespace:
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--overwrite", action="store_true", help="replace an existing results/<run-id>")
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument("--snapshot-version", default="2026-10-15")
+    parser.add_argument(
+        "--snapshot-version",
+        default="2026-10-15",
+        help="Fallback freeze when a task has no snapshot_version",
+    )
     parser.add_argument("--temperature", type=float, default=0.0)
     return parser.parse_args(argv)
 

@@ -47,7 +47,7 @@
       ],
       "properties": {
         "sources": { "type": "integer", "minimum": 1, "maximum": 3 },
-        "min_tool_calls": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "min_tool_calls": { "type": "integer", "minimum": 1, "maximum": 8 },
         "needs_disambiguation": { "type": "boolean" },
         "needs_aggregation": { "type": "boolean" },
         "needs_normalization": { "type": "boolean" },
@@ -115,7 +115,7 @@
       "description": "The tool calls (excluding submit_answer) that retrieve the gold evidence, in order. Its length is min_tool_calls. Used by the oracle integration test and to pre-fetch context for single-turn GRPO.",
       "type": "array",
       "minItems": 1,
-      "maxItems": 6,
+      "maxItems": 8,
       "items": {
         "type": "object",
         "additionalProperties": false,

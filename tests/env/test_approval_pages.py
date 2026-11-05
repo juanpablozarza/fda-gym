@@ -59,16 +59,9 @@ def test_pages_are_nda_first_under_3500_and_cover_every_application():
     assert numbers
     assert all(number.startswith("NDA") for number in numbers)
     assert numbers[0] == "NDA000019"
-    assert all(sub["submission_type"] == "ORIG" for row in page1["results"] for sub in row["submissions"])
-    assert page1["results"][0]["n_supplements"] == 12
-    assert page1["results"][0]["products"] == [
-        {
-            "brand_name": "BRAND",
-            "dosage_form": "TABLET",
-            "route": "ORAL",
-            "active_ingredients": [{"name": "EXAMPLEDRUG"}],
-        }
-    ]
+    assert page1["results"][0]["original_approval"] == "20010101"
+    assert "submissions" not in page1["results"][0]
+    assert page1["results"][0]["products"] == [{"active_ingredients": [{"name": "EXAMPLEDRUG"}]}]
 
     seen = list(numbers)
     page_no = 2

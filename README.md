@@ -101,7 +101,7 @@ The model does not send a raw search string. Each call takes a drug name, a sect
 | `search_approvals` | Drugs@FDA records. Pass exactly one of `generic_name`, `application_number`, or `sponsor_name`. |
 | `submit_answer` | Ends the episode. The answer is one string, number, or boolean, or `NOT_FOUND`, plus up to 8 citations. |
 
-`FDAEnv` is a tool-use environment, not a Gymnasium env. `reset(task_id)` returns `{question, tools}`. `step(action, latency_ms=...)` returns `(observation, reward, done, info)`. Reward stays 0.0 until the episode ends. Tool calls other than `submit_answer` are capped at `tool_budget` (default 6); `submit_answer` is still accepted after that. Invalid JSON is logged as `invalid_action`.
+`FDAEnv` is a tool-use environment, not a Gymnasium env. `reset(task_id)` returns `{question, tools}`. `step(action, latency_ms=...)` returns `(observation, reward, done, info)`. Reward stays 0.0 until the episode ends. Tool calls other than `submit_answer` are capped at `tool_budget` (default 8); `submit_answer` is still accepted after that. Invalid JSON is logged as `invalid_action`.
 
 ## Splits
 

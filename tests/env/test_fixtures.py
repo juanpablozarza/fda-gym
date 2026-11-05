@@ -30,6 +30,7 @@ def test_semaglutide_tool_returns_ozempic_orig_approval():
         "FG-0005",
         [
             {"tool": "search_approvals", "arguments": {"generic_name": "semaglutide"}},
+            {"tool": "search_approvals", "arguments": {"application_number": "NDA209637"}},
             submit(
                 "2017",
                 [
@@ -44,7 +45,11 @@ def test_semaglutide_tool_returns_ozempic_orig_approval():
         ],
     )
     apps = observations[0]["output"]["results"]
-    ozempic = next(row for row in apps if row["application_number"] == "NDA209637")
+    summary = next(row for row in apps if row["application_number"] == "NDA209637")
+    assert summary["original_approval"] == "20171205"
+    assert "submissions" not in summary
+    assert "brand" not in summary
+    ozempic = observations[1]["output"]["results"][0]
     assert "OZEMPIC" in ozempic["brand"]
     orig = next(sub for sub in ozempic["submissions"] if sub["submission_type"] == "ORIG")
     assert orig["submission_status_date"] == "20171205"

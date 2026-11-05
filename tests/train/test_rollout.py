@@ -193,6 +193,29 @@ def test_unfinished_episode_adds_no_injected_tokens():
     assert rollout.reward["total"] == 0.0
 
 
+def test_oversized_tool_result_leaves_a_note_and_still_submits():
+    tokenizer = CharTokenizer()
+    call = '{"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}'
+    submit = '{"tool": "submit_answer", "arguments": {"answer": "NOT_FOUND", "citations": []}}'
+    limits = RolloutLimits(max_turns=3, max_new_tokens=400, max_context_tokens=2300, tool_budget=2)
+
+    class TwoTurns:
+        def __init__(self):
+            self.n = 0
+
+        def generate(self, prompt_token_ids, *, max_tokens, temperature):
+            self.n += 1
+            text = call if self.n == 1 else submit
+            tokens = tuple(tokenizer.encode(text) + [tokenizer.eos_token_id])
+            return [TurnGeneration(tokens[:max_tokens]) for _ in prompt_token_ids]
+
+    rollouts, _generator, _tokenizer, _codec = _run(["FG-0001"], generator=TwoTurns(), limits=limits)
+    rollout = rollouts[0]
+    assert rollout.closed_by is None
+    assert rollout.terminated_by == "submit"
+    assert any("omitted" in span.text for span in rollout.spans if span.role == "tool")
+
+
 def test_context_limit_stops_the_episode():
     tokenizer = CharTokenizer()
     codec = JsonActionCodec()

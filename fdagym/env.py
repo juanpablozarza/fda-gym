@@ -5,7 +5,7 @@
 Reward stays 0.0 until the episode ends. ``info["trajectory"]`` is set on the
 terminal step.
 
-Tool calls other than ``submit_answer`` are capped at ``tool_budget`` (default 6).
+Tool calls other than ``submit_answer`` are capped at ``tool_budget`` (default 8).
 After that cap, ``submit_answer`` is still accepted. Any other tool ends the
 episode with ``terminated_by="max_steps"``. Invalid JSON is logged as
 ``invalid_action``, not as a fake ``submit_answer``.
@@ -19,8 +19,8 @@ from fdagym.rewards.format import answer_validator
 from fdagym.snapshot import Snapshot
 from fdagym.tools import TOOLS, EpisodeState, execute
 
-# Baseline and any caller that does not pass ``tool_budget``. Tool-mode runs pass 8.
-TOOL_BUDGET = 6
+# Shared cap: env default, hard solver, chat eval, and task-schema oracle_calls maxItems.
+TOOL_BUDGET = 8
 SKIP_TYPES = frozenset({"label_open"})
 
 

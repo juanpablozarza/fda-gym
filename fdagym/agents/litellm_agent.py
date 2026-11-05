@@ -1,4 +1,4 @@
-"""Multi-turn LiteLLM tool loop over FDAEnv. Six tools, then a forced submit_answer."""
+"""Multi-turn LiteLLM tool loop over FDAEnv. TOOL_BUDGET tool calls, then a forced submit_answer."""
 
 import json
 import time
@@ -19,7 +19,7 @@ Call submit_answer when you are done. Its arguments must match schemas/answer.sc
 - id is a set_id, application_number, or "step:<n>" for FAERS aggregates and empty searches (n is the tool-call index that returned them).
 - field is a path the tool actually returned: boxed_warning, sections, submissions, products, sponsor_name, results, meta.results.total, ...
 - search_approvals accepts application_number (NDA020977, NDA 020977, 020977, or a BLA/ANDA number) as well as generic_name. Use the application number when the question names one.
-- search_approvals returns one page (page starts at 1). NDA and BLA rows come before ANDA, and submissions list only the original approval.
+- search_approvals by generic_name returns one summary page (application_number, sponsor_name, original_approval, ingredient groups). Call it again with application_number to read products and submissions. page starts at 1. NDA and BLA rows come before ANDA.
 - quote is copied from that field in THIS episode's tool output (verbatim span, not a paraphrase). Quotes shorter than 4 characters never count.
 - MedDRA reaction terms are uppercase with British spelling; copy the term from results, do not translate it.
 - A missing boxed warning is cited from search_drug_label: id = the label's set_id, field = sections.

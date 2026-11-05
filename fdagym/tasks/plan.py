@@ -95,6 +95,13 @@ def _query_for_call(call: dict) -> Query | None:
     if tool == "search_drug_label":
         return label_search(drug)
     if tool == "search_approvals":
+        number = arguments.get("application_number")
+        if isinstance(number, str) and number.strip():
+            # Local index over already-recorded generic-name pages; no new snapshot query.
+            return None
+        sponsor = arguments.get("sponsor_name")
+        if isinstance(sponsor, str) and sponsor.strip():
+            return None
         return approvals_search(drug)
     if tool == "get_label_section":
         return None

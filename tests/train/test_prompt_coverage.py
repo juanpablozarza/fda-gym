@@ -18,6 +18,16 @@ def _citation_ids(task: dict) -> list[str]:
     return found
 
 
+def _decoy_needle(doc: dict) -> str | None:
+    """A token from the decoy that should appear in the packed user prompt."""
+    args = doc.get("arguments") or {}
+    for key in ("generic_name", "application_number", "sponsor_name"):
+        value = args.get(key)
+        if isinstance(value, str) and value:
+            return value
+    return None
+
+
 def _coverage(split: str, tasks: list[dict], snapshot) -> dict:
     id_hits = 0
     id_total = 0
@@ -31,7 +41,7 @@ def _coverage(split: str, tasks: list[dict], snapshot) -> dict:
             if any(cid in user for cid in ids):
                 id_hits += 1
         decoys = [doc for doc in docs if doc["task_id"] != task["id"]]
-        if decoys and any((doc.get("arguments") or {}).get("generic_name") in user for doc in decoys):
+        if decoys and any((needle := _decoy_needle(doc)) is not None and needle in user for doc in decoys):
             decoy_hits += 1
     return {
         "split": split,

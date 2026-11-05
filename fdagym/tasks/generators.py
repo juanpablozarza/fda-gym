@@ -263,7 +263,9 @@ def _approval(drug: str, brand: str | None, records: list[dict], version: str, c
                     "fields": ["submissions"],
                 }
             ],
-            oracle_calls=[_approval_call(drug)],
+            # Submissions are not on the summary, so one detail hop cites the year.
+            # Extra winner applications are unused: citing any one of them is enough.
+            oracle_calls=[_approval_call(drug), _detail_call(app_ids[0])],
             source_count=1,
             needs_disambiguation=across_records,
             needs_aggregation=across_records or cfg.single_record_earliest_is_aggregation,
@@ -343,7 +345,7 @@ def _fact(drug, version, app, question, value, field, brand=None) -> dict:
         answerable=True,
         gold={"kind": "exact", "value": value},
         citations=[{"endpoint": "drug/drugsfda", "ids": [app], "fields": [field]}],
-        oracle_calls=[_approval_call(drug)],
+        oracle_calls=_fact_calls(drug, app, field),
         source_count=1,
         needs_disambiguation=False,
         needs_aggregation=False,
@@ -705,6 +707,22 @@ def _make(
 
 def _approval_call(drug: str) -> dict:
     return {"tool": "search_approvals", "arguments": {"generic_name": drug}}
+
+
+def _detail_call(app: str) -> dict:
+    """Products and submissions. The generic-name page does not carry them."""
+    return {"tool": "search_approvals", "arguments": {"application_number": app}}
+
+
+# On the summary page. Anything else is a second call and counts in min_tool_calls.
+# A brand or dosage question that already names the application is one detail call.
+_SUMMARY_FIELDS = frozenset({"sponsor_name", "original_approval", "active_ingredients"})
+
+
+def _fact_calls(drug: str, app: str, field: str) -> list[dict]:
+    if field in _SUMMARY_FIELDS:
+        return [_approval_call(drug)]
+    return [_detail_call(app)]
 
 
 def _event_call(drug: str, mode: str, year: int | None, serious: bool) -> dict:
