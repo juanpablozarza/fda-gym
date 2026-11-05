@@ -69,7 +69,7 @@ def hop_score(steps: list[dict], task: dict) -> HopScore:
     """Fraction of question-derived hops whose evidence appeared in ``steps``."""
     if task.get("type") not in HOP_TYPES:
         return HopScore(False, 0.0, 0, 0, ["hops not used: type is not compare/sponsor_hop"])
-    from fdagym.tasks.hard_solver import Unsolvable, parse_question
+    from fdagym.questions import Unsolvable, parse_question
 
     try:
         spec = parse_question(task["question"])

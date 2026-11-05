@@ -19,7 +19,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 
 from fdagym.queries import approvals_search
-from fdagym.tasks.hard_solver import Unsolvable, parse_question
+from fdagym.questions import Unsolvable, parse_question
 from fdagym.tasks.plan import load_universe
 
 _APP = re.compile(r"\b(?:NDA|BLA|ANDA)\d{6}\b")

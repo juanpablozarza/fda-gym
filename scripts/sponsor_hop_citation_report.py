@@ -25,8 +25,8 @@ TASK_FILES = (
 TRAJECTORY_GLOBS = (
     "results/**/*.jsonl",
     "web/public/results/**/*.jsonl",
-    "schemas/examples/*.json",
-    "schemas/examples/*.jsonl",
+    "fdagym/schemas/examples/*.json",
+    "fdagym/schemas/examples/*.jsonl",
 )
 
 

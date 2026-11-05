@@ -1,16 +1,8 @@
-import json
-from pathlib import Path
-
 import pytest
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
-SCHEMAS = Path(__file__).resolve().parent.parent / "schemas"
-
-
-def _load(name: str) -> dict:
-    return json.loads((SCHEMAS / name).read_text())
-
+from fdagym.schemas import load as _load
 
 REGISTRY = Registry().with_resources(
     (s["$id"], Resource.from_contents(s))

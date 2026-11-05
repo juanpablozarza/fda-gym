@@ -15,13 +15,14 @@ from fdagym.openfda import DiskSnapshot
 
 ROOT = Path(__file__).resolve().parents[2]
 TASKS_DIR = ROOT / "data" / "tasks"
-SCHEMAS = ROOT / "schemas"
 SKIP_TYPES = frozenset({"label_open"})
 COST_CAP_USD = 5.0
 
 
 def _load_schema(name: str) -> dict:
-    return json.loads((SCHEMAS / name).read_text())
+    from fdagym.schemas import load
+
+    return load(name)
 
 
 _TRAJECTORY_SCHEMA = _load_schema("trajectory.schema.json")

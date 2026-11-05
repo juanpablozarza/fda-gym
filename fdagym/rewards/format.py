@@ -1,11 +1,10 @@
 """Format reward: 1 when submit_answer validates against the answer schema, else 0."""
 
-import json
-from pathlib import Path
-
 from jsonschema import Draft202012Validator
 
-_SCHEMA = json.loads((Path(__file__).resolve().parents[2] / "schemas" / "answer.schema.json").read_text())
+from fdagym.schemas import load as load_schema
+
+_SCHEMA = load_schema("answer.schema.json")
 answer_validator = Draft202012Validator(_SCHEMA)
 
 

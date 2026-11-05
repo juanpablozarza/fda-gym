@@ -9,12 +9,14 @@ search_drug_label call with has_section boxed_warning whose total is 0.
 """
 
 import json
-import re
 from dataclasses import dataclass
 
 from rapidfuzz.fuzz import partial_ratio, ratio
 
 from fdagym.queries import label_search
+from fdagym.text import collapse as _collapse
+from fdagym.text import render as _render
+from fdagym.text import resolve as _resolve
 
 _ID_KEYS = ("id", "set_id", "application_number", "safetyreportid")
 _TOOL_ENDPOINT = {
@@ -196,7 +198,7 @@ def _topic_drugs(task: dict) -> list[str]:
     entity = task["entity"]["generic_name"]
     if task.get("type") != "compare":
         return [entity]
-    from fdagym.tasks.hard_solver import Unsolvable, parse_question
+    from fdagym.questions import Unsolvable, parse_question
 
     try:
         drugs = parse_question(task["question"]).get("drugs") or []
@@ -218,7 +220,7 @@ def _empty_boxed_citation(citation: dict, steps: list[dict], task: dict) -> tupl
         return False, ""
     if citation.get("field") not in {"meta.results.total", "results"} or not str(citation.get("id", "")).startswith("step:"):
         return False, ""
-    from fdagym.tasks.hard_solver import Unsolvable, parse_question
+    from fdagym.questions import Unsolvable, parse_question
 
     try:
         spec = parse_question(task["question"])
@@ -302,40 +304,6 @@ def _quote_matches(quote: str, field_text: str) -> tuple[bool, str]:
     if score < _FUZZY:
         return False, f"quote fuzzy {score / 100:.2f} < 0.90"
     return True, f"quote fuzzy {score / 100:.2f}"
-
-
-def _collapse(text: str) -> str:
-    return re.sub(r"\s+", " ", text.strip())
-
-
-def _resolve(node: object, path: str) -> object:
-    current = node
-    for part in path.split("."):
-        if isinstance(current, dict) and part in current:
-            current = current[part]
-        elif isinstance(current, list) and part.isdigit() and int(part) < len(current):
-            current = current[int(part)]
-        else:
-            return None
-    return current
-
-
-def _render(value: object) -> str | None:
-    if value is None:
-        return None
-    if isinstance(value, str):
-        return value
-    if isinstance(value, bool):
-        return "true" if value else "false"
-    if isinstance(value, int):
-        return str(value)
-    if isinstance(value, float):
-        return str(int(value)) if value.is_integer() else str(value)
-    if isinstance(value, list) and value and all(isinstance(item, str) for item in value):
-        return "\n".join(value)
-    if isinstance(value, (list, dict)):
-        return json.dumps(value, ensure_ascii=False)
-    return str(value)
 
 
 def _dicts(value: object):

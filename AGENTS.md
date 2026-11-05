@@ -48,7 +48,7 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
 | evals | `fdagym/agents/`, `scripts/run_baseline.py`, `results/`, `tests/agents/` | `learn/05-evals.md` |
 | train | `fdagym/train/`, `scripts/grpo_singleturn.py`, `scripts/eval_local.py`, `scripts/run_gpu.py`, `modal_train.py`, `tests/train/` | `learn/07-training.md` |
 | web | `web/` | `learn/06-dashboard.md` |
-| planner | `AGENTS.md`, `schemas/`, `fdagym/snapshot.py`, `fdagym/queries.py`, `docs/`, `learn/00-*` | `learn/00-orientation.md` |
+| planner | `AGENTS.md`, `fdagym/schemas/`, `fdagym/snapshot.py`, `fdagym/queries.py`, `docs/`, `learn/00-*` | `learn/00-orientation.md` |
 
 Everything reads openFDA data through the `Snapshot` protocol in [fdagym/snapshot.py](fdagym/snapshot.py), and every query is built
 by [fdagym/queries.py](fdagym/queries.py). Tools take constrained arguments (drug, year, serious) and never raw search strings, so
@@ -64,7 +64,7 @@ Run metrics go to Weights & Biases (project `bio-rl`, run id = `run_id`, `resume
 ## Working agreement
 
 - One track per agent, one branch and worktree per track. Stay inside your track's directories. JP merges.
-- `schemas/` is the contract between tracks. Don't change it without saying so explicitly in your final report.
+- `fdagym/schemas/` is the contract between tracks. Don't change it without saying so explicitly in your final report.
 - Gate: `tests/integration/test_oracle.py` plays every task's `oracle_calls` through the real env and must score 1.0 on
   every gradable task. Any change to tasks, tools, or rewards keeps it green.
 - Python 3.11+, `uv`, `pytest`, `ruff`. Tests run offline against recorded fixtures, never the live API.

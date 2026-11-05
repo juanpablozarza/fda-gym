@@ -5,6 +5,7 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 from fdagym.queries import approvals_search, faers_report_count, faers_top_reactions, label_search
+from fdagym.schemas import load as load_schema
 from fdagym.tasks.config import GenConfig
 from fdagym.tasks.difficulty import tier
 from fdagym.tasks.generators import _candidates, generate
@@ -12,7 +13,7 @@ from fdagym.tasks.meddra import aliases
 from fdagym.tasks.plan import absence_year, probe_year
 from tests.tasks.fake_snapshot import MemorySnapshot
 
-SCHEMA = json.loads((Path(__file__).resolve().parents[2] / "schemas" / "task.schema.json").read_text())
+SCHEMA = load_schema("task.schema.json")
 REGISTRY = Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA))
 VALIDATOR = Draft202012Validator(SCHEMA, registry=REGISTRY)
 

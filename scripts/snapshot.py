@@ -17,9 +17,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from fdagym import load_env
 from fdagym.openfda import DiskSnapshot, OpenFDAClient, OpenFDAError
-from fdagym.openfda.store import DEFAULT_ROOT
+from fdagym.openfda.store import discover_snapshot_root
 from fdagym.queries import all_queries
+
+load_env()
 
 KEYLESS_DAILY_LIMIT = 1000
 _QUOTED = re.compile(r'"([^"]+)"')
@@ -134,20 +137,21 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("drugs", nargs="?", type=Path, help="file with one generic name per line (# comments ok)")
     parser.add_argument("--version", required=True, help="snapshot version, e.g. the recording date 2026-10-20")
-    parser.add_argument("--root", type=Path, default=DEFAULT_ROOT)
+    parser.add_argument("--root", type=Path, default=None, help="directory that contains <version>/ (or FDAGYM_SNAPSHOT_DIR)")
     parser.add_argument("--budget", type=int, help="max network requests this run (default 1000 without a key)")
     parser.add_argument("--stats", action="store_true", help="rewrite manifest.jsonl and print sizes")
     args = parser.parse_args()
+    root = args.root or discover_snapshot_root() or Path("data/snapshots")
 
     if args.stats:
-        stats(DiskSnapshot(args.version, args.root))
+        stats(DiskSnapshot(args.version, root))
         return 0
     if args.drugs is None:
         parser.error("a drug list is required unless --stats")
 
     client = OpenFDAClient()
     budget = args.budget or (10**9 if client.api_key else KEYLESS_DAILY_LIMIT)
-    snapshot = DiskSnapshot(args.version, args.root, client=client)
+    snapshot = DiskSnapshot(args.version, root, client=client)
     drugs = read_drugs(args.drugs)
     print(
         f"{len(drugs)} drugs, {len(drugs) * len(all_queries('x'))} queries, version {args.version}, "
