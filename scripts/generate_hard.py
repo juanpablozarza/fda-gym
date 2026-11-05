@@ -1,11 +1,15 @@
-"""Generate the hard evaluation or hard training task splits from the snapshot.
+"""Generate the hard training or published public task splits from the snapshot.
 
-    uv run python scripts/generate_hard.py eval
     uv run python scripts/generate_hard.py train
     uv run python scripts/generate_hard.py public
 
-All three commands are CPU-only and leave the core train/test task files untouched.
+Both commands are CPU-only and leave the core train/test task files untouched.
 ``public`` writes ``data/tasks/public.jsonl`` from the drugs the private hard sheet does not use.
+
+The private hard-eval sheet (formerly ``eval``) is not generated from this public repo.
+A checkout that still has the generator can pass ``seed``/``id_start`` into
+``fdagym.tasks.hard.generate_hard`` only via ``FDAGYM_HARD_SEED`` and
+``FDAGYM_HARD_ID_START``; there is no default seed.
 """
 
 from __future__ import annotations
@@ -22,7 +26,7 @@ if str(ROOT) not in sys.path:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("split", choices=("eval", "train", "public"))
+    parser.add_argument("split", choices=("train", "public"))
     return _generate(parser.parse_args(argv).split)
 
 
@@ -30,15 +34,7 @@ def _generate(split: str) -> int:
     from fdagym.openfda import DiskSnapshot
 
     snapshot = DiskSnapshot("2026-10-15")
-    if split == "eval":
-        from fdagym.tasks.hard import generate_hard
-
-        tasks, report = generate_hard(snapshot)
-        output = ROOT / "data" / "tasks" / "hard.jsonl"
-        report_path = ROOT / "results" / "hard-generation.json"
-        summary = report
-        outputs = [(output, tasks)]
-    elif split == "public":
+    if split == "public":
         from fdagym.agents.baseline import load_split
         from fdagym.tasks.disjoint import OverlapError, assert_disjoint
         from fdagym.tasks.hard import PUBLIC_ID_START, PUBLIC_SEED, generate_hard

@@ -14,6 +14,7 @@ the solver settles inside 6 calls.
 
 from __future__ import annotations
 
+import os
 import random
 import re
 from collections import Counter
@@ -51,8 +52,11 @@ from fdagym.tasks.plan import load_universe
 from fdagym.tools import SECTION_LIMIT, EpisodeState
 from fdagym.tools import _section_text as tool_section_text
 
-HARD_SEED = 0
-ID_START = 8001
+# No default seed. A private held-out sheet is generated outside this public
+# repo and must read FDAGYM_HARD_SEED / FDAGYM_HARD_ID_START from the environment.
+HARD_SEED_ENV = "FDAGYM_HARD_SEED"
+HARD_ID_START_ENV = "FDAGYM_HARD_ID_START"
+# PUBLIC_SEED rebuilds the already-published public.jsonl (FG-9101..), not a held-out set.
 PUBLIC_SEED = 1
 PUBLIC_ID_START = 9101
 _CANON = re.compile(r"^(NDA|BLA|ANDA)\d{6}$")
@@ -133,11 +137,25 @@ def _eval_profiles(profiles: list[Profile], rng, *, hold_back: int = 40) -> list
     return order[hold_back:]
 
 
+def _env_int(name: str) -> int:
+    """Read a private integer. There is no default; an unset or non-integer value is an error."""
+    raw = os.environ.get(name)
+    if raw is None or not str(raw).strip():
+        raise RuntimeError(
+            f"{name} is unset. The hard-eval generator seed is private and has no default; "
+            f"export {name} to an integer before generating a held-out sheet."
+        )
+    try:
+        return int(str(raw).strip())
+    except ValueError as exc:
+        raise RuntimeError(f"{name} must be an integer, got {raw!r}") from exc
+
+
 def generate_hard(
     snapshot,
     *,
-    seed: int = HARD_SEED,
-    id_start: int = ID_START,
+    seed: int | None = None,
+    id_start: int | None = None,
     split: str = "hard",
     holdout_tasks: list[dict] | None = None,
     hold_back: int = 40,
@@ -146,7 +164,15 @@ def generate_hard(
 
     ``holdout_tasks`` drops drugs, applications, and sponsors that already appear on another
     sheet, so a public sheet can be checked against the private hard eval.
+
+    ``seed`` and ``id_start`` have no defaults. Omit them only when generating a private
+    held-out sheet, in which case they are read from ``FDAGYM_HARD_SEED`` and
+    ``FDAGYM_HARD_ID_START``.
     """
+    if seed is None:
+        seed = _env_int(HARD_SEED_ENV)
+    if id_start is None:
+        id_start = _env_int(HARD_ID_START_ENV)
     cache = _Cache(snapshot)
     rng = random.Random(seed)
     held = holdout_entities(holdout_tasks, snapshot) if holdout_tasks else None
@@ -195,7 +221,7 @@ def snapshot_answer(snapshot, question: str):
     return _snapshot_answer(_Cache(snapshot), question)
 
 
-def _assign_ids(tasks: list[dict], id_start: int = ID_START) -> list[dict]:
+def _assign_ids(tasks: list[dict], id_start: int) -> list[dict]:
     ordered = sorted(tasks, key=lambda task: (task["type"], task["question"]))
     tagged = []
     for offset, task in enumerate(ordered):

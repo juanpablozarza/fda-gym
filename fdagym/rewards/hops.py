@@ -1,8 +1,10 @@
-"""Process hops for compare / sponsor_hop training reward.
+"""Process hops for compare / sponsor_hop.
 
-Eval stays strict. These predicates read the episode's tool outputs and the
-question string; they do not read gold or oracle_calls. A hop is an observation,
-not a submitted citation. A year hop counts a salt or ester of the question's
+Eval stays strict on the answer. ``HopScore.proves`` is the gate
+``combine.score`` uses before compare or sponsor_hop correctness can pay.
+These predicates read the episode's tool outputs and the question string;
+they do not read gold or oracle_calls. A hop is an observation, not a
+submitted citation. A year hop counts a salt or ester of the question's
 generic as that drug (``fdagym.drugnames.product_matches``). ``earliest_boxed``
 does not credit a boxed-warning observation unless that drug's original-approval
 year is also in the trace, so a labels-only loop scores 0. ``sponsor_hop`` does
@@ -34,19 +36,32 @@ class HopScore:
     variant: str = ""
 
     def proves(self) -> bool:
-        """Whether a right answer on this sponsor trace may keep correctness.
+        """Whether a right answer on this trace may keep correctness.
 
-        The three unnamed questions need every flag. An older sponsor question
-        needs the application, the sponsor match, and FAERS when the question
-        has that step. The boxed-warning keyword is optional once that match
-        has already left a single drug, so a filler word in the warning is not
-        a second proof.
+        The three unnamed sponsor questions need every flag. An older sponsor
+        question needs the application, the sponsor match, and FAERS when the
+        question has that step. The boxed-warning keyword is optional once that
+        match has already left a single drug, so a filler word in the warning
+        is not a second proof.
+
+        A compare question needs every flag: each named drug was queried, and
+        the unique/none decision is visible in the observations. Citing one
+        FAERS substring after a single lookup is not a proof.
         """
         if self.variant == "sponsor_boxed":
             return bool(self.flags) and all(ok for _name, ok in self.flags)
         if self.variant in {"sponsor_faers", "sponsor_drug", "sponsor_count"}:
             required = [ok for name, ok in self.flags if name != "label"]
             return bool(required) and all(required)
+        if self.variant in {
+            "earliest_boxed",
+            "faers_year",
+            "faers_reaction",
+            "boxed_none",
+            "year_reaction",
+            "earliest_reaction",
+        }:
+            return bool(self.flags) and all(ok for _name, ok in self.flags)
         return False
 
 

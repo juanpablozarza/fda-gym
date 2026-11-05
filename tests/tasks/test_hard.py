@@ -12,8 +12,11 @@ from fdagym.agents.baseline import load_split
 from fdagym.env import FDAEnv
 from fdagym.tasks.hard import (
     ANSWER_CAP,
+    HARD_ID_START_ENV,
+    HARD_SEED_ENV,
     NAMED_CAP,
     Profile,
+    _env_int,
     _needs_year_compare,
     _one,
     _unfiltered_faers_max,
@@ -386,10 +389,31 @@ def test_snapshot_gold_is_unique_and_the_question_only_solver_scores(disk, hard_
         assert reward["total"] == 1.0, (task["id"], reward["notes"][:6])
 
 
-def test_generator_reproduces_the_committed_split(disk, hard_tasks):
-    tasks, report = generate_hard(disk, seed=0)
-    assert report["by_variant"] == QUOTAS
-    assert report["by_type"] == {"compare": 50, "sponsor_hop": 50}
-    assert [(task["id"], task["question"], task["gold"]) for task in tasks] == [
-        (task["id"], task["question"], task["gold"]) for task in hard_tasks
-    ]
+def test_generate_hard_has_no_default_seed(monkeypatch):
+    monkeypatch.delenv(HARD_SEED_ENV, raising=False)
+    monkeypatch.delenv(HARD_ID_START_ENV, raising=False)
+    with pytest.raises(RuntimeError, match="FDAGYM_HARD_SEED is unset"):
+        generate_hard(object())
+
+
+def test_generate_hard_id_start_has_no_default(monkeypatch):
+    monkeypatch.setenv(HARD_SEED_ENV, "7")
+    monkeypatch.delenv(HARD_ID_START_ENV, raising=False)
+    with pytest.raises(RuntimeError, match="FDAGYM_HARD_ID_START is unset"):
+        generate_hard(object())
+
+
+def test_hard_eval_env_seed_rejects_a_non_integer(monkeypatch):
+    monkeypatch.setenv(HARD_SEED_ENV, "not-a-seed")
+    with pytest.raises(RuntimeError, match="must be an integer"):
+        _env_int(HARD_SEED_ENV)
+
+
+def test_published_sources_do_not_embed_a_hard_eval_seed():
+    hard = (ROOT / "fdagym" / "tasks" / "hard.py").read_text()
+    script = (ROOT / "scripts" / "generate_hard.py").read_text()
+    assert "HARD_SEED =" not in hard
+    assert "ID_START = 8001" not in hard
+    assert "HARD_SEED =" not in script
+    assert 'choices=("train", "public")' in script
+    assert 'if split == "eval"' not in script

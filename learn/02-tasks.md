@@ -199,16 +199,22 @@ resmetirom unans years [2023]
 ```
 </details>
 
-### 4.3 Hard-task generator after the extraction
+### 4.3 The hard-eval seed is not in this repo
 
 ```bash
-uv run python -c 'from fdagym.tasks.hard import generate_hard; from fdagym.openfda import DiskSnapshot; tasks, report = generate_hard(DiskSnapshot("2026-10-15")); print(report["n"], report["by_variant"])'
+uv run python -c 'from fdagym.tasks.hard import generate_hard; from fdagym.openfda import DiskSnapshot
+try:
+    generate_hard(DiskSnapshot("2026-10-15"))
+except RuntimeError as exc:
+    print(type(exc).__name__ + ":", exc)
+'
 ```
 
 <details>
-<summary><b>[predict]</b> Did moving sponsor candidate search change the number of generated tasks or the per-variant quotas?</summary>
+<summary><b>[predict]</b> Does `generate_hard()` with no arguments reprint the private FG-8001..8100 sheet?</summary>
 
-No. Output from this tree: `100 {'earliest_boxed': 16, 'faers_year': 12, 'faers_reaction': 18, 'boxed_none': 4, 'sponsor_faers': 25, 'sponsor_drug': 25}`. The refactor moved the candidate search boundary; the seeded generator and stable task ordering remain in `hard.py`.
+No. It raises `RuntimeError: FDAGYM_HARD_SEED is unset`. The public checkout has no default seed and no `eval` CLI. Passing a seed still requires you to choose one; the old `HARD_SEED = 0` constant is gone.
+The common wrong answer is that it writes 100 tasks with the old quotas, which is what the seeded generator used to do.
 </details>
 
 ---
