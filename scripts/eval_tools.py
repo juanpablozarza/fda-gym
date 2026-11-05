@@ -1,4 +1,4 @@
-"""Greedy tool-call eval dry run. Does not start Modal.
+"""Greedy tool-call eval dry run. Does not start a GPU job.
 
     uv run python scripts/eval_tools.py --dry-run
 
@@ -6,10 +6,7 @@
 schema-valid trajectory file under a temporary directory. ``--eval`` loads a
 local Hugging Face model (base, or ``--adapter`` as a directory or a Hub repo
 id. A private Hub repo needs ``HF_TOKEN``). ``--split public`` reads
-``data/tasks/public.jsonl``. The rented job is the same protocol:
-
-    HF_TOKEN=... modal run modal_train.py --action eval-tools --split public \\
-        --adapter your-org/fdagym-adapter --run-id public-eval
+``data/tasks/public.jsonl``. See docs/train.md for the optional `[train]` extra.
 """
 
 from __future__ import annotations

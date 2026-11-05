@@ -88,9 +88,9 @@ Small adapter matrices next to the frozen linear layers (`q_proj`, `k_proj`, `v_
 The GPU script is [scripts/grpo_singleturn.py](../scripts/grpo_singleturn.py). It wires `GRPOTrainer` + `LoraConfig` + `fda_reward`, which calls `score_completion` on each sibling. `--dry-run` never touches torch.
 
 <details>
-<summary><b>[why]</b> Why is the default 3B on Modal, not the 1.5B that PLAN.md named for a free T4?</summary>
+<summary><b>[why]</b> Why is the default 3B, not the 1.5B that PLAN.md named for a free T4?</summary>
 
-JP's plan is Qwen2.5-3B-Instruct on Modal L40S (fits the $30/mo credit), then 7B on a RunPod A100 80GB only if the 3B adapter beats its own Plan A TEST baseline. Do not start Modal or RunPod from the training script. Commands live in [docs/train.md](../docs/train.md).
+JP's plan is Qwen2.5-3B-Instruct, then 7B only if the 3B adapter beats its own Plan A TEST baseline. Do not start a GPU job from the training script. Commands live in [docs/train.md](../docs/train.md).
 </details>
 
 ### 3.4 Stage 1 is a mix target, not a promise of easy tasks
@@ -130,7 +130,7 @@ uv run pytest -q tests/train
 <details>
 <summary><b>[predict]</b> How many tests, and does pytest try to import TRL?</summary>
 
-**46 passed** (this run: `46 passed in 24.94s`). Score, parse, curriculum, advantage, eval_local, checkpoint resume, and the prompt-coverage check over the frozen snapshot. No TRL, no GPU, no Modal client. If torch leaked into `fdagym/train/__init__.py`, this command would fail on a machine without the extra.
+**46 passed** (this run: `46 passed in 24.94s`). Score, parse, curriculum, advantage, eval_local, checkpoint resume, and the prompt-coverage check over the frozen snapshot. No TRL, no GPU. If torch leaked into `fdagym/train/__init__.py`, this command would fail on a machine without the extra.
 </details>
 
 ### 4.2 Gold is 1.0, junk is 0, format-only is 0.10
@@ -238,7 +238,7 @@ Because the run directory also contains checkpoints and completion markers. Seri
 - **Clipping uses the question, then keeps original order.** `_clip` in [context.py](../fdagym/train/context.py) keeps whole `results` records inside `max_pack_chars` (6000). Rank only decides which records survive a cut: application numbers and ids written in the question, plus generic or brand names that actually appear in the question. `submission_type == ORIG` is only a tie-break. Survivors stay in their original order. Gold fields are not read. On the frozen snapshot, checkable gold-in-prompt is 898/1054 train and 259/299 test (the blind prefix was 681/1054 and 183/299). Citation ids in the prompt are 686/720 train and 184/193 test. Decoys are still packed.
 - **`max_prompt_length` is 8192.** TRL 0.21 would keep the *last* tokens past that, which drops the question. [launch.py](../fdagym/train/launch.py) refuses to start if a training prompt's chars/3 estimate exceeds the limit. [fit_context](../fdagym/train/prompt_len.py) sets `vllm_max_model_len` from the longest prompt in the stage pool plus the 256-token completion, rounded up to the next power of two and capped at 8192. It does not use a 4-document × 6000-character estimate. Stage 1 measures 6390 tokens (1160 prompts) and resolves to 8192. Two skipped `label_open` rows would not: FG-1553 estimates 9959 and FG-1556 estimates 8285, and launch would refuse them.
 - **Dense reward is on for GRPO only.** Weights stay `0.60*correctness + 0.25*citation + 0.10*format + 0.05*efficiency`. Format is still 0.10, so a schema-only answer cannot outscore a partial citation (`0.25 * 0.50 = 0.125`). Id-only citations score 0.50 of the citation component. Near-miss correctness, only when the strict score is 0: punctuation 0.85, year taken from a date 0.70, brand/generic synonym 0.60, counts inside 10% relative 0.50 times the remaining band. Years do not get that 10% band. Case and whitespace stay at 1.0, which is what the strict scorer already did. `trajectory.reward` in eval jsonl stays strict, so it still compares to the 0.0185 baseline. `summary.json` adds `dense_reward`. On 1160 rendered train prompts, every group of 6 weak completions was tied under the strict score and none were tied under the dense score (base-like mean 0.0857 vs 0.294; gold mean 1.0 either way).
-- **SFT warm-up copies gold that is already in the prompt.** [sft.py](../fdagym/train/sft.py) keeps 984 of 1229 train tasks (skipped 235 whose answer text is not in the user message, 8 whose citation is not, 2 over 8192 tokens). One epoch, LoRA, adapter `/vol/runs/sft-plan-a-qwen3b/adapter`. GRPO `--init-adapter` continues that adapter. No GPU was run from this checkout.
+- **SFT warm-up copies gold that is already in the prompt.** [sft.py](../fdagym/train/sft.py) keeps 984 of 1229 train tasks (skipped 235 whose answer text is not in the user message, 8 whose citation is not, 2 over 8192 tokens). One epoch, LoRA, adapter `results/sft-plan-a-qwen3b/adapter`. GRPO `--init-adapter` continues that adapter. No GPU was run from this checkout.
 - **The curve file is retired.** Training now logs to Weights & Biases (see [10-wandb.md](10-wandb.md)). Overview and `/training` still plot a `training-curve.jsonl` if you drop one in `web/public/results/`; a missing file keeps `no training run yet`.
 - **Paid TEST Qwen 7B pass rate was 12%.** That is the OpenRouter 7B in the *multi-turn* loop. The GRPO starting point is `scripts/eval_local.py` on the same HF checkpoint (Plan A, packed docs). Do not mix those two numbers.
 - **Tool GRPO sampling default is T=0.65, not 0.8.** A pass@8 probe of the distill adapter at 0.8 had a **69%** unparseable-turn rate (mostly an opening `<tool_call>` that never closed; `FDAEnv` then reports `invalid JSON: Expecting value`). The same adapter under greedy hard eval was **10%** format errors. Probe and `train-tools` share `--temperature`.

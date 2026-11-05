@@ -1,10 +1,10 @@
-"""SFT warm-up on oracle tool trajectories. Does not start Modal.
+"""SFT warm-up on oracle tool trajectories. Does not start a GPU job.
 
     uv run python scripts/sft_warmup.py --dry-run
 
 ``--dry-run`` plays two fixture tasks on the CPU and checks the loss mask.
-``--train`` fits the warm-up on a GPU that is already in this process. It does
-not call Modal. JP starts the rented job with ``modal run modal_train.py --action sft``.
+``--train`` fits the warm-up on a GPU that is already in this process.
+See docs/train.md for the optional `[train]` extra.
 """
 
 from __future__ import annotations

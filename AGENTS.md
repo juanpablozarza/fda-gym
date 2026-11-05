@@ -28,7 +28,7 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
     `set_id`, field `sections`. Boolean tasks without a topic have no `keywords`; yes/no alone decides correctness.
 - Difficulty is a structural rubric plus a measured base-model pass rate, scheduled as a curriculum: [docs/difficulty.md](docs/difficulty.md).
 - Models through **OpenRouter** via LiteLLM (`OPENROUTER_API_KEY`). openFDA key in `OPENFDA_API_KEY`.
-- Training: Plan A GRPO + LoRA on **Qwen2.5-3B-Instruct** (Modal L40S, `$30/mo` credit), then **Qwen2.5-7B-Instruct** on a RunPod A100 80GB only if the 3B adapter beats its own Plan A TEST baseline. Commands: [docs/train.md](docs/train.md). Do not start Modal or RunPod from an import, CI, or the training script.
+- Training: Plan A GRPO + LoRA on **Qwen2.5-3B-Instruct**, then **Qwen2.5-7B-Instruct** only if the 3B adapter beats its own Plan A TEST baseline. Optional extra: [docs/train.md](docs/train.md). Do not start a GPU job from an import, CI, or a training import.
 - Dashboard follows design **B1** (dark glass, amber `#F5A524`): [docs/design/B1-overview.png](docs/design/B1-overview.png),
   [docs/design/B1-trajectory.png](docs/design/B1-trajectory.png). The HTML files next to them are the reference markup.
 
@@ -59,7 +59,7 @@ Baseline evals write `results/<run_id>.jsonl` (one trajectory per line, `traject
 
 Training is Plan A: single-turn GRPO. Prefetch each task's `oracle_calls` through `FDAEnv` so citation ids exist in `env.steps`, put 1–2 distractor documents in the **prompt only**, and let the model emit JSON for `submit_answer`. Same `score()`. `label_open` is skipped. LoRA r=16 α=32, 8 generations, 400 steps, ~3k prompt packing, 256 completion tokens, `use_vllm=True`, checkpoints every 50 steps. Default model `Qwen/Qwen2.5-3B-Instruct`. Torch lives behind `uv sync --extra train`. The untrained vs trained comparison is `scripts/eval_local.py` on the TEST split (not the OpenRouter multi-turn table).
 
-Run metrics go to Weights & Biases (project `fda-gym`, run id = `run_id`, `resume='allow'`). The Modal secret is named `wandb` and holds `WANDB_API_KEY`. `scripts/wandb_chart.py` draws the PNG from the W&B API. Eval deliveries stay `results/<run_id>.jsonl` plus `summary.json`, `leaderboard.json`, and `tasks.json`. The dashboard still plots a `training-curve.jsonl` if one is dropped in `web/public/results/`; training no longer writes that file.
+Run metrics optionally go to Weights & Biases when `WANDB_API_KEY` is set (project `fda-gym`, run id = `run_id`, `resume='allow'`). No key means training continues with logging off. `scripts/wandb_chart.py` draws the PNG from the W&B API. Eval deliveries stay `results/<run_id>.jsonl` plus `summary.json`, `leaderboard.json`, and `tasks.json`. The dashboard still plots a `training-curve.jsonl` if one is dropped in `web/public/results/`; training no longer writes that file.
 
 ## Working agreement
 

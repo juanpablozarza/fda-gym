@@ -4,7 +4,7 @@ Dry run (no torch):
 
     uv run python scripts/grpo_singleturn.py --dry-run
 
-This script does not rent a GPU. JP starts Modal or RunPod separately — see docs/train.md.
+This script does not rent a GPU. See docs/train.md for the optional `[train]` extra.
 """
 
 from __future__ import annotations

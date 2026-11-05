@@ -4,8 +4,7 @@ Dry build (no torch, no GPU):
 
     uv run python scripts/sft_plan_a.py --dry-build
 
-Training is started by JP on Modal (`modal run modal_train.py --action sft-plan-a`).
-This script does not rent a GPU.
+This script does not rent a GPU. See docs/train.md for the optional `[train]` extra.
 """
 
 from __future__ import annotations

@@ -28,8 +28,7 @@ train = [
     "peft>=0.13",
     "datasets>=3.0",
 ]
-# The Modal image and the RunPod setup script both install this list.
-# These are the versions modal_train.py pinned before the extra existed.
+# The optional [gpu] extra. Same pins the training launchers install.
 gpu = [
     "torch==2.6.0",
     "transformers==4.55.0",

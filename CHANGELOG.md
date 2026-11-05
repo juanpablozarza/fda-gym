@@ -2,7 +2,7 @@
 
 ## Dashboard CVE, M1–M6, onboarding
 
-Next.js 15.5.29 (GHSA-9qr9-h5gf-34mp). Env docstring matches the tool budget; invalid JSON is `invalid_action`; `label_open` is rejected on `reset`; `step(..., latency_ms=)` records latency; snapshot manifest rows carry `sha256`; `eval_chat.py --split` lists committed files and refuses overwrite. CI runs ruff, pyright, pytest, the wheel smoke, and `web` lint/build. README covers grader v5, the anti-hacking table, and committed baselines.
+Next.js 15.5.29 (GHSA-9qr9-h5gf-34mp). Env docstring matches the tool budget; invalid JSON is `invalid_action`; `label_open` is rejected on `reset`; `step(..., latency_ms=)` records latency; snapshot manifest rows carry `sha256`; `eval_chat.py --split` lists committed files and refuses overwrite. CI runs ruff, pyright, pytest, the wheel smoke, and `web` lint/build. README covers grader v5, the anti-hacking table, and committed baselines. Training docs are the optional `[train]` extra in `docs/train.md`; onboarding does not require a remote GPU vendor or Weights & Biases.
 
 ## Installable wheel
 

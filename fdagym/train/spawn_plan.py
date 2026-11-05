@@ -1,6 +1,6 @@
-"""Spawn kwargs for the hard-run commands in docs/RUNBOOK.md.
+"""Spawn kwargs for the hard-run commands in docs/train.md.
 
-Importing this module does not call Modal. ``scripts/spawn_modal.py`` is what spawns.
+Importing this module does not start a GPU job. ``scripts/spawn_modal.py`` is what spawns.
 """
 
 from __future__ import annotations

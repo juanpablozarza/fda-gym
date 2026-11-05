@@ -398,14 +398,14 @@ def test_modal_tool_actions_are_a100_and_scripts_stay_offline():
         assert "--dry-run" in script or name == "tool_rollout_dry.py"
         assert "import modal" not in script
     runbook = (ROOT / "docs" / "train.md").read_text()
-    assert "modal run modal_train.py --action sft" in runbook
-    assert "modal run modal_train.py --action train-tools" in runbook
-    assert "modal run modal_train.py --action eval-tools-base" in runbook
-    assert "modal run modal_train.py --action eval-tools" in runbook
+    assert "uv run python scripts/sft_warmup.py --dry-run" in runbook
+    assert "uv run python scripts/run_gpu.py train-tools" in runbook
+    assert "eval-tools-base" in runbook
+    assert "uv run python scripts/run_gpu.py eval-tools" in runbook
     assert "150 steps" in runbook
     assert "$0.021" in runbook
     assert "$3.15" in runbook
-    assert runbook.index("modal volume get") < runbook.index("compare_runs.py")
+    assert runbook.index("results/") < runbook.index("compare_runs.py")
 
 
 def _top_level_imports(tree: ast.AST) -> set[str]:

@@ -164,8 +164,8 @@ def test_snapshot_is_on_disk_for_image_upload():
     setup = (ROOT / "scripts" / "runpod_setup.sh").read_text()
     assert "data/snapshots/2026-10-15/manifest.jsonl" in setup
     runbook = (ROOT / "docs" / "train.md").read_text()
-    assert "modal volume get" in runbook
-    assert runbook.index("modal volume get") < runbook.index("compare_runs.py")
+    assert "results/" in runbook
+    assert runbook.index("results/") < runbook.index("compare_runs.py")
 
 
 def test_runpod_setup_pins_the_gpu_extra_and_does_not_train():
