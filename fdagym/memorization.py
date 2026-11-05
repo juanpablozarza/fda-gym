@@ -143,7 +143,7 @@ def memorization_report(
 
 def looked(task: dict, trajectory: dict) -> bool:
     """True when a tool output contained the gold value or the record holding it."""
-    gold = (task.get("gold") or {})
+    gold = task.get("gold") or {}
     value = gold.get("value")
     kind = gold.get("kind")
     aliases = [alias for alias in gold.get("aliases") or [] if isinstance(alias, str)]
@@ -158,8 +158,10 @@ def looked(task: dict, trajectory: dict) -> bool:
             return True
         if kind == "number" and isinstance(value, int) and not isinstance(value, bool) and _total_equals(output, value):
             return True
-        if kind == "exact" and isinstance(value, str) and (
-            _contains_text(output, value) or any(_contains_text(output, alias) for alias in aliases)
+        if (
+            kind == "exact"
+            and isinstance(value, str)
+            and (_contains_text(output, value) or any(_contains_text(output, alias) for alias in aliases))
         ):
             return True
         if _faers_record(task, step, output):
@@ -174,7 +176,9 @@ def attach_memorization(summary: dict, report: dict) -> dict:
     return attached
 
 
-def record_training_memorization(row: dict | None, step: int, measure: Measure | None, *, every: int = 10) -> dict | None:
+def record_training_memorization(
+    row: dict | None, step: int, measure: Measure | None, *, every: int = 10
+) -> dict | None:
     """Attach a report on steps 10, 20, 30, ... Do not stop training."""
     if row is None or measure is None or every < 1 or step < 1 or step % every != 0:
         return row

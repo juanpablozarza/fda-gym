@@ -144,7 +144,9 @@ def encode_messages(
             completion_ids.extend(token_ids)
             loss_mask.extend([1] * len(token_ids))
             continue
-        if role in _TOOL_ROLES or (role == "user" and isinstance(message.get("content"), str) and TOOL_MARK in message["content"]):
+        if role in _TOOL_ROLES or (
+            role == "user" and isinstance(message.get("content"), str) and TOOL_MARK in message["content"]
+        ):
             if role == "user":
                 obs_text = message["content"]
                 start = obs_text.find(TOOL_MARK)

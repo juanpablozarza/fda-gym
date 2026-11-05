@@ -23,7 +23,7 @@ from fdagym.train.spawn_plan import spawn_plan
 
 
 def main(argv: list[str] | None = None) -> int:
-    which = (argv if argv is not None else sys.argv[1:])
+    which = argv if argv is not None else sys.argv[1:]
     if len(which) != 1:
         print("usage: python scripts/spawn_modal.py {sft,eval-hard,grpo-dry}", file=sys.stderr)
         return 2

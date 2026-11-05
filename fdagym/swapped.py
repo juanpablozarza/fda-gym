@@ -87,7 +87,7 @@ class SwappedFactsEnv(FDAEnv):
         original = env_module.execute
         plan = self._plan
 
-        def wrapped(state, name, arguments, step_index=None):
+        def wrapped(state, name, arguments, step_index=0):
             output, err = original(state, name, arguments, step_index=step_index)
             if err is None and isinstance(output, dict) and plan is not None:
                 output = plan.apply(name, arguments, output)
@@ -116,12 +116,7 @@ def select_fact_swaps(tasks: list[dict], *, n: int = SWAP_N) -> list[FactSwap]:
             picked.append(task)
             used.add(task["id"])
     if len(picked) < n:
-        rest = [
-            task
-            for variant, _quota in SWAP_QUOTAS
-            for task in grouped[variant]
-            if task["id"] not in used
-        ]
+        rest = [task for variant, _quota in SWAP_QUOTAS for task in grouped[variant] if task["id"] not in used]
         rest.sort(key=lambda task: task["id"])
         picked.extend(rest[: n - len(picked)])
     return [fact_swap(task) for task in picked[:n]]
@@ -151,13 +146,13 @@ def scripted_oracle_report(snapshot, known: list[dict], unseen: list[dict], *, t
     unseen_rows = [_play_solver(snapshot, task, tool_budget) for task in unseen]
     plans = select_fact_swaps(known)
     by_id = {task["id"]: task for task in known}
-    swapped_rows = [
-        _play_swapped(snapshot, by_id[plan.task_id], plan, tool_budget) for plan in plans
-    ]
+    swapped_rows = [_play_swapped(snapshot, by_id[plan.task_id], plan, tool_budget) for plan in plans]
     return memorization_report(known=known_rows, unseen=unseen_rows, swapped=swapped_rows)
 
 
-def rollout_swapped(snapshot, tasks, plans: list[FactSwap], tokenizer, generator, codec, limits, *, run_id, seed, model):
+def rollout_swapped(
+    snapshot, tasks, plans: list[FactSwap], tokenizer, generator, codec, limits, *, run_id, seed, model
+):
     """Model rollouts on the wrapper. Raises inside a training rollout."""
     _refuse_training()
     by_id = {task["id"]: task for task in tasks}

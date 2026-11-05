@@ -1,41 +1,93 @@
 # FDA-Gym
 
-A model answers a question about a drug label, a FAERS report, or an FDA approval. It calls tools against a frozen [openFDA](https://open.fda.gov/) snapshot. The grader scores the submitted answer and the trace that produced it.
+A **tool-use RL environment** over a frozen [openFDA](https://open.fda.gov/) snapshot. An agent answers a regulatory question by calling tools, then `submit_answer`. The grader scores the answer **and** the trace, so a memorized fact with a fake citation does not pay.
 
-The published sheet has 93 questions, `FG-9101` through `FG-9193`, in [`data/tasks/public.jsonl`](data/tasks/public.jsonl).
+FDA-Gym exists so RL researchers can train and evaluate tool-using models on a real, frozen government dataset without live API calls, and so a recruiter can see in two minutes that the grader actually blocks the shortcuts that usually inflate leaderboard scores.
 
-## Run a model
+The published sheet is 93 questions, `FG-9101`–`FG-9193`, in [`data/tasks/public.jsonl`](data/tasks/public.jsonl). Freeze: `2026-10-15` (`drug/label`, `drug/event`, `drug/drugsfda`).
 
-You need Python 3.11 or newer and [uv](https://docs.astral.sh/uv/).
+![FDA-Gym viewer (design B1)](docs/design/B1-overview.png)
+
+## Quickstart (offline, no GPU, no API keys)
+
+Python 3.11+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync
+uv sync --group dev
+uv run pytest -q
+```
+
+That is the smoke run. It uses the committed snapshot and never calls live openFDA or an LLM.
+
+Score a Chat Completions model on the published sheet (needs `OPENROUTER_API_KEY` in `.env`):
+
+```bash
 cp .env.example .env
+uv run python scripts/eval_chat.py --model openrouter/qwen/qwen-2.5-7b-instruct --split public --run-id public-eval
 ```
 
-Put an OpenRouter key in `OPENROUTER_API_KEY`. Then score the published sheet.
+`--split` is any `*.jsonl` stem in `data/tasks/` (`public`, `hard_train`, `hard_train_holdout`, `train`, `test`). Existing `results/<run-id>` is refused unless you pass `--overwrite`.
+
+Import the installed wheel without a git checkout:
 
 ```bash
-uv run python scripts/eval_chat.py --model <openrouter-slug> --split public --run-id public-eval
+uv build --wheel
+uv venv /tmp/fdagym-wheel && uv pip install --python /tmp/fdagym-wheel/bin/python dist/*.whl
+cd /tmp && /tmp/fdagym-wheel/bin/python -c "import fdagym, fdagym.env, fdagym.rewards"
 ```
 
-`results/public-eval.jsonl` has one trajectory per line. The `reward` object on each line is the grade. `reward.correctness` above 0 is a pass.
+The wheel does not ship the 87 MB snapshot. Point at a clone with `FDAGYM_SNAPSHOT_DIR=/path/to/fda-gym/data/snapshots`, or run `python -m fdagym.openfda`. Training extras are optional: `uv sync --extra train` (CPU) or `--extra gpu`. CPU dry-run: `uv run python scripts/grpo_singleturn.py --dry-run`. See [docs/train.md](docs/train.md). Pytest, the dashboard, and this README do not need a GPU vendor or Weights & Biases.
 
-## What a grade means
+## Why a grader this strict
 
-The total is `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency`. Each term is from 0 to 1.
+A model that already knows the answer can still fail if it does not retrieve the evidence. A model that guesses one of three drugs can still fail if the comparison is not in the trace. That is the point.
 
-Format is 1 when the answer matches the schema. Otherwise format is 0, and correctness is 0 with it.
+Total: `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency`. Every score includes `grader_version`. **Current grader: v5.**
 
-A citation is valid when its id appeared in a tool result from this trajectory, the task accepts that field, and the quote matches the field text. Quotes shorter than 4 characters never count. A field of 12 characters or fewer needs the whole string. The citation score is valid citations divided by citations submitted. No citations scores 0.
+| Term | Pays when |
+| --- | --- |
+| format | `submit_answer` matches the schema. Invalid format forces correctness to 0. |
+| citation | cited `id` appeared in this trajectory, `field` is in `gold_citations`, quote fuzzy-matches ≥ 0.9. Quotes < 4 characters never count. |
+| correctness | format is 1, at least one citation is valid, the answer matches gold, **and** the hop / compare proof is in the trace. |
+| efficiency | only when correctness > 0. Distinct `(tool, arguments)` pairs. Repeated identical calls are free. |
 
-Correctness is 1 only when format is 1, at least one citation is valid, and the answer matches the gold. Otherwise correctness is 0. The pass rate is the share of questions with correctness above 0.
+`compare` pays correctness only when every named drug was queried (so unique/none is visible) and a valid citation is about the deciding drug. `sponsor_hop` already needed that kind of proof. One tool call and a short quote from `results` is not enough.
 
-Efficiency counts only when correctness is above 0. The same tool call with the same arguments counts once. A trace shorter than the task minimum scores calls divided by that minimum. A longer trace scores the minimum divided by the calls.
+### Shortcuts the v5 suite catches
 
-Every score includes `grader_version`. The current grader is version 5.
+From `tests/rewards/test_public_attacks.py` and `tests/rewards/test_compare_proof.py` (grader v5, committed `2026-10-15` freeze):
 
-A `compare` answer keeps correctness only when the trace queried every named drug (so the unique or none decision is in the observations) and a valid citation is about the deciding drug. A `sponsor_hop` answer already needed that kind of proof. One tool call and a short quote from `results` is not enough.
+| Attack | Score |
+| --- | --- |
+| Honest oracle (every `oracle_call`, gold answer, gold citations) | **93 / 93** pass |
+| One-call compare guess (first `oracle_call` + generic quote + gold or first-named drug) | **0 / 50** |
+| One-call sponsor-hop (same attack on `sponsor_hop`) | **0 / 43** |
+| Quitter (`unknown`, no citations) | **0 / 93** |
+| FG-9101: one FAERS call on abacavir, quote `"PAIN"`, answer `"pravastatin"` | correctness **0** (citation can still be 1) |
+
+## Committed baselines
+
+Numbers below are from files already in `results/`, labeled with the grader they were scored under. They are **not** invented. The OpenRouter smoke was re-scored offline with grader v5; totals did not move.
+
+**OpenRouter smoke** (`results/baseline-2026-10-16.jsonl`, split `test`, 19 tasks, 1 seed). Stored rewards had no `grader_version` field; offline v5 re-score matches the stored totals.
+
+| Model | n | mean reward (v5) | pass | mean citation |
+| --- | --- | --- | --- | --- |
+| `openrouter/nvidia/nemotron-3.5-lightning:free` | 19 | 0.1000 | 0.00 | 0.00 |
+| `openrouter/cohere/north-mini-code:free` | 19 | 0.1000 | 0.00 | 0.00 |
+| `openrouter/liquid/lfm-2.5-2.6b:free` | 19 | 0.0947 | 0.00 | 0.00 |
+
+Requested paid slugs (`gpt-4o-mini`, `claude-3.5-haiku`, `qwen-2.5-7b-instruct`) were not run: the account had no credits. See `results/baseline-2026-10-16/summary.json`.
+
+**Plan A local TEST** (`web/public/results/plan-a.json`, split `test`, 324 questions, greedy). These are the committed Qwen2.5-3B numbers, not a public-sheet run.
+
+| Model | mean reward | pass | citation |
+| --- | --- | --- | --- |
+| Qwen2.5-3B-Instruct base | 0.0185 | — | — |
+| SFT warm-up | 0.575 | — | — |
+| GRPO 150 steps from warm-up | 0.839 | 80.6% | 0.87 |
+
+There is no committed OpenRouter run on `public.jsonl` in this tree.
 
 ## Tools
 
@@ -49,36 +101,44 @@ The model does not send a raw search string. Each call takes a drug name, a sect
 | `search_approvals` | Drugs@FDA records. Pass exactly one of `generic_name`, `application_number`, or `sponsor_name`. |
 | `submit_answer` | Ends the episode. The answer is one string, number, or boolean, or `NOT_FOUND`, plus up to 8 citations. |
 
-## See a run
+`FDAEnv` is a tool-use environment, not a Gymnasium env. `reset(task_id)` returns `{question, tools}`. `step(action, latency_ms=...)` returns `(observation, reward, done, info)`. Reward stays 0.0 until the episode ends. Tool calls other than `submit_answer` are capped at `tool_budget` (default 6); `submit_answer` is still accepted after that. Invalid JSON is logged as `invalid_action`.
 
-```bash
-cp results/public-eval.jsonl web/public/results/
-cd web && npm install && npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000). The overview reads the jsonl files in `web/public/results/`.
-
-## Data
-
-The tools read [`data/snapshots/2026-10-15/`](data/snapshots/2026-10-15/), a freeze of three openFDA endpoints: `drug/label`, `drug/event`, and `drug/drugsfda`. The snapshot is on disk, so scoring and the tests do not call the live API.
+## Splits
 
 | File | n | Role |
 | --- | --- | --- |
 | [`data/tasks/public.jsonl`](data/tasks/public.jsonl) | 93 | Published eval (`FG-9101`–`FG-9193`). Leaderboard sheet. |
 | [`data/tasks/hard_train.jsonl`](data/tasks/hard_train.jsonl) | 334 | Hard-style training pool (`FG-8101`+). |
-| [`data/tasks/hard_train_holdout.jsonl`](data/tasks/hard_train_holdout.jsonl) | 36 | In-distribution question holdout (~10% of the generated pool, stratified by variant). Same drugs as `hard_train`. Never mixed into training. Used to probe memorization. |
-| [`data/tasks/train.jsonl`](data/tasks/train.jsonl) / [`test.jsonl`](data/tasks/test.jsonl) | 1229 / 342 | Original type mix (boxed warning, FAERS, approvals). Unchanged by the hard-train rebuild. |
+| [`data/tasks/hard_train_holdout.jsonl`](data/tasks/hard_train_holdout.jsonl) | 36 | In-distribution question holdout (~10% of the generated pool). Same drugs as `hard_train`. Never mixed into training. |
+| [`data/tasks/train.jsonl`](data/tasks/train.jsonl) / [`test.jsonl`](data/tasks/test.jsonl) | 1229 / 342 | Original type mix (boxed warning, FAERS, approvals). |
 
-`hard_train` and `hard_train_holdout` share no drugs, application numbers, sponsors, or question text with `public.jsonl`. They also share none of those with `test.jsonl`. The holdout is allowed to share drugs with `hard_train`; that is how a fact-swap can test memorization of known entities without leaking the published eval.
+`hard_train` and `hard_train_holdout` share no drugs, application numbers, sponsors, or question text with `public.jsonl` (symmetric check: a training drug that owns an eval application number is an overlap). They also share none of those with `test.jsonl`. The holdout may share drugs with `hard_train`.
 
-openFDA records are United States government work. Names, application numbers, and label text in the snapshot and in the task files come from that source.
+openFDA records are United States government work. See [openFDA terms of service](https://open.fda.gov/terms/). Names, application numbers, and label text in the snapshot and in the task files come from that source. Code is MIT.
 
-`OPENFDA_API_KEY` is only for recording a new snapshot. The tests do not need a key.
+`OPENFDA_API_KEY` is only for recording a new snapshot. The tests do not need a key. Verify stored bodies with `python -m fdagym.openfda verify`.
 
-## Tests
+## Dashboard
 
 ```bash
+cp results/public-eval.jsonl web/public/results/
+cd web && npm ci && npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). The overview reads the jsonl files in `web/public/results/`. Design reference: [`docs/design/B1-overview.png`](docs/design/B1-overview.png).
+
+## Verifiers / Environments Hub
+
+A [verifiers](https://github.com/PrimeIntellect-ai/verifiers) v1 / `vf-eval` wrapper is the next packaging step (install `fdagym` as a wheel, expose the five tools, reuse `score()`). Tracking: [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071). Until that lands, the env contract is `FDAEnv.reset` / `FDAEnv.step` above.
+
+## Tests and CI
+
+```bash
+uv run ruff check .
+uv run ruff format --check .
+uv run pyright
 uv run pytest -q
+cd web && npm ci && npm run lint && npm run build
 ```
 
 MIT license. See [LICENSE](LICENSE).

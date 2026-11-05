@@ -25,9 +25,7 @@ def _approval_task():
         "difficulty": "medium",
         "difficulty_features": dict(_FEATURES),
         "gold": {"kind": "number", "value": 1998, "tolerance": 0},
-        "gold_citations": [
-            {"endpoint": "drug/drugsfda", "ids": ["NDA020977"], "fields": ["submissions"]}
-        ],
+        "gold_citations": [{"endpoint": "drug/drugsfda", "ids": ["NDA020977"], "fields": ["submissions"]}],
         "oracle_calls": [],
         "snapshot_version": "2026-10-15",
     }
@@ -44,9 +42,7 @@ def _steps():
                     {
                         "application_number": "NDA020977",
                         "products": [{"brand_name": "ZIAGEN", "active_ingredients": [{"name": "ABACAVIR"}]}],
-                        "submissions": [
-                            {"submission_type": "ORIG", "submission_status_date": "19981217"}
-                        ],
+                        "submissions": [{"submission_type": "ORIG", "submission_status_date": "19981217"}],
                     }
                 ],
             },
@@ -57,9 +53,7 @@ def _steps():
 def _submit(answer, *, field="submissions", quote="19981217"):
     return {
         "answer": answer,
-        "citations": [
-            {"endpoint": "drug/drugsfda", "id": "NDA020977", "field": field, "quote": quote}
-        ],
+        "citations": [{"endpoint": "drug/drugsfda", "id": "NDA020977", "field": field, "quote": quote}],
     }
 
 
@@ -87,9 +81,7 @@ def test_punctuation_and_synonym_are_partial_and_do_not_change_strict():
     task = {
         **_approval_task(),
         "gold": {"kind": "exact", "value": "ZIAGEN"},
-        "gold_citations": [
-            {"endpoint": "drug/drugsfda", "ids": ["NDA020977"], "fields": ["products"]}
-        ],
+        "gold_citations": [{"endpoint": "drug/drugsfda", "ids": ["NDA020977"], "fields": ["products"]}],
     }
     steps = _steps()
     punct = _submit("ZIAGEN,", field="products", quote="nope")
@@ -121,9 +113,7 @@ def test_numeric_band_is_partial_and_years_are_not():
     ]
     final = {
         "answer": 950,
-        "citations": [
-            {"endpoint": "drug/event", "id": "step:1", "field": "meta.results.total", "quote": "nope"}
-        ],
+        "citations": [{"endpoint": "drug/event", "id": "step:1", "field": "meta.results.total", "quote": "nope"}],
     }
     dense = score({"steps": steps, "final_answer": final}, task, dense=True)
     assert 0 < dense["correctness"] < 1
@@ -141,9 +131,7 @@ def test_numeric_band_is_partial_and_years_are_not():
 def test_distractor_id_earns_no_partial_credit():
     final = {
         "answer": 1998,
-        "citations": [
-            {"endpoint": "drug/drugsfda", "id": "NDA999999", "field": "submissions", "quote": "19981217"}
-        ],
+        "citations": [{"endpoint": "drug/drugsfda", "id": "NDA999999", "field": "submissions", "quote": "19981217"}],
     }
     dense = score({"steps": _steps(), "final_answer": final}, _approval_task(), dense=True)
     assert dense["citation"] == 0.0

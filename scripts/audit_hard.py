@@ -2,7 +2,7 @@
 
     uv run python scripts/audit_hard.py disjointness
     uv run python scripts/audit_hard.py public
-    uv run python scripts/audit_hard.py reachability --split hard --budget 6 --budget 8
+    uv run python scripts/audit_hard.py reachability --split public --budget 6 --budget 8
     uv run python scripts/audit_hard.py memorization
 
 These are local snapshot checks. None starts Modal or a GPU job.
@@ -35,11 +35,11 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="audit", required=True)
 
-    sub.add_parser("disjointness", help="check hard_train against public (plus test/hard when present)")
-    sub.add_parser("public", help="check the public sheet against the private hard sheet")
+    sub.add_parser("disjointness", help="check hard_train against public and test")
+    sub.add_parser("public", help="check the public sheet against hard_train")
 
     reach = sub.add_parser("reachability", help="re-solve a split through the real tools")
-    reach.add_argument("--split", default="hard", help="task file stem under data/tasks")
+    reach.add_argument("--split", default="public", help="task file stem under data/tasks")
     reach.add_argument("--budget", dest="budgets", type=_positive, action="append", default=None)
     reach.add_argument("--out", type=Path, default=None, help="report path")
 
@@ -81,21 +81,18 @@ def _disjointness() -> int:
 
 
 def _public() -> int:
-    """The published sheet must not reuse a drug, application, or sponsor from hard.jsonl."""
+    """The published sheet must not reuse a drug, application, or sponsor from hard_train."""
     from fdagym.agents.baseline import load_split
     from fdagym.openfda import DiskSnapshot
     from fdagym.tasks.disjoint import OverlapError, assert_disjoint
 
     public_path = ROOT / "data" / "tasks" / "public.jsonl"
-    hard_path = ROOT / "data" / "tasks" / "hard.jsonl"
     if not public_path.exists():
         print("data/tasks/public.jsonl is missing", file=sys.stderr)
         return 1
-    if not hard_path.exists():
-        print("data/tasks/hard.jsonl is not in this tree. Run this check in the private repo.", file=sys.stderr)
-        return 1
     try:
-        report = assert_disjoint(load_split("public"), load_split("hard"), DiskSnapshot("2026-10-15"))
+        report = assert_disjoint(load_split("public"), load_split("hard_train"), DiskSnapshot("2026-10-15"))
+        assert_disjoint(load_split("public"), load_split("hard_train_holdout"), DiskSnapshot("2026-10-15"))
     except (OverlapError, RuntimeError) as exc:
         print(str(exc), file=sys.stderr)
         for kind, values in getattr(exc, "overlaps", {}).items():
@@ -117,16 +114,10 @@ def _reachability(args: argparse.Namespace) -> int:
     snapshot = DiskSnapshot("2026-10-15")
     tasks = load_split(args.split)
     report = check_reachability(snapshot, tasks, budgets, score=_score)
-    if len(budgets) == 1 and args.split == "hard" and args.out is None:
-        path = ROOT / "results" / f"hard-reachability-budget{budgets[0]}.json"
-    else:
-        path = args.out or (ROOT / "results" / f"{args.split}-reachability.json")
+    path = args.out or (ROOT / "results" / f"{args.split}-reachability.json")
     _write_json(path, report)
 
-    summary = {
-        key: report[key]
-        for key in ("n", "budgets", "env_tool_budget", "min_calls", "by_budget")
-    }
+    summary = {key: report[key] for key in ("n", "budgets", "env_tool_budget", "min_calls", "by_budget")}
     summary["split"] = args.split
     print(json.dumps(summary, indent=2))
     widest = report["by_budget"][-1]
@@ -157,7 +148,7 @@ def _memorization() -> int:
     report = scripted_oracle_report(
         DiskSnapshot("2026-10-15"),
         load_split("hard_train_holdout"),
-        load_split("hard"),
+        load_split("public"),
         tool_budget=DEFAULT_TOOL_BUDGET,
     )
     path = ROOT / "results" / "memorization-oracle.json"

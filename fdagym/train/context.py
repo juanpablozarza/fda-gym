@@ -68,7 +68,7 @@ def pack_distractors(
             break
         try:
             docs = pack_oracle(snapshot, tasks, other, max_chars=max_chars)
-        except RuntimeError:
+        except (RuntimeError, ValueError):
             continue
         if docs:
             packs.append(docs[0])
@@ -146,7 +146,9 @@ def _fit_output(output: dict, max_chars: int, task: dict) -> dict:
         return output
     ids, drugs = _needles(task)
     base = {key: value for key, value in output.items() if key != "results"}
-    ranked = sorted(range(len(results)), key=lambda index: _rank_key(results[index], ids, drugs, orig=False, index=index))
+    ranked = sorted(
+        range(len(results)), key=lambda index: _rank_key(results[index], ids, drugs, orig=False, index=index)
+    )
     chosen: list[int] = []
     replacements: dict[int, object] = {}
     saw_id_match = False

@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
@@ -122,7 +122,7 @@ dependencies = [
     { name = "frozenlist" },
     { name = "multidict" },
     { name = "propcache" },
-    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
     { name = "yarl" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6c/4c/bdccd81e9ee225b69c60e7766c9a5b05364f118f4d383713b89a682d772d/aiohttp-3.14.5.tar.gz", hash = "sha256:5558a7f5a05af9ecf744af91e5baefc436f93c9333e656c27ec253f9a6bbe178", size = 8078052, upload-time = "2026-10-11T01:05:12.408Z" }
@@ -277,7 +277,7 @@ version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "frozenlist" },
-    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/61/62/06741b579156360248d1ec624842ad0edf697050bbaf7c3e46394e106ad1/aiosignal-1.4.0.tar.gz", hash = "sha256:f47eecd9468083c2029cc99945502cb7708b082c232f9aca65da147157b251c7", size = 25007, upload-time = "2025-07-03T22:54:43.528Z" }
 wheels = [
@@ -317,7 +317,7 @@ version = "4.15.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "idna" },
-    { name = "typing-extensions", marker = "python_full_version < '3.15' or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.15'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a9/d2/f4d173e22df740bc37b1db102b386ba719b66e95b0f0d751f556b387e6d2/anyio-4.15.1.tar.gz", hash = "sha256:9f28306018cbd6d329e64a36d58256edff76dd996fe423bc957326e578b82a94", size = 276966, upload-time = "2026-09-05T10:42:39.44Z" }
 wheels = [
@@ -822,12 +822,12 @@ name = "cwevals"
 version = "0.0.1b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "distro", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "httpx", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "pydantic", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "sniffio", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "anyio", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "distro", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "httpx", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "pydantic", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "sniffio", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "typing-extensions", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/91/82/d176b1832e6632c5ebdabbbb943655902f3ff867a18262a0b6cb0e9bf560/cwevals-0.0.1b1.tar.gz", hash = "sha256:2ae997369ff44941925e4db1bd07eb4e13c05de412e615636fd12881d63f8a13", size = 258563, upload-time = "2026-09-28T18:21:23.442Z" }
 wheels = [
@@ -1329,8 +1329,8 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "rapidfuzz" },
     { name = "referencing" },
-    { name = "wandb", version = "0.28.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "wandb", version = "0.31.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "wandb", version = "0.28.0", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "wandb", version = "0.31.0", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 
 [package.optional-dependencies]
@@ -1353,6 +1353,7 @@ train = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "pyright" },
     { name = "pytest" },
     { name = "ruff" },
 ]
@@ -1383,6 +1384,7 @@ provides-extras = ["train", "gpu"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "pyright", specifier = ">=1.1" },
     { name = "pytest", specifier = ">=8" },
     { name = "ruff", specifier = ">=0.6" },
 ]
@@ -1576,7 +1578,7 @@ name = "gitdb"
 version = "4.0.12"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "smmap", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
+    { name = "smmap", marker = "extra == 'extra-6-fdagym-gpu'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/72/94/63b0fc47eb32792c7ba1fe1b694daec9a63620db1e313033d18140c2320a/gitdb-4.0.12.tar.gz", hash = "sha256:5ef71f855d191a3326fcfbc0d5da835f26b13fbcba60c32c21091c349ffdb571", size = 394684, upload-time = "2025-01-02T07:20:46.413Z" }
 wheels = [
@@ -1588,7 +1590,7 @@ name = "gitpython"
 version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "gitdb", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
+    { name = "gitdb", marker = "extra == 'extra-6-fdagym-gpu'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c0/ff/fee293f1ec3e1b64db6eb270e00964f29c086d769201474cedb8d1608930/gitpython-3.2.1.tar.gz", hash = "sha256:0f1229ec5c057bdabdeeda8bda4f17bda679ab33dbccc00f24e6a480553c8613", size = 241688, upload-time = "2026-10-14T12:20:20.589Z" }
 wheels = [
@@ -1601,7 +1603,7 @@ version = "1.75.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "protobuf", version = "4.25.9", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-gpu'" },
-    { name = "protobuf", version = "7.36.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "protobuf", version = "7.36.2", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b5/c8/f439cffde755cffa462bfbb156278fa6f9d09119719af9814b858fd4f81f/googleapis_common_protos-1.75.0.tar.gz", hash = "sha256:53a062ff3c32552fbd62c11fe23768b78e4ddf0494d5e5fd97d3f4689c75fbbd", size = 151035, upload-time = "2026-05-07T08:04:49.423Z" }
 wheels = [
@@ -1912,15 +1914,15 @@ resolution-markers = [
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "click", marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
-    { name = "filelock", marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
-    { name = "fsspec", version = "2026.7.0", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
+    { name = "click", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "filelock", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "fsspec", version = "2026.7.0", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
     { name = "hf-xet", marker = "(platform_machine == 'AMD64' and extra != 'extra-6-fdagym-gpu') or (platform_machine == 'aarch64' and extra != 'extra-6-fdagym-gpu') or (platform_machine == 'amd64' and extra != 'extra-6-fdagym-gpu') or (platform_machine == 'arm64' and extra != 'extra-6-fdagym-gpu') or (platform_machine == 'x86_64' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
-    { name = "httpx", marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
-    { name = "packaging", marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
-    { name = "pyyaml", marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
-    { name = "tqdm", marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
-    { name = "typing-extensions", marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
+    { name = "httpx", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "packaging", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "pyyaml", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "tqdm", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "typing-extensions", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/25/2a/484d112c0d8fc5f665d7b65137ac9cdb2953c982391598c3597968a12ee7/huggingface_hub-1.33.0.tar.gz", hash = "sha256:367be21a201db9523eddf8aeac7048f2602c1b308691c97640d5e72ed188007e", size = 1043548, upload-time = "2026-09-24T09:49:29.971Z" }
 wheels = [
@@ -2157,7 +2159,7 @@ dependencies = [
     { name = "filelock" },
     { name = "httpx", extra = ["http2"] },
     { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-gpu'" },
-    { name = "huggingface-hub", version = "1.33.0", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
+    { name = "huggingface-hub", version = "1.33.0", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
     { name = "importlib-metadata" },
     { name = "jinja2" },
     { name = "jsonschema" },
@@ -2169,7 +2171,7 @@ dependencies = [
     { name = "pyyaml" },
     { name = "tiktoken" },
     { name = "tokenizers", version = "0.21.4", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-gpu'" },
-    { name = "tokenizers", version = "0.23.3", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
+    { name = "tokenizers", version = "0.23.3", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/54/4b/0f42182e4a3f957e8b5d8bdc2522779092da973bef7a3492c8e6a3409764/litellm-1.106.2.tar.gz", hash = "sha256:9f0e770cb007c8c6e78917ad7b5c4f059f7bdc4a3606f854831780ea53fd9e2d", size = 21431422, upload-time = "2026-10-21T10:44:51.337Z" }
@@ -2974,6 +2976,15 @@ wheels = [
 ]
 
 [[package]]
+name = "nodeenv"
+version = "1.12.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e6/99/d27cfc9518f49e4cbc25c683ec7cf8704a9d31311341c291c0e78ddf791b/nodeenv-1.12.0.tar.gz", hash = "sha256:4ea7f88339310afebc3253f2c7a91b94bacf97d73a36a5c108962abdfaca501e", size = 131292, upload-time = "2026-10-31T19:03:18.847Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2d/6a/8a9ac7d5e2f7cf53c459bfef90ebc17a2f8cd54b665af96799d4c534840e/nodeenv-1.12.0-py3-none-any.whl", hash = "sha256:80644d65c10cc2be12e3e4b54b3367ff288c7ad24ae75c2dcc65454fc7449d4d", size = 39442, upload-time = "2026-10-31T19:03:17.427Z" },
+]
+
+[[package]]
 name = "numba"
 version = "0.61.2"
 source = { registry = "https://pypi.org/simple" }
@@ -3443,13 +3454,16 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "typing-extensions", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2e/02/6e0ae9cc61bd3169d401077b507b3ebc344745171e1051ab430be012dcd9/opentelemetry_api-1.45.1.tar.gz", hash = "sha256:aa38ed19bcc084ba42782a73255b3582283eced7ad6dddbd6695189e69adfb75", size = 72804, upload-time = "2026-10-06T17:32:58.133Z" }
 wheels = [
@@ -3461,7 +3475,7 @@ name = "opentelemetry-exporter-http-transport"
 version = "0.66b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/62/0c/e3ebdb4b507f66afcc905e6885a4946969bd75b45988492643356fbbdc63/opentelemetry_exporter_http_transport-0.66b1.tar.gz", hash = "sha256:443080203bf52586ce0b2ad901e8951c61833eab1aa539ae6f1f16fe9e8e7952", size = 11693, upload-time = "2026-10-06T17:32:59.65Z" }
 wheels = [
@@ -3470,7 +3484,7 @@ wheels = [
 
 [package.optional-dependencies]
 requests = [
-    { name = "requests", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "requests", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 
 [[package]]
@@ -3491,7 +3505,7 @@ name = "opentelemetry-exporter-otlp-common"
 version = "0.66b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cb/19/41de712173f43057e4532d42ece7d0c6d4210d353e5752433cb14987643f/opentelemetry_exporter_otlp_common-0.66b1.tar.gz", hash = "sha256:6b1403487a2185ac1feb45fd5546fdf8630ce71c36bcefaadf51e2130e9e23f9", size = 14325, upload-time = "2026-10-06T17:33:01.725Z" }
 wheels = [
@@ -3533,13 +3547,16 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c1/8e/65e85e5137991a3c493b11682151d198638a5bc1dd4b4c5f67e013c57d7c/opentelemetry_exporter_otlp_proto_common-1.45.1.tar.gz", hash = "sha256:2e4adcc3a67bcf57804fc49514f0ef64974ca7590aa3491da389852b4a0628f6", size = 18873, upload-time = "2026-10-06T17:33:04.471Z" }
 wheels = [
@@ -3607,21 +3624,24 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "googleapis-common-protos", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-exporter-http-transport", extra = ["requests"], marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-exporter-otlp-common", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "requests", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "googleapis-common-protos", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-exporter-http-transport", extra = ["requests"], marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-exporter-otlp-common", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "requests", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "typing-extensions", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1b/17/26487707ea4caa97b17e6e4b5fa72133a53512ffa2f5cf7a49ef284b29cb/opentelemetry_exporter_otlp_proto_http-1.45.1.tar.gz", hash = "sha256:45c218405ce3fd879596924b1874bf9a8f6880206d61065c5a912c8e5c297fb7", size = 28839, upload-time = "2026-10-06T17:33:05.713Z" }
 wheels = [
@@ -3663,13 +3683,16 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "protobuf", version = "7.36.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "protobuf", version = "7.36.2", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4b/7f/15f014fb195da6c2dbb6c71399b8e76824878718e94de6454038488eed28/opentelemetry_proto-1.45.1.tar.gz", hash = "sha256:79e0fb95e4616691a469439238aa9224d75779b3e108e895d1aa125ab29ca77c", size = 46488, upload-time = "2026-10-06T17:33:11.49Z" }
 wheels = [
@@ -3713,15 +3736,18 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-semantic-conventions", version = "0.66b1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-semantic-conventions", version = "0.66b1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "typing-extensions", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a1/79/7392e21a1c8f0c61d90b223e31c7e48cb9d452e91a6b820ad24cca5f23c4/opentelemetry_sdk-1.45.1.tar.gz", hash = "sha256:63d24a6ca645019a631e6a51999c73e93adcac1196ca640b8ae78a7cc4762bf3", size = 218324, upload-time = "2026-10-06T17:33:13.26Z" }
 wheels = [
@@ -3765,14 +3791,17 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "typing-extensions", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/46/e4/dbbfb2a010c4db2224a5114638acede6fe563d33cc20fb1752cebcbe6298/opentelemetry_semantic_conventions-0.66b1.tar.gz", hash = "sha256:497ca63bf383723411e8eaf60c8779e9877633c936bb641080adab59d0eb6ec8", size = 150250, upload-time = "2026-10-06T17:33:14.073Z" }
 wheels = [
@@ -3936,8 +3965,8 @@ dependencies = [
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.14' and extra == 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
     { name = "numpy", version = "2.5.4", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.12' and extra == 'extra-6-fdagym-train') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
-    { name = "python-dateutil", marker = "(python_full_version < '3.14' and extra == 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
-    { name = "tzdata", marker = "(python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.14' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and sys_platform == 'win32' and extra == 'extra-6-fdagym-train') or (sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
+    { name = "python-dateutil", marker = "(python_full_version < '3.14' and extra == 'extra-6-fdagym-gpu') or extra == 'extra-6-fdagym-train'" },
+    { name = "tzdata", marker = "(python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu') or (python_full_version < '3.14' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu') or (sys_platform == 'emscripten' and extra == 'extra-6-fdagym-train') or (sys_platform == 'win32' and extra == 'extra-6-fdagym-train') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e2/17/d7b106e05bfa642e8694451e7d3d759c6a241c5386a5d962e4f66c047e06/pandas-3.0.6.tar.gz", hash = "sha256:66b07ef7315a31bfe1089cd3d71a7de781c9dca986762d0b4fe7c0ef17465d10", size = 4667686, upload-time = "2026-09-17T23:23:18.345Z" }
 wheels = [
@@ -4340,21 +4369,18 @@ name = "protobuf"
 version = "4.25.9"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
-    "python_full_version >= '3.14' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.13.*' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.13.*' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.13.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
-    "python_full_version == '3.12.*' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.12.*' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.12.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version < '3.12' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version < '3.12' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.13.*' and sys_platform == 'win32'",
+    "python_full_version == '3.13.*' and sys_platform == 'emscripten'",
+    "python_full_version == '3.13.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.12.*' and sys_platform == 'win32'",
+    "python_full_version == '3.12.*' and sys_platform == 'emscripten'",
+    "python_full_version == '3.12.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'emscripten'",
+    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d9/8e/d08c41a8c004e1d437ef467e7c4f9c3295cd784eba48ed5d1d01f94b1dad/protobuf-4.25.9.tar.gz", hash = "sha256:b0dc7e7c68de8b1ce831dacb12fb407e838edbb8b6cc0dc3a2a6b4cbf6de9cff", size = 381040, upload-time = "2026-03-25T23:09:36.423Z" }
 wheels = [
@@ -4375,6 +4401,9 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
@@ -4699,11 +4728,24 @@ wheels = [
 ]
 
 [[package]]
+name = "pyright"
+version = "1.1.414"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "nodeenv" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e1/1b/244c7b710031ada80f27e579ec20d28a2285dfc318fed0339866b1047f12/pyright-1.1.414.tar.gz", hash = "sha256:523c0a97c60da6333234955c277730c9cf4f5bd6d5399e7b7d2b0fc5d3599524", size = 4154638, upload-time = "2026-09-10T12:26:53.181Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d7/ba/18b6e682ead424ad24bcc134339ae5d1b931cd9ae260540592a058a91279/pyright-1.1.414-py3-none-any.whl", hash = "sha256:2a6b4b3298c9eec174c5ed83bd338de6eee82df2992f3e1930e6199d381be36f", size = 6225049, upload-time = "2026-09-10T12:26:51.427Z" },
+]
+
+[[package]]
 name = "pytest"
 version = "9.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "iniconfig" },
     { name = "packaging" },
     { name = "pluggy" },
@@ -5036,7 +5078,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "rpds-py" },
-    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/22/f5/df4e9027acead3ecc63e50fe1e36aca1523e1719559c499951bb4b53188f/referencing-0.37.0.tar.gz", hash = "sha256:44aefc3142c5b842538163acb373e24cce6632bd54bdb01b21ad5863489f50d8", size = 78036, upload-time = "2025-10-13T15:30:48.871Z" }
 wheels = [
@@ -5747,8 +5789,8 @@ name = "sentry-sdk"
 version = "2.73.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "urllib3", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
+    { name = "certifi", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "urllib3", marker = "extra == 'extra-6-fdagym-gpu'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c5/3b/1e47acf2456781c26e12007379ecc154bf310b8f64d40390d78b791d55c3/sentry_sdk-2.73.0.tar.gz", hash = "sha256:4a2ab97b16e4693c325ab361c7bbbb346dbc7d0bc0150922d795a25bac8d5280", size = 1079078, upload-time = "2026-10-22T09:08:49.63Z" }
 wheels = [
@@ -5943,7 +5985,7 @@ resolution-markers = [
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "huggingface-hub", version = "1.33.0", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-train' or extra != 'extra-6-fdagym-gpu'" },
+    { name = "huggingface-hub", version = "1.33.0", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e0/7c/2cabb2174e772636683008f2c5621949b645da7d303c596589e84516a184/tokenizers-0.23.3.tar.gz", hash = "sha256:cded33237c77caeef62944d32aa9a7ef42bdce2b3497e18d137e072a8c4be438", size = 385286, upload-time = "2026-10-09T10:16:55.759Z" }
 wheels = [
@@ -6070,7 +6112,7 @@ name = "tqdm"
 version = "4.70.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0d/ea/b2a5bd54b28a324dae8211928b2d730b6547500342c7e6c6dea08bd0a485/tqdm-4.70.1.tar.gz", hash = "sha256:cefd0eca11b2a37a3aee776544d4f4ae913f02688135b5556b8788dfa474afc4", size = 171846, upload-time = "2026-09-11T07:25:16.601Z" }
 wheels = [
@@ -6370,33 +6412,30 @@ name = "wandb"
 version = "0.28.0"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
-    "python_full_version >= '3.14' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.13.*' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.13.*' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.13.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
-    "python_full_version == '3.12.*' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.12.*' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version == '3.12.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version < '3.12' and sys_platform == 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version < '3.12' and sys_platform == 'emscripten' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
-    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.13.*' and sys_platform == 'win32'",
+    "python_full_version == '3.13.*' and sys_platform == 'emscripten'",
+    "python_full_version == '3.13.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.12.*' and sys_platform == 'win32'",
+    "python_full_version == '3.12.*' and sys_platform == 'emscripten'",
+    "python_full_version == '3.12.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'emscripten'",
+    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 dependencies = [
-    { name = "click", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "gitpython", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "packaging", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "platformdirs", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "protobuf", version = "4.25.9", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "pydantic", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "pyyaml", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "requests", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "sentry-sdk", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
-    { name = "typing-extensions", marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and extra == 'extra-6-fdagym-train') or extra == 'extra-6-fdagym-gpu'" },
+    { name = "click", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "gitpython", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "packaging", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "platformdirs", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "protobuf", version = "4.25.9", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "pydantic", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "pyyaml", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "requests", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "sentry-sdk", marker = "extra == 'extra-6-fdagym-gpu'" },
+    { name = "typing-extensions", marker = "extra == 'extra-6-fdagym-gpu'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5f/a7/683bfbd6cbade3012bc90d3e9c4cfc72dd62566195bf4c30321946d64b77/wandb-0.28.0.tar.gz", hash = "sha256:b20e5af0fe80e2e2a466b0466a1d60cedcc578dce0f036eca04f4a0adcad95b6", size = 40558332, upload-time = "2026-06-23T00:38:50.115Z" }
 wheels = [
@@ -6420,25 +6459,28 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform == 'emscripten' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train'",
     "python_full_version < '3.14' and extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train'",
 ]
 dependencies = [
-    { name = "click", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "cwevals", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-exporter-otlp-proto-http", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "packaging", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "platformdirs", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "protobuf", version = "7.36.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "pydantic", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "pyyaml", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "requests", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
-    { name = "xxhash", marker = "(python_full_version < '3.12' and extra == 'extra-6-fdagym-train') or (python_full_version < '3.12' and extra != 'extra-6-fdagym-gpu') or (python_full_version >= '3.14' and extra == 'extra-6-fdagym-train') or (python_full_version >= '3.14' and extra != 'extra-6-fdagym-gpu') or (extra == 'extra-6-fdagym-gpu' and extra == 'extra-6-fdagym-train') or (extra != 'extra-6-fdagym-gpu' and extra != 'extra-6-fdagym-train')" },
+    { name = "click", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "cwevals", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-exporter-otlp-proto-http", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "packaging", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "platformdirs", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "protobuf", version = "7.36.2", source = { registry = "https://pypi.org/simple" }, marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "pydantic", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "pyyaml", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "requests", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "typing-extensions", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
+    { name = "xxhash", marker = "extra != 'extra-6-fdagym-gpu' or extra == 'extra-6-fdagym-train'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/07/a5/8fc1c319f2db9be5a707c25a76ecba1b2b9450a44a05b295ff5aa379bbfa/wandb-0.31.0.tar.gz", hash = "sha256:dcdaa635576ff17b18a757b39fc22b0db3d1c6e01d5ce090fe80f6adc776028d", size = 40420416, upload-time = "2026-10-16T18:56:13.817Z" }
 wheels = [

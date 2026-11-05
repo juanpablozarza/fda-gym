@@ -442,9 +442,7 @@ def _unique_labels_max(snapshot, cache, task: dict, question: str) -> bool:
     return len(winners) == 1 and answer in winners
 
 
-def strip_clear_leaks(
-    snapshot, tasks: list[dict], *, train_tasks: list[dict] | None = None
-) -> list[dict]:
+def strip_clear_leaks(snapshot, tasks: list[dict], *, train_tasks: list[dict] | None = None) -> list[dict]:
     """Drop sponsor questions until ``leak_report`` has no clear surface shortcut."""
     from fdagym.tasks.hard import sponsor_surface_caches
 
@@ -482,9 +480,7 @@ def carve_clean_holdout(snapshot, tasks: list[dict], *, rounds: int = 20) -> tup
         train, holdout = carve_known_holdout(remaining, snapshot=snapshot)
         labels, texts = sponsor_surface_caches(snapshot, [*train, *holdout])
         train_leaks = clear_leaks(leak_report(train, label_counts=labels, boxed_texts=texts, train_tasks=train))
-        hold_leaks = clear_leaks(
-            leak_report(holdout, label_counts=labels, boxed_texts=texts, train_tasks=train)
-        )
+        hold_leaks = clear_leaks(leak_report(holdout, label_counts=labels, boxed_texts=texts, train_tasks=train))
         if not train_leaks and not hold_leaks:
             return train, holdout
         if train_leaks:

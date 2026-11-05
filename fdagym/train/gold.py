@@ -67,11 +67,7 @@ def _entity_first(steps: list[dict], task: dict) -> list[dict]:
     }
     if not drug or len(names) < 2:
         return list(steps)
-    matched = [
-        step
-        for step in steps
-        if ((step.get("arguments") or {}).get("generic_name") or "").casefold() == drug
-    ]
+    matched = [step for step in steps if ((step.get("arguments") or {}).get("generic_name") or "").casefold() == drug]
     matched_ids = {id(step) for step in matched}
     return matched + [step for step in steps if id(step) not in matched_ids]
 

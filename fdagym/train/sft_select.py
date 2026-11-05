@@ -101,7 +101,7 @@ def _explicit_mix(tasks: list[dict]) -> dict:
 def assert_sft_rows_allowed(tasks: list[dict], *, include_hard_train: bool) -> None:
     """Raise if a warm-up row is holdout, hard eval, or an unexpected ``hard_train`` task."""
     holdout = hard_train_holdout_ids()
-    hard_eval = file_ids("hard.jsonl") | file_ids("public.jsonl")
+    hard_eval = file_ids("public.jsonl")
     blocked = []
     for task in tasks:
         task_id = str(task.get("id"))

@@ -277,7 +277,11 @@ def test_absent_boxed_warning_is_cited_from_the_sections_list():
             ]
         },
     )
-    _put(mapping, faers_top_reactions(drug), {"results": [{"term": "NAUSEA", "count": 4}, {"term": "HEADACHE", "count": 1}]})
+    _put(
+        mapping,
+        faers_top_reactions(drug),
+        {"results": [{"term": "NAUSEA", "count": 4}, {"term": "HEADACHE", "count": 1}]},
+    )
     _put(
         mapping,
         faers_top_reactions(drug, serious=True, year=year),
@@ -289,7 +293,9 @@ def test_absent_boxed_warning_is_cited_from_the_sections_list():
         {"results": [{"term": "NAUSEA", "count": 3}, {"term": "HEADACHE", "count": 1}]},
     )
     _put(mapping, faers_report_count(drug), {"meta": {"results": {"total": 80}}, "results": []})
-    _put(mapping, faers_report_count(drug, serious=True, year=year), {"meta": {"results": {"total": 12}}, "results": []})
+    _put(
+        mapping, faers_report_count(drug, serious=True, year=year), {"meta": {"results": {"total": 12}}, "results": []}
+    )
     tasks = generate(MemorySnapshot(mapping, "toy"), GenConfig(), drugs=[drug])
     easy = next(task for task in tasks if task["question"] == f"Does {drug}'s label carry a boxed warning?")
     assert easy["gold"]["value"] is False
@@ -320,7 +326,11 @@ def test_combination_application_cannot_set_the_approval_year():
                     "set_id": "set-1",
                     "boxed_warning": ["WARNING: BLEEDING RISK"],
                     "contraindications": ["Do not use during pregnancy."],
-                    "openfda": {"generic_name": ["exampledrug"], "brand_name": ["Example"], "product_type": ["HUMAN PRESCRIPTION DRUG"]},
+                    "openfda": {
+                        "generic_name": ["exampledrug"],
+                        "brand_name": ["Example"],
+                        "product_type": ["HUMAN PRESCRIPTION DRUG"],
+                    },
                 }
             ]
         },
@@ -332,33 +342,53 @@ def test_combination_application_cannot_set_the_approval_year():
             "results": [
                 {
                     "application_number": "NDA000001",
-                    "products": [{"brand_name": "COMBO", "active_ingredients": [{"name": "EXAMPLEDRUG"}, {"name": "OTHER"}]}] ,
-                    "submissions": [{"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "20010101"}],
+                    "products": [
+                        {"brand_name": "COMBO", "active_ingredients": [{"name": "EXAMPLEDRUG"}, {"name": "OTHER"}]}
+                    ],
+                    "submissions": [
+                        {"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "20010101"}
+                    ],
                 },
                 {
                     "application_number": "NDA000002",
                     "products": [{"brand_name": "EXAMPLE", "active_ingredients": [{"name": "EXAMPLEDRUG"}]}],
-                    "submissions": [{"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "19950301"}],
+                    "submissions": [
+                        {"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "19950301"}
+                    ],
                 },
             ]
         },
     )
-    _put(mapping, faers_top_reactions(drug), {"results": [{"term": "DIARRHOEA", "count": 9}, {"term": "NAUSEA", "count": 2}]})
-    _put(mapping, faers_top_reactions(drug, serious=True, year=year), {"meta": {"results": {"total": 0}}, "results": []})
+    _put(
+        mapping,
+        faers_top_reactions(drug),
+        {"results": [{"term": "DIARRHOEA", "count": 9}, {"term": "NAUSEA", "count": 2}]},
+    )
+    _put(
+        mapping, faers_top_reactions(drug, serious=True, year=year), {"meta": {"results": {"total": 0}}, "results": []}
+    )
     _put(
         mapping,
         faers_top_reactions(drug, serious=True, year=gap),
         {"results": [{"term": "NAUSEA", "count": 4}, {"term": "HEADACHE", "count": 1}]},
     )
     _put(mapping, faers_report_count(drug), {"meta": {"results": {"total": 80}}, "results": []})
-    _put(mapping, faers_report_count(drug, serious=True, year=year), {"meta": {"results": {"total": 12}}, "results": [{"safetyreportid": "1"}]})
+    _put(
+        mapping,
+        faers_report_count(drug, serious=True, year=year),
+        {"meta": {"results": {"total": 12}}, "results": [{"safetyreportid": "1"}]},
+    )
     snapshot = MemorySnapshot(mapping, "toy")
     tasks = generate(snapshot, GenConfig(), drugs=[drug])
     approval = next(task for task in tasks if task["type"] == "approval")
     assert approval["gold"]["value"] == 1995
     assert approval["gold_citations"][0]["ids"] == ["NDA000002"]
     assert approval["difficulty"] == "easy"
-    top = next(task for task in tasks if task["type"] == "faers_top_reaction" and task["answerable"] and "serious" not in task["question"])
+    top = next(
+        task
+        for task in tasks
+        if task["type"] == "faers_top_reaction" and task["answerable"] and "serious" not in task["question"]
+    )
     assert top["gold"]["value"] == "DIARRHOEA"
     assert top["gold"]["aliases"] == ["DIARRHEA"]
     candidates = list(_candidates(snapshot, drug, GenConfig()))
@@ -378,7 +408,11 @@ def test_tied_top_reaction_is_not_emitted():
                 "set_id": "set-1",
                 "boxed_warning": ["WARNING: BLEEDING RISK"],
                 "contraindications": ["Do not use during pregnancy."],
-                "openfda": {"generic_name": ["exampledrug"], "brand_name": ["Example"], "product_type": ["HUMAN PRESCRIPTION DRUG"]},
+                "openfda": {
+                    "generic_name": ["exampledrug"],
+                    "brand_name": ["Example"],
+                    "product_type": ["HUMAN PRESCRIPTION DRUG"],
+                },
             }
         ]
     }
@@ -391,16 +425,32 @@ def test_tied_top_reaction_is_not_emitted():
                 {
                     "application_number": "NDA000002",
                     "products": [{"brand_name": "EXAMPLE", "active_ingredients": [{"name": "EXAMPLEDRUG"}]}],
-                    "submissions": [{"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "19950301"}],
+                    "submissions": [
+                        {"submission_type": "ORIG", "submission_status": "AP", "submission_status_date": "19950301"}
+                    ],
                 }
             ]
         },
     )
-    _put(mapping, faers_top_reactions(drug), {"results": [{"term": "NAUSEA", "count": 5}, {"term": "FATIGUE", "count": 5}]})
-    _put(mapping, faers_top_reactions(drug, serious=True, year=year), {"results": [{"term": "NAUSEA", "count": 3}, {"term": "FATIGUE", "count": 1}]})
-    _put(mapping, faers_top_reactions(drug, serious=True, year=gap), {"results": [{"term": "NAUSEA", "count": 3}, {"term": "FATIGUE", "count": 1}]})
+    _put(
+        mapping,
+        faers_top_reactions(drug),
+        {"results": [{"term": "NAUSEA", "count": 5}, {"term": "FATIGUE", "count": 5}]},
+    )
+    _put(
+        mapping,
+        faers_top_reactions(drug, serious=True, year=year),
+        {"results": [{"term": "NAUSEA", "count": 3}, {"term": "FATIGUE", "count": 1}]},
+    )
+    _put(
+        mapping,
+        faers_top_reactions(drug, serious=True, year=gap),
+        {"results": [{"term": "NAUSEA", "count": 3}, {"term": "FATIGUE", "count": 1}]},
+    )
     _put(mapping, faers_report_count(drug), {"meta": {"results": {"total": 80}}, "results": []})
-    _put(mapping, faers_report_count(drug, serious=True, year=year), {"meta": {"results": {"total": 12}}, "results": []})
+    _put(
+        mapping, faers_report_count(drug, serious=True, year=year), {"meta": {"results": {"total": 12}}, "results": []}
+    )
     tasks = generate(MemorySnapshot(mapping, "toy"), GenConfig(), drugs=[drug])
     questions = [task["question"] for task in tasks if task["type"] == "faers_top_reaction"]
     assert not any("serious" not in question and "received" not in question for question in questions)

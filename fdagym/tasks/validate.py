@@ -12,9 +12,7 @@ class OracleMismatch(ValueError):
     """oracle_calls is not the evidence-retrieving sequence difficulty_features claims."""
 
 
-_ORACLE_TOOLS = frozenset(
-    {"search_drug_label", "get_label_section", "query_adverse_events", "search_approvals"}
-)
+_ORACLE_TOOLS = frozenset({"search_drug_label", "get_label_section", "query_adverse_events", "search_approvals"})
 
 
 def require_oracle_calls(task: dict) -> None:

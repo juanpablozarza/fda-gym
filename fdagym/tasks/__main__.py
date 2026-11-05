@@ -1,6 +1,6 @@
 """Write train/test JSONL and the review sheet from a snapshot loader.
 
-    uv run python -m fdagym.tasks --snapshot fdagym.tasks.pilot:load --out data/tasks
+uv run python -m fdagym.tasks --snapshot fdagym.tasks.pilot:load --out data/tasks
 """
 
 import argparse
@@ -65,7 +65,9 @@ def main(argv: list[str] | None = None) -> None:
             continue
         n_unans = sum(not task["answerable"] for task in rows)
         n_drugs = len({task["entity"]["generic_name"] for task in rows})
-        print(f"  {split}: {len(rows)} tasks, {n_drugs} drugs, {n_unans} unanswerable ({100 * n_unans / len(rows):.1f}%)")
+        print(
+            f"  {split}: {len(rows)} tasks, {n_drugs} drugs, {n_unans} unanswerable ({100 * n_unans / len(rows):.1f}%)"
+        )
 
 
 if __name__ == "__main__":

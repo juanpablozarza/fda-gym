@@ -10,12 +10,11 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 from fdagym.agents.litellm_agent import LiteLLMAgent
-from fdagym.env import FDAEnv
+from fdagym.env import SKIP_TYPES, FDAEnv
 from fdagym.openfda import DiskSnapshot
 
 ROOT = Path(__file__).resolve().parents[2]
 TASKS_DIR = ROOT / "data" / "tasks"
-SKIP_TYPES = frozenset({"label_open"})
 COST_CAP_USD = 5.0
 
 
@@ -235,9 +234,7 @@ def run_baseline(
                 try:
                     trajectory = agent.run(env, task["id"])
                 except Exception as exc:  # noqa: BLE001 — keep the run going on a single model error
-                    failure = append_failure(
-                        failures_path, model=model, task_id=task["id"], seed=seed, error=exc
-                    )
+                    failure = append_failure(failures_path, model=model, task_id=task["id"], seed=seed, error=exc)
                     print(
                         f"FAIL {model} {task['id']} s{seed} {failure['error_type']} (recorded)",
                         flush=True,

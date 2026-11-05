@@ -34,7 +34,10 @@ def check_reachability(snapshot, tasks: list[dict], budgets: list[int], *, score
         "budgets": ordered,
         "env_tool_budget": ordered[-1],
         "module_tool_budget": TOOL_BUDGET,
-        "by_budget": [{key: value for key, value in row.items() if key not in {"solved_calls", "solved_ids"}} for row in per_budget],
+        "by_budget": [
+            {key: value for key, value in row.items() if key not in {"solved_calls", "solved_ids"}}
+            for row in per_budget
+        ],
         "min_calls": distribution,
         "solved_at_max_budget": len(solved_ids),
         "fraction_at_max_budget": (len(solved_ids) / len(tasks)) if tasks else 0.0,
@@ -89,9 +92,7 @@ def _one_budget(snapshot, tasks: list[dict], budget: int, score) -> dict:
         "n": len(tasks),
         "solved": solved,
         "fraction": (solved / len(tasks)) if tasks else 0.0,
-        "by_variant": {
-            name: {"n": by_variant[name], "solved": solved_variant[name]} for name in sorted(by_variant)
-        },
+        "by_variant": {name: {"n": by_variant[name], "solved": solved_variant[name]} for name in sorted(by_variant)},
         "min_calls": {str(n): count for n, count in sorted(Counter(calls).items())},
         "max_calls": max(calls) if calls else 0,
         "max_observation_chars": max(widths) if widths else 0,

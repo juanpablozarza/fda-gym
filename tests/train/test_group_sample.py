@@ -296,20 +296,17 @@ def test_filter_drops_solved_or_failed_and_keeps_protected_types():
 
 
 def test_filter_refuses_eval_holdout_test_and_hard_train_rows():
-    if not (Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl").exists():
-        pytest.skip("data/tasks/hard.jsonl stays in the private repo")
     config = hard_prompt_filter()
     blocked = blocked_eval_ids()
-    with pytest.raises(RuntimeError, match="FG-8001"):
-        filter_current_tasks([_task("FG-8001", "approval", "medium")], config, blocked_ids=blocked)
-    for split in ("test", "hard", "hard_train", "hard_train_holdout"):
+    public_id = load_split("public")[0]["id"]
+    with pytest.raises(RuntimeError, match=public_id):
+        filter_current_tasks([_task(public_id, "approval", "medium")], config, blocked_ids=blocked)
+    for split in ("test", "hard", "hard_train", "hard_train_holdout", "public"):
         with pytest.raises(RuntimeError, match="refuses"):
             filter_current_tasks([_task("X", "approval", "medium", split=split)], config, blocked_ids=set())
 
 
 def test_real_hard_prompts_keep_the_mix_and_the_regressed_types():
-    if not (Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl").exists():
-        pytest.skip("data/tasks/hard.jsonl stays in the private repo")
     blocked = blocked_eval_ids()
     rows, mix = build_tool_rows(
         load_split("train"),
@@ -334,19 +331,17 @@ def test_real_hard_prompts_keep_the_mix_and_the_regressed_types():
     assert mix["by_type"]["rows"] == {
         "approval": 11,
         "boxed_warning": 60,
-        "compare": 222,
-        "faers_count": 39,
-        "faers_top_reaction": 130,
-        "sponsor_hop": 138,
+        "compare": 215,
+        "faers_count": 40,
+        "faers_top_reaction": 129,
+        "sponsor_hop": 145,
     }
     assert "composite" not in mix["by_type"]["rows"]
     assert mix["by_type"]["splits"] == {"hard_train": 360, "train": 240}
     by_id = {task["id"]: task for task in [*load_split("train"), *load_split("hard_train")]}
     prompt_ids = [row["task_id"] for row in rows]
     assert set(prompt_ids).isdisjoint(blocked)
-    hard_file = Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl"
-    if hard_file.exists():
-        assert set(prompt_ids).isdisjoint(task["id"] for task in load_split("hard"))
+    assert set(prompt_ids).isdisjoint(task["id"] for task in load_split("public"))
     assert set(prompt_ids).isdisjoint(task["id"] for task in load_split("hard_train_holdout"))
     assert set(prompt_ids).isdisjoint(task["id"] for task in load_split("test"))
     for task_id in prompt_ids:

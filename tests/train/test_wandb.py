@@ -42,7 +42,7 @@ class _Run:
         self.config = _Config()
         self.id = None
         self.name = None
-        self.url = "https://wandb.ai/lab/bio-rl/runs/grpo-qwen3b-tools"
+        self.url = "https://wandb.ai/lab/fda-gym/runs/grpo-qwen3b-tools"
 
 
 class _Wandb:
@@ -82,7 +82,7 @@ def test_disabled_without_a_key(monkeypatch):
     session = start_wandb("grpo-qwen3b-tools", {"run_id": "grpo-qwen3b-tools"})
     assert session.enabled is False
     assert session.report_to == []
-    assert session.project == "bio-rl"
+    assert session.project == "fda-gym"
     assert fake.init_kwargs is None
     session.log({"reward": 1})
     session.finish()
@@ -176,7 +176,7 @@ def test_env_project_and_entity_when_flags_are_blank(monkeypatch):
     assert resolve_wandb_target(None, None) == ("from-env", "lab")
     monkeypatch.delenv("WANDB_PROJECT")
     monkeypatch.delenv("WANDB_ENTITY")
-    assert resolve_wandb_target(None, None) == ("bio-rl", None)
+    assert resolve_wandb_target(None, None) == ("fda-gym", None)
 
 
 def test_resume_skips_steps_already_logged(monkeypatch):

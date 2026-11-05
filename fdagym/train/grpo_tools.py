@@ -565,9 +565,7 @@ def build_tool_rows(
         )
         mix["pool_types"] = type_report
         if prompt_filter is not None and prompt_filter.enabled and prompt_filter.protected_floor > 0:
-            selected, floor_report = apply_protected_floor(
-                selected, current, config=prompt_filter, seed=mix_seed + 1
-            )
+            selected, floor_report = apply_protected_floor(selected, current, config=prompt_filter, seed=mix_seed + 1)
             mix["floor"] = floor_report
         if filter_report is not None:
             mix["filter"] = filter_report

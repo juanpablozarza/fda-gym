@@ -20,9 +20,20 @@ OUT = Path(__file__).parent / "fixtures" / "openfda.json"
 BASE = "https://api.fda.gov/"
 KEEP_LABEL_SETS = {"0cbce382-9c88-4f58-ae0f-532a841e8f95"}
 LABEL_FIELDS = (
-    "set_id", "id", "effective_time", "version", "boxed_warning", "indications_and_usage",
-    "contraindications", "warnings_and_cautions", "warnings", "adverse_reactions", "drug_interactions",
-    "pregnancy", "overdosage", "description",
+    "set_id",
+    "id",
+    "effective_time",
+    "version",
+    "boxed_warning",
+    "indications_and_usage",
+    "contraindications",
+    "warnings_and_cautions",
+    "warnings",
+    "adverse_reactions",
+    "drug_interactions",
+    "pregnancy",
+    "overdosage",
+    "description",
 )
 SECTION_CHARS = 2500
 
@@ -85,10 +96,21 @@ def trim(q: Query, body: dict) -> dict:
             # Many applications have no openfda block; the brand lives on the product.
             r["brand_names"] = brands
             r.pop("products", None)
-            r["openfda"] = {k: r.get("openfda", {}).get(k) for k in ("brand_name", "generic_name") if k in r.get("openfda", {})}
+            r["openfda"] = {
+                k: r.get("openfda", {}).get(k) for k in ("brand_name", "generic_name") if k in r.get("openfda", {})
+            }
             r["submissions"] = [
-                {k: s.get(k) for k in ("submission_type", "submission_number", "submission_status",
-                                       "submission_status_date", "submission_class_code_description") if k in s}
+                {
+                    k: s.get(k)
+                    for k in (
+                        "submission_type",
+                        "submission_number",
+                        "submission_status",
+                        "submission_status_date",
+                        "submission_class_code_description",
+                    )
+                    if k in s
+                }
                 for s in r.get("submissions", [])
             ]
     elif q.endpoint == "drug/event" and not q.count:
@@ -99,9 +121,16 @@ def trim(q: Query, body: dict) -> dict:
 def main() -> None:
     out = json.loads(OUT.read_text()) if OUT.exists() else {}
     # Approvals already hold all 6 semaglutide applications. Only the limit in the key changed.
-    old_approvals = json.dumps(list(queries.Query(
-        "drug/drugsfda", 'products.active_ingredients.name:"semaglutide"', None, 100,
-    )))
+    old_approvals = json.dumps(
+        list(
+            queries.Query(
+                "drug/drugsfda",
+                'products.active_ingredients.name:"semaglutide"',
+                None,
+                100,
+            )
+        )
+    )
     new_approvals = key(queries.approvals_search("semaglutide"))
     if old_approvals in out and new_approvals not in out:
         out[new_approvals] = out.pop(old_approvals)

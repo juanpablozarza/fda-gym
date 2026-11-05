@@ -426,7 +426,9 @@ def _boxed_mentions(steps: list[dict], drug: str, keyword: str | None) -> bool:
     return keyword.casefold() in _boxed_text(steps, drug).casefold()
 
 
-def _event_steps(steps: list[dict], drug: str, *, mode: str, year: int | None = None, serious: bool | None = None) -> list[dict]:
+def _event_steps(
+    steps: list[dict], drug: str, *, mode: str, year: int | None = None, serious: bool | None = None
+) -> list[dict]:
     found = []
     for step in steps:
         if step.get("tool") != "query_adverse_events":
@@ -444,7 +446,9 @@ def _event_steps(steps: list[dict], drug: str, *, mode: str, year: int | None = 
     return found
 
 
-def _event_hit(steps: list[dict], drug: str, *, mode: str, year: int | None = None, serious: bool | None = None) -> bool:
+def _event_hit(
+    steps: list[dict], drug: str, *, mode: str, year: int | None = None, serious: bool | None = None
+) -> bool:
     return bool(_event_steps(steps, drug, mode=mode, year=year, serious=serious))
 
 

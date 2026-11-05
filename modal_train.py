@@ -56,7 +56,7 @@ TOOL_GPU = "A100-80GB"
 def _modal_pip() -> list[str]:
     """Pinned image packages, loaded without importing fdagym.
 
-    The container imports this module before ``_bind_paths`` puts ``/root/bio-rl``
+    The container imports this module before ``_bind_paths`` puts ``/root/fda-gym``
     on ``sys.path``, so ``import fdagym`` fails there. The image install uses the
     list computed on the laptop, where ``pyproject.toml`` is readable either way.
     """
@@ -109,7 +109,7 @@ _DEPLOY_GIT_SHA = _deploy_git_sha()
 image = modal.Image.debian_slim(python_version="3.11").pip_install(*PIP)
 if _DEPLOY_GIT_SHA:
     image = image.env({"FDAGYM_GIT_SHA": _DEPLOY_GIT_SHA})
-image = image.add_local_dir(str(ROOT), remote_path="/root/bio-rl", ignore=IGNORE)
+image = image.add_local_dir(str(ROOT), remote_path="/root/fda-gym", ignore=IGNORE)
 
 volume = modal.Volume.from_name("fdagym-checkpoints", create_if_missing=True)
 # Key lives only in this secret. Never pass WANDB_API_KEY as a function argument.
@@ -131,7 +131,7 @@ def _bind_paths() -> None:
     os.environ["FDAGYM_EXECUTOR"] = "modal"
     os.environ.setdefault("HF_HOME", f"{VOL_MOUNT}/hf-cache")
     os.environ.setdefault("HF_HUB_CACHE", f"{VOL_MOUNT}/hf-cache")
-    sys.path.insert(0, "/root/bio-rl")
+    sys.path.insert(0, "/root/fda-gym")
 
 
 _TRAIN_KW = {

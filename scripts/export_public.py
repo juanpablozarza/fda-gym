@@ -1,14 +1,6 @@
-"""Write a clean public tree. No git history, and no private hard sheet.
+"""Copy a clean tree without git history, env files, or build artifacts.
 
-    uv run python scripts/export_public.py /tmp/fda-gym-public
-
-Copies the worktree, then removes:
-
-- data/tasks/hard.jsonl
-- data/tasks/review.md
-- results/hard-*
-
-.git, .env, and virtualenv or build directories are not copied.
+uv run python scripts/export_public.py /tmp/fda-gym-export
 """
 
 from __future__ import annotations
@@ -19,10 +11,6 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PRIVATE = (
-    Path("data/tasks/hard.jsonl"),
-    Path("data/tasks/review.md"),
-)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -56,41 +44,16 @@ def main(argv: list[str] | None = None) -> int:
             ".next",
             "--exclude",
             ".DS_Store",
-            "--exclude",
-            "data/tasks/hard.jsonl",
-            "--exclude",
-            "data/tasks/review.md",
-            "--exclude",
-            "results/hard-*",
-            "--exclude",
-            "videos/hard-frontier",
             f"{ROOT}/",
             f"{dest}/",
         ],
         check=True,
     )
-    leaked = _leaks(dest)
-    if leaked:
-        print("private paths still in the export:", file=sys.stderr)
-        for item in leaked:
-            print(f"  {item}", file=sys.stderr)
-        return 1
     if not (dest / "data" / "tasks" / "public.jsonl").exists():
         print("data/tasks/public.jsonl is missing from the export", file=sys.stderr)
         return 1
     print(f"exported {dest}")
     return 0
-
-
-def _leaks(dest: Path) -> list[str]:
-    found = []
-    for relative in PRIVATE:
-        if (dest / relative).exists():
-            found.append(str(relative))
-    results = dest / "results"
-    if results.exists():
-        found.extend(str(path.relative_to(dest)) for path in results.glob("hard-*"))
-    return found
 
 
 if __name__ == "__main__":

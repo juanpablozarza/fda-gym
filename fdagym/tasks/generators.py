@@ -511,7 +511,9 @@ def _top_question(drug: str, year: int | None, serious: bool) -> str:
     if year is None and not serious:
         return f"What is the most-reported adverse reaction in FAERS for {drug}?"
     if year is not None and serious:
-        return f"What is the most-reported adverse reaction in FAERS for {drug} among serious reports received in {year}?"
+        return (
+            f"What is the most-reported adverse reaction in FAERS for {drug} among serious reports received in {year}?"
+        )
     if year is not None:
         return f"What is the most-reported adverse reaction in FAERS for {drug} among reports received in {year}?"
     return f"What is the most-reported adverse reaction in FAERS for {drug} among serious reports?"
@@ -717,11 +719,7 @@ def _event_call(drug: str, mode: str, year: int | None, serious: bool) -> dict:
 def _label_calls(drug: str, labels: list[dict], wanted: list[str], *, section: str | None) -> list[dict]:
     """Pages of search_drug_label until a cited set_id is on the page, then the section read when the text is the evidence."""
     wanted_ids = set(wanted)
-    visible = [
-        label
-        for label in labels
-        if section is None or tool_section_text(label, section) is not None
-    ]
+    visible = [label for label in labels if section is None or tool_section_text(label, section) is not None]
     index = next((i for i, label in enumerate(visible) if label.get("set_id") in wanted_ids), None)
     if index is None:
         raise TaskRejected("cited set_id is not in the label search")

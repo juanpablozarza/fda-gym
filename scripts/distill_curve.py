@@ -1,7 +1,7 @@
 """Collect distill-SFT hard evals into CSV + SVG. No GPU.
 
     uv run python scripts/distill_curve.py \\
-      --runs-dir /workspace/runs \\
+      --runs-dir results \\
       --prefix distill-sft-qwen3b \\
       --sizes 100,250,500,1000,all \\
       --out results/distill-curve

@@ -79,7 +79,8 @@ def query_key(endpoint: Endpoint, search: str | None, count: str | None, limit: 
 
 
 def key_for(query: Query) -> str:
-    return query_key(query.endpoint, query.search, query.count, query.limit)
+    # Query has no skip field; recorded keys use skip=0, matching DiskSnapshot.get.
+    return query_key(query.endpoint, query.search, query.count, query.limit, 0)
 
 
 def _richer_application(new: dict, old: dict) -> bool:
@@ -139,6 +140,7 @@ class DiskSnapshot:
         path.parent.mkdir(parents=True, exist_ok=True)
         data = gzip.compress(json.dumps(record, sort_keys=True, separators=(",", ":")).encode(), mtime=0)
         _atomic_write(path, data)
+        _read_text.cache_clear()
 
     def drugsfda_records(self) -> list[dict]:
         """Cached Drugs@FDA applications, one record per application number.
@@ -200,11 +202,43 @@ class DiskSnapshot:
                     "raw_bytes": record["raw_bytes"],
                     "trimmed_bytes": len(json.dumps(body, separators=(",", ":"))),
                     "stored_bytes": path.stat().st_size,
+                    "sha256": body_digest(body),
                 }
             )
         manifest = self.dir / "manifest.jsonl"
         _atomic_write(manifest, "".join(json.dumps(row) + "\n" for row in rows).encode())
         return rows
+
+    def verify(self) -> list[str]:
+        """Check each stored body against ``sha256`` when the field is present.
+
+        Rows written before this field are accepted; call ``write_manifest`` to backfill.
+        """
+        _read_text.cache_clear()
+        mismatches = []
+        manifest = self.dir / "manifest.jsonl"
+        if not manifest.is_file():
+            return [f"missing manifest {manifest}"]
+        by_key = {}
+        for line in manifest.read_text().splitlines():
+            if line.strip():
+                row = json.loads(line)
+                by_key[row["key"]] = row
+        for path in sorted((self.dir / "responses").glob("*/*.json.gz")):
+            key = path.name.removesuffix(".json.gz")
+            record = json.loads(_read_text(path))
+            expected = by_key.get(key, {}).get("sha256")
+            if not expected:
+                continue
+            got = body_digest(record["body"])
+            if got != expected:
+                mismatches.append(f"{key}: manifest {expected} != body {got}")
+        return mismatches
+
+
+def body_digest(body: dict) -> str:
+    canonical = json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(canonical).hexdigest()
 
 
 def _atomic_write(path: Path, data: bytes) -> None:

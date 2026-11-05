@@ -23,8 +23,8 @@ def wandb_key_present() -> bool:
 
 
 def resolve_wandb_target(project: str | None = None, entity: str | None = None) -> tuple[str, str | None]:
-    """Project defaults to ``bio-rl``. An empty flag falls through to the environment."""
-    chosen_project = (project or "").strip() or os.environ.get("WANDB_PROJECT", "").strip() or "bio-rl"
+    """Project defaults to ``fda-gym``. An empty flag falls through to the environment."""
+    chosen_project = (project or "").strip() or os.environ.get("WANDB_PROJECT", "").strip() or "fda-gym"
     chosen_entity = (entity or "").strip() or os.environ.get("WANDB_ENTITY", "").strip() or None
     return chosen_project, chosen_entity
 

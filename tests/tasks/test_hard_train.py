@@ -28,7 +28,9 @@ from fdagym.train.tool_config import ToolTrainConfig
 
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA = load_schema("task.schema.json")
-VALIDATOR = Draft202012Validator(SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA)))
+VALIDATOR = Draft202012Validator(
+    SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA))
+)
 HARD_TRAIN_SHA256 = "fa80218c2a8a64726349465ea32b102bdc1fce31a25c9c4984ee9f487c67779f"
 HARD_TRAIN_HOLDOUT_SHA256 = "e00c9c7426e40ecad673bd25a4f1a471c9d1f139cc7442de88cba599c1a63096"
 TRAIN_SHA256 = "a6c895f14c3399cfd47de5b0d2ac311bc38e2f853f7de13f24343d588d739a31"
@@ -90,9 +92,7 @@ def test_file_matches_schema_and_stays_off_the_eval_ids(hard_train):
     assert len(holdout) == N_HOLDOUT
     ids = sorted(task["id"] for task in [*hard_train, *holdout])
     assert ids == [f"FG-{ID_START + offset:04d}" for offset in range(N_TASKS)]
-    hard_path = ROOT / "data" / "tasks" / "hard.jsonl"
-    if hard_path.exists():
-        assert set(ids).isdisjoint(task["id"] for task in load_split("hard"))
+    assert set(ids).isdisjoint(task["id"] for task in load_split("public"))
     assert set(ids).isdisjoint(task["id"] for task in load_split("train"))
     assert set(ids).isdisjoint(task["id"] for task in load_split("test"))
     variants = []
@@ -286,9 +286,8 @@ def test_sixty_forty_mix_is_opt_in(hard_train):
     assert report["rows"] == {"hard": 60, "current": 40}
     assert sum(task["split"] == "hard_train" for task in rows) == 60
     assert all(task["split"] != "hard" for task in rows)
-    if (ROOT / "data" / "tasks" / "hard.jsonl").exists():
-        with pytest.raises(RuntimeError, match="eval split"):
-            mix_hard_train(load_split("train"), load_split("hard"), n_rows=10)
+    with pytest.raises(RuntimeError, match="eval split"):
+        mix_hard_train(load_split("train"), load_split("public"), n_rows=10)
 
 
 def test_question_only_solver_reaches_every_task_at_6_and_8(disk, hard_train):

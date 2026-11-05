@@ -9,6 +9,7 @@ search_drug_label call with has_section boxed_warning whose total is 0.
 """
 
 import json
+from collections.abc import Iterator
 from dataclasses import dataclass
 
 from rapidfuzz.fuzz import partial_ratio, ratio
@@ -139,7 +140,7 @@ def _gold_id_hit(citation: dict, steps: list[dict], task: dict) -> bool:
         if not cid.startswith("step:"):
             continue
         for step in steps:
-            if step.get("error") or _TOOL_ENDPOINT.get(step.get("tool")) != endpoint:
+            if step.get("error") or _step_endpoint(step) != endpoint:
                 continue
             if not any(_node_has_id(node, cid) for node in _dicts(step.get("output"))):
                 continue
@@ -164,7 +165,7 @@ def _needs_drug_check(task: dict, endpoint: str, cid: str, field: str) -> bool |
 def _candidates(steps: list[dict], endpoint: str, cid: str, field: str) -> list[tuple[dict, str]]:
     found = []
     for step in steps:
-        if step.get("error") or _TOOL_ENDPOINT.get(step.get("tool")) != endpoint:
+        if step.get("error") or _step_endpoint(step) != endpoint:
             continue
         output = step.get("output")
         for node in _dicts(output):
@@ -179,11 +180,18 @@ def _candidates(steps: list[dict], endpoint: str, cid: str, field: str) -> list[
 
 def _id_appeared(steps: list[dict], endpoint: str, cid: str) -> bool:
     for step in steps:
-        if step.get("error") or _TOOL_ENDPOINT.get(step.get("tool")) != endpoint:
+        if step.get("error") or _step_endpoint(step) != endpoint:
             continue
         if any(_node_has_id(node, cid) for node in _dicts(step.get("output"))):
             return True
     return False
+
+
+def _step_endpoint(step: dict) -> str | None:
+    tool = step.get("tool")
+    if not isinstance(tool, str):
+        return None
+    return _TOOL_ENDPOINT.get(tool)
 
 
 def _about_task_drug(step: dict, steps: list[dict], task: dict) -> bool:
@@ -218,7 +226,9 @@ def _empty_boxed_citation(citation: dict, steps: list[dict], task: dict) -> tupl
     label = f"{citation.get('id')} {citation.get('field')}"
     if task.get("type") != "compare" or citation.get("endpoint") != "drug/label":
         return False, ""
-    if citation.get("field") not in {"meta.results.total", "results"} or not str(citation.get("id", "")).startswith("step:"):
+    if citation.get("field") not in {"meta.results.total", "results"} or not str(citation.get("id", "")).startswith(
+        "step:"
+    ):
         return False, ""
     from fdagym.questions import Unsolvable, parse_question
 
@@ -306,7 +316,7 @@ def _quote_matches(quote: str, field_text: str) -> tuple[bool, str]:
     return True, f"quote fuzzy {score / 100:.2f}"
 
 
-def _dicts(value: object):
+def _dicts(value: object) -> Iterator[dict]:
     if isinstance(value, dict):
         yield value
         for child in value.values():

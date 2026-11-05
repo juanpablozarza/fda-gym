@@ -30,7 +30,9 @@ def _csv(value: str) -> list[str]:
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run-id", required=True, help="Used in the output filename; choose a fresh name for new data.")
+    parser.add_argument(
+        "--run-id", required=True, help="Used in the output filename; choose a fresh name for new data."
+    )
     parser.add_argument("--split", choices=("train", "test", "hard_train", "hard"), default="train")
     parser.add_argument("--tasks", type=Path, help="Optional task JSONL; overrides --split.")
     parser.add_argument("--snapshot-version", help="Override only when all tasks use this recorded snapshot.")

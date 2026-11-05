@@ -220,7 +220,7 @@ agent actually searched (a grounded "empty result" citation). On answerable task
 | Name | FDA-Gym, Python package `fdagym` | RegGym |
 | Visual direction | B1: dark glass, signal amber `#F5A524` | Teal B, violet B2, lime B3, light C |
 | Parallelism | One git worktree and branch per track; JP merges | Shared folder, cloud agents |
-| Training GPU | Fly.io GPU machine, paid by the hour | Colab, RunPod |
+| Training GPU | Fly.io GPU machine, paid by the hour | Colab or a rented GPU |
 | Model access | OpenRouter (one key for GPT, Claude, Qwen) + free openFDA key | Separate provider keys |
 | Correctness | Counts only with a grounded, relevant citation (JP's call at checkpoint) | Trusting a bare answer |
 | Efficiency | `min(1, min_tool_calls / calls)`, only if correct | `1 − calls/6`, which punishes hard tasks |

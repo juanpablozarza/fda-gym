@@ -23,8 +23,11 @@ def test_runs_in_order_and_gates(tmp_path):
     calls = []
     stages = [
         Stage("sft", lambda s: calls.append("sft")),
-        Stage("eval", lambda s: {"models": {"m": {"mean_reward": 0.01}}},
-              gate=lambda s: strict_mean(s["results"]["eval"]) >= 0.0485),
+        Stage(
+            "eval",
+            lambda s: {"models": {"m": {"mean_reward": 0.01}}},
+            gate=lambda s: strict_mean(s["results"]["eval"]) >= 0.0485,
+        ),
         Stage("grpo", lambda s: calls.append("grpo")),
     ]
     st = Pipeline(tmp_path, stages).run()
@@ -71,9 +74,10 @@ def test_resume_from_sft_skips_finished_evals_and_keeps_scores(tmp_path):
     calls = []
 
     def gate(status):
-        return strict_mean(status["results"].get("eval-tools-start")) >= strict_mean(
-            status["results"].get("eval-tools-base")
-        ) + 0.03
+        return (
+            strict_mean(status["results"].get("eval-tools-start"))
+            >= strict_mean(status["results"].get("eval-tools-base")) + 0.03
+        )
 
     stages = [
         Stage("eval-tools-base", lambda s: calls.append("base"), output=paths["eval_base"]),
@@ -89,8 +93,7 @@ def test_resume_from_sft_skips_finished_evals_and_keeps_scores(tmp_path):
     assert strict_mean(status["results"]["eval-tools-start"]) == 0.5552
     assert json.loads(paths["eval_base"].read_text())["models"]["Qwen/Qwen2.5-3B-Instruct"]["mean_reward"] == 0.0086
     assert (
-        json.loads(paths["eval_start"].read_text())["models"]["Qwen/Qwen2.5-3B-Instruct+tools"]["mean_reward"]
-        == 0.5552
+        json.loads(paths["eval_start"].read_text())["models"]["Qwen/Qwen2.5-3B-Instruct+tools"]["mean_reward"] == 0.5552
     )
     text = (ROOT / "modal_train.py").read_text()
     assert "tool_artifact_paths" in text

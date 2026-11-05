@@ -199,9 +199,11 @@ def run_from_files(
     cost_cap_usd: float = DEFAULT_COST_CAP_USD,
     pause_s: float = 0.0,
 ) -> dict:
-    tasks = load_split(split) if tasks_path is None else [
-        json.loads(line) for line in tasks_path.read_text(encoding="utf-8").splitlines() if line.strip()
-    ]
+    tasks = (
+        load_split(split)
+        if tasks_path is None
+        else [json.loads(line) for line in tasks_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    )
     if limit is not None:
         if limit < 1:
             raise ValueError("limit must be >= 1")

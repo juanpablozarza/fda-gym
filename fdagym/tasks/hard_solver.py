@@ -167,7 +167,7 @@ def _earliest(session: _Session, spec: dict) -> Solution:
     for drug in spec["drugs"]:
         output = session.call("search_approvals", {"generic_name": drug})
         year, chosen, node = _earliest_visible(output, drug)
-        if year is None or node is None:
+        if year is None or chosen is None or node is None:
             raise Unsolvable(f"{drug} has no visible original approval")
         years[drug] = year
         apps[drug] = chosen

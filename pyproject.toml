@@ -28,8 +28,7 @@ train = [
     "peft>=0.13",
     "datasets>=3.0",
 ]
-# The Modal image and the RunPod setup script both install this list.
-# These are the versions modal_train.py pinned before the extra existed.
+# The optional [gpu] extra. Same pins the training launchers install.
 gpu = [
     "torch==2.6.0",
     "transformers==4.55.0",
@@ -41,7 +40,11 @@ gpu = [
 ]
 
 [dependency-groups]
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+    "pyright>=1.1",
+]
 
 [tool.uv]
 # train stays the loose CPU extra. gpu is the pinned stack the A100 installs.
@@ -63,6 +66,13 @@ packages = ["fdagym"]
 [tool.ruff]
 line-length = 120
 target-version = "py311"
+
+[tool.pyright]
+include = ["fdagym"]
+exclude = ["**/__pycache__", "fdagym/train"]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+reportMissingImports = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

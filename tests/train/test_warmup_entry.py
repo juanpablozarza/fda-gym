@@ -30,7 +30,7 @@ def test_task_ids_digest_is_sorted_ids_joined_by_newlines():
 def test_task_ids_pool_is_exact_and_rejects_blocked_rows():
     train = [
         {"id": "T1", "split": "train", "type": "approval", "entity": {"generic_name": "a"}},
-        {"id": "FG-8001", "split": "train", "type": "approval", "entity": {"generic_name": "b"}},
+        {"id": "FG-T-BLOCK", "split": "train", "type": "approval", "entity": {"generic_name": "b"}},
     ]
     hard = [
         {"id": "H1", "split": "hard_train", "type": "sponsor_hop", "entity": {"generic_name": "c"}},
@@ -50,7 +50,7 @@ def test_task_ids_pool_is_exact_and_rejects_blocked_rows():
     assert [task["id"] for task in again] == ["T1"]
     with pytest.raises(RuntimeError, match="unknown task ids"):
         sft_sources(train, SFTConfig(task_ids=["NOPE"]), hard)
-    blocked_id = "FG-8001" if (ROOT / "data" / "tasks" / "hard.jsonl").exists() else load_split("public")[0]["id"]
+    blocked_id = load_split("public")[0]["id"]
     with pytest.raises(RuntimeError, match="hard eval|unknown task ids"):
         sft_sources(train, SFTConfig(task_ids=[blocked_id]), hard)
     with pytest.raises(RuntimeError, match="holdout"):

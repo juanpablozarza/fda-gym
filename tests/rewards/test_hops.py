@@ -7,7 +7,7 @@ from tests.rewards.test_dense import _approval_task, _steps
 from tests.rewards.test_dense import _submit as approval_submit
 
 SPONSOR_TASK = {
-    "id": "FG-8051",
+    "id": "FG-0001-sponsor",
     "type": "sponsor_hop",
     "question": (
         "Application BLA205692 is held by a sponsor that also markets one of these drugs: "
@@ -34,7 +34,7 @@ SPONSOR_TASK = {
 }
 
 COMPARE_TASK = {
-    "id": "FG-8005",
+    "id": "FG-0001-count",
     "type": "compare",
     "question": "Of aprocitentan, ondansetron, and sitagliptin, which drug has the most FAERS reports of DYSPNOEA?",
     "sources": ["drug/event"],
@@ -225,7 +225,9 @@ def test_compare_unique_max_is_the_last_hop():
 
 
 def test_one_shot_tasks_do_not_get_hop_fallback():
-    dense = score({"steps": _steps(), "final_answer": approval_submit(1999, quote="nope")}, _approval_task(), dense=True)
+    dense = score(
+        {"steps": _steps(), "final_answer": approval_submit(1999, quote="nope")}, _approval_task(), dense=True
+    )
     assert dense["hops"] == 0.0
     assert dense["correctness"] == 0.0
 
@@ -234,7 +236,7 @@ _EARLIEST_DRUGS = ("ondansetron", "sitagliptin", "aprocitentan")
 
 EARLIEST_TASK = {
     **COMPARE_TASK,
-    "id": "FG-8001",
+    "id": "FG-0001-earliest",
     "question": question_earliest(list(_EARLIEST_DRUGS)),
     "sources": ["drug/drugsfda", "drug/label"],
     "entity": {"generic_name": "ondansetron"},

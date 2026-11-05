@@ -337,10 +337,7 @@ def test_concurrent_snapshot_writes_use_distinct_atomic_temps(tmp_path: Path, mo
         return handle
 
     monkeypatch.setattr(store_module.tempfile, "NamedTemporaryFile", create_simultaneous_temp)
-    records = [
-        {"fetched_at": f"2026-10-{day}T00:00:00+00:00", "body": {"results": [day]}}
-        for day in ("15", "16")
-    ]
+    records = [{"fetched_at": f"2026-10-{day}T00:00:00+00:00", "body": {"results": [day]}} for day in ("15", "16")]
     with ThreadPoolExecutor(max_workers=2) as pool:
         futures = [pool.submit(snap._write, target, record) for record in records]
         for future in futures:
@@ -351,3 +348,42 @@ def test_concurrent_snapshot_writes_use_distinct_atomic_temps(tmp_path: Path, mo
     stored = json.loads(gzip.decompress(target.read_bytes()))
     assert stored in records
     assert list(target.parent.glob(".*.tmp")) == []
+
+
+def test_manifest_sha256_catches_a_modified_body(tmp_path: Path):
+    from fdagym.openfda.store import body_digest
+
+    snap = DiskSnapshot("v", tmp_path)
+    body = {"meta": {"results": {"total": 1}}, "results": [{"id": "abc"}]}
+    record = {
+        "query": {"endpoint": "drug/label", "search": "x", "count": None, "limit": 1, "skip": 0},
+        "fetched_at": "2026-10-15T00:00:00+00:00",
+        "raw_bytes": 3,
+        "body": body,
+    }
+    key = query_key("drug/label", "x", None, 1, 0)
+    snap._write(snap.path(key), record)
+    rows = snap.write_manifest()
+    assert rows[0]["sha256"] == body_digest(body)
+    assert snap.verify() == []
+
+    tampered = json.loads(gzip.decompress(snap.path(key).read_bytes()))
+    tampered["body"]["results"] = [{"id": "EVIL"}]
+    snap._write(snap.path(key), tampered)
+    mismatches = snap.verify()
+    assert len(mismatches) == 1
+    assert key in mismatches[0]
+
+
+def test_committed_manifest_rows_have_sha256():
+    from fdagym.openfda.store import SNAPSHOT_VERSION, body_digest, resolve_snapshot_root
+
+    manifest = resolve_snapshot_root() / SNAPSHOT_VERSION / "manifest.jsonl"
+    rows = [json.loads(line) for line in manifest.read_text().splitlines() if line.strip()]
+    assert rows
+    assert all(isinstance(row.get("sha256"), str) and len(row["sha256"]) == 64 for row in rows)
+    sample = rows[0]
+    record = json.loads(
+        gzip.decompress((manifest.parent / "responses" / sample["key"][:2] / f"{sample['key']}.json.gz").read_bytes())
+    )
+    assert sample["sha256"] == body_digest(record["body"])

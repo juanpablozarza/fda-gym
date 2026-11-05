@@ -50,7 +50,10 @@ def _trim_approval(r: dict) -> dict:
             for p in r.get("products", [])
         ],
         "submissions": [
-            {k: s.get(k) for k in ("submission_type", "submission_number", "submission_status", "submission_status_date")}
+            {
+                k: s.get(k)
+                for k in ("submission_type", "submission_number", "submission_status", "submission_status_date")
+            }
             for s in r.get("submissions", [])
         ],
     }

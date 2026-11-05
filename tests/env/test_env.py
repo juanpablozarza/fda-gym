@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from fdagym.env import TOOL_BUDGET, FDAEnv
@@ -120,3 +122,33 @@ def test_unanswerable_not_found_scores_one_only_after_an_empty_search():
     assert _obs[0]["output"]["meta"]["results"]["total"] == 0
     assert reward["total"] == 1.0
     assert reward["correctness"] == 1.0
+
+
+def test_invalid_json_is_logged_as_invalid_action():
+    env = FDAEnv(JsonSnapshot(), ALL_TASKS)
+    env.reset("FG-0001")
+    obs, _reward, done, _info = env.step("{not json")
+    assert done is True
+    assert obs["tool"] == "invalid_action"
+    assert obs["error"] is not None and "invalid JSON" in obs["error"]
+    assert env.trajectory["steps"][-1]["tool"] == "invalid_action"
+    assert env.trajectory["terminated_by"] == "error"
+    assert env.trajectory["final_answer"] is None
+    validator("trajectory.schema.json").validate(env.trajectory)
+
+
+def test_label_open_is_rejected_on_reset():
+    task = json.loads(json.dumps(ALL_TASKS[0]))
+    task["id"] = "FG-0099"
+    task["type"] = "label_open"
+    task["gold"] = {"kind": "judge", "value": "anything"}
+    env = FDAEnv(JsonSnapshot(), [task])
+    with pytest.raises(ValueError, match="label_open"):
+        env.reset("FG-0099")
+
+
+def test_step_records_latency_ms():
+    env = FDAEnv(JsonSnapshot(), ALL_TASKS)
+    env.reset("FG-0001")
+    env.step({"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}, latency_ms=12.4)
+    assert env.steps[-1]["latency_ms"] == 12.4

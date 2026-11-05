@@ -65,7 +65,9 @@ def test_compare_detects_a_win(tmp_path):
     assert row["beats_baseline"] is True
     assert row["delta_mean_reward"] == 0.13
     assert "BEATS baseline" in format_compare(row)
-    tied = compare_summaries(baseline, {"run_id": "flat", "models": [{"name": "x", "mean_reward": 0.21, "pass_rate": 0.12}]})
+    tied = compare_summaries(
+        baseline, {"run_id": "flat", "models": [{"name": "x", "mean_reward": 0.21, "pass_rate": 0.12}]}
+    )
     assert tied["beats_baseline"] is False
     noise = compare_summaries(
         baseline,

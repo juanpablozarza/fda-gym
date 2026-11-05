@@ -1,6 +1,6 @@
 # GRPO with live tool calls
 
-Status: **implementation, not a GPU run.** JP approved the eight decisions on 2026-10-18, then a tool-protocol baseline (`eval-tools-base`) and a first GRPO run of **150 steps**. This branch subclasses `GRPOTrainer` on TRL 0.21. It does not start Modal or RunPod. JP approves every training run.
+Status: **implementation, not a GPU run.** JP approved the eight decisions on 2026-10-18, then a tool-protocol baseline (`eval-tools-base`) and a first GRPO run of **150 steps**. This branch subclasses `GRPOTrainer` on TRL 0.21. It does not start a GPU job. JP approves every training run.
 
 Plan A pastes `oracle_calls` into the prompt and the model only writes `submit_answer`. That packing truncates the record that holds the answer (see the 2026-10-18 data audit). Live rollouts drop the pasted documents. The prompt is the question plus the tool schema. During a GRPO step the model calls `search_drug_label`, `get_label_section`, `query_adverse_events`, and `search_approvals` against `FDAEnv` on `DiskSnapshot`, then `submit_answer`. `fdagym.rewards.score` grades that episode.
 
@@ -20,7 +20,7 @@ Colocate vLLM already lives on the trainer as `trainer.llm` (`vllm.LLM` from vLL
 
 Pros:
 
-- The image stays `torch==2.6.0`, `transformers==4.53.0`, `trl==0.21.0`, `vllm==0.8.5`. That is the stack `modal_train.py` and the RunPod image already pin, and the only stack Plan A has run.
+- The image stays `torch==2.6.0`, `transformers==4.53.0`, `trl==0.21.0`, `vllm==0.8.5`. That is the `[gpu]` extra pin list, and the only stack Plan A has run.
 - `FDAEnv` stays the environment. Reward, citation ids, the 6-call budget, and `submit_answer` validation do not get reimplemented as TRL tool functions.
 - The runner's return value is the contract: prompt ids, completion ids, a loss mask, and an attention mask. A later TRL upgrade can consume the same object.
 
@@ -39,7 +39,7 @@ Cons:
 | 0.29 (2026-02-25) | `environment_factory`: env methods are the tools, `reset()` required, optional `get_reward()` | Still marked experimental. `FDAEnv.step` is one action channel, not a method per tool |
 | 1.0 (2026-03) | `rollout_func(prompts, trainer) -> {prompt_ids, completion_ids, logprobs}`. Colocate is the default. Current main splits `completion_mask` (attention) from `tool_mask` (loss) | vLLM extra is `>=0.10.2,<=0.17.1` |
 
-Version-pin impact of landing on 1.0, which is the first release where the mask split is actually the supported path: **vLLM 0.10.0+ pins `torch==2.7.1`** (and a newer transformers). vLLM 0.8.5 cannot stay. The `[gpu]` extra in `pyproject.toml` is the pin list, and `modal_train.py` installs that extra, so they move together. Colocate weight-sync also changed (`sleep`, engine internals). Plan A numbers would come from a different stack than the tool-rollout numbers, on top of a different task.
+Version-pin impact of landing on 1.0, which is the first release where the mask split is actually the supported path: **vLLM 0.10.0+ pins `torch==2.7.1`** (and a newer transformers). vLLM 0.8.5 cannot stay. The `[gpu]` extra in `pyproject.toml` is the pin list. Colocate weight-sync also changed (`sleep`, engine internals). Plan A numbers would come from a different stack than the tool-rollout numbers, on top of a different task.
 
 `environment_factory` does not remove the need for a runner. It wants each tool to be a Python callable with a Google-style docstring, and it builds the transcript through the chat template. That is the retokenization path TRL spent 0.29–1.0 fixing (tool mask shorter than `completion_ids` after `apply_chat_template`). `FDAEnv` already has the schema, the snapshot, and the reward. Wrapping it as eight callables would throw that away to fit a hook that is still marked experimental.
 
@@ -108,7 +108,7 @@ An unfinished episode is closed with an invalid `submit_answer` so `trajectory` 
 
 The 3B will emit malformed calls for a long time. Every one of those episodes scores 0 or 0.10, the group advantage is 0, and LoRA does not move. That is the same failure mode as Plan A groups that all score 0.10, reached earlier.
 
-Warm-up, implemented as `fdagym/train/sft_tools.py` and `modal_train.py --action sft`:
+Warm-up, implemented as `fdagym/train/sft_tools.py` and `scripts/sft_warmup.py`:
 
 1. For each train task, play the scripted trajectory on `DiskSnapshot`, then `gold_submit`. Approval and FAERS tasks replay `oracle_calls`. Boxed-warning and composite tasks search labels without `has_section` and read `boxed_warning` only when a label of that drug lists the section.
 2. Render the transcript in the chosen tool format. Model spans are the action strings. Tool spans are the clipped observations.
@@ -118,9 +118,9 @@ Warm-up, implemented as `fdagym/train/sft_tools.py` and `modal_train.py --action
 
 GRPO from the raw 3B is the alternative if we would rather not spend the warm-up on teaching oracle arguments. Expect a long stretch of zero advantage first.
 
-## Memory, step time, Modal cost
+## Memory, step time, cost
 
-Target: **150 steps, Qwen2.5-3B-Instruct, LoRA, 1× A100 80GB on Modal.** No job was launched for this estimate. The 6–8 s single-turn step is the figure from the data audit, not a new measurement. Memory below does not change with the step count.
+Target: **150 steps, Qwen2.5-3B-Instruct, LoRA, 1× A100 80GB.** No job was launched for this estimate. The 6–8 s single-turn step is the figure from the data audit, not a new measurement. Memory below does not change with the step count.
 
 Published 3B shape used for the arithmetic: 36 layers, hidden 2048, intermediate 11008, 2 KV heads, head dim 128, vocab 151936. Weights in bf16 are about **6.2 GB**. LoRA on `q,k,v,o,gate,up,down` at r=16 is about **30M parameters**. AdamW on those parameters is about **0.24 GB**.
 
@@ -143,7 +143,7 @@ Step time. TRL 0.21's `LLM(...)` does not pass `enable_prefix_caching`, so each 
 
 150 steps at 25 s is **1.0 hour**. A 400-step run would have been 2.8 hours.
 
-Modal's public rate (A100 80GB) is **$2.50 per GPU-hour** ($0.000694/s). The tool functions request 64 GiB of RAM at $0.00000222 per GiB-second, about $0.51/hour. Together that is about **$0.000837/s**.
+A typical A100 80GB public rate is **$2.50 per GPU-hour** ($0.000694/s). A 64 GiB RAM add-on at $0.00000222 per GiB-second is about $0.51/hour. Together that is about **$0.000837/s**.
 
 | Step | Seconds | Cost per step |
 |---|---|---|
@@ -176,7 +176,7 @@ uv run pytest -q tests/train
 
 `check_approval_reachability.py` writes `results/approval-reachability.json`. For every gold application id on an approval task it runs one `search_approvals` by that number and records whether the id and the answer text sit in the first 3,500 characters the model would see. It also replays FG-0002 and expects reward 1.0.
 
-Modal, only after JP approves the run. Commands and the per-step cost are in [docs/train.md](train.md).
+GPU jobs, only after JP approves the run. Commands and the per-step cost are in [docs/train.md](train.md).
 
 ## Decisions (JP, 2026-10-18)
 
@@ -189,5 +189,5 @@ Modal, only after JP approves the run. Commands and the per-step cost are in [do
 7. SFT on scripted tool trajectories before GRPO. Boxed-warning and composite label steps are answer-independent. One epoch, keep reward >= 0.97, 5% of train drugs held out for teacher-forced eval. GRPO does not start from the raw base.
 8. First GPU shape: 8 generations, gradient checkpointing, A100-80GB, vLLM memory fraction 0.30. The first run is 150 steps.
 9. Dense reward (JP, 2026-10-19), wired from `track/train` at `61f059c`. Tool GRPO passes `TrainConfig.dense_reward` explicitly. `tool_train_config()` sets it true. `FDAEnv` still scores with the strict default, so the trajectory total stays comparable to the 0.03 gate. Eval reports both totals: the strict env total on `models[].mean_reward`, and the dense total on `summary["dense_reward"]`. The +0.05 parse bonus stays training-only, added to the dense total.
-10. Tool run decisions (JP, 2026-10-19), implemented, not launched: tool SFT from the base model; GRPO prompts from `type_mix_pool` (then 30% composite with yes/no balanced, 30% boxed_warning, 20% faers_top_reaction, 15% approval, 5% faers_count; not stage 3); composite half credit (0.5 per correct half) in the dense training reward only, eval strict; temperature 0.8 with 8 generations; tied-group fraction, parse rates, and termination reasons logged to Weights & Biases; stop at step 20 if the mean parse rate is below 0.9; gate +0.03 strict over `eval-tools-base`; $20 cap. Later defaults (distill GRPO): temperature **0.65**, composite **out of the pool**, `boxed_warning` still floored. Details in [RUNBOOK.md](RUNBOOK.md).
+10. Tool run decisions (JP, 2026-10-19), implemented, not launched: tool SFT from the base model; GRPO prompts from `type_mix_pool` (then 30% composite with yes/no balanced, 30% boxed_warning, 20% faers_top_reaction, 15% approval, 5% faers_count; not stage 3); composite half credit (0.5 per correct half) in the dense training reward only, eval strict; temperature 0.8 with 8 generations; tied-group fraction, parse rates, and termination reasons logged to Weights & Biases; stop at step 20 if the mean parse rate is below 0.9; gate +0.03 strict over `eval-tools-base`; $20 cap. Later defaults (distill GRPO): temperature **0.65**, composite **out of the pool**, `boxed_warning` still floored. Details in [train.md](train.md).
 

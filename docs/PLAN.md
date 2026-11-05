@@ -38,7 +38,7 @@ flowchart LR
   D --> E
   H[Agents: GPT/Claude/Qwen via LiteLLM] <--> E
   E --> I[(Trajectories JSONL -> Postgres)]
-  J[GRPO + LoRA<br/>TRL / Unsloth on Colab or RunPod] <--> E
+  J[GRPO + LoRA<br/>TRL / Unsloth on Colab or a rented GPU] <--> E
   J --> I
   I --> K[FastAPI read API]
   K --> L[Next.js dashboard<br/>leaderboard, replay, reward breakdown, training curve]
@@ -109,7 +109,7 @@ R = 0.6*correctness + 0.25*citation + 0.1*format + 0.05*efficiency
 - **Plan B (stretch):** multi-turn con tools limitadas (max 3 steps) usando el soporte de tools de TRL o un rollout loop propio con vLLM; solo si Plan A corre el día 2.
 - Modelo: **Qwen2.5-1.5B-Instruct** (Colab T4 gratis) o **Qwen2.5-3B-Instruct** (A10/L4/A100).
 - Hiperparámetros iniciales: LoRA r=16, α=32, lr 5e-6–1e-5, `num_generations`=6–8, max_completion 256, ~300–500 steps.
-- **Compute (estimaciones):** 1.5B en T4 gratis con Unsloth 4-bit: ~2–4 h para ~300 steps (riesgo de desconexión de Colab). 3B en RunPod/Lambda A100 40GB (~$1.2–2/h): ~2–3 h → **~$5–15** total. Baselines con APIs (60 tasks × 3 modelos × ~6 steps): **~$5–20**. Presupuesto total estimado: **<$50**.
+- **Compute (estimaciones):** 1.5B en T4 gratis con Unsloth 4-bit: ~2–4 h para ~300 steps (riesgo de desconexión de Colab). 3B en A100 40GB (~$1.2–2/h): ~2–3 h → **~$5–15** total. Baselines con APIs (60 tasks × 3 modelos × ~6 steps): **~$5–20**. Presupuesto total estimado: **<$50**.
 - Entregable: gráfica **reward before vs after** en test split (y por componente), más curva de reward en training.
 
 ## 8. Plan por día (workstreams paralelos para agentes)
@@ -144,7 +144,7 @@ Convención: cada agente trabaja en su branch, con un **contrato compartido** de
 |---|---|
 | Rate limits / cambios de openFDA | Snapshot completo día 1; API key gratuita; todo el env corre offline |
 | GRPO no sube el reward | Más tasks fáciles (curriculum), subir `num_generations`, bajar lr; si no, SFT con trajectories buenas + GRPO corto, y reportarlo honestamente |
-| Colab se desconecta | RunPod A100 por horas (estimado <$15), checkpoints cada 50 steps |
+| Colab se desconecta | A100 por horas (estimado <$15), checkpoints cada 50 steps |
 | Multi-turn GRPO muy complejo | Quedarse en Plan A; multi-turn solo en evals con modelos API |
 | Gold answers ambiguos | Validadores automáticos + descartar tasks con >1 respuesta válida; auditoría manual de 30 tasks |
 | Dashboard se ve genérico | Dedicar todo el día 3 de A3 a diseño; referencias: Linear, Vercel, W&B |

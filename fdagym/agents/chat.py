@@ -3,7 +3,7 @@
 import json
 import time
 
-from fdagym.env import FDAEnv
+from fdagym.env import FDAEnv, budget_exhausted
 from fdagym.tools import TOOLS
 
 PUBLIC_PROMPT = """\
@@ -92,7 +92,7 @@ def _round(env: FDAEnv, complete, messages: list[dict], *, model: str, temperatu
                 "function": {"name": action["tool"], "arguments": action["arguments_json"]},
             }
         )
-        if action["tool"] != "submit_answer" and env.tool_calls >= env.tool_budget:
+        if budget_exhausted(action["tool"], env.tool_calls, env.tool_budget):
             tool_messages.append(_tool_message(action["call_id"], _BUDGET_ERROR))
             continue
         thought = content if stamp_latency else None
@@ -118,9 +118,10 @@ def _submit(env: FDAEnv, arguments: dict, *, thought: str | None, latency_ms: fl
 
 
 def _step(env: FDAEnv, tool: str, arguments: dict, thought: str | None, latency_ms: float, stamp_latency: bool):
-    observation, _reward, done, info = env.step({"tool": tool, "arguments": arguments, "thought": thought})
-    if stamp_latency:
-        env.steps[-1]["latency_ms"] = round(latency_ms)
+    observation, _reward, done, info = env.step(
+        {"tool": tool, "arguments": arguments, "thought": thought},
+        latency_ms=round(latency_ms) if stamp_latency else 0,
+    )
     return observation, done, info
 
 

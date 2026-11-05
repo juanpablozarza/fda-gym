@@ -2,7 +2,7 @@
 
 Reads ``<runs-dir>/<prefix>-n<size>-<split>/summary.json`` plus the jsonl and
 ``tasks.json`` sidecar that ``eval-tools`` already writes. Does not touch
-``data/tasks/hard.jsonl``.
+``data/tasks/public.jsonl``.
 """
 
 from __future__ import annotations
@@ -84,9 +84,7 @@ def per_variant_from_jsonl(jsonl_path: Path, tasks: list[dict]) -> list[dict]:
                 "variant": variant,
                 "n": n,
                 "mean_reward": round(sum(float(item["reward"]["total"]) for item in rows) / n, 4),
-                "pass_rate": round(
-                    sum(1 for item in rows if float(item["reward"].get("correctness") or 0) > 0) / n, 4
-                ),
+                "pass_rate": round(sum(1 for item in rows if float(item["reward"].get("correctness") or 0) > 0) / n, 4),
             }
         )
     return out

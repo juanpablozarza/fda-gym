@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
-# Pin the GPU stack on a fresh RunPod pod (Ubuntu, CUDA, one A100 80GB) and stop.
-# Does not start probe, GRPO, or eval. Does not call Modal.
+# Pin the GPU stack on a fresh CUDA box (Ubuntu, one A100 80GB) and stop.
+# Does not start probe, GRPO, or eval.
 #
-# On the pod:
 #   git clone https://github.com/juanpablozarza/fda-gym.git
-#   cd bio-rl
+#   cd fda-gym
 #   bash scripts/runpod_setup.sh
 #
-# Then the commands in docs/train.md, section "Tool-mode jobs on a RunPod pod".
+# Then the commands in docs/train.md.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -21,7 +20,7 @@ if ! command -v uv >/dev/null 2>&1; then
   source "$HOME/.local/bin/env"
 fi
 
-# Frozen solve of the [gpu] extra. Same direct pins Modal's image installs.
+# Frozen solve of the [gpu] extra.
 uv sync --extra gpu --frozen --no-dev
 
 if [[ -n "${HF_HOME:-}" ]]; then
@@ -83,5 +82,4 @@ Next, from this directory, with the venv uv just created:
   uv run python scripts/run_gpu.py --help
 
 Commands, outputs, and how to copy them off: docs/train.md
-  "Tool-mode jobs on a RunPod pod"
 EOF

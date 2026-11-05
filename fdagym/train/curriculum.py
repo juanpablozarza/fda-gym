@@ -228,7 +228,9 @@ def type_mix_pool(
     total = sum(shares.values())
     raw = {kind: share / total * n_rows for kind, share in shares.items()}
     counts = {kind: int(value) for kind, value in raw.items()}
-    for kind in sorted(raw, key=lambda key: (raw[key] - counts[key], key), reverse=True)[: n_rows - sum(counts.values())]:
+    for kind in sorted(raw, key=lambda key: (raw[key] - counts[key], key), reverse=True)[
+        : n_rows - sum(counts.values())
+    ]:
         counts[kind] += 1
     rng = random.Random(seed)
     rows: list[dict] = []

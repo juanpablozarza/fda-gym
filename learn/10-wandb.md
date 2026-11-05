@@ -5,7 +5,7 @@
 **By the end you can:**
 - Say which env var turns logging on, and what the run does when it is missing.
 - Compute the step a checkpoint restart must not log again.
-- Point at the Modal secret name and the chart command.
+- Point at the env var that turns logging on, and the chart command.
 
 ---
 
@@ -57,7 +57,7 @@ The check is one strip of the environment variable. The key is not a function ar
 <details>
 <summary><b>[recall]</b> What is the project name when neither the flag nor WANDB_PROJECT is set?</summary>
 
-`bio-rl`. `resolve_wandb_target` uses the flag, then the env var, then that default. Entity stays unset so the key's account default is used.
+`fda-gym`. `resolve_wandb_target` uses the flag, then the env var, then that default. Entity stays unset so the key's account default is used.
 </details>
 
 ### 3.2 One run, no repeated steps
@@ -111,13 +111,13 @@ print('enabled', s.enabled, 'report_to', s.report_to, 'project', s.project)
 <details>
 <summary><b>[predict]</b> With no key in the environment, is enabled True or False, and what is report_to?</summary>
 
-False, and `[]`. Project is `bio-rl`. Floor of a resumed run with summary 73 and checkpoint 50 is 73. A run W&B has not seen yet has floor `None`.
+False, and `[]`. Project is `fda-gym`. Floor of a resumed run with summary 73 and checkpoint 50 is 73. A run W&B has not seen yet has floor `None`.
 
 ```
 floor 73
 fresh None
-target ('bio-rl', None)
-enabled False report_to [] project bio-rl
+target ('fda-gym', None)
+enabled False report_to [] project fda-gym
 ```
 </details>
 
@@ -173,12 +173,12 @@ Logs can run ahead of the last save. A checkpoint at 50 with history through 73 
 Results are delivered as tarballs in that format. The chart is for the person watching the run. The tarball is the artifact.
 </details>
 
-**The key is the Modal secret `wandb`.** It is not an argument and it is not printed. A missing key disables logging.
+**The key is the env var `WANDB_API_KEY`.** It is not an argument and it is not printed. A missing key disables logging.
 
 <details>
-<summary><b>[transfer]</b> You want a different entity for one dry run. Do you edit modal_train.py?</summary>
+<summary><b>[transfer]</b> You want a different entity for one dry run. Do you edit `wandb_log.py`?</summary>
 
-No. Pass `--wandb-entity` or export `WANDB_ENTITY` before `scripts/launch_pipeline.py`. The secret can also carry `WANDB_ENTITY`. The project default stays `bio-rl`.
+No. Pass `--wandb-entity` or export `WANDB_ENTITY` before the launcher. The project default stays `fda-gym`.
 </details>
 
 ---
@@ -187,7 +187,7 @@ No. Pass `--wandb-entity` or export `WANDB_ENTITY` before `scripts/launch_pipeli
 
 Hugging Face rewrites `reward` to `train/reward` and `rewards/env/mean` to `train/rewards/env/mean` before `wandb.log`. The chart looks up both names ([wandb_chart.py](../fdagym/train/wandb_chart.py#L109)).
 
-The image ignores `.git`, so the container cannot run `git rev-parse`. Deploy bakes `FDAGYM_GIT_SHA` ([modal_train.py](../modal_train.py#L110)). That value is the config field `git_sha`.
+A GPU image that ignores `.git` cannot run `git rev-parse`. Bake `FDAGYM_GIT_SHA` into the job env before launch. That value is the config field `git_sha`.
 
 A W&B exception is caught and the step continues. The message prints the exception type only, because some wandb errors echo the request.
 
@@ -213,6 +213,6 @@ Then stop. When you are done, the lesson's author reads `learn/answers/10-wandb.
 
 ## 9. Read next
 
-- [docs/RUNBOOK.md](../docs/RUNBOOK.md) — the `modal secret create wandb` command and where the run shows up.
+- [docs/train.md](../docs/train.md) — optional `[train]` extra, including how W&B is off unless `WANDB_API_KEY` is set.
 - [learn/09-hard-train.md](09-hard-train.md) — the memorization report this callback flattens onto the same step.
 - [learn/07-training.md](07-training.md) — the old curve file, and why the test split is still the number that matters.

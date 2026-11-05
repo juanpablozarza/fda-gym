@@ -213,7 +213,9 @@ def _parser() -> argparse.ArgumentParser:
     probe = sub.add_parser("probe", help="reward-dispersion probe, same arguments as Modal probe_dispersion")
     _runs_dir(probe)
     probe.add_argument("--adapter", required=True)
-    probe.add_argument("--task-id", action="append", default=None, help="one id; repeat for a list. Or use --task-ids-file")
+    probe.add_argument(
+        "--task-id", action="append", default=None, help="one id; repeat for a list. Or use --task-ids-file"
+    )
     probe.add_argument("--task-ids-file", default=None, help="one task id per line, in draw order")
     probe.add_argument("--task-ids-sha256", required=True)
     probe.add_argument("--run-id", required=True)
@@ -238,11 +240,17 @@ def _parser() -> argparse.ArgumentParser:
     )
     distill.add_argument("--sizes", default=",".join(DEFAULT_SIZES), help="nested sizes, e.g. 100,250,500,1000,all")
     distill.add_argument("--seed", type=int, default=0)
-    distill.add_argument("--teacher", action="append", default=None, help="keep this teacher_model; repeat to allow several")
-    distill.add_argument("--template", action="append", default=None, help="keep this template; repeat to allow several")
+    distill.add_argument(
+        "--teacher", action="append", default=None, help="keep this teacher_model; repeat to allow several"
+    )
+    distill.add_argument(
+        "--template", action="append", default=None, help="keep this template; repeat to allow several"
+    )
     distill.add_argument("--max-attempts-per-question", type=int, default=None)
     distill.add_argument("--run-id", default=DEFAULT_RUN_ID)
-    distill.add_argument("--init-adapter", default="", help="existing LoRA to continue; default is a fresh adapter on the base 3B")
+    distill.add_argument(
+        "--init-adapter", default="", help="existing LoRA to continue; default is a fresh adapter on the base 3B"
+    )
     distill.add_argument("--model", default="", help="base model id (default Qwen/Qwen2.5-3B-Instruct)")
     distill.add_argument("--learning-rate", type=float, default=None)
     distill.add_argument("--num-train-epochs", type=float, default=None)
@@ -251,16 +259,21 @@ def _parser() -> argparse.ArgumentParser:
     distill.add_argument("--max-length", type=int, default=None)
     distill.add_argument("--warmup-ratio", type=float, default=None)
     distill.add_argument("--save-steps", type=int, default=None)
-    distill.add_argument("--max-steps", type=int, default=0, help="0 uses num_train_epochs (warm-up default). Set for a short GPU smoke.")
+    distill.add_argument(
+        "--max-steps", type=int, default=0, help="0 uses num_train_epochs (warm-up default). Set for a short GPU smoke."
+    )
     _budget_and_prompt(distill)
-    distill.add_argument("--eval", action=argparse.BooleanOptionalAction, default=False, help="run eval-tools on each adapter")
+    distill.add_argument(
+        "--eval", action=argparse.BooleanOptionalAction, default=False, help="run eval-tools on each adapter"
+    )
     distill.add_argument("--eval-split", default="hard")
     distill.add_argument("--eval-limit", type=int, default=None)
-    distill.add_argument("--dry-run", action="store_true", help="CPU: filter, nest, mask-check fixtures. Does not load Qwen.")
+    distill.add_argument(
+        "--dry-run", action="store_true", help="CPU: filter, nest, mask-check fixtures. Does not load Qwen."
+    )
     _wandb(distill)
     distill.set_defaults(func=_distill)
     return parser
-
 
 
 def _runs_dir(parser: argparse.ArgumentParser) -> None:

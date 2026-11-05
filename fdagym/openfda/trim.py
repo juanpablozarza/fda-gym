@@ -81,8 +81,12 @@ def pick(value: Any, spec: Spec) -> Any:
         return value
     kept = {}
     for name, sub in spec.items():
-        if name in value:
-            kept[name] = value[name] if sub is True else pick(value[name], sub)
+        if name not in value:
+            continue
+        if sub is True:
+            kept[name] = value[name]
+        elif isinstance(sub, dict):
+            kept[name] = pick(value[name], sub)
     return kept
 
 

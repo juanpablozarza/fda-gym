@@ -113,9 +113,7 @@ def task_unanswerable() -> dict:
         "difficulty": "hard",
         "difficulty_features": _features(needs_aggregation=True, has_constraint=True),
         "gold": {"kind": "exact", "value": "NOT_FOUND"},
-        "gold_citations": [
-            {"endpoint": "drug/event", "ids": [], "fields": ["meta.results.total"]}
-        ],
+        "gold_citations": [{"endpoint": "drug/event", "ids": [], "fields": ["meta.results.total"]}],
         "oracle_calls": [
             {
                 "tool": "query_adverse_events",
@@ -138,9 +136,7 @@ def task_approval() -> dict:
         "difficulty": "easy",
         "difficulty_features": _features(),
         "gold": {"kind": "exact", "value": "2017", "aliases": ["2017-12-05"]},
-        "gold_citations": [
-            {"endpoint": "drug/drugsfda", "ids": ["NDA209637"], "fields": ["submissions"]}
-        ],
+        "gold_citations": [{"endpoint": "drug/drugsfda", "ids": ["NDA209637"], "fields": ["submissions"]}],
         "oracle_calls": [{"tool": "search_approvals", "arguments": {"generic_name": "semaglutide"}}],
         "snapshot_version": "2026-10-15",
     }

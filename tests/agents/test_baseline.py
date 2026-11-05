@@ -11,7 +11,9 @@ from tests.env.support import ALL_TASKS, EXAMPLE_TASK, JsonSnapshot, task_nausea
 from tests.test_schemas import validator
 
 
-def _scripted_run(tmp_path, tasks, snapshot, calls, *, run_id="offline", models=None, seeds=None, cost_cap=5.0, cost=0.0001):
+def _scripted_run(
+    tmp_path, tasks, snapshot, calls, *, run_id="offline", models=None, seeds=None, cost_cap=5.0, cost=0.0001
+):
     return run_baseline(
         split="test",
         models=models or ["scripted-oracle"],

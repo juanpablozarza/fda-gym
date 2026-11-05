@@ -5,9 +5,9 @@ Reward, strict (``rewards/env/mean``), memorization gap, and flags
 environment. It is not an argument and it is not printed.
 
     uv run python scripts/wandb_chart.py grpo-qwen3b-tools
-    uv run python scripts/wandb_chart.py grpo-qwen3b-tools --project bio-rl --entity my-lab --out /tmp/grpo.png
+    uv run python scripts/wandb_chart.py grpo-qwen3b-tools --project fda-gym --entity my-lab --out /tmp/grpo.png
 
-Project defaults to ``bio-rl``. Entity defaults to ``WANDB_ENTITY`` or the key's default entity.
+Project defaults to ``fda-gym``. Entity defaults to ``WANDB_ENTITY`` or the key's default entity.
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ from fdagym.train.wandb_log import resolve_wandb_target, wandb_key_present
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Render a W&B training run to PNG")
     parser.add_argument("run_id")
-    parser.add_argument("--project", default="", help="W&B project (default: env WANDB_PROJECT or bio-rl)")
+    parser.add_argument("--project", default="", help="W&B project (default: env WANDB_PROJECT or fda-gym)")
     parser.add_argument("--entity", default="", help="W&B entity (default: env WANDB_ENTITY)")
     parser.add_argument("--out", type=Path, default=None, help="PNG path (default: results/<run_id>-chart.png)")
     args = parser.parse_args(argv)
