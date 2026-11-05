@@ -176,9 +176,9 @@ def _year_hits(steps, task) -> int:
 def test_hard_train_correct_lookups_gain_the_missed_year_hops():
     """Exact ingredient equality missed salt forms. The shared matcher credits them.
 
-    An earlier pass estimated about 179 of the hard_train questions. Counted
-    on the frozen file, with the approval page the reward actually scores, 63
-    questions gain a year hop that was a miss, and 63 have a higher hop rate.
+        An earlier pass estimated about 179 of the hard_train questions. Counted
+        on the frozen file, with the approval page the reward actually scores, 61
+        questions gain a year hop that was a miss, and 62 have a higher hop rate.
     """
     if not SNAPSHOT.exists():
         pytest.skip("pilot snapshot absent")
@@ -189,7 +189,7 @@ def test_hard_train_correct_lookups_gain_the_missed_year_hops():
     from fdagym.tools import EpisodeState, execute
 
     tasks = load_split("hard_train")
-    assert len(tasks) == 319
+    assert len(tasks) == 337
     snapshot = DiskSnapshot("2026-10-15")
     cache: dict[str, dict] = {}
 
@@ -233,6 +233,6 @@ def test_hard_train_correct_lookups_gain_the_missed_year_hops():
         hops_mod.product_matches = saved
 
     assert lost_year == []
-    assert len(gained_year) == 63
-    assert len(gained_rate) == 63
+    assert len(gained_year) == 61
+    assert len(gained_rate) == 62
     assert set(gained_year) <= set(gained_rate)

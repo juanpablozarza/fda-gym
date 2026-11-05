@@ -381,7 +381,7 @@ def test_train_job_builds_the_same_hard_mix_config(monkeypatch, tmp_path):
     assert captured["kwargs"]["sft_adapter"] == str(tmp_path / "adapter")
     assert captured["kwargs"]["results_dir"] == runs
     assert captured["args"][0].version == "2026-10-15"
-    assert result["pool_exclusion"]["n_holdout"] == 34
+    assert result["pool_exclusion"]["n_holdout"] == 36
     hard_n = 100 if (Path(__file__).resolve().parents[2] / "data" / "tasks" / "hard.jsonl").exists() else 93
     assert result["pool_exclusion"]["n_hard_eval"] == hard_n
     assert commits == [None, None]

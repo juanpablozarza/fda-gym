@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-05 hard_train decontamination
+
+`hard_train.jsonl` (337) and `hard_train_holdout.jsonl` (36) were rebuilt so they share no drugs, application numbers, sponsors, or question text with `public.jsonl`. The previous files overlapped the published sheet on 51 drugs and one question (old `FG-8393` = `FG-9171`). `hard_train_holdout` remains an in-distribution ~10% question carve of the same pool, not a disjoint eval. `tests/tasks/test_public.py` now always checks the three files.
+
 ## 2026-11-05 grader 5
 
 Grader version 5. Data version stays 2026-10-28. `snapshot_version` stays `2026-10-15`.

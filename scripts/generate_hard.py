@@ -4,6 +4,9 @@
     uv run python scripts/generate_hard.py public
 
 Both commands are CPU-only and leave the core train/test task files untouched.
+``train`` writes ``hard_train.jsonl`` and ``hard_train_holdout.jsonl`` from drugs that
+do not appear on ``public.jsonl`` (plus ``test.jsonl`` and ``hard.jsonl`` when those
+files exist). The holdout is a ~10% in-distribution question carve, not a disjoint eval.
 ``public`` writes ``data/tasks/public.jsonl`` from the drugs the private hard sheet does not use.
 
 The private hard-eval sheet (formerly ``eval``) is not generated from this public repo.
@@ -61,11 +64,19 @@ def _generate(split: str) -> int:
         outputs = [(output, tasks)]
     else:
         from fdagym.tasks.disjoint import OverlapError, assert_disjoint
-        from fdagym.tasks.hard_train import generate_hard_train
+        from fdagym.tasks.hard_train import (
+            generate_hard_train,
+            load_exclusion_splits,
+            reassign_ids,
+            strip_clear_leaks,
+        )
         from fdagym.tasks.holdout import assert_question_holdout, carve_known_holdout
         from fdagym.tasks.plan import load_universe
 
         generated, report = generate_hard_train(snapshot)
+        n_before = len(generated)
+        generated = reassign_ids(strip_clear_leaks(snapshot, generated))
+        report["stripped_leaks"] = n_before - len(generated)
         tasks, question_holdout = carve_known_holdout(generated, snapshot=snapshot)
         report["question_holdout"] = assert_question_holdout(tasks, question_holdout, snapshot)
         outputs = [
@@ -74,9 +85,7 @@ def _generate(split: str) -> int:
         ]
         report_path = ROOT / "results" / "hard-train-generation.json"
         try:
-            from fdagym.agents.baseline import load_split
-
-            held_out = [*load_split("hard"), *load_split("test")]
+            held_out = load_exclusion_splits()
             report["disjoint"] = assert_disjoint(tasks, held_out, snapshot)
             report["holdout_disjoint"] = assert_disjoint(question_holdout, held_out, snapshot)
         except (OverlapError, RuntimeError) as exc:

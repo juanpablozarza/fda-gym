@@ -28,12 +28,12 @@ from fdagym.train.tool_config import ToolTrainConfig
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA = json.loads((ROOT / "schemas" / "task.schema.json").read_text())
 VALIDATOR = Draft202012Validator(SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA)))
-HARD_TRAIN_SHA256 = "a4915082a2691b2e029546a3b03f667ab1366fe70518cc486a079c80fac0848a"
-HARD_TRAIN_HOLDOUT_SHA256 = "ca56125afe4609b5ca6069674ceee1a707ff07de744b05f94f13365732458556"
+HARD_TRAIN_SHA256 = "6bfaf4d5357569308a3feed0ddf75571e6dd414870015915dd80bc0daa60d3b9"
+HARD_TRAIN_HOLDOUT_SHA256 = "e8b5ee075159af09fd2682c4c5f87b302157ea25eb3647492b2618d3d0f97cd1"
 TRAIN_SHA256 = "a6c895f14c3399cfd47de5b0d2ac311bc38e2f853f7de13f24343d588d739a31"
 TEST_SHA256 = "3b52b30c45e19956bf183799f51a7e811a2f981a2777413f6fced837a82ce3ea"
-N_TRAIN = 319
-N_HOLDOUT = 34
+N_TRAIN = 337
+N_HOLDOUT = 36
 N_TASKS = N_TRAIN + N_HOLDOUT
 ID_START = 8101
 BY_VARIANT = {
@@ -42,7 +42,7 @@ BY_VARIANT = {
     "earliest_reaction": 40,
     "faers_reaction": 40,
     "faers_year": 38,
-    "sponsor_count": 47,
+    "sponsor_count": 65,
     "sponsor_drug": 37,
     "sponsor_faers": 36,
     "year_reaction": 38,
@@ -53,7 +53,7 @@ HOLDOUT_BY_VARIANT = {
     "earliest_reaction": 4,
     "faers_reaction": 4,
     "faers_year": 4,
-    "sponsor_count": 5,
+    "sponsor_count": 7,
     "sponsor_drug": 4,
     "sponsor_faers": 4,
     "year_reaction": 4,
@@ -116,7 +116,7 @@ def test_file_matches_schema_and_stays_off_the_eval_ids(hard_train):
             assert isinstance(task["gold"]["value"], int)
     assert {variant: variants.count(variant) for variant in BY_VARIANT} == BY_VARIANT
     assert sum(task["type"] == "compare" for task in hard_train) == 199
-    assert sum(task["type"] == "sponsor_hop" for task in hard_train) == 120
+    assert sum(task["type"] == "sponsor_hop" for task in hard_train) == 138
     holdout_variants = []
     for task in holdout:
         VALIDATOR.validate(task)
@@ -230,33 +230,38 @@ def test_sponsor_keyword_hits_a_named_distractor(disk, hard_train):
 
 
 def test_real_file_is_disjoint_and_a_planted_overlap_is_loud(disk, hard_train):
-    if not (ROOT / "data" / "tasks" / "hard.jsonl").exists():
-        pytest.skip("data/tasks/hard.jsonl stays in the private repo")
-    holdout = [*load_split("hard"), *load_split("test")]
-    report = assert_disjoint(hard_train, holdout, disk)
-    assert report["overlap"] == {"drugs": [], "applications": [], "sponsors": []}
-    assert report["train"]["drugs"] == 60
-    assert report["holdout"]["drugs"] == 90
+    from fdagym.tasks.hard_train import load_exclusion_splits
 
-    leaked = json.loads(json.dumps(load_split("hard")[0]))
+    public = load_split("public")
+    holdout = load_split("hard_train_holdout")
+    excluded = load_exclusion_splits()
+    report = assert_disjoint(hard_train, public, disk)
+    assert report["overlap"] == {"drugs": [], "applications": [], "sponsors": []}
+    assert report["train"]["drugs"] == 69
+    assert report["holdout"]["drugs"] == 61
+    assert report["train_tasks"] == N_TRAIN
+    assert_disjoint(holdout, public, disk)
+    assert_disjoint(hard_train, excluded, disk)
+    assert_disjoint(holdout, excluded, disk)
+
+    leaked = json.loads(json.dumps(public[0]))
     leaked["split"] = "hard_train"
     with pytest.raises(OverlapError, match="drugs"):
-        assert_disjoint([leaked], holdout, disk)
+        assert_disjoint([leaked], public, disk)
 
     tainted = json.loads(json.dumps(hard_train[0]))
-    tainted["question"] = tainted["question"] + " Cited application NDA016084."
-    with pytest.raises(OverlapError, match="NDA016084"):
-        assert_disjoint([tainted], holdout, disk)
+    tainted["question"] = tainted["question"] + " Cited application NDA016012."
+    with pytest.raises(OverlapError, match="NDA016012"):
+        assert_disjoint([tainted], public, disk)
 
-    sponsor_task = next(task for task in load_split("test") if task["question"].lower().startswith("who is the sponsor"))
-    sponsor = sponsor_task["gold"]["value"]
+    sponsor_task = next(task for task in public if "sponsor_name" in str(task.get("gold_citations")))
     forged = json.loads(json.dumps(hard_train[0]))
     forged["question"] = "Who is the sponsor of application NDA999999?"
     forged["entity"] = {"generic_name": "olezarsen"}
-    forged["gold"] = {"kind": "exact", "value": sponsor}
-    forged["gold_citations"] = [{"endpoint": "drug/drugsfda", "ids": ["NDA999999"], "fields": ["sponsor_name"]}]
+    forged["gold"] = {"kind": "exact", "value": "ENDO OPERATIONS"}
+    forged["gold_citations"] = [{"endpoint": "drug/drugsfda", "ids": ["NDA007337"], "fields": ["sponsor_name"]}]
     forged["oracle_calls"] = [{"tool": "search_approvals", "arguments": {"application_number": "NDA999999"}}]
-    with pytest.raises(OverlapError, match=sponsor.casefold()):
+    with pytest.raises(OverlapError, match="endo operations"):
         assert_disjoint([forged], [sponsor_task], disk)
 
 
@@ -288,7 +293,7 @@ def test_sixty_forty_mix_is_opt_in(hard_train):
 def test_question_only_solver_reaches_every_task_at_6_and_8(disk, hard_train):
     both = [*hard_train, *load_split("hard_train_holdout")]
     report = check_reachability(disk, both, [6, 8])
-    assert report["min_calls"] == {"3": 90, "4": 86, "5": 52, "6": 125}
+    assert report["min_calls"] == {"3": 90, "4": 86, "5": 72, "6": 125}
     assert [row["solved"] for row in report["by_budget"]] == [N_TASKS, N_TASKS]
     assert report["budgets"] == [6, 8]
     six = next(task for task in hard_train if task["difficulty_features"]["min_tool_calls"] == 6)

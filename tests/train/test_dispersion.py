@@ -153,7 +153,7 @@ def test_probe_task_ids_rejects_composite():
     composite = COMPOSITE_PROBE_IDS[0]
     with pytest.raises(ValueError, match="not in the GRPO training pool"):
         probe_task_ids([composite], ids_sha256([composite]))
-    with pytest.raises(ValueError, match="not in the GRPO training pool"):
+    with pytest.raises(ValueError, match="not in the GRPO training pool|eval, holdout, or test"):
         probe_task_ids(PROBE_IDS, PROBE_SHA)
 
 
