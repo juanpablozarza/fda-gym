@@ -33,7 +33,9 @@ Correctness is 1 only when format is 1, at least one citation is valid, and the 
 
 Efficiency counts only when correctness is above 0. The same tool call with the same arguments counts once. A trace shorter than the task minimum scores calls divided by that minimum. A longer trace scores the minimum divided by the calls.
 
-Every score includes `grader_version`. The current grader is version 4.
+Every score includes `grader_version`. The current grader is version 5.
+
+A `compare` answer keeps correctness only when the trace queried every named drug (so the unique or none decision is in the observations) and a valid citation is about the deciding drug. A `sponsor_hop` answer already needed that kind of proof. One tool call and a short quote from `results` is not enough.
 
 ## Tools
 

@@ -217,8 +217,10 @@ def test_compare_unique_max_is_the_last_hop():
     ]
     hops = hop_score(steps, COMPARE_TASK)
     assert hops.hits == hops.total == 4
+    assert hops.proves()
     two = hop_score(steps[:2], COMPARE_TASK)
     assert two.hits == 2
+    assert not two.proves()
     assert any("unique: miss" in note for note in two.notes)
 
 

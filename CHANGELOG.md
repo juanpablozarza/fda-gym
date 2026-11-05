@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-05 grader 5
+
+Grader version 5. Data version stays 2026-10-28. `snapshot_version` stays `2026-10-15`.
+
+Version 4 gated `sponsor_hop` correctness on a hop proof. Version 5 applies the same idea to `compare`. A right answer still needs a valid citation; it now also needs the comparison to be visible in the trace.
+
+- A `compare` score pays correctness only when every named drug was queried so the unique/none decision is in the observations, and (except `boxed_none`) a valid citation is about the deciding drug. One FAERS call plus a four-character quote from `results` no longer opens the gate.
+- `HopScore.proves()` is true for compare variants only when every hop flag hits. Dense training still shapes a partial hop into the correctness slot after that gate, the same way sponsor-hop does.
+- The public repo no longer ships a default seed or an `eval` command that can regenerate the private held-out sheet. `generate_hard()` reads `FDAGYM_HARD_SEED` / `FDAGYM_HARD_ID_START` when those arguments are omitted.
+
 ## 2026-10-28 grader 4
 
 Grader version 4. Data version stays 2026-10-28. `snapshot_version` stays `2026-10-15`.

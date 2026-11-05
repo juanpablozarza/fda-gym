@@ -25,6 +25,11 @@ match, and FAERS when that question has it. The boxed-warning keyword is not
 required once the match has left one drug. Dense training still shapes a
 partial hop into the correctness slot after that gate, and efficiency stays on
 the pre-shape value.
+
+A ``compare`` task pays the answer's correctness the same way: the trace has to
+prove the comparison (every named drug queried, unique/none decision visible)
+and a valid citation has to be about the deciding drug. ``boxed_none`` is the
+exception on the citation side, because the gold is yes/no rather than a drug.
 """
 
 from fdagym.rewards.citation import CitationScore, score_citations
@@ -72,7 +77,7 @@ def score(trajectory: dict, task: dict, *, judge: Judge | None = None, dense: bo
             ],
             id_hits=0,
         )
-    hop = hop_score(steps, task) if dense or task.get("type") == "sponsor_hop" else None
+    hop = hop_score(steps, task) if dense or task.get("type") in {"sponsor_hop", "compare"} else None
     if dense:
         correctness, correctness_notes = dense_correctness(
             answer,
@@ -87,6 +92,9 @@ def score(trajectory: dict, task: dict, *, judge: Judge | None = None, dense: bo
         answer_correctness = correctness
         correctness, correctness_notes, answer_correctness = _apply_sponsor_proof(
             task, correctness, correctness_notes, answer_correctness, hop
+        )
+        correctness, correctness_notes, answer_correctness = _apply_compare_proof(
+            task, correctness, correctness_notes, answer_correctness, hop, steps, citations
         )
         if correctness <= 0 and hop is not None and hop.applies:
             correctness = HOP_CAP * hop.rate
@@ -107,6 +115,9 @@ def score(trajectory: dict, task: dict, *, judge: Judge | None = None, dense: bo
         answer_correctness = correctness
         correctness, correctness_notes, answer_correctness = _apply_sponsor_proof(
             task, correctness, correctness_notes, answer_correctness, hop
+        )
+        correctness, correctness_notes, answer_correctness = _apply_compare_proof(
+            task, correctness, correctness_notes, answer_correctness, hop, steps, citations
         )
     efficiency, efficiency_notes = score_efficiency(steps, task, answer_correctness)
     total = round(
@@ -152,3 +163,64 @@ def _apply_sponsor_proof(task, correctness, notes, answer_correctness, hop):
         [*notes, "correctness needs the sponsor proof", *hop.notes],
         0.0,
     )
+
+
+def _apply_compare_proof(task, correctness, notes, answer_correctness, hop, steps, citations):
+    if task.get("type") != "compare" or correctness <= 0:
+        return correctness, notes, answer_correctness
+    hop_notes = hop.notes if hop is not None else ["compare hops were not scored"]
+    if hop is None or not hop.proves():
+        return (
+            0.0,
+            [*notes, "correctness needs the compare proof", *hop_notes],
+            0.0,
+        )
+    if not _compare_citation_supports(steps, task, citations, hop):
+        return (
+            0.0,
+            [*notes, "correctness needs a citation of the deciding compare evidence"],
+            0.0,
+        )
+    return correctness, notes, answer_correctness
+
+
+def _compare_citation_supports(steps, task, citations, hop) -> bool:
+    """True when a valid citation is about the drug the comparison decided on.
+
+    ``boxed_none`` gold is yes/no, so the hop proof (every label searched, none
+    boxed) is the whole gate. Other compare variants store that drug on
+    ``entity.generic_name``.
+    """
+    if hop.variant == "boxed_none":
+        return True
+    target = (task.get("entity") or {}).get("generic_name")
+    if not isinstance(target, str) or not target.strip():
+        return False
+    from fdagym.queries import label_search
+    from fdagym.rewards.citation import _TOOL_ENDPOINT, _dicts, _drug_of, _node_has_id, _one
+
+    for citation in citations or []:
+        if not isinstance(citation, dict):
+            continue
+        ok, _reason, _empty = _one(citation, steps, task)
+        if not ok:
+            continue
+        step = _step_holding_citation(steps, citation, _TOOL_ENDPOINT, _dicts, _node_has_id)
+        if step is None:
+            continue
+        drug = _drug_of(step, steps)
+        if isinstance(drug, str) and label_search(drug) == label_search(target):
+            return True
+    return False
+
+
+def _step_holding_citation(steps, citation, tool_endpoint, dicts, node_has_id):
+    endpoint, cid = citation.get("endpoint"), citation.get("id")
+    if not isinstance(endpoint, str) or not isinstance(cid, str):
+        return None
+    for step in steps or []:
+        if step.get("error") or tool_endpoint.get(step.get("tool")) != endpoint:
+            continue
+        if any(node_has_id(node, cid) for node in dicts(step.get("output"))):
+            return step
+    return None

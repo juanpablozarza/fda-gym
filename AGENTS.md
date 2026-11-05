@@ -16,6 +16,10 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
   - Boolean answers with a topic (boxed warnings) must match yes/no, hit a gold keyword, and name at most 2 distinct
     boxed-warning topics from the vocabulary derived from the snapshot's labels (blocks keyword stuffing).
   - `efficiency = min(1, min_tool_calls / max(calls, 1))`, counted only if correctness > 0.
+  - A `compare` answer keeps correctness only when the trace proves the comparison
+    (every named drug queried, unique/none decision visible) and a valid citation is
+    about the deciding drug. `boxed_none` is yes/no, so the hop proof is the whole
+    extra gate. Same idea as the `sponsor_hop` proof.
   - Abstaining is correct only on `answerable: false` tasks, and only after a search (grounded empty-result citation).
   - Records with no id of their own are cited by the tool call that returned them: `id: "step:<n>"`. FAERS top reactions use
     field `results`, FAERS report counts and empty results use `meta.results.total`. Task `gold_citations` for these use

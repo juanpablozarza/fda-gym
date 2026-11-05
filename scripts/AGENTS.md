@@ -2,7 +2,7 @@
 
 Scripts are command-line entry points for repeatable project workflows. Keep each command thin: parse arguments, validate the request, call the implementation in `fdagym/`, and print or save its result. Put reusable logic in the owning package module rather than duplicating it across scripts.
 
-Group closely related hard-split audits under `audit_hard.py` (`disjointness`, `reachability`, `memorization`) and hard-split generation under `generate_hard.py` (`eval`, `train`). Use a preset or subcommand when command variants share a purpose; keep distinct training and evaluation protocols as distinct entry points. When changing a command, update the runbook, lessons, tests, and dashboard documentation in the same change.
+Group closely related hard-split audits under `audit_hard.py` (`disjointness`, `reachability`, `memorization`) and hard-split generation under `generate_hard.py` (`train`, `public`). Use a preset or subcommand when command variants share a purpose; keep distinct training and evaluation protocols as distinct entry points. When changing a command, update the runbook, lessons, tests, and dashboard documentation in the same change. The private hard-eval sheet is not generated from this public repo.
 
 Keep modules import-safe. Put remote-service imports and side effects inside `main()` or a function called by it. GPU and paid operations must require an explicit command. Snapshot, evaluation, and task audit commands should use the frozen local snapshot and remain reproducible offline where possible.
 
@@ -14,7 +14,7 @@ Use `uv add` for dependencies. Avoid introducing dependencies for small CLI task
 |---|---|---|
 | Record or inspect the frozen openFDA snapshot | `snapshot.py` | `fdagym.openfda`, `fdagym.queries` |
 | Generate standard tasks | `python -m fdagym.tasks` | `fdagym.tasks` |
-| Generate hard evaluation/train splits | `generate_hard.py eval\|train` | `fdagym.tasks.hard`, `fdagym.tasks.hard_train` |
+| Generate hard train or public splits | `generate_hard.py train\|public` | `fdagym.tasks.hard`, `fdagym.tasks.hard_train` |
 | Audit hard splits | `audit_hard.py disjointness\|reachability\|memorization` | `fdagym.tasks`, `fdagym.swapped` |
 | Run OpenRouter baseline | `run_baseline.py` | `fdagym.agents` |
 | Score one model on a split via Chat Completions | `eval_chat.py` | `fdagym.agents.chat` |
