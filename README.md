@@ -68,17 +68,7 @@ From `tests/rewards/test_public_attacks.py` and `tests/rewards/test_compare_proo
 
 ## Committed baselines
 
-These tables are from committed files under `results/` and `web/public/results/`, labeled with the grader they were scored under.
-
-### Plan A local TEST
-
-`web/public/results/plan-a.json`, split `test`, 324 questions, greedy. These are the committed Qwen2.5-3B numbers on split `test` (324), not a public-sheet run.
-
-| Model | mean reward | pass | citation |
-| --- | --- | --- | --- |
-| Qwen2.5-3B-Instruct base | 0.0185 | — | — |
-| SFT warm-up | 0.575 | — | — |
-| GRPO 150 steps from warm-up | 0.839 | 80.6% | 0.87 |
+The table below is from a committed file under `results/`, labeled with the grader it was scored under.
 
 ### OpenRouter public.jsonl
 
