@@ -140,11 +140,11 @@ uv run vf-eval fdagym --dry-run --no-push
 uv run vf-eval @ configs/prime.toml --dry-run --no-push
 ```
 
-The optional extra pins `verifiers==0.4.0` so the v1 CLI is `vf-eval` (`uv run vf-eval @ configs/prime.toml`). Point `--select.include.ids` at a public id such as `FG-9101` for a one-task run; do not treat that as a 93-row model baseline. `--extra prime` cannot be combined with `--extra gpu`. The env contract remains `FDAEnv.reset` / `FDAEnv.step` above.
+The optional extra pins `verifiers==0.4.0` so the v1 CLI is `vf-eval` (`uv run vf-eval @ configs/prime.toml`). Point `--select.include.ids` at a public id such as `FG-9101` for a one-task run; do not treat that as a 93-row model baseline. `--extra prime` cannot be combined with `--extra hud` or `--extra gpu` (hud wants mcp>=2.2.0; verifiers==0.4.0 pins mcp==2.0.0). The env contract remains `FDAEnv.reset` / `FDAEnv.step` above.
 
 ## HUD
 
-Optional [HUD](https://docs.hud.ai) SDK Environment around the same `FDAEnv` / five tools / `score()` path, over `data/tasks/public.jsonl` only (`FG-9101`–`FG-9193`). No GPU. Default `uv sync --group dev` does not install the SDK. Do not combine with `--extra gpu` (solve `--extra hud` on its own, or with `--extra train`).
+Optional [HUD](https://docs.hud.ai) SDK Environment around the same `FDAEnv` / five tools / `score()` path, over `data/tasks/public.jsonl` only (`FG-9101`–`FG-9193`). No GPU. Default `uv sync --group dev` does not install the SDK. Do not combine with `--extra gpu` (solve `--extra hud` on its own, or with `--extra train`). `--extra hud` cannot be combined with `--extra prime` (hud wants mcp>=2.2.0; verifiers==0.4.0 pins mcp==2.0.0).
 
 ```bash
 uv sync --extra hud
