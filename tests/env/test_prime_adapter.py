@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from fdagym.demo import DemoError
+from fdagym.demo import HONEST_TOTAL_MIN, PUBLIC_ID_FIRST, PUBLIC_ID_LAST, DemoError, load_public_tasks
 from fdagym.env import TOOL_BUDGET
 from fdagym.prime.episode import (
     ADAPTER_TOOLS,
@@ -82,6 +82,23 @@ def test_fg9101_adapter_episode_is_three_faers_queries_then_submit():
         "query_adverse_events",
         "submit_answer",
     ]
+
+
+def test_every_public_task_replays_through_prime_adapter_to_one():
+    assert GRADER_VERSION == "5"
+    tasks = load_public_tasks(PUBLIC)
+    expected = [f"FG-{n}" for n in range(PUBLIC_ID_FIRST, PUBLIC_ID_LAST + 1)]
+    assert sorted(tasks) == expected
+    failures = []
+    for task_id in expected:
+        reward = play_public_adapter_episode(
+            task_id,
+            public_path=PUBLIC,
+            snapshot_root=SNAPSHOT,
+        )
+        if reward["total"] < HONEST_TOTAL_MIN or reward["grader_version"] != GRADER_VERSION:
+            failures.append(f"{task_id} total={reward['total']} grader_version={reward['grader_version']}")
+    assert failures == []
 
 
 def test_adapter_rejects_ids_outside_the_public_sheet():
