@@ -140,10 +140,10 @@ uv run vf-eval fdagym --dry-run --no-push
 uv run vf-eval @ configs/prime.toml --dry-run --no-push
 ```
 
-Install the Hub package:
+Install the Hub package ([listing](https://app.primeintellect.ai/dashboard/environments/jpzarza/fda-gym)):
 
 ```bash
-prime env install juanpablozarza/fda-gym
+prime env install jpzarza/fda-gym
 uv run vf-eval fda-gym --dry-run --no-push
 ```
 

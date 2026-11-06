@@ -20,7 +20,7 @@ Use `uv add` for dependencies. Avoid introducing dependencies for small CLI task
 | Score one model on a split via Chat Completions | `eval_chat.py` | `fdagym.agents.chat` |
 | Keyless public-sheet grader demo (offline, no LLM) | `demo_public_episode.py` | `fdagym.demo` |
 | Local verifiers v1 / vf-eval wrapper (optional `prime` extra; not with `hud`) | `uv run vf-eval fdagym` / `uv run vf-eval @ configs/prime.toml` | `fdagym.prime` |
-| Environments Hub package (public sheet + freeze; do not `prime env push` from CI) | `environments/fda-gym/` then later `prime env install juanpablozarza/fda-gym` | `fda_gym` re-exports `FDAGymTaskset` |
+| Environments Hub package (public sheet + freeze; do not `prime env push` from CI) | `environments/fda-gym/` then later `prime env install jpzarza/fda-gym` | `fda_gym` re-exports `FDAGymTaskset` |
 | HUD SDK local eval of public.jsonl (optional extra, no GPU; not with `prime`) | `hud eval tasks.py claude` | `fdagym.hud` |
 | Train/evaluate locally | `grpo_singleturn.py`, `grpo_tools.py`, `sft_*.py`, `eval_local.py`, `eval_tools.py`, `run_gpu.py` | `fdagym.train` |
 | Compare or chart runs | `compare_runs.py`, `wandb_chart.py` | `fdagym.train` |
