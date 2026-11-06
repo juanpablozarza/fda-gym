@@ -1,0 +1,13 @@
+# Local verifiers v1 eval of public FDA-Gym (FG-9101–FG-9193).
+# Install: uv sync --extra prime
+# Dry-run (no model): uv run vf-eval @ configs/prime.toml --dry-run --no-push
+# One published row:  uv run vf-eval @ configs/prime.toml --no-push
+# This is not a Hub listing and not a 93-row model baseline.
+
+push = false
+
+[env.taskset]
+id = "fdagym"
+
+[select.include]
+ids = ["FG-9101"]
