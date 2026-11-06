@@ -1,7 +1,5 @@
-"""Hard-RL Modal flags, SFT pool guard, and the unused hop-reward hook."""
+"""Hard-RL flags, SFT pool guard, and the unused hop-reward hook."""
 
-import ast
-import importlib.util
 import inspect
 import json
 from pathlib import Path
@@ -23,7 +21,6 @@ from fdagym.train.hard_mix import (
 from fdagym.train.rollout import QwenToolCodec
 from fdagym.train.sft_config import SFTConfig
 from fdagym.train.sft_select import assert_sft_rows_allowed
-from fdagym.train.spawn_plan import spawn_plan
 from fdagym.train.tool_score import episode_scores, hop_reward, training_reward
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -170,67 +167,20 @@ def test_hop_reward_is_not_added():
     assert training_reward(0.8, 0, 0.05) == pytest.approx(0.8)
 
 
-def test_spawn_plan_is_the_new_hard_run_and_does_not_import_modal():
-    sft = spawn_plan("sft")
-    assert sft["function"] == "sft"
-    assert sft["kwargs"] == {
-        "run_id": "sft-qwen3b-tools-v4",
-        "tool_budget": 8,
-        "prompt_version": "v4",
-        "include_hard_train": False,
-    }
-    evaluation = spawn_plan("eval-hard")
-    assert evaluation["function"] == "eval_tools"
-    assert evaluation["kwargs"]["split"] == "public"
-    assert evaluation["kwargs"]["tool_budget"] == 8
-    assert evaluation["kwargs"]["prompt_version"] == "v4"
-    assert evaluation["kwargs"]["adapter"] == "/vol/runs/sft-qwen3b-tools-v4/adapter"
-    dry = spawn_plan("grpo-dry")
-    assert dry["kwargs"]["hard_train_mix"] == 0.6
-    assert dry["kwargs"]["max_steps"] == 3
-    assert dry["kwargs"]["tool_budget"] == 8
-    assert dry["kwargs"]["prompt_version"] == "v4"
-    assert dry["kwargs"]["memorization_every"] == 10
-    with pytest.raises(ValueError):
-        spawn_plan("train")
-    script = (ROOT / "scripts" / "spawn_modal.py").read_text()
-    tree = ast.parse(script)
-    imported = set()
-    for node in tree.body:
-        if isinstance(node, ast.Import):
-            imported.update(alias.name.split(".")[0] for alias in node.names)
-        elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
-            imported.add(node.module.split(".")[0])
-    assert "modal" not in imported
-    assert "fn.spawn" in script
-
-
-def test_modal_hard_path_logs_the_pool_and_wires_memorization():
-    modal = (ROOT / "modal_train.py").read_text()
+def test_hard_path_logs_the_pool_and_wires_memorization():
     jobs = (ROOT / "fdagym" / "train" / "jobs.py").read_text()
     grpo = (ROOT / "fdagym" / "train" / "grpo_tools.py").read_text()
+    cli = (ROOT / "scripts" / "run_gpu.py").read_text()
     assert "format_pool_exclusion_log" in jobs
     assert "memorization=weights is not None" in jobs
     assert "type_mix=tool.type_mix" in jobs
-    assert "run_train_tools(" in modal
-    assert "include_hard_train: bool = False" in modal
+    assert "run_train_tools(" in cli
     assert "memorization: bool = False" in grpo
     assert 'if memorization and measure_box["fn"] is None' in grpo
     assert "live_memorization_measure" in grpo
     assert "fdagym.swapped" not in grpo
-    assert "SwappedFactsEnv" not in modal
-    launcher = (ROOT / "scripts" / "launch_pipeline.py").read_text()
-    spec = importlib.util.spec_from_file_location("launch_pipeline", ROOT / "scripts" / "launch_pipeline.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    args = module._parser().parse_args(["tools", "--init-adapter", "adapter", "--hard-train-mix", "0.6"])
-    assert module._kwargs(args) == {"init_adapter": "adapter", "force": False, "hard_train_mix": 0.6}
-    assert "modal" not in {
-        alias.name.split(".")[0]
-        for node in ast.parse(launcher).body
-        if isinstance(node, ast.Import)
-        for alias in node.names
-    }
+    assert "SwappedFactsEnv" not in jobs
+    assert "SwappedFactsEnv" not in cli
 
 
 def test_v4_sft_audit_keeps_the_v3_counts():

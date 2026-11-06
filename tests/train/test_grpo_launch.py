@@ -75,26 +75,8 @@ def test_7b_preset_enables_gradient_checkpointing():
     assert "7b" in help_text
 
 
-def test_modal_app_is_l40s_vllm_and_resumable():
-    text = (ROOT / "modal_train.py").read_text()
-    assert 'gpu="L40S"' in text or "gpu=GPU_DEFAULT" in text
-    assert 'GPU_DEFAULT = "L40S"' in text
-    assert "A100-80GB" in text
-    assert "use_vllm=True" in text
-    assert "fdagym-checkpoints" in text
-    assert "resume" in text
-    assert "volume.commit" in text or "_commit" in text
-    assert "eval-base" in text
-    assert "sft-plan-a" in text
-    assert "init_adapter" in text
-    assert "sft-plan-a-qwen3b" in text
-    assert "run_id or RUN_ID_3B" in text
-    assert "does nothing until" in text.lower() or "Does nothing until" in text
-    assert '".env"' in text
-    assert '"*.pyc"' in text
-    assert "require_snapshot" in text
-    assert "_modal_pip()" in text
-    from fdagym.train.gpu_stack import gpu_requirements, modal_pip
+def test_gpu_extra_pins_the_local_cuda_stack():
+    from fdagym.train.gpu_stack import gpu_requirements
 
     pins = gpu_requirements()
     assert pins == [
@@ -106,14 +88,11 @@ def test_modal_app_is_l40s_vllm_and_resumable():
         "datasets==3.5.1",
         "vllm==0.8.5",
     ]
-    assert modal_pip()[: len(pins)] == pins
-    assert "wandb>=0.19.0" in modal_pip()
-    assert "litellm" not in " ".join(modal_pip())
-    ignore_block = text.split("IGNORE = [", 1)[1].split("]", 1)[0]
-    assert ".env" in ignore_block
-    assert "*.pyc" in ignore_block
-    assert '"data"' not in ignore_block
-    assert "data/snapshots" not in ignore_block
+    extra = (ROOT / "pyproject.toml").read_text()
+    assert "[project.optional-dependencies]" in extra
+    cfg_text = (ROOT / "fdagym" / "train" / "config.py").read_text()
+    assert "use_vllm: bool = True" in cfg_text
+    assert "require_snapshot" in (ROOT / "fdagym" / "train" / "snapshot_fs.py").read_text()
 
 
 def test_fit_context_ignores_the_four_document_maximum():
@@ -158,25 +137,10 @@ def test_stage1_pool_fits_4096_after_approval_summaries():
     assert_prompts_fit(rows, fitted)
 
 
-def test_snapshot_is_on_disk_for_image_upload():
+def test_snapshot_is_on_disk_for_local_gpu_jobs():
     path = require_snapshot(ROOT)
     assert path.is_file()
-    assert not (ROOT / "Dockerfile").exists()
-    assert not (ROOT / ".dockerignore").exists()
-    setup = (ROOT / "scripts" / "runpod_setup.sh").read_text()
-    assert "data/snapshots/2026-10-15/manifest.jsonl" in setup
     runbook = (ROOT / "docs" / "train.md").read_text()
     assert "results/" in runbook
     assert runbook.index("results/") < runbook.index("compare_runs.py")
-
-
-def test_runpod_setup_pins_the_gpu_extra_and_does_not_train():
-    setup = (ROOT / "scripts" / "runpod_setup.sh").read_text()
-    assert "uv sync --extra gpu --frozen --no-dev" in setup
-    assert "import vllm" in setup
-    assert "torch.cuda.is_available()" in setup
-    assert "gpu_requirements" in setup
-    assert "run_gpu.py" not in setup.split("cat <<'EOF'", 1)[0]
-    assert "--preset 7b" not in setup
-    assert "A100" in setup
-    assert "Does not start" in setup or "No job was started" in setup
+    assert "uv sync --extra gpu" in runbook

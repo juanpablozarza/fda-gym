@@ -135,7 +135,7 @@ def test_config_resume_and_project_overrides(monkeypatch):
         tool_budget=8,
         hard_train_mix={"hard": 0.6, "current": 0.4},
         seeds=[0],
-        adapter="/vol/runs/sft-qwen3b-tools-v4/adapter",
+        adapter="results/sft-qwen3b-tools-v4/adapter",
         model="Qwen/Qwen2.5-3B-Instruct",
     )
     session = start_wandb(
@@ -213,7 +213,7 @@ def test_config_update_scrubs_tokens(monkeypatch):
     start_wandb("run", {"run_id": "run", "hub_token": "should-drop", "note": "keep"})
     fake.run.config.update({"hub_token": "abc", "learning_rate": 1e-5, "api_key": "nope"})
     assert fake.run.config.updates == [{"learning_rate": 1e-5}]
-    scrubbed = scrub_config({"adapter": "/vol/a", "WANDB_API_KEY": "test-key", "ok": 1})
+    scrubbed = scrub_config({"adapter": "results/a", "WANDB_API_KEY": "test-key", "ok": 1})
     assert "WANDB_API_KEY" not in scrubbed
     assert scrubbed["ok"] == 1
 
@@ -223,8 +223,8 @@ def test_resume_floor_and_checkpoint_step():
     assert resume_floor(resumed=True, summary_step=73, resume_step=50) == 73
     assert resume_floor(resumed=True, summary_step=None, resume_step=50) == 50
     assert resume_floor(resumed=True, summary_step=None, resume_step=None) is None
-    assert step_from_checkpoint("/vol/runs/grpo/checkpoint-50") == 50
-    assert step_from_checkpoint("/vol/runs/grpo/adapter") is None
+    assert step_from_checkpoint("results/grpo/checkpoint-50") == 50
+    assert step_from_checkpoint("results/grpo/adapter") is None
     assert should_skip_log({"train/global_step": 50, "train/reward": 0.1}, None, 50)
     assert not should_skip_log({"train/reward": 0.1}, None, 50)
     assert not should_skip_log({"eval/strict": 0.4}, None, 50)
@@ -399,7 +399,6 @@ def test_key_is_not_a_parameter_or_a_literal():
     assert "api_key" not in signature.parameters
     assert "wandb_api_key" not in signature.parameters
     for relative in (
-        "modal_train.py",
         "fdagym/train/wandb_log.py",
         "fdagym/train/grpo_tools.py",
         "fdagym/train/sft_launch.py",
@@ -416,19 +415,6 @@ def test_key_is_not_a_parameter_or_a_literal():
                 names = {arg.arg for arg in node.args.args}
                 assert "wandb_api_key" not in names
                 assert "api_key" not in names
-    modal = (ROOT / "modal_train.py").read_text()
-    assert 'Secret.from_name("wandb")' in modal
-    assert "WANDB_API_KEY=" not in modal
-    from fdagym.train.gpu_stack import modal_pip
-
-    assert any(item.startswith("wandb>=") for item in modal_pip())
-    assert "_modal_pip()" in modal
-    assert "FDAGYM_GIT_SHA" in modal
-    assert modal.index('image.env({"FDAGYM_GIT_SHA"') < modal.index(".add_local_dir(")
-    assert ".env(" not in modal.split(".add_local_dir(", 1)[1]
-    for name in ("def sft(", "def train_tools(", "def eval_tools("):
-        assert name in modal
-    assert modal.count("secrets=[WANDB_SECRET]") >= 4
     grpo = (ROOT / "fdagym" / "train" / "grpo_tools.py").read_text()
     assert "report_to" in grpo
     assert "attach_grpo_train_logs" in grpo

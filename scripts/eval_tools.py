@@ -38,7 +38,7 @@ def main(argv: list[str] | None = None) -> int:
     args = _parse(argv)
     if args.dry_run == args.eval:
         print(
-            "Pass --dry-run for the CPU check, or --eval to score a local model. This script does not start Modal.",
+            "Pass --dry-run for the CPU check, or --eval to score a local model. This script does not start a GPU job.",
             file=sys.stderr,
         )
         return 2
@@ -146,9 +146,9 @@ def _limits(args) -> RolloutLimits:
 
 
 def _parse(argv: list[str] | None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="CPU dry run or local tool eval. Does not start Modal.")
+    parser = argparse.ArgumentParser(description="CPU dry run or local tool eval. Does not start a GPU job.")
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--eval", action="store_true", help="score a local model; does not call Modal")
+    parser.add_argument("--eval", action="store_true", help="score a local model")
     parser.add_argument("--task-id", action="append", dest="task_id")
     parser.add_argument("--model", default=None)
     parser.add_argument("--adapter", default=None, help="local adapter dir or a Hugging Face repo id")

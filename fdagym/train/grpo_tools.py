@@ -323,7 +323,7 @@ class ToolGRPOTrainer(_GRPOTrainer):
 
         The GPU job sets ``use_vllm=True`` and never enters here. The dict has the
         same keys ``_compute_loss`` reads, so the log-prob, the loss, and the
-        optimizer step are the TRL path that crashed on Modal.
+        optimizer step are the TRL path used on GPU.
         """
         import torch
         from transformers import Trainer

@@ -5,7 +5,7 @@
     uv run python scripts/audit_hard.py reachability --split public --budget 6 --budget 8
     uv run python scripts/audit_hard.py memorization
 
-These are local snapshot checks. None starts Modal or a GPU job.
+These are local snapshot checks. None starts a GPU job.
 """
 
 from __future__ import annotations

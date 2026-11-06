@@ -46,7 +46,7 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
 | env | `fdagym/env.py`, `fdagym/tools.py`, `fdagym/rewards/`, `tests/env/`, `tests/rewards/` | `learn/03-env-rewards.md` |
 | integration | `tests/integration/` | `learn/04-integration.md` |
 | evals | `fdagym/agents/`, `scripts/run_baseline.py`, `results/`, `tests/agents/` | `learn/05-evals.md` |
-| train | `fdagym/train/`, `scripts/grpo_singleturn.py`, `scripts/eval_local.py`, `scripts/run_gpu.py`, `modal_train.py`, `tests/train/` | `learn/07-training.md` |
+| train | `fdagym/train/`, `scripts/grpo_singleturn.py`, `scripts/eval_local.py`, `scripts/run_gpu.py`, `tests/train/` | `learn/07-training.md` |
 | web | `web/` | `learn/06-dashboard.md` |
 | planner | `AGENTS.md`, `fdagym/schemas/`, `fdagym/snapshot.py`, `fdagym/queries.py`, `docs/`, `learn/00-*` | `learn/00-orientation.md` |
 

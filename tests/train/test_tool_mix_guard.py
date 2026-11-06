@@ -115,13 +115,12 @@ def test_tool_config_has_the_approved_knobs():
         ToolTrainConfig(limits=RolloutLimits(temperature=0.7))
 
 
-def test_modal_and_script_pass_the_mix_and_the_guard():
+def test_script_passes_the_mix_and_the_guard():
     jobs = (ROOT / "fdagym" / "train" / "jobs.py").read_text()
     assert "type_mix=tool.type_mix" in jobs
     assert "ParseRateGuard(window=tool.parse_stop_steps, min_rate=tool.parse_stop_min)" in jobs
-    for relative in ("modal_train.py", "scripts/run_gpu.py"):
-        text = (ROOT / relative).read_text()
-        assert "run_train_tools(" in text
+    cli = (ROOT / "scripts" / "run_gpu.py").read_text()
+    assert "run_train_tools(" in cli
     dry = (ROOT / "scripts" / "grpo_tools.py").read_text()
     assert "--train" not in dry
     assert "run_gpu.py" in dry

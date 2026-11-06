@@ -256,7 +256,8 @@ def test_swapped_facts_env_cannot_run_inside_training(disk):
         "fdagym/train/rollout.py",
         "fdagym/train/curriculum.py",
         "fdagym/train/hard_mix.py",
-        "modal_train.py",
+        "fdagym/train/jobs.py",
+        "scripts/run_gpu.py",
     ):
         text = (ROOT / relative).read_text()
         assert "SwappedFactsEnv" not in text

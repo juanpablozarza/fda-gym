@@ -10,7 +10,7 @@ from fdagym.train.run_record import RunConflictError, finish_run, start_run
 
 
 def test_run_record_tracks_config_executor_revision_and_attempts(tmp_path, monkeypatch):
-    monkeypatch.setenv("FDAGYM_EXECUTOR", "runpod")
+    monkeypatch.setenv("FDAGYM_EXECUTOR", "local")
     monkeypatch.setenv("FDAGYM_GIT_SHA", "abc123")
     run_dir = start_run(
         tmp_path / "runs",
@@ -24,7 +24,7 @@ def test_run_record_tracks_config_executor_revision_and_attempts(tmp_path, monke
     assert record["record_version"] == 1
     assert record["status"] == "running"
     assert record["source_revision"] == "abc123"
-    assert record["environment"]["executor"] == "runpod"
+    assert record["environment"]["executor"] == "local"
     assert record["config"] == {"prompt_version": "v4", "tool_budget": 8}
     assert record["attempts"][0]["status"] == "running"
 
@@ -33,7 +33,7 @@ def test_run_record_tracks_config_executor_revision_and_attempts(tmp_path, monke
     assert record["status"] == "done"
     assert record["attempts"][0]["finished_at"]
 
-    monkeypatch.setenv("FDAGYM_EXECUTOR", "modal")
+    monkeypatch.setenv("FDAGYM_EXECUTOR", "laptop")
     start_run(
         tmp_path / "runs",
         "grpo-tools",
@@ -43,8 +43,8 @@ def test_run_record_tracks_config_executor_revision_and_attempts(tmp_path, monke
         resume=True,
     )
     record = json.loads((run_dir / "run.json").read_text())
-    assert record["environment"]["executor"] == "modal"
-    assert [attempt["environment"]["executor"] for attempt in record["attempts"]] == ["runpod", "modal"]
+    assert record["environment"]["executor"] == "laptop"
+    assert [attempt["environment"]["executor"] for attempt in record["attempts"]] == ["local", "laptop"]
     assert not (run_dir / "DONE").exists()
     assert not (run_dir / "FAILED").exists()
 

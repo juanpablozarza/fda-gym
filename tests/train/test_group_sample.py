@@ -364,9 +364,9 @@ def test_trainer_logs_dropped_and_resampled_groups():
     assert "collapse_group_counts(" in source
     assert "example_mask" in source
     jobs = (root / "fdagym" / "train" / "jobs.py").read_text(encoding="utf-8")
-    modal = (root / "modal_train.py").read_text(encoding="utf-8")
+    cli = (root / "scripts" / "run_gpu.py").read_text(encoding="utf-8")
     assert "configure_tool_run(" in jobs
-    assert "run_train_tools(" in modal
-    assert "prompts_per_step: int | None = None" in modal
-    assert "dynamic_sampling: bool | None = None" in modal
-    assert "difficulty_filter: bool | None = None" in modal
+    assert "run_train_tools(" in cli
+    assert "prompts_per_step: int | None = None" in jobs
+    assert "dynamic_sampling: bool | None = None" in jobs
+    assert "difficulty_filter: bool | None = None" in jobs

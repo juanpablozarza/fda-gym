@@ -1,4 +1,4 @@
-"""Score v4 / budget-8 SFT oracle rows on the CPU. Does not start Modal.
+"""Score v4 / budget-8 SFT oracle rows on the CPU. Does not start a GPU job.
 
     uv run python scripts/report_sft_oracle.py
 
@@ -141,7 +141,7 @@ def _example(built: dict, tokenizer: CharTokenizer, config: SFTConfig) -> dict |
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="CPU audit of v4 SFT oracle rows. Does not start Modal.")
+    parser = argparse.ArgumentParser(description="CPU audit of v4 SFT oracle rows. Does not start a GPU job.")
     parser.add_argument("--include-hard-train", action="store_true")
     parser.add_argument("--snapshot", default="2026-10-15")
     parser.add_argument("--out", default="results/sft-v4-oracle.json")

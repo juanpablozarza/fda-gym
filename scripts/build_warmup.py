@@ -1,4 +1,4 @@
-"""Rebuild the multi-hop SFT warm-up id list. CPU only. Does not start Modal.
+"""Rebuild the multi-hop SFT warm-up id list. CPU only. Does not start a GPU job.
 
 The list this repo trains on is ``data/warmup/mh1_ids.txt``. Its sha256 is the
 sorted ids joined by newlines (``971819b19cc0a1b9…``). This script writes a new
@@ -242,7 +242,7 @@ def _anchor(task: dict) -> set[str]:
 
 
 def _parse(argv: list[str] | None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Build the multi-hop warm-up id list. Does not start Modal.")
+    parser = argparse.ArgumentParser(description="Build the multi-hop warm-up id list. Does not start a GPU job.")
     parser.add_argument("--tokenizer", required=True, help="tokenizer.json from the SFT v4 adapter")
     parser.add_argument("--out", default=str(ROOT / "results" / "warmup-mh1"))
     parser.add_argument("--snapshot", default="2026-10-15")

@@ -354,16 +354,16 @@ def test_training_pools_drop_hard_tasks(hard_tasks):
 
 
 def test_eval_entry_points_accept_a_hard_split_without_loading_it_for_training():
-    modal = (ROOT / "modal_train.py").read_text()
-    assert "def eval_tools(" in modal
-    assert 'split: str = "test"' in modal
-    assert 'hf_token: str = ""' in modal
-    assert "split=split" in modal
-    assert 'load_split("hard")' not in modal
-    assert 'load_split("train")' in modal
+    jobs = (ROOT / "fdagym" / "train" / "jobs.py").read_text()
+    assert "def run_eval_tools(" in jobs
+    assert 'split: str = "test"' in jobs
+    assert "split=split" in jobs
+    assert 'load_split("hard")' not in jobs
+    assert 'load_split("train")' in jobs
     script = (ROOT / "scripts" / "eval_tools.py").read_text()
     assert "--split public" in script
-    assert "import modal" not in script
+    cli = (ROOT / "scripts" / "run_gpu.py").read_text()
+    assert 'evaluate.add_argument("--split", default="test")' in cli
     assert 'path = TASKS_DIR / f"{split}.jsonl"' in (ROOT / "fdagym" / "agents" / "baseline.py").read_text()
 
 
