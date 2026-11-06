@@ -39,7 +39,7 @@ uv venv /tmp/fdagym-wheel && uv pip install --python /tmp/fdagym-wheel/bin/pytho
 cd /tmp && /tmp/fdagym-wheel/bin/python -c "import fdagym, fdagym.env, fdagym.rewards"
 ```
 
-The wheel does not ship the 87 MB snapshot. Point at a clone with `FDAGYM_SNAPSHOT_DIR=/path/to/fda-gym/data/snapshots`, or run `python -m fdagym.openfda`. Training extras are optional: `uv sync --extra train` (CPU) or `--extra gpu`. CPU dry-run: `uv run python scripts/grpo_singleturn.py --dry-run`. See [docs/train.md](docs/train.md). Pytest, the dashboard, and this README do not need a GPU vendor or Weights & Biases.
+The wheel does not ship the 87 MB snapshot. Point at a clone with `FDAGYM_SNAPSHOT_DIR=/path/to/fda-gym/data/snapshots`, or run `python -m fdagym.openfda`. CI's wheel smoke sets that env var from the checkout freeze, steps the `FG-9101` honest hops from `data/tasks/public.jsonl`, and runs `fdagym.rewards.score()` (grader v5) from the installed wheel, not the source tree. Training extras are optional: `uv sync --extra train` (CPU) or `--extra gpu`. CPU dry-run: `uv run python scripts/grpo_singleturn.py --dry-run`. See [docs/train.md](docs/train.md). Pytest, the dashboard, and this README do not need a GPU vendor or Weights & Biases.
 
 ## Why a grader this strict
 
