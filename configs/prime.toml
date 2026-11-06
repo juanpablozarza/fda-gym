@@ -2,7 +2,8 @@
 # Install: uv sync --extra prime
 # Dry-run (no model): uv run vf-eval @ configs/prime.toml --dry-run --no-push
 # One published row:  uv run vf-eval @ configs/prime.toml --no-push
-# This is not a Hub listing and not a 93-row model baseline.
+# Hub package: environments/fda-gym/. CI keeps this file at --dry-run --no-push.
+# A public Hub listing is `prime env push` from that directory after merge; this config does not push.
 
 push = false
 

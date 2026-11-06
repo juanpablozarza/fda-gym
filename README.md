@@ -138,7 +138,11 @@ Open [http://localhost:3000](http://localhost:3000). The overview reads the json
 
 ## Verifiers / Environments Hub
 
-This repo has a [verifiers](https://github.com/PrimeIntellect-ai/verifiers) v1 wrapper. Install `fdagym` with the optional `prime` extra, expose the five tools above, and grade with `fdagym.rewards.score` (grader v5). The default split is [`data/tasks/public.jsonl`](data/tasks/public.jsonl) (`FG-9101`–`FG-9193`). Ids outside that public range are refused. The snapshot is the committed `2026-10-15` freeze via `FDAGYM_SNAPSHOT_DIR`. The wheel does not ship it. Tracking: [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071). This is a local wrapper, not an Environments Hub listing.
+This repo has a [verifiers](https://github.com/PrimeIntellect-ai/verifiers) v1 wrapper and a Hub package at [`environments/fda-gym/`](environments/fda-gym/). Both expose the five tools above and grade with `fdagym.rewards.score` (grader v5). The only Hub split is [`data/tasks/public.jsonl`](data/tasks/public.jsonl) (`FG-9101`–`FG-9193`). Ids outside that public range are refused. Tracking: [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071).
+
+The `fdagym` library wheel still does not ship the freeze. The Hub environment wheel does: `public.jsonl` plus `data/snapshots/2026-10-15`. A public listing appears only after `prime env push` from `environments/fda-gym/` (not `--visibility=PRIVATE`). This repo does not run that push.
+
+From this checkout:
 
 ```bash
 uv sync --extra prime
@@ -146,7 +150,14 @@ uv run vf-eval fdagym --dry-run --no-push
 uv run vf-eval @ configs/prime.toml --dry-run --no-push
 ```
 
-The optional extra pins `verifiers==0.4.0`, so the v1 CLI is `vf-eval` (`uv run vf-eval @ configs/prime.toml`). Point `--select.include.ids` at a public id such as `FG-9101` for a one-task run. That is not a 93-row model baseline. `--extra prime` cannot be combined with `--extra hud` or `--extra gpu`. HUD wants mcp>=2.2.0; `verifiers==0.4.0` pins mcp==2.0.0. The env contract remains `FDAEnv.reset` / `FDAEnv.step` above.
+After a successful Hub push:
+
+```bash
+prime env install juanpablozarza/fda-gym
+uv run vf-eval fda-gym --dry-run --no-push
+```
+
+The optional extra pins `verifiers==0.4.0`, so the v1 CLI is `vf-eval` (`uv run vf-eval @ configs/prime.toml`). Point `--select.include.ids` at a public id such as `FG-9101` for a one-task run. That is not a 93-row model baseline. `--extra prime` cannot be combined with `--extra hud` or `--extra gpu`. HUD wants mcp>=2.2.0; `verifiers==0.4.0` pins mcp==2.0.0. The env contract remains `FDAEnv.reset` / `FDAEnv.step` above. `configs/prime.toml` stays `--dry-run --no-push` for CI.
 
 ## HUD
 
@@ -164,7 +175,7 @@ uv run hud eval tasks.py claude --all
 
 ## Tests and CI
 
-Default extra-free CI (`uv sync --frozen --group dev`) runs ruff, format, pyright, pytest, and the wheel smoke. Separate jobs install `--extra prime` and `--extra hud` on their own. They cannot be combined. Prime runs the SDK tests plus `vf-eval --dry-run --no-push`. HUD runs the SDK tests. Neither job runs a paid or model-backed `hud eval`. No job uses `--extra gpu`.
+Default extra-free CI (`uv sync --frozen --group dev`) runs ruff, format, pyright, pytest, and the wheel smoke. Pytest includes a Hub-style install of `environments/fda-gym` (public.jsonl + freeze 2026-10-15, no non-public splits). Separate jobs install `--extra prime` and `--extra hud` on their own. They cannot be combined. Prime runs the SDK tests plus `vf-eval --dry-run --no-push` for local `fdagym` and for the Hub wheel id `fda-gym`. HUD runs the SDK tests. Neither job runs a paid or model-backed `hud eval`. No job uses `--extra gpu`.
 
 ```bash
 uv run ruff check .

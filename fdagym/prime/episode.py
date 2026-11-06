@@ -7,6 +7,7 @@ step through ``FDAEnv`` and grade with ``fdagym.rewards.score``.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 from fdagym.demo import (
@@ -19,7 +20,12 @@ from fdagym.demo import (
     snapshot_for_demo,
 )
 from fdagym.env import TOOL_BUDGET, FDAEnv
-from fdagym.openfda.store import discover_snapshot_root, resolve_snapshot_root
+from fdagym.openfda.store import (
+    discover_snapshot_root,
+    packaged_hub_root,
+    packaged_hub_snapshot_root,
+    resolve_snapshot_root,
+)
 from fdagym.rewards import score
 from fdagym.tools import TOOLS
 
@@ -31,21 +37,41 @@ Tools: search_drug_label, get_label_section, query_adverse_events, search_approv
 Call submit_answer when you are done. Search before submitting NOT_FOUND.
 You get at most 8 tool calls besides submit_answer.
 """
+PUBLIC_ENV = "FDAGYM_PUBLIC_JSONL"
 PUBLIC_SHEET = Path("data") / "tasks" / "public.jsonl"
 
 
+def packaged_hub_public_path() -> Path | None:
+    """``public.jsonl`` shipped in the ``fda-gym`` Hub wheel, else an editable checkout."""
+    pkg = packaged_hub_root()
+    if pkg is None:
+        return None
+    bundled = pkg / "data" / "tasks" / "public.jsonl"
+    if bundled.is_file():
+        return bundled
+    snap = packaged_hub_snapshot_root()
+    if snap is None:
+        return None
+    path = snap.parent / "tasks" / "public.jsonl"
+    return path if path.is_file() else None
+
+
 def discover_public_path() -> Path | None:
-    """``data/tasks/public.jsonl`` walked from cwd, else next to the snapshot root."""
+    """``FDAGYM_PUBLIC_JSONL``, else ``data/tasks/public.jsonl`` from cwd, snapshot, or Hub wheel."""
+    env = os.environ.get(PUBLIC_ENV)
+    if env:
+        return Path(env)
     here = Path.cwd().resolve()
     for candidate in [here, *here.parents]:
         path = candidate / PUBLIC_SHEET
         if path.is_file():
             return path
     root = discover_snapshot_root()
-    if root is None:
-        return None
-    path = root.parent / "tasks" / "public.jsonl"
-    return path if path.is_file() else None
+    if root is not None:
+        path = root.parent / "tasks" / "public.jsonl"
+        if path.is_file():
+            return path
+    return packaged_hub_public_path()
 
 
 def resolve_public_path(path: Path | str | None = None) -> Path:
@@ -129,6 +155,7 @@ __all__ = [
     "ADAPTER_SYSTEM_PROMPT",
     "ADAPTER_TOOLS",
     "DEFAULT_TASK_ID",
+    "PUBLIC_ENV",
     "PUBLIC_SHEET",
     "SNAPSHOT_VERSION",
     "TOOL_BUDGET",
@@ -140,6 +167,7 @@ __all__ = [
     "grade_steps",
     "load_public_sheet",
     "make_public_env",
+    "packaged_hub_public_path",
     "play_public_adapter_episode",
     "public_snapshot",
     "resolve_public_path",
