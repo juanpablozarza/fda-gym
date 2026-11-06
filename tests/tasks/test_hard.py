@@ -54,8 +54,8 @@ SCHEMA = load_schema("task.schema.json")
 VALIDATOR = Draft202012Validator(
     SCHEMA, registry=Registry().with_resource(SCHEMA["$id"], Resource.from_contents(SCHEMA))
 )
-TRAIN_SHA256 = "1d468b230af2941963871689b20be10badb831a434213a7ef0f215f2fc509179"
-TEST_SHA256 = "7807a9f27f609a915f1ac8ae1eefa35b6fcd94f3989a368ce57d242d61f33537"
+TRAIN_SHA256 = "940c3a333b19570c2097a5d6b39dd17a91e2615474fa2e7e6b831a850d01e0c0"
+TEST_SHA256 = "8731d64d4c7de81914ec0c37d96cc49afa3698e116c01d3f2a4c02c99efa7f1e"
 QUOTAS = {
     "earliest_boxed": 16,
     "faers_year": 12,

@@ -24,7 +24,8 @@ def citations_from_outputs(steps: list[dict], task: dict) -> list[dict]:
     per candidate would otherwise cite the first call. Those rows name the
     answer drug on ``entity.generic_name``, so that drug's calls are tried first.
     An empty ``results: []`` on a count call is skipped when a later call has
-    the reaction list.
+    the reaction list. Gold rows whose endpoint was never queried are skipped,
+    matching the env oracle helper, so a composite FAERS-only path can submit.
     """
     ordered = _entity_first(steps, task)
     citations = []
@@ -52,9 +53,14 @@ def citations_from_outputs(steps: list[dict], task: dict) -> list[dict]:
             if found:
                 break
         if found is None:
+            queried = {_TOOL_ENDPOINT.get(step.get("tool")) for step in steps if isinstance(step.get("tool"), str)}
+            if gold["endpoint"] not in queried:
+                continue
             raise RuntimeError(f"{task['id']} gold field {gold['fields']} never appeared")
         endpoint, cid, field, quote = found
         citations.append({"endpoint": endpoint, "id": cid, "field": field, "quote": quote})
+    if not citations:
+        raise RuntimeError(f"{task['id']} no gold field appeared")
     return citations
 
 

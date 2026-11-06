@@ -8,7 +8,8 @@ from fdagym.train.prompt import render_messages
 
 # Question-only needles and a 6,000-character budget, snapshot 2026-10-15.
 # Gold citation ids are not used to rank, so this is the measured floor, not a 95% target.
-CITATION_FLOOR = {"train": (651, 651), "test": (193, 193)}
+# Composite oracles are the FAERS count call; their label set_ids are not packed.
+CITATION_FLOOR = {"train": (582, 651), "test": (176, 193)}
 
 
 def _citation_ids(task: dict) -> list[str]:

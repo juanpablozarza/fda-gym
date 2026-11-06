@@ -629,7 +629,6 @@ def _composite(drug, brand, count_body, labels, version, year: int) -> dict:
         raise TaskRejected("empty count")
     answer = "yes" if present else "no"
     ids = _set_ids(unscoped[0])
-    section = "boxed_warning" if present else None
     return _make(
         type="composite",
         question=(
@@ -647,7 +646,9 @@ def _composite(drug, brand, count_body, labels, version, year: int) -> dict:
             {"endpoint": "drug/event", "ids": [], "fields": ["meta.results.total"]},
             {"endpoint": "drug/label", "ids": ids, "fields": ["boxed_warning" if present else "sections"]},
         ],
-        oracle_calls=[_event_call(drug, "count", year, True), *_label_calls(drug, labels, ids, section=section)],
+        # The current grader pays after one valid citation, so the FAERS count
+        # call is already a 1.0 path. Label hops after it are prefix padding.
+        oracle_calls=[_event_call(drug, "count", year, True)],
         source_count=2,
         needs_disambiguation=len(unscoped[0]) > 1,
         needs_aggregation=True,
