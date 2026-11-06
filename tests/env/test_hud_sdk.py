@@ -12,7 +12,7 @@ pytest.importorskip("fastmcp")
 
 from hud.environment import Environment
 
-from fdagym.env import TOOL_BUDGET
+from fdagym.env import TOOL_BUDGET, tool_hard_cap
 from fdagym.hud.sdk import (
     ENV_NAME,
     ENV_VERSION,
@@ -49,7 +49,7 @@ def test_mint_one_hud_task_per_public_row():
     assert tasks[0].slug == "FG-9101"
     assert tasks[-1].slug == "FG-9193"
     assert {task.id for task in tasks} == {"public"}
-    assert all(task.agent_config == {"max_steps": TOOL_BUDGET + 4} for task in tasks)
+    assert all(task.agent_config == {"max_steps": tool_hard_cap(TOOL_BUDGET) + 1} for task in tasks)
 
 
 def test_mcp_server_advertises_the_five_fda_tools():

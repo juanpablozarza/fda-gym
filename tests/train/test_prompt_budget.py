@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from fdagym import queries
+from fdagym.env import tool_hard_cap
 from fdagym.tools import faers_modes
 from fdagym.train.eval_tools import eval_tool_tasks
 from fdagym.train.rollout import (
@@ -67,11 +68,11 @@ def test_new_tool_configs_default_to_v4_and_budget_8_and_v3_stays_selectable():
     assert tool.prompt_version == "v4"
     assert tool.limits.tool_budget == 8
     assert tool.limits.prompt_version == "v4"
-    assert tool.limits.max_turns == 9
+    assert tool.limits.max_turns == tool_hard_cap(8) + 1
     legacy = ToolTrainConfig(tool_budget=6, prompt_version="v3")
     assert legacy.limits.tool_budget == 6
     assert legacy.limits.prompt_version == "v3"
-    assert legacy.limits.max_turns == 7
+    assert legacy.limits.max_turns == tool_hard_cap(6) + 1
     assert system_prompt("v3", 6) in QwenToolCodec(prompt_version="v3", tool_budget=6).prompt("q")
     sft = SFTConfig()
     assert sft.tool_budget == 8
@@ -86,7 +87,7 @@ def test_rollout_prompt_names_the_budget_the_env_enforces():
     tokenizer = CharTokenizer()
     # Codec defaults are v4/8. The limits below must win, or the prompt would advertise 8.
     codec = QwenToolCodec()
-    limits = RolloutLimits(tool_budget=2, prompt_version="v4", temperature=0.0)
+    limits = RolloutLimits(tool_budget=2, prompt_version="v4", temperature=0.0, max_context_tokens=100_000)
     seen: dict[str, str] = {}
 
     class RepeatSearch:
@@ -112,9 +113,12 @@ def test_rollout_prompt_names_the_budget_the_env_enforces():
     assert system_prompt("v4", 2) in system
     assert "at most 2 tool calls" in system
     assert "at most 8 tool calls" not in system
+    assert "at most 4 tool calls" not in system
+    assert "at most 16 tool calls" not in system
+    assert limits.max_turns == tool_hard_cap(2) + 1
     assert rollout.terminated_by == "max_steps"
     assert rollout.trajectory["steps"][-1]["error"] == "tool budget exhausted"
-    assert sum(1 for step in rollout.trajectory["steps"] if step.get("error") is None) == 2
+    assert sum(1 for step in rollout.trajectory["steps"] if step.get("error") is None) == tool_hard_cap(2)
 
 
 def test_eval_summary_records_the_prompt_and_the_budget(tmp_path):

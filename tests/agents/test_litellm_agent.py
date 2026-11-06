@@ -4,7 +4,7 @@ import pytest
 
 from fdagym.agents import litellm_agent as agent_mod
 from fdagym.agents.litellm_agent import FORCED_SUBMIT, LiteLLMAgent
-from fdagym.env import TOOL_BUDGET, FDAEnv
+from fdagym.env import TOOL_BUDGET, FDAEnv, tool_hard_cap
 from fdagym.openfda import DiskSnapshot
 from tests.agents.fake import ScriptedCompletion
 from tests.env.support import ALL_TASKS, EXAMPLE_TASK, JsonSnapshot
@@ -51,29 +51,41 @@ def test_scripted_oracle_on_fixture_validates_and_scores_one():
 
 def test_budget_forces_submit_answer():
     snapshot = JsonSnapshot()
-    searches = [{"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}] * TOOL_BUDGET
+    cap = tool_hard_cap(TOOL_BUDGET)
+    searches = [{"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}] * cap
     extra = [{"tool": "search_drug_label", "arguments": {"generic_name": "aspirin"}}]
     completion = ScriptedCompletion(searches + extra)
     trajectory, env = _run(snapshot, ALL_TASKS, EXAMPLE_TASK, completion, run_id="force-submit")
+    assert env.tool_hard_cap == cap == 16
     assert trajectory["terminated_by"] == "submit"
     assert trajectory["final_answer"] == FORCED_SUBMIT
     assert trajectory["reward"]["format"] == 1.0
     assert trajectory["reward"]["correctness"] == 0.0
-    assert env.tool_calls == TOOL_BUDGET
+    assert env.tool_calls == cap
     assert completion.kwargs[-1]["tools"][0]["function"]["name"] == "submit_answer"
+    prompt = completion.kwargs[0]["messages"][0]["content"]
+    assert "at most 8 tool calls" in prompt
+    assert "at most 16 tool calls" not in prompt
+    assert len(completion.kwargs[TOOL_BUDGET]["tools"]) > 1
 
 
 def test_custom_budget_offers_submit_without_tool_choice():
     snapshot = JsonSnapshot()
-    completion = ScriptedCompletion(
-        [{"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}] * 2
-        + [{"tool": "submit_answer", "arguments": {"answer": "NOT_FOUND", "citations": []}}]
-    )
+    searches = [{"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}] * 4
+    extra = [{"tool": "search_drug_label", "arguments": {"generic_name": "aspirin"}}]
+    completion = ScriptedCompletion(searches + extra)
     env = FDAEnv(snapshot, ALL_TASKS, run_id="custom-budget", seed=1, tool_budget=2)
     trajectory = LiteLLMAgent("scripted", completion=completion).run(env, EXAMPLE_TASK["id"])
+    assert env.tool_hard_cap == 4
     assert trajectory["terminated_by"] == "submit"
-    assert len(completion.kwargs) == 3
-    assert "at most 2 tool calls" in completion.kwargs[0]["messages"][0]["content"]
+    assert trajectory["final_answer"] == FORCED_SUBMIT
+    assert env.tool_calls == 4
+    assert len(completion.kwargs) == 5
+    prompt = completion.kwargs[0]["messages"][0]["content"]
+    assert "at most 2 tool calls" in prompt
+    assert "at most 4 tool calls" not in prompt
+    assert "at most 16 tool calls" not in prompt
+    assert len(completion.kwargs[2]["tools"]) > 1
     assert [tool["function"]["name"] for tool in completion.kwargs[-1]["tools"]] == ["submit_answer"]
     assert "tool_choice" not in completion.kwargs[-1]
 

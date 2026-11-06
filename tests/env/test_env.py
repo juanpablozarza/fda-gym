@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from fdagym.env import TOOL_BUDGET, FDAEnv
+from fdagym.env import TOOL_BUDGET, FDAEnv, tool_hard_cap
 from tests.env.support import ALL_TASKS, WARFARIN_SET, JsonSnapshot, cite, drive, submit
 from tests.test_schemas import validator
 
@@ -53,11 +53,29 @@ def test_local_tasks_match_the_task_schema():
         check.validate(task)
 
 
+def test_hard_cap_is_twice_the_advertised_budget():
+    assert tool_hard_cap(TOOL_BUDGET) == 16
+    assert tool_hard_cap(2) == 4
+    default = FDAEnv(JsonSnapshot(), ALL_TASKS)
+    assert default.tool_budget == TOOL_BUDGET == 8
+    assert default.tool_hard_cap == 16
+    custom = FDAEnv(JsonSnapshot(), ALL_TASKS, tool_budget=2)
+    custom.reset("FG-0001")
+    assert custom.tool_hard_cap == 4
+    action = {"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}
+    for _ in range(4):
+        _obs, _reward, done, _info = custom.step(action)
+        assert done is False
+    blocked, _reward, done, _info = custom.step(action)
+    assert done is True
+    assert blocked["error"] == "tool budget exhausted"
+
+
 def test_submit_still_works_after_the_tool_budget():
     env = FDAEnv(JsonSnapshot(), ALL_TASKS)
     env.reset("FG-0001")
     action = {"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}
-    for _ in range(TOOL_BUDGET):
+    for _ in range(env.tool_hard_cap):
         _obs, _reward, done, _info = env.step(action)
         assert done is False
     _obs, reward, done, _info = env.step(submit("unknown", []))
@@ -76,6 +94,13 @@ def test_configured_budget_of_eight_still_accepts_submit_and_rejects_the_ninth_c
     for _ in range(7):
         _obs, _reward, done, _info = env.step(action)
         assert done is False
+    ninth, _reward, done, _info = env.step(action)
+    assert done is False
+    assert ninth["error"] is None
+    for _ in range(7):
+        _obs, _reward, done, _info = env.step(action)
+        assert done is False
+    assert env.tool_calls == env.tool_hard_cap == 16
     blocked, _reward, done, _info = env.step(action)
     assert done is True
     assert blocked["error"] == "tool budget exhausted"
@@ -83,7 +108,7 @@ def test_configured_budget_of_eight_still_accepts_submit_and_rejects_the_ninth_c
 
     fresh = FDAEnv(JsonSnapshot(), ALL_TASKS, tool_budget=8)
     fresh.reset("FG-0001")
-    for _ in range(8):
+    for _ in range(fresh.tool_hard_cap):
         _obs, _reward, done, _info = fresh.step(action)
         assert done is False
     _obs, _reward, done, _info = fresh.step(submit("unknown", []))
@@ -94,12 +119,29 @@ def test_configured_budget_of_eight_still_accepts_submit_and_rejects_the_ninth_c
 
 
 def test_call_past_the_budget_stops_without_running_the_tool():
-    env = FDAEnv(JsonSnapshot(), ALL_TASKS)
+    class CountingSnapshot(JsonSnapshot):
+        def __init__(self):
+            super().__init__()
+            self.n_get = 0
+
+        def get(self, *args, **kwargs):
+            self.n_get += 1
+            return super().get(*args, **kwargs)
+
+    snapshot = CountingSnapshot()
+    env = FDAEnv(snapshot, ALL_TASKS)
     env.reset("FG-0001")
     action = {"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}
-    for _ in range(TOOL_BUDGET):
+    for _ in range(TOOL_BUDGET + 1):
+        obs, _reward, done, _info = env.step(action)
+        assert done is False
+        assert obs["error"] is None
+    for _ in range(env.tool_hard_cap - (TOOL_BUDGET + 1)):
         env.step(action)
+    assert env.tool_calls == 16
+    hits = snapshot.n_get
     obs, reward, done, _info = env.step({"tool": "search_drug_label", "arguments": {"generic_name": "aspirin"}})
+    assert snapshot.n_get == hits
     assert done is True
     assert obs["error"] == "tool budget exhausted"
     assert reward == 0.0

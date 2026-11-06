@@ -15,7 +15,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 
 from fdagym import queries
-from fdagym.env import FDAEnv
+from fdagym.env import FDAEnv, tool_hard_cap
 from fdagym.snapshot import Snapshot
 from fdagym.tools import TOOLS, faers_modes
 
@@ -97,11 +97,13 @@ def system_prompt(version: str, tool_budget: int) -> str:
 class RolloutLimits:
     """Approved tool-rollout budgets.
 
-    ``tool_budget`` is what ``FDAEnv`` enforces. ``max_turns`` defaults to one
-    past that, so a submit can still be written after the last tool call.
-    ``prompt_version`` selects the system prompt, whose budget sentence is
-    rendered from ``tool_budget``. New tool-mode runs use budget 8 and v4.
-    ``tool_budget=6`` and ``prompt_version="v3"`` reproduce a v3 run.
+    ``tool_budget`` is the advertised soft target (the number in the system
+    prompt). ``FDAEnv`` hard-caps non-submit tools at ``tool_hard_cap(tool_budget)``
+    (2×). ``max_turns`` defaults to one past that hard cap, so a submit can
+    still be written after the last tool call. ``prompt_version`` selects the
+    system prompt, whose budget sentence is rendered from ``tool_budget``. New
+    tool-mode runs use budget 8 and v4. ``tool_budget=6`` and
+    ``prompt_version="v3"`` reproduce a v3 run (hard cap 12, default max_turns 13).
     """
 
     max_turns: int | None = None
@@ -119,7 +121,7 @@ class RolloutLimits:
         if self.prompt_version not in PROMPT_VERSIONS:
             raise ValueError(f"prompt_version must be one of {', '.join(PROMPT_VERSIONS)}")
         if self.max_turns is None:
-            object.__setattr__(self, "max_turns", self.tool_budget + 1)
+            object.__setattr__(self, "max_turns", tool_hard_cap(self.tool_budget) + 1)
         if isinstance(self.max_turns, bool) or not isinstance(self.max_turns, int) or self.max_turns < 1:
             raise ValueError("max_turns must be >= 1")
         if self.max_new_tokens < 1:

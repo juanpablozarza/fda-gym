@@ -34,23 +34,14 @@ If it lets the model skip citing, GRPO will treat 0.10 as "sometimes works" and 
 <details>
 <summary><b>[predict]</b> LiteLLM returns a Chat Completions <code>tool_calls</code> list. What does FDA-Gym's env actually accept as an action?</summary>
 
-A dict `{tool, arguments, thought}`. The env does not speak OpenAI. [litellm_agent.py:111](../fdagym/agents/litellm_agent.py#L111) is the only bridge: parse the function name and JSON arguments, then `env.step`. The common wrong picture is that LiteLLM "runs the tools". It only proposes calls. The snapshot answers them.
+A dict `{tool, arguments, thought}`. The env does not speak OpenAI. [litellm_agent.py:149](../fdagym/agents/litellm_agent.py#L149) is the only bridge: parse the function name and JSON arguments, then `env.step`. The common wrong picture is that LiteLLM "runs the tools". It only proposes calls. The snapshot answers them.
 </details>
 
-`reset` gives the question plus the five schemas in `TOOLS`. Each model round may emit one or more tool calls. The loop executes them against the frozen snapshot, appends the raw output as a `role: tool` message, and calls the model again. Temperature is 0.2. The cap is 8 tools plus one submit ([env.py](../fdagym/env.py) `TOOL_BUDGET`, [litellm_agent.py](../fdagym/agents/litellm_agent.py)).
+`reset` gives the question plus the five schemas in `TOOLS`. Each model round may emit one or more tool calls. The loop executes them against the frozen snapshot, appends the raw output as a `role: tool` message, and calls the model again. Temperature is 0.2. The prompt still says 8 calls. The loop force-submits at 2× `TOOL_BUDGET` (16 tools plus one submit) ([env.py](../fdagym/env.py) `tool_hard_cap`, [litellm_agent.py](../fdagym/agents/litellm_agent.py)).
 
-```71:82:fdagym/agents/litellm_agent.py
-def run_episode(env: FDAEnv, task_id: str, *, model: str, completion=None, temperature: float = TEMPERATURE, kind: str = "baseline") -> dict:
-    complete = completion or _completion
-    env.model = {"name": model, "kind": kind, "checkpoint_step": None}
-    env.usage = {"prompt_tokens": 0, "completion_tokens": 0, "cost_usd": 0.0, "latency_ms": 0}
-    obs = env.reset(task_id)
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": obs["question"]},
-    ]
-    for _round in range(MAX_LLM_ROUNDS):
-        force_submit = env.tool_calls >= TOOL_BUDGET
+```109:111:fdagym/agents/litellm_agent.py
+    for _round in range(env.tool_hard_cap + 1):
+        force_submit = env.tool_calls >= env.tool_hard_cap
         tools = [_SUBMIT] if force_submit else TOOLS
 ```
 
@@ -61,20 +52,20 @@ The system prompt forbids memorized FDA facts and includes a worked warfarin cit
 <details>
 <summary><b>[recall]</b> Who fills <code>trajectory.model</code> and <code>trajectory.usage</code>: <code>FDAEnv</code> or the agent?</summary>
 
-The agent. `FDAEnv` defaults them to `"unspecified"` and zeros. The property [env.py:94](../fdagym/env.py#L94) just copies whatever the caller left on `env.model` / `env.usage`. The dashboard replay of cost and latency is only as honest as this loop.
+The agent. `FDAEnv` defaults them to `"unspecified"` and zeros. The property [env.py:153](../fdagym/env.py#L153) just copies whatever the caller left on `env.model` / `env.usage`. The dashboard replay of cost and latency is only as honest as this loop.
 </details>
 
-### 3.2 The ninth tool call is a crash unless we submit first
+### 3.2 The 17th tool call is a crash unless we submit first
 
 <details>
-<summary><b>[predict]</b> The model has already made 8 tool calls and now emits <code>search_drug_label</code> again. If the agent forwards that call, what is <code>terminated_by</code>, and what is format?</summary>
+<summary><b>[predict]</b> The model has already made 16 tool calls and now emits <code>search_drug_label</code> again. If the agent forwards that call, what is <code>terminated_by</code>, and what is format?</summary>
 
-`max_steps`, format **0**. [env.py:54](../fdagym/env.py#L54) ends the episode without running the tool and without a `final_answer`. The common wrong answer is "the env converts it to submit_answer". It does not. The agent has to.
+`max_steps`, format **0**. [env.py:105](../fdagym/env.py#L105) ends the episode without running the tool and without a `final_answer`. The ninth search now runs. The common wrong answer is "the env converts it to submit_answer". It does not. The agent has to.
 </details>
 
-After `TOOL_BUDGET` calls, the loop offers only `submit_answer` as a tool. If the model still searches, `_actions_from_response` drops that call and injects `{"answer": "NOT_FOUND", "citations": []}` ([litellm_agent.py:180](../fdagym/agents/litellm_agent.py#L180)). Format stays 1. Correctness stays 0.
+After `tool_hard_cap` calls (2× `TOOL_BUDGET`, 16 when budget is 8), the loop offers only `submit_answer` as a tool. If the model still searches, `_actions_from_response` drops that call and injects `{"answer": "NOT_FOUND", "citations": []}` ([litellm_agent.py:218](../fdagym/agents/litellm_agent.py#L218)). Format stays 1. Correctness stays 0. The prompt still says 8.
 
-```180:185:fdagym/agents/litellm_agent.py
+```218:223:fdagym/agents/litellm_agent.py
     if force_submit:
         actions = [row for row in actions if row["tool"] == "submit_answer"]
         if not actions:
@@ -244,12 +235,12 @@ FAIL broken-model FG-0001 s7 RuntimeError (recorded)
 
 ## 5. Break it
 
-In [litellm_agent.py:180](../fdagym/agents/litellm_agent.py#L180), delete the whole `if force_submit:` block (the three statements that filter to `submit_answer` and inject `FORCED_SUBMIT`). Leave the later "if not actions" fallback.
+In [litellm_agent.py:218](../fdagym/agents/litellm_agent.py#L218), delete the whole `if force_submit:` block (the three statements that filter to `submit_answer` and inject `FORCED_SUBMIT`). Leave the later "if not actions" fallback.
 
 <details>
-<summary><b>[predict]</b> Which test fails, and what does the seventh search do to the episode?</summary>
+<summary><b>[predict]</b> Which test fails, and what does the 17th search do to the episode?</summary>
 
-`test_budget_forces_submit_answer` fails. The scripted model emits a 7th `search_drug_label`. Without the filter, that call is forwarded. The env ends with `terminated_by == "max_steps"`, `final_answer is None`, format 0. The test expects `terminated_by == "submit"` and format 1.0. Revert with `git checkout -- fdagym/agents/litellm_agent.py`.
+`test_budget_forces_submit_answer` fails. The scripted model emits a 17th `search_drug_label`. Without the filter, that call is forwarded. The env ends with `terminated_by == "max_steps"`, `final_answer is None`, format 0. The test expects `terminated_by == "submit"` and format 1.0. Revert with `git checkout -- fdagym/agents/litellm_agent.py`.
 </details>
 
 ```bash
