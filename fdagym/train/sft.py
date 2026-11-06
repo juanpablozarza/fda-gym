@@ -15,11 +15,11 @@ from collections import Counter
 from inspect import signature
 from pathlib import Path
 
+from fdagym.gold_cite import _accepted_id, gold_answer
 from fdagym.rewards.citation import _TOOL_ENDPOINT, _collapse, _dicts, _render, _resolve
 from fdagym.snapshot import Snapshot
 from fdagym.train.config import TrainConfig
 from fdagym.train.context import assemble_documents
-from fdagym.train.gold import _accepted_id, gold_answer
 from fdagym.train.prompt import render_messages
 from fdagym.train.prompt_len import prompt_tokens
 

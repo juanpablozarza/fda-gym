@@ -11,7 +11,7 @@ aripiprazole, most reports of FATIGUE). It is short, uses only
 guess that scores correctness 0. The honest three-drug replay should total 1.0.
 
 This module must not import ``fdagym.train``, ``fdagym.agents``, litellm, or
-any chat-completion client. Gold submit is duplicated here on purpose so the
+any chat-completion client. Gold submit lives in ``fdagym.gold_cite`` so the
 demo never loads the trainer path (see ``scripts/tool_rollout_dry.py``).
 """
 
@@ -24,9 +24,9 @@ from collections.abc import Callable
 from pathlib import Path
 
 from fdagym.env import TOOL_BUDGET, FDAEnv
+from fdagym.gold_cite import gold_submit
 from fdagym.openfda import DiskSnapshot
 from fdagym.rewards import score
-from fdagym.rewards.citation import _TOOL_ENDPOINT, _collapse, _dicts, _render, _resolve
 from fdagym.snapshot import Snapshot
 
 DEFAULT_TASK_ID = "FG-9101"
@@ -103,59 +103,6 @@ def truncate_observation(value, *, limit: int = OBS_LIMIT) -> str:
     return text[: limit - 1] + "…"
 
 
-def gold_answer(task: dict):
-    if not task["answerable"]:
-        return "NOT_FOUND"
-    gold = task["gold"]
-    if gold["kind"] == "boolean":
-        if gold["value"]:
-            keywords = gold.get("keywords") or []
-            if keywords:
-                return f"Yes. {keywords[0]}."
-            return "Yes."
-        return "No."
-    return gold["value"]
-
-
-def gold_submit(task: dict, steps: list[dict]) -> dict:
-    """Honest oracle payload: gold answer plus citations from this episode."""
-    return {"answer": gold_answer(task), "citations": citations_from_outputs(steps, task)}
-
-
-def citations_from_outputs(steps: list[dict], task: dict) -> list[dict]:
-    ordered = _entity_first(steps, task)
-    citations = []
-    for gold in task["gold_citations"]:
-        found = None
-        for index, step in enumerate(ordered):
-            tool = step.get("tool")
-            if step.get("error") or not isinstance(tool, str) or _TOOL_ENDPOINT.get(tool) != gold["endpoint"]:
-                continue
-            for node in _dicts(step.get("output")):
-                if not isinstance(node, dict):
-                    continue
-                cid = _accepted_id(node, gold)
-                if cid is None:
-                    continue
-                for field in gold["fields"]:
-                    text = _render(_resolve(node, field))
-                    if not text:
-                        continue
-                    if text == "[]" and _later_field(ordered, index, gold["endpoint"], field):
-                        continue
-                    found = (gold["endpoint"], cid, field, _quote(text))
-                    break
-                if found:
-                    break
-            if found:
-                break
-        if found is None:
-            raise RuntimeError(f"{task['id']} gold field {gold['fields']} never appeared")
-        endpoint, cid, field, quote = found
-        citations.append({"endpoint": endpoint, "id": cid, "field": field, "quote": quote})
-    return citations
-
-
 def snapshot_for_demo(root: Path) -> DiskSnapshot:
     if not (root / SNAPSHOT_VERSION / "manifest.jsonl").is_file():
         raise DemoError(f"committed snapshot missing: {root / SNAPSHOT_VERSION}")
@@ -221,49 +168,3 @@ def _print_hop(
     breakdown = reward if reward is not None else score({"steps": env.steps, "final_answer": env.final_answer}, task)
     write(f"score  {format_score(breakdown)}")
     write("")
-
-
-def _entity_first(steps: list[dict], task: dict) -> list[dict]:
-    drug = ((task.get("entity") or {}).get("generic_name") or "").casefold()
-    names = {
-        name.casefold()
-        for step in steps
-        if isinstance(name := (step.get("arguments") or {}).get("generic_name"), str) and name.strip()
-    }
-    if not drug or len(names) < 2:
-        return list(steps)
-    matched = [step for step in steps if ((step.get("arguments") or {}).get("generic_name") or "").casefold() == drug]
-    matched_ids = {id(step) for step in matched}
-    return matched + [step for step in steps if id(step) not in matched_ids]
-
-
-def _later_field(steps: list[dict], index: int, endpoint: str, field: str) -> bool:
-    for step in steps[index + 1 :]:
-        tool = step.get("tool")
-        if step.get("error") or not isinstance(tool, str) or _TOOL_ENDPOINT.get(tool) != endpoint:
-            continue
-        for node in _dicts(step.get("output")):
-            text = _render(_resolve(node, field))
-            if text and text != "[]":
-                return True
-    return False
-
-
-def _quote(text: str) -> str:
-    collapsed = _collapse(text)
-    if len(collapsed) <= 12 or len(collapsed) < 20:
-        return collapsed
-    return collapsed[:20]
-
-
-def _accepted_id(node: dict, gold: dict) -> str | None:
-    for key in ("set_id", "application_number", "safetyreportid", "id"):
-        value = node.get(key)
-        if not isinstance(value, str) or not value:
-            continue
-        if gold["ids"]:
-            if value in gold["ids"]:
-                return value
-        elif value.startswith("step:"):
-            return value
-    return None

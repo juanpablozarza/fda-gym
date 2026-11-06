@@ -11,13 +11,21 @@ import pytest
 
 from fdagym.demo import (
     DEFAULT_TASK_ID,
+    HONEST_TOTAL_MIN,
+    PUBLIC_ID_FIRST,
+    PUBLIC_ID_LAST,
     SCORE_KEYS,
     DemoError,
     is_public_task_id,
+    load_public_tasks,
     play_public_task,
     resolve_task,
+    run_episode,
+    snapshot_for_demo,
 )
-from fdagym.env import TOOL_BUDGET
+from fdagym.env import TOOL_BUDGET, FDAEnv
+from fdagym.gold_cite import citations_from_outputs
+from fdagym.rewards.version import GRADER_VERSION
 
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "scripts" / "demo_public_episode.py"
@@ -136,3 +144,105 @@ def test_demo_script_rejects_a_non_public_task_id():
     )
     assert result.returncode == 2
     assert "published public sheet" in result.stderr
+
+
+def test_importing_fdagym_demo_does_not_load_train():
+    code = (
+        "import sys; import fdagym.demo; "
+        "mods = [n for n in sys.modules if n == 'fdagym.train' or n.startswith('fdagym.train.')]; "
+        "print(mods); raise SystemExit(1 if mods else 0)"
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+        env=_clean_env(),
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_demo_and_trainer_share_citations_from_outputs():
+    from fdagym.demo import gold_submit as demo_submit
+    from fdagym.gold_cite import gold_submit as shared_submit
+    from fdagym.train.gold import citations_from_outputs as train_cite
+    from fdagym.train.gold import gold_submit as train_submit
+
+    assert demo_submit is shared_submit
+    assert train_submit is shared_submit
+    assert train_cite is citations_from_outputs
+
+
+def test_citations_skip_gold_rows_whose_endpoint_was_never_queried():
+    steps = [
+        {
+            "tool": "search_approvals",
+            "arguments": {"generic_name": "sumatriptan"},
+            "output": {"application_number": "NDA007337", "sponsor_name": "Glaxo"},
+        }
+    ]
+    task = {
+        "id": "FG-9151",
+        "gold_citations": [
+            {"endpoint": "drug/drugsfda", "ids": ["NDA007337"], "fields": ["sponsor_name"]},
+            {"endpoint": "drug/label", "ids": ["abc"], "fields": ["boxed_warning"]},
+        ],
+    }
+    cites = citations_from_outputs(steps, task)
+    assert [cite["field"] for cite in cites] == ["sponsor_name"]
+    assert cites[0]["id"] == "NDA007337"
+
+
+def test_citations_still_error_when_a_queried_gold_field_never_appeared():
+    steps = [
+        {
+            "tool": "search_drug_label",
+            "arguments": {"generic_name": "sumatriptan"},
+            "output": {"set_id": "abc", "indications_and_usage": "migraine"},
+        }
+    ]
+    task = {
+        "id": "T",
+        "gold_citations": [{"endpoint": "drug/label", "ids": ["abc"], "fields": ["boxed_warning"]}],
+    }
+    with pytest.raises(RuntimeError, match=r"T gold field \['boxed_warning'\] never appeared"):
+        citations_from_outputs(steps, task)
+
+
+def test_citations_error_when_nothing_remains_after_filtering():
+    steps = [
+        {
+            "tool": "search_approvals",
+            "arguments": {"generic_name": "sumatriptan"},
+            "output": {"application_number": "NDA007337", "sponsor_name": "Glaxo"},
+        }
+    ]
+    task = {
+        "id": "T",
+        "gold_citations": [{"endpoint": "drug/label", "ids": ["abc"], "fields": ["boxed_warning"]}],
+    }
+    with pytest.raises(RuntimeError, match="T no gold field appeared"):
+        citations_from_outputs(steps, task)
+
+
+def test_every_public_task_replays_through_demo_to_one():
+    assert GRADER_VERSION == "5"
+    tasks = load_public_tasks(PUBLIC)
+    expected = [f"FG-{n}" for n in range(PUBLIC_ID_FIRST, PUBLIC_ID_LAST + 1)]
+    assert expected[0] == "FG-9101"
+    assert expected[-1] == "FG-9193"
+    assert len(expected) == 93
+    assert sorted(tasks) == expected
+    env = FDAEnv(
+        snapshot_for_demo(SNAPSHOT),
+        list(tasks.values()),
+        run_id="public-demo-all",
+        tool_budget=TOOL_BUDGET,
+    )
+    failures = []
+    for task_id in expected:
+        reward = run_episode(env, tasks[task_id], write=lambda _line: None)
+        if reward["total"] < HONEST_TOTAL_MIN or reward["grader_version"] != GRADER_VERSION:
+            failures.append(f"{task_id} total={reward['total']} grader_version={reward['grader_version']}")
+    assert failures == []
