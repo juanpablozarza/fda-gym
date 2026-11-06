@@ -86,6 +86,14 @@ jobs:
         run: uv run pytest -q
       - name: vf-eval dry-run
         run: uv run vf-eval @ configs/prime.toml --dry-run --no-push
+      - name: Hub package vf-eval dry-run
+        run: |
+          uv build --wheel --out-dir /tmp/fda-gym-hub --directory environments/fda-gym
+          uv pip install --python .venv/bin/python --no-deps /tmp/fda-gym-hub/*.whl
+          mkdir -p /tmp/fda-gym-hub-eval
+          cd /tmp/fda-gym-hub-eval
+          unset FDAGYM_SNAPSHOT_DIR FDAGYM_PUBLIC_JSONL
+          "${GITHUB_WORKSPACE}/.venv/bin/vf-eval" fda-gym --dry-run --no-push --select.include.ids FG-9101
 
   hud:
     runs-on: ubuntu-24.04

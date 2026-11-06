@@ -19,6 +19,7 @@ choose different fetched bodies or regenerate a manifest before all in-flight re
 
 import gzip
 import hashlib
+import importlib.util
 import json
 import os
 import tempfile
@@ -33,9 +34,13 @@ from fdagym.snapshot import Endpoint, SnapshotMiss
 
 SNAPSHOT_ENV = "FDAGYM_SNAPSHOT_DIR"
 SNAPSHOT_VERSION = "2026-10-15"
+HUB_PACKAGE = "fda_gym"
 SNAPSHOT_MISSING = """FDA-Gym snapshot directory not found.
 
-The installed wheel does not ship the 2026-10-15 openFDA freeze. Point FDA-Gym at a checkout:
+The installed fdagym wheel does not ship the 2026-10-15 openFDA freeze. The Environments Hub
+package ``fda-gym`` bundles that freeze in its own wheel (fda_gym/data/snapshots/2026-10-15).
+
+Point FDA-Gym at a checkout, or at that bundled freeze:
 
   export FDAGYM_SNAPSHOT_DIR=/path/to/fda-gym/data/snapshots
   python -m fdagym.openfda
@@ -45,8 +50,43 @@ DiskSnapshot(version, root=...) also accepts the directory that contains 2026-10
 """
 
 
+def _package_dir(name: str) -> Path | None:
+    spec = importlib.util.find_spec(name)
+    if spec is None:
+        return None
+    if spec.origin:
+        return Path(spec.origin).resolve().parent
+    if spec.submodule_search_locations:
+        return Path(next(iter(spec.submodule_search_locations))).resolve()
+    return None
+
+
+def _freeze_root(path: Path) -> Path | None:
+    if (path / SNAPSHOT_VERSION).is_dir():
+        return path
+    return None
+
+
+def packaged_hub_root() -> Path | None:
+    """Installed ``fda_gym`` Hub package directory, if that spec is importable."""
+    return _package_dir(HUB_PACKAGE)
+
+
+def packaged_hub_snapshot_root() -> Path | None:
+    """``data/snapshots`` shipped in the ``fda-gym`` Hub wheel, else an editable checkout."""
+    pkg = packaged_hub_root()
+    if pkg is None:
+        return None
+    bundled = _freeze_root(pkg / "data" / "snapshots")
+    if bundled is not None:
+        return bundled
+    if pkg.name != HUB_PACKAGE or len(pkg.parents) < 3:
+        return None
+    return _freeze_root(pkg.parents[2] / "data" / "snapshots")
+
+
 def discover_snapshot_root() -> Path | None:
-    """``FDAGYM_SNAPSHOT_DIR``, else a git checkout's ``data/snapshots`` walked from cwd."""
+    """``FDAGYM_SNAPSHOT_DIR``, else a checkout ``data/snapshots``, else the Hub wheel freeze."""
     env = os.environ.get(SNAPSHOT_ENV)
     if env:
         return Path(env)
@@ -55,7 +95,7 @@ def discover_snapshot_root() -> Path | None:
         path = candidate / "data" / "snapshots"
         if path.is_dir():
             return path
-    return None
+    return packaged_hub_snapshot_root()
 
 
 def resolve_snapshot_root(root: Path | str | None = None) -> Path:

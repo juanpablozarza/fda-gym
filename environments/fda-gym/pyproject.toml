@@ -1,0 +1,42 @@
+[project]
+name = "fda-gym"
+version = "0.1.0"
+description = "Public FDA-Gym: 93 openFDA tool-use tasks (FG-9101–FG-9193), grader v5, freeze 2026-10-15."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Juan Pablo Zarza" }]
+keywords = ["eval", "tool-use", "openfda", "rl", "verifiers"]
+dependencies = [
+    "verifiers==0.4.0",
+    "fdagym @ git+https://github.com/juanpablozarza/fda-gym.git",
+]
+
+[project.urls]
+Homepage = "https://github.com/juanpablozarza/fda-gym"
+Repository = "https://github.com/juanpablozarza/fda-gym"
+Issues = "https://github.com/juanpablozarza/fda-gym/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+# Build from a full juanpablozarza/fda-gym clone so these paths exist.
+# The Hub wheel ships public.jsonl and the 2026-10-15 freeze. The fdagym
+# library wheel still does not. prime env push from this directory.
+[tool.hatch.build.targets.wheel]
+packages = ["fda_gym"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"../../data/tasks/public.jsonl" = "fda_gym/data/tasks/public.jsonl"
+"../../data/snapshots/2026-10-15" = "fda_gym/data/snapshots/2026-10-15"
+
+[tool.hatch.build.targets.sdist]
+include = ["/fda_gym", "/README.md", "/pyproject.toml"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"../../data/tasks/public.jsonl" = "fda_gym/data/tasks/public.jsonl"
+"../../data/snapshots/2026-10-15" = "fda_gym/data/snapshots/2026-10-15"
