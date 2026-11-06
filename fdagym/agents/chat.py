@@ -50,7 +50,7 @@ def run_chat_episode(
         {"role": "system", "content": PUBLIC_PROMPT},
         {"role": "user", "content": observation["question"]},
     ]
-    for _ in range(env.tool_budget + 1):
+    for _ in range(env.tool_hard_cap + 1):
         trajectory = _round(env, complete, messages, model=model, temperature=temperature)
         if trajectory is not None:
             return trajectory
@@ -58,7 +58,7 @@ def run_chat_episode(
 
 
 def _round(env: FDAEnv, complete, messages: list[dict], *, model: str, temperature: float) -> dict | None:
-    force_submit = env.tool_calls >= env.tool_budget
+    force_submit = env.tool_calls >= env.tool_hard_cap
     kwargs = {
         "model": model,
         "messages": messages,

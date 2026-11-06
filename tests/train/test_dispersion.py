@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from fdagym.agents.baseline import load_split
+from fdagym.env import tool_hard_cap
 from fdagym.rewards import score
 from fdagym.train import dispersion
 from fdagym.train.dispersion import ids_sha256, probe_task_ids, run_probe, sampling_param_kwargs
@@ -127,7 +128,7 @@ def test_probe_task_ids_accepts_ids_from_the_current_pool():
     assert tool.tool_parse_bonus == 0.05
     assert tool.limits.temperature == 0.65
     assert tool.limits.max_new_tokens == 256
-    assert tool.limits.max_turns == 9
+    assert tool.limits.max_turns == tool_hard_cap(8) + 1
     assert tool.limits.max_tool_chars == 3500
     assert tool.limits.max_context_tokens == 8192
     assert tool.limits.tool_budget == 8

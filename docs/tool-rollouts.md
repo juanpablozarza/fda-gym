@@ -21,7 +21,7 @@ Colocate vLLM already lives on the trainer as `trainer.llm` (`vllm.LLM` from vLL
 Pros:
 
 - The image stays `torch==2.6.0`, `transformers==4.53.0`, `trl==0.21.0`, `vllm==0.8.5`. That is the `[gpu]` extra pin list, and the only stack Plan A has run.
-- `FDAEnv` stays the environment. Reward, citation ids, the 6-call budget, and `submit_answer` validation do not get reimplemented as TRL tool functions.
+- `FDAEnv` stays the environment. Reward, citation ids, the advertised tool budget and its 2× hard cap, and `submit_answer` validation do not get reimplemented as TRL tool functions.
 - The runner's return value is the contract: prompt ids, completion ids, a loss mask, and an attention mask. A later TRL upgrade can consume the same object.
 
 Cons:
@@ -73,9 +73,9 @@ Recommended budgets, already the defaults on `RolloutLimits`. They are arguments
 
 | Knob | Default | Why |
 |---|---|---|
-| `tool_budget` | 8 | What `FDAEnv` enforces on a new tool-mode run, and the number in the system prompt. `6` reproduces a v3 run. |
+| `tool_budget` | 8 | Advertised in the system prompt and the efficiency target. `FDAEnv` hard-caps non-submit calls at `tool_hard_cap(tool_budget)` (16 when budget is 8). `6` reproduces a v3 run (hard cap 12). |
 | `prompt_version` | `v4` | v4 is JP's v3 prompt plus the `query_adverse_events` argument line, with the budget sentence filled from `tool_budget`. `v3` is the previous text (budget number still follows `tool_budget`) |
-| `max_turns` | 9 | One past `tool_budget`, so the model can still `submit_answer` after the last tool call. `force_submit` is off. A v3 run sets `tool_budget=6`, which makes this 7 |
+| `max_turns` | 17 | One past `tool_hard_cap(tool_budget)`, so the model can still `submit_answer` after the last tool call. `force_submit` is off. A v3 run sets `tool_budget=6`, which makes this 13 |
 | `max_new_tokens` | 256 | Same cap as Plan A. A tool call is a short JSON object. A gold `submit_answer` for the warfarin fixture is 216 characters, so 256 BPE tokens covers the citation |
 | `max_tool_chars` | 3500 | Same clip as Plan A's `_clip`, applied to the string the model sees. The env keeps the full tool output, which is what citation matching reads |
 | `max_context_tokens` | 8192 | Prompt is the question plus the schema (about 1–2k tokens), not four packed documents. TRL 0.21 sizes the engine as `max_prompt_length + max_completion_length` (2048 + 6144) |

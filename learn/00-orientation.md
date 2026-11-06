@@ -43,7 +43,7 @@ searching labels first and approvals second can both lead to the correct answer.
 The loop: `reset(task_id)` returns the question plus tool schemas (the **observation**). The agent emits
 an **action**: either a tool call (`search_approvals(...)`) or `submit_answer({...})`. `step(action)` runs the
 tool against the **snapshot** (never the live API, so results are reproducible) and returns the tool output as the next observation.
-The episode ends on `submit_answer` or after 8 tool calls (`TOOL_BUDGET`). Everything is logged as a **trajectory**: the replay screen
+The episode ends on `submit_answer` or when a non-submit is attempted after 2× `TOOL_BUDGET` calls (16 when the advertised budget is 8). Everything is logged as a **trajectory**: the replay screen
 in [B1-trajectory.png](../docs/design/B1-trajectory.png) is literally one trajectory rendered.
 
 <details>

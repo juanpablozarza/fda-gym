@@ -1,4 +1,8 @@
-"""Multi-turn LiteLLM tool loop over FDAEnv. TOOL_BUDGET tool calls, then a forced submit_answer."""
+"""Multi-turn LiteLLM tool loop over FDAEnv.
+
+The prompt advertises ``tool_budget``. The loop force-submits at
+``env.tool_hard_cap`` (2× budget), not at the advertised number.
+"""
 
 import json
 import time
@@ -102,8 +106,8 @@ def run_episode(
         {"role": "system", "content": prompt},
         {"role": "user", "content": obs["question"]},
     ]
-    for _round in range(env.tool_budget + 1):
-        force_submit = env.tool_calls >= env.tool_budget
+    for _round in range(env.tool_hard_cap + 1):
+        force_submit = env.tool_calls >= env.tool_hard_cap
         tools = [_SUBMIT] if force_submit else TOOLS
         started = time.perf_counter()
         response = _call_llm(
@@ -152,7 +156,7 @@ def run_episode(
         messages.extend(tool_messages)
         if done:
             return info["trajectory"]
-    raise RuntimeError(f"{task_id}: episode did not finish after {env.tool_budget + 1} LLM rounds")
+    raise RuntimeError(f"{task_id}: episode did not finish after {env.tool_hard_cap + 1} LLM rounds")
 
 
 def _call_llm(complete, *, model, messages, tools, temperature, force_submit):

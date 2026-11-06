@@ -118,7 +118,7 @@ The model does not send a raw search string. Each call takes a drug name, a sect
 | `search_approvals` | Drugs@FDA records. Pass exactly one of `generic_name`, `application_number`, or `sponsor_name`. |
 | `submit_answer` | Ends the episode. The answer is one string, number, or boolean, or `NOT_FOUND`, plus up to 8 citations. |
 
-`FDAEnv` is a tool-use environment, not a Gymnasium env. `reset(task_id)` returns `{question, tools}`. `step(action, latency_ms=...)` returns `(observation, reward, done, info)`. Reward stays 0.0 until the episode ends. Tool calls other than `submit_answer` are capped at `tool_budget` (default 8); `submit_answer` is still accepted after that. Invalid JSON is logged as `invalid_action`.
+`FDAEnv` is a tool-use environment, not a Gymnasium env. `reset(task_id)` returns `{question, tools}`. `step(action, latency_ms=...)` returns `(observation, reward, done, info)`. Reward stays 0.0 until the episode ends. `tool_budget` (default 8) is the advertised soft target. Non-submit tools are hard-capped at 2× `tool_budget` (default 16 when budget is 8); `submit_answer` is still accepted after that. Invalid JSON is logged as `invalid_action`.
 
 ## Splits
 
@@ -166,7 +166,7 @@ uv run hud eval tasks.py claude
 uv run hud eval tasks.py claude --all
 ```
 
-`hud eval` spawns the env locally (no Docker). The first command runs one public task; `--all` runs FG-9101–FG-9193. Use `claude`, another catalog model, or `--model …`. That run needs a provider key or `HUD_API_KEY` for the *model*; tests do not. Cap agent steps with `--max-steps` if you override the per-task default (`tool_budget` 8 plus `submit_answer`). Snapshot discovery is the same as the keyless demo: `FDAGYM_SNAPSHOT_DIR` or a checkout's `data/snapshots` freeze `2026-10-15`.
+`hud eval` spawns the env locally (no Docker). The first command runs one public task; `--all` runs FG-9101–FG-9193. Use `claude`, another catalog model, or `--model …`. That run needs a provider key or `HUD_API_KEY` for the *model*; tests do not. Cap agent steps with `--max-steps` if you override the per-task default (16 tools plus `submit_answer`, 17). Snapshot discovery is the same as the keyless demo: `FDAGYM_SNAPSHOT_DIR` or a checkout's `data/snapshots` freeze `2026-10-15`.
 
 `Dockerfile.hud` is optional and deploy-only (`hud deploy` / `hud serve` in an image). Local `hud eval` does not use it. The wheel still does not ship the 87 MB snapshot.
 

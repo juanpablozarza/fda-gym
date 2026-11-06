@@ -4,7 +4,7 @@ import json
 from types import SimpleNamespace
 
 from fdagym.agents.chat import PUBLIC_PROMPT, run_chat_episode
-from fdagym.env import TOOL_BUDGET, FDAEnv
+from fdagym.env import TOOL_BUDGET, FDAEnv, tool_hard_cap
 from fdagym.tools import TOOLS
 from tests.agents.fake import ScriptedCompletion
 from tests.env.support import ALL_TASKS, EXAMPLE_TASK, JsonSnapshot
@@ -74,15 +74,18 @@ def test_public_prompt_is_short_and_does_not_teach_citation_law():
 
 def test_searches_until_budget_exhausted_finish_with_submit():
     snapshot = JsonSnapshot()
-    searches = [{"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}] * TOOL_BUDGET
+    cap = tool_hard_cap(TOOL_BUDGET)
+    searches = [{"tool": "search_drug_label", "arguments": {"generic_name": "warfarin"}}] * cap
     extra = [{"tool": "search_drug_label", "arguments": {"generic_name": "aspirin"}}]
     completion = ScriptedCompletion(searches + extra)
     trajectory, env = _run(snapshot, ALL_TASKS, EXAMPLE_TASK, completion, run_id="chat-budget")
+    assert env.tool_hard_cap == cap == 16
     assert trajectory["terminated_by"] == "submit"
     assert trajectory["steps"][-1]["tool"] == "submit_answer"
     assert trajectory["final_answer"] == {"answer": "NOT_FOUND", "citations": []}
-    assert env.tool_calls == TOOL_BUDGET
+    assert env.tool_calls == cap
     assert not any(step["arguments"].get("generic_name") == "aspirin" for step in trajectory["steps"])
+    assert len(completion.kwargs[TOOL_BUDGET]["tools"]) > 1
     forced = completion.kwargs[-1]
     assert [tool["function"]["name"] for tool in forced["tools"]] == ["submit_answer"]
     assert forced["tool_choice"] == {"type": "function", "function": {"name": "submit_answer"}}
@@ -104,7 +107,7 @@ def test_parallel_calls_past_the_budget_are_not_stepped():
                         arguments=json.dumps({"generic_name": "warfarin"}),
                     ),
                 )
-                for index in range(TOOL_BUDGET + 1)
+                for index in range(tool_hard_cap(TOOL_BUDGET) + 1)
             ]
             message = SimpleNamespace(content="batch", tool_calls=tool_calls)
         else:
@@ -128,8 +131,8 @@ def test_parallel_calls_past_the_budget_are_not_stepped():
 
     trajectory, env = _run(snapshot, ALL_TASKS, EXAMPLE_TASK, complete, run_id="chat-parallel", model="scripted")
     assert trajectory["terminated_by"] == "submit"
-    assert env.tool_calls == TOOL_BUDGET
-    assert len(trajectory["steps"]) == TOOL_BUDGET + 1
+    assert env.tool_calls == env.tool_hard_cap == tool_hard_cap(TOOL_BUDGET)
+    assert len(trajectory["steps"]) == env.tool_hard_cap + 1
     errors = [
         json.loads(row["content"])
         for row in seen[1]["messages"]

@@ -20,6 +20,7 @@ import os
 import statistics
 from pathlib import Path
 
+from fdagym.env import tool_hard_cap
 from fdagym.train.curriculum import GRPO_POOL_TYPES_FLAG
 from fdagym.train.group_sample import tied_group_flags
 from fdagym.train.grpo_tools import build_tool_rows
@@ -250,7 +251,7 @@ def _require_training_reward(tool: ToolTrainConfig) -> None:
         "dense_reward": (tool.train.dense_reward, True),
         "tool_parse_bonus": (tool.tool_parse_bonus, 0.05),
         "max_new_tokens": (limits.max_new_tokens, 256),
-        "max_turns": (limits.max_turns, PROBE_TOOL_BUDGET + 1),
+        "max_turns": (limits.max_turns, tool_hard_cap(PROBE_TOOL_BUDGET) + 1),
         "max_tool_chars": (limits.max_tool_chars, 3500),
         "max_context_tokens": (limits.max_context_tokens, 8192),
         "tool_budget": (limits.tool_budget, PROBE_TOOL_BUDGET),

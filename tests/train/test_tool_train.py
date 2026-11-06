@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 
+from fdagym.env import tool_hard_cap
 from fdagym.rewards import score
 from fdagym.train.config import QWEN_3B, TrainConfig
 from fdagym.train.eval_tools import eval_tool_tasks, tool_eval_model
@@ -26,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def test_approved_limits_and_plan_a_defaults_stay():
     limits = RolloutLimits()
-    assert limits.max_turns == 9
+    assert limits.max_turns == tool_hard_cap(8) + 1
     assert limits.tool_budget == 8
     assert limits.prompt_version == "v4"
     assert limits.max_new_tokens == 256
@@ -63,7 +64,7 @@ def test_approved_limits_and_plan_a_defaults_stay():
     assert wrapped.prompt_version == "v4"
     assert wrapped.limits.tool_budget == 8
     assert wrapped.limits.prompt_version == "v4"
-    assert wrapped.limits.max_turns == 9
+    assert wrapped.limits.max_turns == tool_hard_cap(8) + 1
     assert wrapped.limits.force_submit is False
 
 

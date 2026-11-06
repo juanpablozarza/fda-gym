@@ -1,6 +1,6 @@
 """Env default, hard solver, and task schema share one tool-call cap."""
 
-from fdagym.env import TOOL_BUDGET, FDAEnv
+from fdagym.env import TOOL_BUDGET, FDAEnv, tool_hard_cap
 from fdagym.schemas import load as load_schema
 from fdagym.tasks.hard_solver import BUDGET
 from tests.env.support import ALL_TASKS, JsonSnapshot
@@ -25,6 +25,13 @@ def test_eight_calls_are_not_truncated_at_six():
         assert obs["error"] is None
         assert env.tool_calls == index + 1
     assert env.tool_calls == 8
+    ninth, _reward, done, _info = env.step(action)
+    assert done is False
+    assert ninth["error"] is None
+    for _ in range(tool_hard_cap(TOOL_BUDGET) - 9):
+        obs, _reward, done, _info = env.step(action)
+        assert done is False
+        assert obs["error"] is None
     blocked, _reward, done, _info = env.step(action)
     assert done is True
     assert blocked["error"] == "tool budget exhausted"

@@ -5,9 +5,10 @@
 Reward stays 0.0 until the episode ends. ``info["trajectory"]`` is set on the
 terminal step.
 
-Tool calls other than ``submit_answer`` are capped at ``tool_budget`` (default 8).
-After that cap, ``submit_answer`` is still accepted. Any other tool ends the
-episode with ``terminated_by="max_steps"``. Invalid JSON is logged as
+``tool_budget`` (default 8) is the advertised soft target. Non-submit tools are
+hard-capped at ``tool_hard_cap(tool_budget)`` (2×, default 16). After that cap,
+``submit_answer`` is still accepted. Any other tool ends the episode with
+``terminated_by="max_steps"`` and does not run. Invalid JSON is logged as
 ``invalid_action``, not as a fake ``submit_answer``.
 """
 
@@ -19,9 +20,15 @@ from fdagym.rewards.format import answer_validator
 from fdagym.snapshot import Snapshot
 from fdagym.tools import TOOLS, EpisodeState, execute
 
-# Shared cap: env default, hard solver, chat eval, and task-schema oracle_calls maxItems.
+# Advertised soft target: env default, hard solver, chat eval, and task-schema oracle_calls maxItems.
+# Non-submit tools may run until tool_hard_cap(TOOL_BUDGET) (2×).
 TOOL_BUDGET = 8
 SKIP_TYPES = frozenset({"label_open"})
+
+
+def tool_hard_cap(budget: int) -> int:
+    """Episode hard stop for non-submit tools: twice the advertised budget."""
+    return 2 * budget
 
 
 class FDAEnv:
@@ -47,6 +54,7 @@ class FDAEnv:
         if isinstance(budget, bool) or not isinstance(budget, int) or budget < 1:
             raise ValueError("tool_budget must be an integer >= 1")
         self.tool_budget = budget
+        self.tool_hard_cap = tool_hard_cap(budget)
         self._ready = False
 
     def reset(self, task_id: str) -> dict:
@@ -172,8 +180,8 @@ class FDAEnv:
 
 
 def budget_exhausted(name: str, tool_calls: int, budget: int) -> bool:
-    """True when a non-submit tool would exceed ``budget`` recorded calls."""
-    return name != "submit_answer" and tool_calls >= budget
+    """True when a non-submit tool would exceed ``tool_hard_cap(budget)`` recorded calls."""
+    return name != "submit_answer" and tool_calls >= tool_hard_cap(budget)
 
 
 def _parse_action(action) -> tuple[dict | None, str | None]:

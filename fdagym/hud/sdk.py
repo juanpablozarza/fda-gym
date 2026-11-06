@@ -12,7 +12,7 @@ import socket
 from collections.abc import AsyncGenerator
 from typing import Any
 
-from fdagym.env import TOOL_BUDGET
+from fdagym.env import TOOL_BUDGET, tool_hard_cap
 from fdagym.hud.session import PublicEpisode
 from fdagym.tools import TOOLS
 
@@ -224,6 +224,6 @@ def mint_public_tasks(public_path=None):
         task = public_task(task_id=task_id)
         task.slug = task_id
         task.columns = {"split": "public"}
-        task.agent_config = {"max_steps": TOOL_BUDGET + 4}
+        task.agent_config = {"max_steps": tool_hard_cap(TOOL_BUDGET) + 1}
         tasks.append(task)
     return tasks
