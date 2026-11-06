@@ -27,14 +27,51 @@ jobs:
       - name: Test
         run: uv run pytest -q
       - name: Wheel smoke
+        env:
+          FDAGYM_SNAPSHOT_DIR: ${{ github.workspace }}/data/snapshots
+          FDAGYM_PUBLIC_JSONL: ${{ github.workspace }}/data/tasks/public.jsonl
         run: |
           uv build --wheel
           WHEEL=$(ls dist/*.whl)
+          python3 -c "import sys, zipfile; names = zipfile.ZipFile(sys.argv[1]).namelist(); assert not any('snapshots' in name for name in names), names" "$WHEEL"
           TMP=$(mktemp -d /tmp/fdagym-wheel-XXXX)
           uv venv "$TMP/venv"
           uv pip install --python "$TMP/venv/bin/python" "$WHEEL"
+          export FDAGYM_WHEEL="$(pwd)/$WHEEL"
           cd "$TMP"
-          "$TMP/venv/bin/python" -c "import fdagym, fdagym.env, fdagym.rewards"
+          "$TMP/venv/bin/python" <<'PY'
+          import os
+          import zipfile
+          from pathlib import Path
+
+          import fdagym
+          from fdagym.demo import play_public_task
+          from fdagym.rewards import score
+          from fdagym.rewards.version import GRADER_VERSION
+
+          pkg = Path(fdagym.__file__).resolve()
+          assert "fdagym-wheel-" in str(pkg), pkg
+          assert GRADER_VERSION == "5", GRADER_VERSION
+          names = zipfile.ZipFile(os.environ["FDAGYM_WHEEL"]).namelist()
+          assert not any("snapshots" in name for name in names), names
+
+          public = Path(os.environ["FDAGYM_PUBLIC_JSONL"])
+          snap = Path(os.environ["FDAGYM_SNAPSHOT_DIR"])
+          lines: list[str] = []
+          reward = play_public_task(
+              "FG-9101",
+              public_path=public,
+              snapshot_root=snap,
+              write=lines.append,
+          )
+          text = "\n".join(lines)
+          assert "query_adverse_events" in text
+          assert reward["grader_version"] == "5"
+          assert float(reward["total"]) >= 0.99
+          # score() is the same grader the demo prints after every hop.
+          assert score.__module__ == "fdagym.rewards.combine"
+          print("wheel smoke ok", {k: reward[k] for k in ("total", "grader_version")})
+          PY
 
   web:
     runs-on: ubuntu-24.04

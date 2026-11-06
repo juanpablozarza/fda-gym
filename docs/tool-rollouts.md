@@ -73,7 +73,7 @@ Recommended budgets, already the defaults on `RolloutLimits`. They are arguments
 
 | Knob | Default | Why |
 |---|---|---|
-| `tool_budget` | 8 | What `FDAEnv` enforces on a new tool-mode run, and the number in the system prompt. `6` reproduces a v3 run. The baseline agent still defaults to 6 when it constructs `FDAEnv` with no budget |
+| `tool_budget` | 8 | What `FDAEnv` enforces on a new tool-mode run, and the number in the system prompt. `6` reproduces a v3 run. |
 | `prompt_version` | `v4` | v4 is JP's v3 prompt plus the `query_adverse_events` argument line, with the budget sentence filled from `tool_budget`. `v3` is the previous text (budget number still follows `tool_budget`) |
 | `max_turns` | 9 | One past `tool_budget`, so the model can still `submit_answer` after the last tool call. `force_submit` is off. A v3 run sets `tool_budget=6`, which makes this 7 |
 | `max_new_tokens` | 256 | Same cap as Plan A. A tool call is a short JSON object. A gold `submit_answer` for the warfarin fixture is 216 characters, so 256 BPE tokens covers the citation |
@@ -139,7 +139,7 @@ Training forward, the shape used for the dollar estimate: **8 generations, gradi
 
 Turning checkpointing off, or letting a completion run out to the full 8192, pushes the logits and activations through the remaining 20 GB. The first GPU run should checkpoint, and it should stay at 8 generations only while completions stay near 4k tokens. L40S (48 GB) is the wrong card for this loop.
 
-Step time. TRL 0.21's `LLM(...)` does not pass `enable_prefix_caching`, so each turn re-prefills. The snapshot read is local and is not the cost. A step that dies on a bad first call is close to today's 6–8 s. A step whose episodes take two or three real turns is about **25 s**. A full 6-tool episode is about **45 s**. These are planning numbers, not a measured GPU step.
+Step time. TRL 0.21's `LLM(...)` does not pass `enable_prefix_caching`, so each turn re-prefills. The snapshot read is local and is not the cost. A step that dies on a bad first call is close to today's 6–8 s. A step whose episodes take two or three real turns is about **25 s**. A full 8-tool episode is about **45 s**. These are planning numbers, not a measured GPU step.
 
 150 steps at 25 s is **1.0 hour**. A 400-step run would have been 2.8 hours.
 
@@ -149,7 +149,7 @@ A typical A100 80GB public rate is **$2.50 per GPU-hour** ($0.000694/s). A 64 Gi
 |---|---|---|
 | Parse fails on the first call | ~8 s | **~$0.007** |
 | Two or three real turns (planning step) | ~25 s | **~$0.021** |
-| All 6 tool calls | ~45 s | **~$0.038** |
+| All 8 tool calls | ~45 s | **~$0.038** |
 
 150 steps at $0.021 is **about $3.15** (1.0 h). The range is **about $1–$6**. SFT is one epoch, on the order of **$1–2**. Each tool-protocol TEST eval (about 324 tasks, base or adapter) is about **0.5–1.5 h and $1.50–$4**. A cold volume also downloads the 3B weights once; that is outside these jobs. None of this was measured on a GPU.
 
@@ -182,7 +182,7 @@ GPU jobs, only after JP approves the run. Commands and the per-step cost are in 
 
 1. Stay on TRL 0.21 and subclass `GRPOTrainer`. Do not pay the torch 2.7.1 / vLLM ≥0.10.2 pin.
 2. Qwen `<tool_call>` / `<tool_response>`. The JSON codec remains a test double.
-3. Up to 6 tool calls (7 generation turns), 256 new tokens, 3500-character clip, 8192 context.
+3. Up to 8 tool calls (9 generation turns), 256 new tokens, 3500-character clip, 8192 context.
 4. `force_submit` stays off. A missing submit scores 0.
 5. Mask tool outputs and any forced or canonicalized span, including the assistant continuation header. Model tokens, including EOS, keep loss 1.
 6. Shaping bonus 0.05, once per episode, when a non-submit tool call parses. Configurable. Not stored on the trajectory.

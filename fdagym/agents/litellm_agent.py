@@ -24,7 +24,7 @@ Call submit_answer when you are done. Its arguments must match schemas/answer.sc
 - MedDRA reaction terms are uppercase with British spelling; copy the term from results, do not translate it.
 - A missing boxed warning is cited from search_drug_label: id = the label's set_id, field = sections.
 - NOT_FOUND is only correct when the snapshot has no record, and only after you searched.
-- You get at most 6 tool calls, then you must submit_answer.
+- You get at most 8 tool calls, then you must submit_answer.
 
 Worked citation example (warfarin boxed warning):
 1. search_drug_label({"generic_name": "warfarin", "has_section": "boxed_warning"})
@@ -92,7 +92,7 @@ def run_episode(
     complete = completion or _completion
     prompt = SYSTEM_PROMPT if system_prompt is None else system_prompt
     prompt = prompt.replace(
-        "- You get at most 6 tool calls, then you must submit_answer.",
+        "- You get at most 8 tool calls, then you must submit_answer.",
         f"- You get at most {env.tool_budget} tool calls, then you must submit_answer.",
     )
     env.model = {"name": model, "kind": kind, "checkpoint_step": None}

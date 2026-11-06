@@ -197,11 +197,11 @@ the 6–8 s single-turn step.
 |---|---|---|
 | Early step, the call does not parse | ~8 s | **~$0.007** |
 | Planning step, two or three turns | ~25 s | **~$0.021** |
-| All 6 tool calls | ~45 s | **~$0.038** |
+| All 8 tool calls | ~45 s | **~$0.038** |
 
 The first GRPO run is **150 steps**. At 25 s that is about **1.0 h and $3.15**
 (150 × $0.021). The range is about **$1–$6** ($0.007 × 150 at an early
-parse-fail step, $0.038 × 150 if every episode uses all 6 calls). SFT one
+parse-fail step, $0.038 × 150 if every episode uses all 8 calls). SFT one
 epoch is about **$1–2**. Each greedy tool eval covers about 324 TEST tasks
 and is about **0.5–1.5 h and $1.50–$4**, also not measured. The base eval and
 the adapter eval are two jobs.

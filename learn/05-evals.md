@@ -37,7 +37,7 @@ If it lets the model skip citing, GRPO will treat 0.10 as "sometimes works" and 
 A dict `{tool, arguments, thought}`. The env does not speak OpenAI. [litellm_agent.py:111](../fdagym/agents/litellm_agent.py#L111) is the only bridge: parse the function name and JSON arguments, then `env.step`. The common wrong picture is that LiteLLM "runs the tools". It only proposes calls. The snapshot answers them.
 </details>
 
-`reset` gives the question plus the five schemas in `TOOLS`. Each model round may emit one or more tool calls. The loop executes them against the frozen snapshot, appends the raw output as a `role: tool` message, and calls the model again. Temperature is 0.2. The cap is 6 tools plus one submit ([env.py:11](../fdagym/env.py#L11), [litellm_agent.py:10](../fdagym/agents/litellm_agent.py#L10)).
+`reset` gives the question plus the five schemas in `TOOLS`. Each model round may emit one or more tool calls. The loop executes them against the frozen snapshot, appends the raw output as a `role: tool` message, and calls the model again. Temperature is 0.2. The cap is 8 tools plus one submit ([env.py](../fdagym/env.py) `TOOL_BUDGET`, [litellm_agent.py](../fdagym/agents/litellm_agent.py)).
 
 ```71:82:fdagym/agents/litellm_agent.py
 def run_episode(env: FDAEnv, task_id: str, *, model: str, completion=None, temperature: float = TEMPERATURE, kind: str = "baseline") -> dict:
@@ -64,10 +64,10 @@ The system prompt forbids memorized FDA facts and includes a worked warfarin cit
 The agent. `FDAEnv` defaults them to `"unspecified"` and zeros. The property [env.py:94](../fdagym/env.py#L94) just copies whatever the caller left on `env.model` / `env.usage`. The dashboard replay of cost and latency is only as honest as this loop.
 </details>
 
-### 3.2 The seventh tool call is a crash unless we submit first
+### 3.2 The ninth tool call is a crash unless we submit first
 
 <details>
-<summary><b>[predict]</b> The model has already made 6 tool calls and now emits <code>search_drug_label</code> again. If the agent forwards that call, what is <code>terminated_by</code>, and what is format?</summary>
+<summary><b>[predict]</b> The model has already made 8 tool calls and now emits <code>search_drug_label</code> again. If the agent forwards that call, what is <code>terminated_by</code>, and what is format?</summary>
 
 `max_steps`, format **0**. [env.py:54](../fdagym/env.py#L54) ends the episode without running the tool and without a `final_answer`. The common wrong answer is "the env converts it to submit_answer". It does not. The agent has to.
 </details>
