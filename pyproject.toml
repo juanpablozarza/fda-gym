@@ -41,6 +41,10 @@ gpu = [
 prime = [
     "verifiers==0.4.0",
 ]
+# HUD SDK Environment adapter. Default pytest / ruff / pyright do not need it.
+hud = [
+    "hud>=0.6.22,<0.7",
+]
 
 [dependency-groups]
 dev = [
@@ -60,6 +64,16 @@ conflicts = [
     # mcp 2.x (verifiers 0.4.0) and the gpu extra's vllm pin disagree on OpenTelemetry.
     [
         { extra = "gpu" },
+        { extra = "prime" },
+    ],
+    # hud extra is separate from gpu: fastmcp needs opentelemetry-api>=1.28, vllm==0.8.5 pins <1.27.
+    [
+        { extra = "gpu" },
+        { extra = "hud" },
+    ],
+    # hud (mcp>=2.2) and prime (verifiers 0.4.0 pins mcp==2.0.0) cannot be solved together.
+    [
+        { extra = "hud" },
         { extra = "prime" },
     ],
 ]

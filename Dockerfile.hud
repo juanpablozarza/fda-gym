@@ -1,0 +1,15 @@
+# Optional HUD deploy image. Local eval is `hud eval tasks.py` with no Docker and no GPU.
+# The Python wheel still does not ship the snapshot; this image copies the freeze so a
+# deployed environment can serve public.jsonl. COPY paths are explicit (no .dockerignore).
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+
+WORKDIR /hud
+COPY pyproject.toml uv.lock README.md env.py tasks.py ./
+COPY fdagym ./fdagym
+COPY data/tasks/public.jsonl ./data/tasks/public.jsonl
+COPY data/snapshots ./data/snapshots
+RUN uv sync --extra hud --frozen --no-dev
+
+EXPOSE 8765
+ENV FDAGYM_SNAPSHOT_DIR=/hud/data/snapshots
+CMD ["uv", "run", "hud", "serve", "env.py", "--host", "0.0.0.0", "--port", "8765"]
