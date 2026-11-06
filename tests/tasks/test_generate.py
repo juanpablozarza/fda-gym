@@ -305,7 +305,9 @@ def test_absent_boxed_warning_is_cited_from_the_sections_list():
     composite = next(task for task in tasks if task["type"] == "composite")
     assert composite["gold"]["value"].endswith("no")
     assert composite["gold_citations"][1]["fields"] == ["sections"]
-    assert [call["tool"] for call in composite["oracle_calls"]] == ["query_adverse_events", "search_drug_label"]
+    assert [call["tool"] for call in composite["oracle_calls"]] == ["query_adverse_events"]
+    assert composite["difficulty_features"]["min_tool_calls"] == 1
+    assert composite["difficulty"] == "hard"
 
 
 def _put(mapping, query, response):

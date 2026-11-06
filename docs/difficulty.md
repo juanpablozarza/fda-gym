@@ -44,7 +44,7 @@ The tier is computed from the features and never typed by hand, so changing the 
 | `faers_top_reaction` | "Most-reported reaction in FAERS for metformin?" | 1 source, 1 call, aggregation, normalization | medium |
 | `faers_count` | "How many serious FAERS reports for drug X were received in 2025?" | 1 source, 1 call, aggregation + constraint | hard |
 | `label_open` | "Summarize isotretinoin contraindications for a patient planning pregnancy." (LLM judge, ~10% of tasks) | 1 source, 2 calls, disambiguation | medium |
-| `composite` | "Serious reports in 2025 for X, and does its label carry a boxed warning?" | 2 sources, 3 calls | hard |
+| `composite` | "Serious reports in 2025 for X, and does its label carry a boxed warning?" | 2 sources, 1 call | hard |
 
 \* "Earliest" over a single record's submission list does not count as aggregation (decided below).
 
