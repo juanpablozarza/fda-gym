@@ -43,7 +43,7 @@ prime = [
 ]
 # HUD SDK Environment adapter. Default pytest / ruff / pyright do not need it.
 hud = [
-    "hud>=0.6.22,<0.7",
+    "hud==0.6.22",
 ]
 
 [dependency-groups]

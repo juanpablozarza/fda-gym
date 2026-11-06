@@ -158,6 +158,8 @@ uv run hud eval tasks.py claude --all
 
 ## Tests and CI
 
+Default extra-free CI (`uv sync --frozen --group dev`) runs ruff, format, pyright, pytest, and the wheel smoke. Separate jobs install `--extra prime` and `--extra hud` on their own (they cannot be combined): Prime runs the SDK tests plus `vf-eval --dry-run --no-push`; HUD runs the SDK tests. Neither job runs a paid or model-backed `hud eval`, and no job uses `--extra gpu`.
+
 ```bash
 uv run ruff check .
 uv run ruff format --check .
