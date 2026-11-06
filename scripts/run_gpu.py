@@ -1,4 +1,4 @@
-"""Tool-mode GPU jobs on a machine that already has the GPU. Does not call Modal.
+"""Tool-mode GPU jobs on a machine that already has the GPU.
 
 ``WANDB_API_KEY`` and ``HF_TOKEN`` are read from the environment by the
 libraries that need them. This script does not accept them as arguments and
@@ -11,7 +11,6 @@ does not print them.
 
 The functions are ``run_probe_dispersion``, ``run_train_tools``,
 ``run_eval_tools``, and ``run_distill_sft`` in ``fdagym/train/jobs.py``.
-Modal's wrappers call the first three. Distill SFT is the RunPod student job.
 """
 
 from __future__ import annotations
@@ -34,7 +33,7 @@ from fdagym.train.tool_config import TOOL_TEMPERATURE
 def main(argv: list[str] | None = None) -> int:
     parser = _parser()
     args = parser.parse_args(argv)
-    os.environ["FDAGYM_EXECUTOR"] = args.executor
+    os.environ["FDAGYM_EXECUTOR"] = "local"
     if os_hf_home_set():
         print(
             "HF_HOME is already set; the job will not move the Hub cache next to --runs-dir.",
@@ -166,18 +165,10 @@ def _task_ids(args: argparse.Namespace) -> list[str]:
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Run a tool-mode GPU job on this machine. Does not call Modal or rent a pod."
-    )
-    parser.add_argument(
-        "--executor",
-        choices=("runpod", "local"),
-        default="runpod",
-        help="record where this job runs (default: runpod)",
-    )
+    parser = argparse.ArgumentParser(description="Run a tool-mode GPU job on this machine.")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    train = sub.add_parser("train-tools", help="tool GRPO, same arguments as Modal train_tools")
+    train = sub.add_parser("train-tools", help="tool GRPO")
     _runs_dir(train)
     train.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     train.add_argument("--run-id", default="grpo-qwen3b-tools")
@@ -200,7 +191,7 @@ def _parser() -> argparse.ArgumentParser:
     train.add_argument("--max-resample-attempts", type=int, default=None)
     train.set_defaults(func=_train)
 
-    evaluate = sub.add_parser("eval-tools", help="greedy tool eval, same arguments as Modal eval_tools")
+    evaluate = sub.add_parser("eval-tools", help="greedy tool eval")
     _runs_dir(evaluate)
     evaluate.add_argument("--adapter", default=None)
     evaluate.add_argument("--run-id", default="grpo-qwen3b-tools-eval")
@@ -210,7 +201,7 @@ def _parser() -> argparse.ArgumentParser:
     _wandb(evaluate)
     evaluate.set_defaults(func=_eval)
 
-    probe = sub.add_parser("probe", help="reward-dispersion probe, same arguments as Modal probe_dispersion")
+    probe = sub.add_parser("probe", help="reward-dispersion probe")
     _runs_dir(probe)
     probe.add_argument("--adapter", required=True)
     probe.add_argument(
@@ -310,7 +301,7 @@ def _wandb(parser: argparse.ArgumentParser) -> None:
 
 
 def _optional_bool(parser: argparse.ArgumentParser, flag: str) -> None:
-    """Tri-state flag. Omitted stays None, which is Modal's 'use the mix default'."""
+    """Tri-state flag. Omitted stays None, which uses the mix default."""
     dest = flag.replace("-", "_")
     group = parser.add_mutually_exclusive_group()
     group.add_argument(f"--{flag}", dest=dest, action="store_const", const=True, default=None)

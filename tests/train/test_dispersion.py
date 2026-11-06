@@ -1,4 +1,4 @@
-"""CPU checks for the reward-dispersion probe. No GPU and no Modal calls."""
+"""CPU checks for the reward-dispersion probe. No GPU."""
 
 import ast
 import json
@@ -343,42 +343,7 @@ def test_recorded_sampling_kwargs_match_generate_with_vllm():
     assert "repetition_penalty" not in sampling_param_kwargs(0.8, 256)
 
 
-def test_probe_dispersion_uses_vllm_generator_and_the_spawn_signature():
-    source = (ROOT / "modal_train.py").read_text(encoding="utf-8")
-    tree = ast.parse(source)
-    function = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "probe_dispersion")
-    names = [arg.arg for arg in function.args.args]
-    assert names == [
-        "adapter",
-        "task_ids",
-        "task_ids_sha256",
-        "run_id",
-        "k",
-        "seed",
-        "hard_train_mix",
-        "tool_budget",
-        "prompt_version",
-        "temperature",
-        "pool_types",
-    ]
-    defaults = [ast.literal_eval(default) for default in function.args.defaults]
-    assert defaults == [8, 0, 0.6, 8, "v4", 0.65, "boxed_warning,faers_top_reaction,approval,faers_count"]
-    decorator = ast.get_source_segment(source, function.decorator_list[0])
-    assert decorator is not None
-    assert "gpu=TOOL_GPU" in decorator
-    assert "timeout=10 * 60" in decorator
-    assert "memory=32768" in decorator
-    assert "retries=0" in decorator
-    assert "secrets" not in decorator
-    assert "WANDB" not in decorator
-    body = ast.get_source_segment(source, function)
-    assert body is not None
-    assert "run_probe_dispersion(" in body
-    assert "HFRolloutGenerator" not in body
-    assert "load_hf_rollout" not in body
-    assert "llm.generate" not in body
-    assert "start_wandb" not in body
-    assert "hf_token" not in body
+def test_probe_dispersion_uses_vllm_generator():
     job_src = (ROOT / "fdagym" / "train" / "jobs.py").read_text(encoding="utf-8")
     job_tree = ast.parse(job_src)
     job = next(
@@ -395,10 +360,6 @@ def test_probe_dispersion_uses_vllm_generator_and_the_spawn_signature():
     assert "hf_token" not in job_body
     cli = (ROOT / "scripts" / "run_gpu.py").read_text(encoding="utf-8")
     assert "run_probe_dispersion(" in cli
-    main = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "main")
-    main_src = ast.get_source_segment(source, main)
-    assert main_src is not None
-    assert "probe_dispersion" not in main_src
     module = (ROOT / "fdagym" / "train" / "dispersion.py").read_text(encoding="utf-8")
     tree = ast.parse(module)
     imported = set()
@@ -409,5 +370,4 @@ def test_probe_dispersion_uses_vllm_generator_and_the_spawn_signature():
             imported.add(node.module.split(".")[0])
     assert "torch" not in imported
     assert "vllm" not in imported
-    assert "modal" not in imported
     assert "wandb" not in imported

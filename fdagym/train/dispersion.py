@@ -149,7 +149,7 @@ def run_probe(
     Each chunk of ``chunk_groups`` questions is one ``rollout_batch``. The chunk
     is written and ``on_chunk`` runs before the next chunk starts, so a timeout
     leaves whole groups. ``k is None`` uses the training group size, 8. A caller
-    that passes ``k`` (the CPU tests) may use a smaller group; the Modal entry
+    that passes ``k`` (the CPU tests) may use a smaller group; the GPU probe
     passes 8.
 
     ``rollout_batch`` already opens ``training_rollout``. This function does not

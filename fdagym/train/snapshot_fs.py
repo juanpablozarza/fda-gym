@@ -15,6 +15,6 @@ def require_snapshot(repo: Path | None = None) -> Path:
     if not path.is_file():
         raise FileNotFoundError(
             f"frozen snapshot missing at {path}. "
-            "Copy data/snapshots/2026-10-15 from the main worktree before `modal run` or docker build."
+            "Copy data/snapshots/2026-10-15 from the main worktree before a GPU job."
         )
     return path

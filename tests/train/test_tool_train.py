@@ -1,4 +1,4 @@
-"""CPU checks for tool-call GRPO, the SFT mask, and the Modal entrypoints."""
+"""CPU checks for tool-call GRPO, the SFT mask, and the local GPU entrypoints."""
 
 import ast
 import inspect
@@ -319,7 +319,7 @@ def test_eval_dry_run_writes_a_schema_valid_trajectory(tmp_path):
 def test_base_eval_is_the_raw_model_and_adapter_eval_is_trained():
     base = tool_eval_model(None)
     assert base == {"name": QWEN_3B, "kind": "baseline", "checkpoint_step": None}
-    trained = tool_eval_model("/vol/runs/grpo-qwen3b-tools/adapter")
+    trained = tool_eval_model("results/grpo-qwen3b-tools/adapter")
     assert trained["kind"] == "trained"
     assert trained["name"] == f"{QWEN_3B}+tools"
     assert tool_eval_model("")["kind"] == "baseline"
@@ -380,23 +380,10 @@ def test_tool_modules_import_without_torch():
         assert "vllm" not in imported
 
 
-def test_modal_tool_actions_are_a100_and_scripts_stay_offline():
-    text = (ROOT / "modal_train.py").read_text()
-    assert 'TOOL_GPU = "A100-80GB"' in text
-    assert "def sft(" in text
-    assert "def train_tools(" in text
-    assert "def eval_tools(" in text
-    assert "train-tools" in text
-    assert "eval-tools-base" in text
-    assert "baseline-qwen3b-tools" in text
-    assert "adapter=None" in text
-    assert "sft-qwen3b-tools" in text
-    assert "gpu = TOOL_GPU" in text
-    assert "eval-base" in text
+def test_local_tool_scripts_stay_offline():
     for name in ("sft_warmup.py", "grpo_tools.py", "eval_tools.py", "tool_rollout_dry.py"):
         script = (ROOT / "scripts" / name).read_text()
         assert "--dry-run" in script or name == "tool_rollout_dry.py"
-        assert "import modal" not in script
     runbook = (ROOT / "docs" / "train.md").read_text()
     assert "uv run python scripts/sft_warmup.py --dry-run" in runbook
     assert "uv run python scripts/run_gpu.py train-tools" in runbook

@@ -45,7 +45,7 @@ def main(argv: list[str] | None = None) -> int:
 def _parse(argv: list[str] | None) -> argparse.Namespace:
     from fdagym.train.rollout import DEFAULT_PROMPT_VERSION, DEFAULT_TOOL_BUDGET, PROMPT_VERSIONS
 
-    parser = argparse.ArgumentParser(description="CPU dry-run for distill SFT. Does not load Qwen or start Modal.")
+    parser = argparse.ArgumentParser(description="CPU dry-run for distill SFT. Does not load Qwen or start a GPU job.")
     parser.add_argument("--dry-run", action="store_true", default=True)
     parser.add_argument("--trajectories", action="append", type=Path, default=None)
     parser.add_argument("--sizes", default="3,5,all", help="nested sizes (fixture dry-run default 3,5,all)")

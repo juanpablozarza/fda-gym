@@ -1,9 +1,8 @@
-"""Tool-mode GPU jobs shared by Modal and a plain GPU box.
+"""Tool-mode GPU jobs for a machine that already has CUDA.
 
-``modal_train.py`` calls these with ``runs_dir=/vol/runs`` and ``on_save`` set
-to the volume commit. ``scripts/run_gpu.py`` calls them with a directory on
-local disk and ``on_save=None``. Sampling, the task pool, and the defaults are
-the arguments below. This module does not implement a reward.
+``scripts/run_gpu.py`` calls these with a directory on local disk and
+``on_save=None``. Sampling, the task pool, and the defaults are the arguments
+below. This module does not implement a reward.
 
 ``run_distill_sft`` is the student LoRA job over teacher JSONL. It does not
 call a teacher API and does not rescore JP's reward.
@@ -25,9 +24,7 @@ _REPO = Path(__file__).resolve().parents[2]
 def prepare_runtime(runs_dir: Path | str) -> Path:
     """Point the Hub cache at the disk that holds ``runs_dir``, and record the git SHA.
 
-    ``setdefault`` keeps a value that is already there. Modal's ``_bind_paths``
-    sets ``HF_HOME`` to ``/vol/hf-cache`` before the call, and the image sets
-    ``FDAGYM_GIT_SHA`` because the container has no ``.git``. A box that has
+    ``setdefault`` keeps a value that is already there. A process that has set
     neither gets ``<parent of runs_dir>/hf-cache`` and ``git rev-parse HEAD``.
     """
     runs = Path(runs_dir)
@@ -63,7 +60,7 @@ def _redact(text: str) -> str:
 
 
 def _mark(run_dir: Path, status: str, exc: BaseException | None = None, on_save=None) -> None:
-    """Write ``DONE`` or ``FAILED`` and commit it when ``on_save`` is the volume.
+    """Write ``DONE`` or ``FAILED`` and call ``on_save`` when the job supplied one.
 
     A missing directory means the job refused to start (bad ids, existing
     probe dir). Leave that directory alone.
@@ -107,9 +104,9 @@ def run_train_tools(
     temperature: float = 0.65,
     pool_types: str = "boxed_warning,faers_top_reaction,approval,faers_count",
 ) -> dict:
-    """Tool GRPO. Defaults match ``train_tools`` on Modal, including mix 0.
+    """Tool GRPO. Unflagged mix is 0.
 
-    ``on_save`` commits run metadata, trainer checkpoints, and the final ``DONE`` marker.
+    ``on_save`` is called after run metadata, trainer checkpoints, and the final ``DONE`` marker.
     ``init_adapter`` is a local directory or a Hugging Face repo id; private
     Hub adapters need ``HF_TOKEN`` in the environment.
     """
@@ -282,8 +279,7 @@ def run_eval_tools(
 ) -> dict:
     """Greedy tool eval. ``HF_TOKEN`` is whatever the process environment already has.
 
-    This function does not take the token. Modal copies its ``hf_token``
-    argument into the environment before calling. The CLI never has that argument.
+    This function does not take the token as an argument. The CLI never has that argument.
     """
     validate_run_id(run_id)
     runs = prepare_runtime(runs_dir)

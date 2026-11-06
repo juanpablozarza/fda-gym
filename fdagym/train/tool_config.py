@@ -78,7 +78,7 @@ class ToolTrainConfig:
     mix_rows: int = TOOL_MIX_ROWS
     mix_seed: int = 0
     # None keeps the current-train type mix. A new hard RL run passes
-    # {"hard": 0.60, "current": 0.40} (see HARD_TRAIN_MIX). The Modal flag
+    # {"hard": 0.60, "current": 0.40} (see HARD_TRAIN_MIX). The CLI flag
     # defaults to 0, which stays None, so an unflagged train-tools run does not mix.
     hard_train_mix: dict | None = None
     # Measurement only. The callback reads every_n_steps. It does not change the pool.

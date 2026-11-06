@@ -286,9 +286,11 @@ def test_default_training_pool_still_refuses_the_file(hard_train):
 def test_sixty_forty_mix_is_opt_in(hard_train):
     assert HARD_TRAIN_MIX == {"hard": 0.60, "current": 0.40}
     assert ToolTrainConfig().hard_train_mix is None
-    modal = (ROOT / "modal_train.py").read_text()
-    # Unflagged train-tools, pipeline_tools, and the local entrypoint stay at 0 (no mix).
-    assert modal.count("hard_train_mix: float = 0.0") >= 3
+    jobs = (ROOT / "fdagym" / "train" / "jobs.py").read_text()
+    cli = (ROOT / "scripts" / "run_gpu.py").read_text()
+    # Unflagged train-tools stays at 0 (no mix).
+    assert "hard_train_mix: float = 0.0" in jobs
+    assert 'train.add_argument("--hard-train-mix", type=float, default=0.0)' in cli
     rows, report = mix_hard_train(load_split("train"), hard_train, n_rows=100, seed=0)
     assert report["rows"] == {"hard": 60, "current": 40}
     assert sum(task["split"] == "hard_train" for task in rows) == 60

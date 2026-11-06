@@ -1,8 +1,7 @@
-"""CLI and Modal wrappers call the same job functions. CPU only. No Modal and no GPU."""
+"""CLI calls the local job functions. CPU only. No GPU."""
 
 import ast
 import importlib.util
-import inspect
 import json
 import os
 from pathlib import Path
@@ -14,7 +13,6 @@ from fdagym.train.jobs import prepare_runtime, run_eval_tools, run_probe_dispers
 from tests.train.test_dispersion import PROBE_IDS, PROBE_SHA
 
 ROOT = Path(__file__).resolve().parents[2]
-MODAL = ROOT / "modal_train.py"
 CLI_PATH = ROOT / "scripts" / "run_gpu.py"
 
 
@@ -38,125 +36,11 @@ def _load_cli():
     return module
 
 
-def _function(path: Path, name: str) -> ast.FunctionDef:
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    return next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == name)
-
-
-def _resolved_defaults(path: Path, name: str) -> dict:
-    source = path.read_text(encoding="utf-8")
-    tree = ast.parse(source)
-    assigned = {}
-    for node in tree.body:
-        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
-            try:
-                assigned[node.targets[0].id] = ast.literal_eval(node.value)
-            except (ValueError, TypeError):
-                continue
-    function = _function(path, name)
-    args = function.args.args
-    defaults = function.args.defaults
-    offset = len(args) - len(defaults)
-    resolved = {}
-    for arg, default in zip(args[offset:], defaults, strict=True):
-        if isinstance(default, ast.Constant):
-            resolved[arg.arg] = default.value
-        elif isinstance(default, ast.Name) and default.id in assigned:
-            resolved[arg.arg] = assigned[default.id]
-        else:
-            resolved[arg.arg] = ast.literal_eval(default)
-    return resolved
-
-
-def _call_keywords(path: Path, function: str, callee: str) -> dict[str, str]:
-    source = path.read_text(encoding="utf-8")
-    node = _function(path, function)
-    segment = ast.get_source_segment(source, node)
-    assert segment is not None
-    found = None
-    for child in ast.walk(node):
-        if isinstance(child, ast.Call) and isinstance(child.func, ast.Name) and child.func.id == callee:
-            found = child
-            break
-    assert found is not None, callee
-    keywords = {}
-    for keyword in found.keywords:
-        assert keyword.arg is not None
-        keywords[keyword.arg] = ast.get_source_segment(source, keyword.value)
-    return keywords
-
-
 def test_published_probe_file_is_the_pr27_draw():
     ids = (ROOT / "data" / "probe" / "dispersion-warmup-mh1.txt").read_text(encoding="utf-8").split()
     assert ids == PROBE_IDS
     assert ids_sha256(ids) == PROBE_SHA
     assert len(ids) == 40
-
-
-def test_job_defaults_match_the_modal_signatures():
-    train = _resolved_defaults(MODAL, "train_tools")
-    signature = inspect.signature(run_train_tools)
-    for name, modal_default in train.items():
-        assert signature.parameters[name].default == modal_default
-    assert signature.parameters["runs_dir"].default is inspect.Parameter.empty
-    assert signature.parameters["on_save"].default is None
-    assert "hf_token" not in signature.parameters
-
-    evaluate = _resolved_defaults(MODAL, "eval_tools")
-    eval_signature = inspect.signature(run_eval_tools)
-    for name, modal_default in evaluate.items():
-        if name == "hf_token":
-            continue
-        assert eval_signature.parameters[name].default == modal_default
-    assert "hf_token" not in eval_signature.parameters
-
-    probe = _resolved_defaults(MODAL, "probe_dispersion")
-    probe_signature = inspect.signature(run_probe_dispersion)
-    for name, modal_default in probe.items():
-        assert probe_signature.parameters[name].default == modal_default
-    assert probe["k"] == 8
-    assert probe["hard_train_mix"] == 0.6
-    assert probe["tool_budget"] == 8
-    assert probe["prompt_version"] == "v4"
-
-
-def test_modal_wrappers_forward_the_same_arguments_the_cli_does():
-    train_modal = _call_keywords(MODAL, "train_tools", "run_train_tools")
-    train_cli = _call_keywords(CLI_PATH, "_train", "run_train_tools")
-    assert set(train_modal) == set(train_cli)
-    modal_params = [arg.arg for arg in _function(MODAL, "train_tools").args.args]
-    for name in modal_params:
-        assert train_modal[name] == name
-        assert train_cli[name] == f"args.{name}"
-    assert train_modal["on_save"] == "_commit"
-    assert train_cli["on_save"] == "None"
-    assert "VOL_MOUNT" in train_modal["runs_dir"]
-    assert train_cli["runs_dir"] == "args.runs_dir"
-
-    eval_modal = _call_keywords(MODAL, "eval_tools", "run_eval_tools")
-    eval_cli = _call_keywords(CLI_PATH, "_eval", "run_eval_tools")
-    assert set(eval_modal) == set(eval_cli)
-    assert "hf_token" not in eval_modal
-    eval_params = [arg.arg for arg in _function(MODAL, "eval_tools").args.args]
-    for name in eval_params:
-        if name == "hf_token":
-            continue
-        assert eval_modal[name] == name
-        assert eval_cli[name] == f"args.{name}"
-    wrapper = ast.get_source_segment(MODAL.read_text(encoding="utf-8"), _function(MODAL, "eval_tools"))
-    assert wrapper is not None
-    assert 'os.environ["HF_TOKEN"] = hf_token' in wrapper
-
-    probe_modal = _call_keywords(MODAL, "probe_dispersion", "run_probe_dispersion")
-    probe_cli = _call_keywords(CLI_PATH, "_probe", "run_probe_dispersion")
-    assert set(probe_modal) == set(probe_cli)
-    probe_params = [arg.arg for arg in _function(MODAL, "probe_dispersion").args.args]
-    for name in probe_params:
-        assert probe_modal[name] == name
-        if name == "task_ids":
-            assert probe_cli[name] == "_task_ids(args)"
-        else:
-            assert probe_cli[name] == f"args.{name}"
 
 
 def test_cli_defaults_match_and_secrets_are_not_arguments():
@@ -191,7 +75,6 @@ def test_cli_defaults_match_and_secrets_are_not_arguments():
     )
     assert probe.k == 8
     assert probe.seed == 0
-    assert probe.executor == "runpod"
     assert probe.hard_train_mix == 0.6
     assert probe.tool_budget == 8
     assert probe.prompt_version == "v4"
@@ -263,6 +146,7 @@ def test_cli_forwards_the_hard_run_and_the_probe_file(monkeypatch, tmp_path, cap
     assert forwarded["pool_types"] == "boxed_warning,faers_top_reaction,approval,faers_count"
     assert forwarded["prompts_per_step"] is None
     assert forwarded["dynamic_sampling"] is None
+    assert os.environ["FDAGYM_EXECUTOR"] == "local"
     dry = cli._parser().parse_args(
         [
             "train-tools",
@@ -521,7 +405,7 @@ def test_probe_refuses_a_bad_k_a_bad_run_id_and_an_existing_directory(tmp_path):
     assert not (run_dir / "FAILED").exists()
 
 
-def test_prepare_runtime_matches_modal_when_the_env_is_already_set(tmp_path, monkeypatch):
+def test_prepare_runtime_keeps_an_already_set_env(tmp_path, monkeypatch):
     monkeypatch.delenv("HF_HOME", raising=False)
     monkeypatch.delenv("HF_HUB_CACHE", raising=False)
     monkeypatch.delenv("FDAGYM_GIT_SHA", raising=False)
@@ -530,11 +414,12 @@ def test_prepare_runtime_matches_modal_when_the_env_is_already_set(tmp_path, mon
     assert os.environ["HF_HOME"] == str(tmp_path / "hf-cache")
     assert os.environ["HF_HUB_CACHE"] == str(tmp_path / "hf-cache")
     assert os.environ["FDAGYM_GIT_SHA"]
-    monkeypatch.setenv("HF_HOME", "/vol/hf-cache")
-    monkeypatch.setenv("HF_HUB_CACHE", "/vol/hf-cache")
+    preset = str(tmp_path / "preset-cache")
+    monkeypatch.setenv("HF_HOME", preset)
+    monkeypatch.setenv("HF_HUB_CACHE", preset)
     monkeypatch.setenv("FDAGYM_GIT_SHA", "baked")
-    prepare_runtime(Path("/vol/runs"))
-    assert os.environ["HF_HOME"] == "/vol/hf-cache"
+    prepare_runtime(tmp_path / "other-runs")
+    assert os.environ["HF_HOME"] == preset
     assert os.environ["FDAGYM_GIT_SHA"] == "baked"
 
 
@@ -574,7 +459,7 @@ def test_jobs_module_does_not_import_torch_or_define_a_reward():
             imported.update(alias.name.split(".")[0] for alias in node.names)
         elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
             imported.add(node.module.split(".")[0])
-    assert imported.isdisjoint({"torch", "vllm", "modal", "wandb", "peft", "transformers"})
+    assert imported.isdisjoint({"torch", "vllm", "wandb", "peft", "transformers"})
     names = {node.name for node in tree.body if isinstance(node, (ast.FunctionDef, ast.ClassDef))}
     assert names.isdisjoint({"score", "episode_scores", "training_reward"})
     assert "fdagym.rewards" not in source

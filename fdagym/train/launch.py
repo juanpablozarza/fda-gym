@@ -1,4 +1,4 @@
-"""Shared Plan A GRPO entry used by the local script, Modal, and RunPod."""
+"""Shared Plan A GRPO entry used by the local training scripts."""
 
 from __future__ import annotations
 

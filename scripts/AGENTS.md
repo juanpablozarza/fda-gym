@@ -22,7 +22,6 @@ Use `uv add` for dependencies. Avoid introducing dependencies for small CLI task
 | Local verifiers v1 / vf-eval wrapper (optional `prime` extra) | `uv run vf-eval fdagym` / `uv run vf-eval @ configs/prime.toml` | `fdagym.prime` |
 | HUD SDK local eval of public.jsonl (optional extra, no GPU) | `hud eval tasks.py claude` | `fdagym.hud` |
 | Train/evaluate locally | `grpo_singleturn.py`, `grpo_tools.py`, `sft_*.py`, `eval_local.py`, `eval_tools.py`, `run_gpu.py` | `fdagym.train` |
-| Spawn a remote training job | `launch_pipeline.py`, `spawn_modal.py` | `fdagym.train.pipeline`, `fdagym.train.spawn_plan` |
 | Compare or chart runs | `compare_runs.py`, `wandb_chart.py` | `fdagym.train` |
 
 The old separate hard audit and hard generation commands were consolidated into the subcommands above. Use the command map and project docs rather than recreating those one-off files.

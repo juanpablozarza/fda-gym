@@ -1,6 +1,5 @@
 """Warm-up SFT: continue an adapter, train an explicit id list, expose GRPO save_steps."""
 
-import ast
 import hashlib
 import sys
 import types
@@ -19,7 +18,6 @@ from fdagym.train.tool_config import configure_tool_run
 
 ROOT = Path(__file__).resolve().parents[2]
 WARMUP_SHA = "971819b19cc0a1b93b6f14540779877682d07bf17673f6c68678fb3526543316"
-MODAL = ROOT / "modal_train.py"
 
 
 def test_task_ids_digest_is_sorted_ids_joined_by_newlines():
@@ -113,44 +111,19 @@ def test_committed_warmup_ids_are_the_hard_train_subset():
     assert "eval_strategy" not in kwargs
 
 
-def test_sft_modal_defaults_match_sft_config_and_are_forwarded():
-    defaults = _signature_defaults(MODAL, "sft")
+def test_sft_config_defaults_match_the_warm_up_entrypoint():
     cfg = SFTConfig()
-    assert defaults["num_train_epochs"] == cfg.num_train_epochs == 1.0
-    assert defaults["learning_rate"] == cfg.learning_rate == 1e-4
-    assert defaults["save_steps"] == cfg.save_steps == 50
-    assert defaults["val_drug_fraction"] == cfg.val_drug_fraction == VAL_DRUG_FRACTION == 0.05
-    assert defaults["warmup_ratio"] == cfg.warmup_ratio == 0.03
-    assert defaults["init_adapter"] is None
-    assert defaults["task_ids"] is None
-    assert defaults["task_ids_sha256"] is None
-    assert defaults["include_hard_train"] is False
+    assert cfg.num_train_epochs == 1.0
+    assert cfg.learning_rate == 1e-4
+    assert cfg.save_steps == 50
+    assert cfg.val_drug_fraction == VAL_DRUG_FRACTION == 0.05
+    assert cfg.warmup_ratio == 0.03
     assert cfg.task_ids is None
-    body = _function_text(MODAL, "sft", "train_tools")
-    for name in (
-        "init_adapter",
-        "task_ids",
-        "task_ids_sha256",
-        "num_train_epochs",
-        "learning_rate",
-        "save_steps",
-        "val_drug_fraction",
-        "warmup_ratio",
-        "include_hard_train",
-        "tool_budget",
-        "prompt_version",
-    ):
-        assert f"{name}={name}" in body
-    assert 'load_split("hard_train") if config.include_hard_train or config.task_ids is not None' in body
-    forwarded = SFTConfig(
-        num_train_epochs=defaults["num_train_epochs"],
-        learning_rate=defaults["learning_rate"],
-        save_steps=defaults["save_steps"],
-        val_drug_fraction=defaults["val_drug_fraction"],
-        warmup_ratio=defaults["warmup_ratio"],
-    )
-    assert forwarded == SFTConfig()
-    assert forwarded.trainer_kwargs("/tmp/out") == SFTConfig().trainer_kwargs("/tmp/out")
+    assert cfg.task_ids_sha256 is None
+    assert cfg.include_hard_train is False
+    launch = (ROOT / "fdagym" / "train" / "sft_launch.py").read_text()
+    assert "config.include_hard_train or config.task_ids is not None" in launch
+    assert SFTConfig().trainer_kwargs("/tmp/out") == cfg.trainer_kwargs("/tmp/out")
 
 
 def test_zero_val_fraction_and_bad_sft_knobs():
@@ -220,10 +193,10 @@ def test_init_adapter_loads_the_existing_lora_as_trainable(monkeypatch):
     monkeypatch.setitem(sys.modules, "transformers", transformers)
     monkeypatch.setitem(sys.modules, "peft", peft)
 
-    wrapped = load_sft_model(SFTConfig(gradient_checkpointing=True, bf16=True), "/vol/runs/sft/adapter")
+    wrapped = load_sft_model(SFTConfig(gradient_checkpointing=True, bf16=True), "results/sft/adapter")
     assert wrapped == "wrapped"
     assert calls[0][:3] == ("base", "Qwen/Qwen2.5-3B-Instruct", "fp32")
-    assert calls[1] == ("peft", "/vol/runs/sft/adapter", True, True, True, False)
+    assert calls[1] == ("peft", "results/sft/adapter", True, True, True, False)
     assert not any(call[0] == "fresh" for call in calls)
 
     calls.clear()
@@ -243,7 +216,7 @@ def test_init_adapter_loads_the_existing_lora_as_trainable(monkeypatch):
     assert "is_trainable=True" in launch
     assert _blank(None) is None
     assert _blank("") is None
-    assert _blank("  /vol/runs/sft/adapter  ") == "/vol/runs/sft/adapter"
+    assert _blank("  results/sft/adapter  ") == "results/sft/adapter"
 
 
 def test_adapter_sha256_hashes_the_safetensors_file(tmp_path):
@@ -257,7 +230,7 @@ def test_adapter_sha256_hashes_the_safetensors_file(tmp_path):
     hub = "example/fdagym-adapter"
     assert is_hub_adapter(hub) is True
     assert is_hub_adapter(adapter) is False
-    assert is_hub_adapter("/vol/runs/missing/adapter") is False
+    assert is_hub_adapter("results/missing/adapter") is False
     assert is_hub_adapter("runs/missing/adapter") is False
     assert adapter_sha256(hub) == hashlib.sha256(f"hub:{hub}".encode()).hexdigest()
 
@@ -283,18 +256,16 @@ def test_grpo_save_steps_reaches_the_train_config():
     assert dry.train.max_steps == 2
     with pytest.raises(ValueError, match="save_steps"):
         configure_tool_run(hard=False, save_steps=0)
-    defaults = _signature_defaults(MODAL, "train_tools")
-    assert defaults["save_steps"] == 50
-    body = _function_text(MODAL, "train_tools", "eval_tools")
-    assert "save_steps=save_steps" in body
+    jobs = (ROOT / "fdagym" / "train" / "jobs.py").read_text()
+    assert "save_steps: int = 50" in jobs
+    assert "save_steps=save_steps" in jobs
 
 
-def test_build_warmup_script_keeps_the_quotas_and_does_not_import_modal():
+def test_build_warmup_script_keeps_the_quotas():
     import importlib.util
 
     path = ROOT / "scripts" / "build_warmup.py"
     text = path.read_text()
-    assert "import modal" not in text
     assert "task_ids_digest" in text
     assert "refusing to write into data/tasks" in text
     spec = importlib.util.spec_from_file_location("build_warmup_under_test", path)
@@ -310,33 +281,6 @@ def test_build_warmup_script_keeps_the_quotas_and_does_not_import_modal():
 def test_plan_a_run_sft_is_still_the_plan_a_entrypoint():
     """The legacy single-turn fitter stays. Tool SFT is sft_launch.run_sft."""
     text = (ROOT / "fdagym" / "train" / "sft.py").read_text()
-    modal = MODAL.read_text()
+    launch = (ROOT / "fdagym" / "train" / "sft_launch.py").read_text()
     assert "def run_sft(" in text
-    assert "from fdagym.train.sft import run_sft" in modal
-    assert "from fdagym.train.sft_launch import run_sft" in modal
-
-
-def _signature_defaults(path: Path, name: str) -> dict:
-    tree = ast.parse(path.read_text())
-    for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef) and node.name == name:
-            args = node.args.args
-            defaults = node.args.defaults
-            offset = len(args) - len(defaults)
-            return {arg.arg: _literal(default) for arg, default in zip(args[offset:], defaults, strict=True)}
-    raise AssertionError(name)
-
-
-def _literal(node: ast.AST):
-    if isinstance(node, ast.Constant):
-        return node.value
-    if isinstance(node, ast.Name):
-        return node.id
-    return ast.literal_eval(node)
-
-
-def _function_text(path: Path, name: str, follower: str) -> str:
-    text = path.read_text()
-    start = text.index(f"def {name}(")
-    end = text.index(f"\ndef {follower}(")
-    return text[start:end]
+    assert "def run_sft(" in launch

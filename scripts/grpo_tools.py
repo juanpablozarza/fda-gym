@@ -1,8 +1,8 @@
-"""Tool-call GRPO dry run. Does not start Modal or a GPU.
+"""Tool-call GRPO dry run. Does not start a GPU job.
 
     uv run python scripts/grpo_tools.py --dry-run
 
-The GPU job is ``scripts/run_gpu.py train-tools`` (or Modal ``train_tools``).
+The GPU job is ``scripts/run_gpu.py train-tools``.
 Both call ``fdagym.train.jobs.run_train_tools``. This script only checks the
 CPU fixtures.
 """
@@ -31,7 +31,7 @@ def main(argv: list[str] | None = None) -> int:
     if not args.dry_run:
         print(
             "Pass --dry-run for the CPU check. GPU training is `python scripts/run_gpu.py train-tools`. "
-            "This script does not start Modal.",
+            "This script does not start a GPU job.",
             file=sys.stderr,
         )
         return 2
@@ -94,7 +94,7 @@ def _dry(args) -> int:
 
 
 def _parse(argv: list[str] | None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="CPU dry run for tool GRPO. Does not start Modal or a GPU.")
+    parser = argparse.ArgumentParser(description="CPU dry run for tool GRPO. Does not start a GPU job.")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(
         "--tool-budget",

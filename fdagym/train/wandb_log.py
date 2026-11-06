@@ -1,8 +1,7 @@
 """Weights & Biases as the run record. The API key is read from the environment only.
 
-Modal injects it from the secret named ``wandb`` (``WANDB_API_KEY``). This module
-never takes the key as an argument and never prints it. With no key, or if W&B
-itself fails, training continues and ``report_to`` stays empty.
+This module never takes the key as an argument and never prints it. With no
+key, or if W&B itself fails, training continues and ``report_to`` stays empty.
 """
 
 from __future__ import annotations
@@ -189,8 +188,7 @@ def flatten_memorization(report: dict) -> dict:
 def write_memorization_report(report: dict, directory: str | Path, step: int) -> Path:
     """Write the full report beside the run outputs.
 
-    The path is ``<directory>/memorization-<step>.json``. On Modal that directory
-    is ``/vol/runs/<run_id>``.
+    The path is ``<directory>/memorization-<step>.json``.
     """
     path = Path(directory) / f"memorization-{int(step)}.json"
     path.parent.mkdir(parents=True, exist_ok=True)

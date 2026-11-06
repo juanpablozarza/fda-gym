@@ -27,7 +27,7 @@ def main(argv: list[str] | None = None) -> int:
     args = _parse(argv)
     if args.dry_run == args.train:
         print(
-            "Pass --dry-run for the CPU check, or --train to fit on a local GPU. This script does not start Modal.",
+            "Pass --dry-run for the CPU check, or --train to fit on a local GPU.",
             file=sys.stderr,
         )
         return 2
@@ -80,9 +80,9 @@ def _fixtures():
 
 
 def _parse(argv: list[str] | None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="CPU dry run or local SFT warm-up. Does not start Modal.")
+    parser = argparse.ArgumentParser(description="CPU dry run or local SFT warm-up. Does not start a GPU job.")
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--train", action="store_true", help="fit on the local GPU; does not call Modal")
+    parser.add_argument("--train", action="store_true", help="fit on the local GPU")
     parser.add_argument("--task-id", action="append", dest="task_id")
     parser.add_argument("--snapshot", default="2026-10-15")
     parser.add_argument("--run-id", default="sft-qwen3b-tools")

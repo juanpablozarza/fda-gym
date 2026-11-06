@@ -1,4 +1,4 @@
-"""CPU dry run of the multi-turn rollout in Qwen tool-call format. No torch, no vLLM, no Modal.
+"""CPU dry run of the multi-turn rollout in Qwen tool-call format. No torch, no vLLM.
 
     uv run python scripts/tool_rollout_dry.py
 

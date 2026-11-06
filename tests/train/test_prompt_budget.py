@@ -141,9 +141,12 @@ def test_eval_summary_records_the_prompt_and_the_budget(tmp_path):
 
 
 def test_entrypoints_publish_the_same_defaults():
-    modal = (ROOT / "modal_train.py").read_text()
-    assert modal.count(f"tool_budget: int = {DEFAULT_TOOL_BUDGET}") >= 4
-    assert modal.count(f'prompt_version: str = "{DEFAULT_PROMPT_VERSION}"') >= 4
+    jobs = (ROOT / "fdagym" / "train" / "jobs.py").read_text()
+    assert f"tool_budget: int = {DEFAULT_TOOL_BUDGET}" in jobs
+    assert f'prompt_version: str = "{DEFAULT_PROMPT_VERSION}"' in jobs
+    cli = (ROOT / "scripts" / "run_gpu.py").read_text()
+    assert "DEFAULT_TOOL_BUDGET" in cli
+    assert "DEFAULT_PROMPT_VERSION" in cli
     for relative in ("scripts/eval_tools.py", "scripts/grpo_tools.py"):
         text = (ROOT / relative).read_text()
         assert "--tool-budget" in text
