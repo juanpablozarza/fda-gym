@@ -1,0 +1,18 @@
+[
+  {
+    "name": "openrouter/openai/gpt-6-luna",
+    "kind": "baseline",
+    "mean_reward": 0.5817,
+    "pass": 0.4839,
+    "citations": 0.698,
+    "tools": 5.1183
+  },
+  {
+    "name": "openrouter/anthropic/claude-haiku-5.5",
+    "kind": "baseline",
+    "mean_reward": 0.4795,
+    "pass": 0.4194,
+    "citations": 0.4799,
+    "tools": 5.3656
+  }
+]

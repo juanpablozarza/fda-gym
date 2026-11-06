@@ -90,7 +90,21 @@ Requested paid slugs (`gpt-4o-mini`, `claude-3.5-haiku`, `qwen-2.5-7b-instruct`)
 | SFT warm-up | 0.575 | — | — |
 | GRPO 150 steps from warm-up | 0.839 | 80.6% | 0.87 |
 
-There is no committed OpenRouter run on `public.jsonl` in this tree.
+**OpenRouter public.jsonl** (`results/public-haiku-luna-2026-11-05.jsonl`, split `public`, 93 tasks `FG-9101`–`FG-9193`, 50 compare + 43 sponsor_hop, seed 1). Grader v5, snapshot `2026-10-15`. `TOOL_BUDGET` 8 with the then-current hard cut: 8 non-submit tools, then `submit_answer` is still accepted; a 9th search/get ends as `max_steps`. Started `2026-11-06T03:34:55Z` (9:35 PM America/Mexico_City on Nov 5). Wall ~24 min. Cost cap $1; real cost $0.267374. `summary.status` is `incomplete` only because `failure_count=9`; all 186 trajectories exist and count in n=93. See `results/public-haiku-luna-2026-11-05/summary.json`.
+
+| Model | n | mean reward (v5) | pass | mean citation | mean tools | cost_usd |
+| --- | --- | --- | --- | --- | --- | --- |
+| `openrouter/openai/gpt-6-luna` | 93 | 0.5817 | 45/93 (48.39%) | 0.698 | 5.1183 | 0.055976 |
+| `openrouter/anthropic/claude-haiku-5.5` | 93 | 0.4795 | 39/93 (41.94%) | 0.4799 | 5.3656 | 0.211398 |
+
+Pass = correctness > 0.
+
+| Type | n | Luna mean / pass | Haiku 5.5 mean / pass |
+| --- | --- | --- | --- |
+| compare | 50 | 0.7314 / 36/50 (72%) | 0.6047 / 31/50 (62%) |
+| sponsor_hop | 43 | 0.4077 / 9/43 (21%) | 0.3340 / 8/43 (19%) |
+
+Nine `error` rows: the model called `submit_answer` but it failed the schema (`submit_answer is missing or does not match the schema`). These are not absent submits. IDs: Luna `FG-9185`; Haiku `FG-9110`, `FG-9155`, `FG-9164`, `FG-9177`, `FG-9185`, `FG-9186`, `FG-9187`, `FG-9189` (`failures.jsonl`). Three `max_steps` (also total 0): Luna `FG-9118`, `FG-9140`; Haiku `FG-9152`. Each had 8 successful tools plus a rejected 9th (`search_drug_label` / `get_label_section` / `search_approvals`) with `tool budget exhausted; call submit_answer`.
 
 ## Tools
 

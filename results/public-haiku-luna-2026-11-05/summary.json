@@ -1,0 +1,116 @@
+{
+  "status": "incomplete",
+  "complete": false,
+  "failures": [
+    {
+      "model": "openrouter/openai/gpt-6-luna",
+      "task_id": "FG-9185",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:47:39.340384+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9110",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:49:48.935826+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9155",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:54:11.451426+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9164",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:55:14.145027+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9177",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:56:46.268080+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9185",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:58:06.479082+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9186",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:58:12.289573+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9187",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:58:19.187867+00:00"
+    },
+    {
+      "model": "openrouter/anthropic/claude-haiku-5.5",
+      "task_id": "FG-9189",
+      "seed": 1,
+      "error_type": "AgentEpisodeError",
+      "failed_at": "2026-11-06T03:58:34.392329+00:00"
+    }
+  ],
+  "failure_count": 9,
+  "skipped": {
+    "label_open": 0,
+    "already_done": 0
+  },
+  "models": {
+    "openrouter/openai/gpt-6-luna": {
+      "n": 93,
+      "mean_reward": 0.5817,
+      "pass_rate": 0.4839,
+      "mean_citation": 0.698,
+      "mean_tools": 5.1183,
+      "cost_usd": 0.055976
+    },
+    "openrouter/anthropic/claude-haiku-5.5": {
+      "n": 93,
+      "mean_reward": 0.4795,
+      "pass_rate": 0.4194,
+      "mean_citation": 0.4799,
+      "mean_tools": 5.3656,
+      "cost_usd": 0.211398
+    }
+  },
+  "leaderboard": [
+    {
+      "name": "openrouter/openai/gpt-6-luna",
+      "kind": "baseline",
+      "mean_reward": 0.5817,
+      "pass": 0.4839,
+      "citations": 0.698,
+      "tools": 5.1183
+    },
+    {
+      "name": "openrouter/anthropic/claude-haiku-5.5",
+      "kind": "baseline",
+      "mean_reward": 0.4795,
+      "pass": 0.4194,
+      "citations": 0.4799,
+      "tools": 5.3656
+    }
+  ],
+  "run_id": "public-haiku-luna-2026-11-05",
+  "split": "public",
+  "seeds": [
+    1
+  ],
+  "cost_usd_total": 0.267374
+}

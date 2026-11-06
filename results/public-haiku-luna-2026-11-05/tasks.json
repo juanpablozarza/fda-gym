@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "FG-9101",
+    "question": "Of abacavir, pravastatin, and aripiprazole, which drug has the most FAERS reports of FATIGUE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pravastatin"
+    }
+  },
+  {
+    "id": "FG-9102",
+    "question": "Of amoxicillin, protriptyline, and vadadustat, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "protriptyline"
+    }
+  },
+  {
+    "id": "FG-9103",
+    "question": "Of atorvastatin, divalproex, and lorazepam, which drug has the most FAERS reports of FATIGUE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atorvastatin"
+    }
+  },
+  {
+    "id": "FG-9104",
+    "question": "Of azithromycin, tirzepatide, and pentosan polysulfate, which drug has the most serious FAERS reports received in 2023?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "azithromycin"
+    }
+  },
+  {
+    "id": "FG-9105",
+    "question": "Of bosentan, sertraline, and rosuvastatin, which drug has the most serious FAERS reports received in 2022?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rosuvastatin"
+    }
+  },
+  {
+    "id": "FG-9106",
+    "question": "Of bupropion, mavorixafor, and olanzapine, which drug has the most FAERS reports of NAUSEA?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "bupropion"
+    }
+  },
+  {
+    "id": "FG-9107",
+    "question": "Of bupropion, nevirapine, and olanzapine, which drug has the most FAERS reports of DRUG INEFFECTIVE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "bupropion"
+    }
+  },
+  {
+    "id": "FG-9108",
+    "question": "Of canagliflozin, protriptyline, and quetiapine, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "protriptyline"
+    }
+  },
+  {
+    "id": "FG-9109",
+    "question": "Of canagliflozin, quetiapine, and colchicine, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "quetiapine"
+    }
+  },
+  {
+    "id": "FG-9110",
+    "question": "Of cetirizine, bosentan, and apixaban, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "bosentan"
+    }
+  },
+  {
+    "id": "FG-9111",
+    "question": "Of cetirizine, disulfiram, and apixaban, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-9112",
+    "question": "Of disulfiram, apixaban, and colchicine, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-9113",
+    "question": "Of disulfiram, olezarsen, and haloperidol, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "disulfiram"
+    }
+  },
+  {
+    "id": "FG-9114",
+    "question": "Of donepezil, loxapine, and pentosan polysulfate, which drug has the most serious FAERS reports received in 2023?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "donepezil"
+    }
+  },
+  {
+    "id": "FG-9115",
+    "question": "Of empagliflozin, rivaroxaban, and buprenorphine, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "buprenorphine"
+    }
+  },
+  {
+    "id": "FG-9116",
+    "question": "Of ensifentrine, olezarsen, and gepotidacin, which drug has a boxed warning on its label? Answer no if none of them do.",
+    "type": "compare",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "ensifentrine"
+    }
+  },
+  {
+    "id": "FG-9117",
+    "question": "Of furosemide, empagliflozin, and insulin glargine, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "furosemide"
+    }
+  },
+  {
+    "id": "FG-9118",
+    "question": "Of insulin glargine, amoxicillin, and buprenorphine, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "amoxicillin"
+    }
+  },
+  {
+    "id": "FG-9119",
+    "question": "Of insulin glargine, furosemide, and haloperidol, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "furosemide"
+    }
+  },
+  {
+    "id": "FG-9120",
+    "question": "Of lithium, atorvastatin, and lorazepam, which drug has the most serious FAERS reports received in 2024?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atorvastatin"
+    }
+  },
+  {
+    "id": "FG-9121",
+    "question": "Of lithium, divalproex, and mavorixafor, which drug has the most FAERS reports of NAUSEA?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "lithium"
+    }
+  },
+  {
+    "id": "FG-9122",
+    "question": "Of lithium, tirzepatide, and pembrolizumab, which drug has the most serious FAERS reports received in 2024?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pembrolizumab"
+    }
+  },
+  {
+    "id": "FG-9123",
+    "question": "Of loxapine, metoclopramide, and cetirizine, which drug has the most serious FAERS reports received in 2022?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "cetirizine"
+    }
+  },
+  {
+    "id": "FG-9124",
+    "question": "Of mavorixafor, seladelpar, and elafibranor, which drug has a boxed warning on its label? Answer no if none of them do.",
+    "type": "compare",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "mavorixafor"
+    }
+  },
+  {
+    "id": "FG-9125",
+    "question": "Of metoclopramide, buprenorphine, and colchicine, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metoclopramide"
+    }
+  },
+  {
+    "id": "FG-9126",
+    "question": "Of metoprolol, abacavir, and glipizide, which drug has the most FAERS reports of FATIGUE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metoprolol"
+    }
+  },
+  {
+    "id": "FG-9127",
+    "question": "Of metoprolol, ethosuximide, and bupropion, which drug has the most FAERS reports of FATIGUE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metoprolol"
+    }
+  },
+  {
+    "id": "FG-9128",
+    "question": "Of olanzapine, topiramate, and ethosuximide, which drug has the most FAERS reports of DRUG INEFFECTIVE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "topiramate"
+    }
+  },
+  {
+    "id": "FG-9129",
+    "question": "Of olezarsen, elafibranor, and pentosan polysulfate, which drug has a boxed warning on its label? Answer no if none of them do.",
+    "type": "compare",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "olezarsen"
+    }
+  },
+  {
+    "id": "FG-9130",
+    "question": "Of olezarsen, haloperidol, and furosemide, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "furosemide"
+    }
+  },
+  {
+    "id": "FG-9131",
+    "question": "Of olezarsen, sertraline, and metoclopramide, which drug has the most serious FAERS reports received in 2022?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sertraline"
+    }
+  },
+  {
+    "id": "FG-9132",
+    "question": "Of omeprazole, divalproex, and promethazine, which drug has the most FAERS reports of PAIN?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "omeprazole"
+    }
+  },
+  {
+    "id": "FG-9133",
+    "question": "Of omeprazole, pomalidomide, and promethazine, which drug has the most FAERS reports of DIARRHOEA?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "omeprazole"
+    }
+  },
+  {
+    "id": "FG-9134",
+    "question": "Of pembrolizumab, donepezil, and atorvastatin, which drug has the most serious FAERS reports received in 2024?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "atorvastatin"
+    }
+  },
+  {
+    "id": "FG-9135",
+    "question": "Of pentosan polysulfate, ensifentrine, and gepotidacin, which drug has a boxed warning on its label? Answer no if none of them do.",
+    "type": "compare",
+    "sources": [
+      "drug/label"
+    ],
+    "difficulty": "medium",
+    "entity": {
+      "generic_name": "pentosan polysulfate"
+    }
+  },
+  {
+    "id": "FG-9136",
+    "question": "Of pomalidomide, ethosuximide, and topiramate, which drug has the most FAERS reports of OFF LABEL USE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "topiramate"
+    }
+  },
+  {
+    "id": "FG-9137",
+    "question": "Of pravastatin, nevirapine, and glipizide, which drug has the most FAERS reports of DRUG INEFFECTIVE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "glipizide"
+    }
+  },
+  {
+    "id": "FG-9138",
+    "question": "Of promethazine, bosentan, and donepezil, which drug has the most serious FAERS reports received in 2024?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "donepezil"
+    }
+  },
+  {
+    "id": "FG-9139",
+    "question": "Of quetiapine, vadadustat, and canagliflozin, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "quetiapine"
+    }
+  },
+  {
+    "id": "FG-9140",
+    "question": "Of rivaroxaban, empagliflozin, and amoxicillin, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "amoxicillin"
+    }
+  },
+  {
+    "id": "FG-9141",
+    "question": "Of rosuvastatin, loxapine, and pentosan polysulfate, which drug has the most serious FAERS reports received in 2023?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rosuvastatin"
+    }
+  },
+  {
+    "id": "FG-9142",
+    "question": "Of sertraline, azithromycin, and rosuvastatin, which drug has the most serious FAERS reports received in 2022?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rosuvastatin"
+    }
+  },
+  {
+    "id": "FG-9143",
+    "question": "Of sildenafil, lorazepam, and pomalidomide, which drug has the most FAERS reports of DYSPNOEA?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sildenafil"
+    }
+  },
+  {
+    "id": "FG-9144",
+    "question": "Of sildenafil, mavorixafor, and glipizide, which drug has the most FAERS reports of NAUSEA?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sildenafil"
+    }
+  },
+  {
+    "id": "FG-9145",
+    "question": "Of sumatriptan, levetiracetam, and abacavir, which drug has the most FAERS reports of HEADACHE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sumatriptan"
+    }
+  },
+  {
+    "id": "FG-9146",
+    "question": "Of sumatriptan, nevirapine, and pravastatin, which drug has the most FAERS reports of DRUG INEFFECTIVE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sumatriptan"
+    }
+  },
+  {
+    "id": "FG-9147",
+    "question": "Of tadalafil, aripiprazole, and sumatriptan, which drug has the most FAERS reports of NAUSEA?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tadalafil"
+    }
+  },
+  {
+    "id": "FG-9148",
+    "question": "Of tirzepatide, pembrolizumab, and azithromycin, which drug has the most serious FAERS reports received in 2023?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pembrolizumab"
+    }
+  },
+  {
+    "id": "FG-9149",
+    "question": "Of topiramate, omeprazole, and sildenafil, which drug has the most FAERS reports of DRUG INEFFECTIVE?",
+    "type": "compare",
+    "sources": [
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "omeprazole"
+    }
+  },
+  {
+    "id": "FG-9150",
+    "question": "Of vadadustat, rivaroxaban, and protriptyline, which drug has a boxed warning and the earliest original FDA approval (NDA or BLA)?",
+    "type": "compare",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "protriptyline"
+    }
+  },
+  {
+    "id": "FG-9151",
+    "question": "Application NDA007337 is held by a sponsor that also markets one of these drugs: risperidone, sumatriptan, or olanzapine. That other drug has a boxed warning mentioning cardiovascular. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sumatriptan"
+    }
+  },
+  {
+    "id": "FG-9152",
+    "question": "Application NDA017862 is held by a sponsor that also markets one of these drugs: ambrisentan, febuxostat, or pomalidomide. That other drug has a boxed warning mentioning precautions. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "febuxostat"
+    }
+  },
+  {
+    "id": "FG-9153",
+    "question": "Application NDA017862 is held by a sponsor that also markets one of these drugs: febuxostat or ambrisentan. That other drug has a boxed warning mentioning precautions. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "febuxostat"
+    }
+  },
+  {
+    "id": "FG-9154",
+    "question": "Application NDA017963 is held by a sponsor that also markets one of these drugs: tadalafil, furosemide, or lithium. That other drug has a boxed warning mentioning potent. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "furosemide"
+    }
+  },
+  {
+    "id": "FG-9155",
+    "question": "Application NDA018140 is held by a sponsor that also markets one of these drugs: sertraline or metoclopramide. That other drug has a boxed warning mentioning disorder. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metoclopramide"
+    }
+  },
+  {
+    "id": "FG-9156",
+    "question": "Application NDA018569 is held by a sponsor that also markets one of these drugs: enoxaparin, febuxostat, or glimepiride. That other drug has a boxed warning mentioning precautions. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "glimepiride"
+    }
+  },
+  {
+    "id": "FG-9157",
+    "question": "Application NDA018701 is held by a sponsor that also markets one of these drugs: metoclopramide or rivaroxaban. That other drug has a boxed warning mentioning increases. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-9158",
+    "question": "Application NDA019839 is held by a sponsor that also markets one of these drugs: zolpidem or duloxetine. That other drug has a boxed warning mentioning behaviors. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "zolpidem"
+    }
+  },
+  {
+    "id": "FG-9159",
+    "question": "Application NDA020272 is held by a sponsor that also markets one of these drugs: haloperidol or bupropion. That other drug has a boxed warning mentioning trials. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-9160",
+    "question": "Application NDA020588 is held by a sponsor that also markets one of these drugs: haloperidol or quetiapine. That other drug has a boxed warning mentioning mortality. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "haloperidol"
+    }
+  },
+  {
+    "id": "FG-9161",
+    "question": "Application NDA020592 is held by a sponsor that also markets one of these drugs: aripiprazole or quetiapine. That other drug has a boxed warning mentioning mortality. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "quetiapine"
+    }
+  },
+  {
+    "id": "FG-9162",
+    "question": "Application NDA020639 is held by a sponsor that also markets one of these drugs: olanzapine or haloperidol. That other drug has a boxed warning mentioning mortality. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "olanzapine"
+    }
+  },
+  {
+    "id": "FG-9163",
+    "question": "Application NDA020844 is held by a sponsor that also markets one of these drugs: febuxostat, metoclopramide, or rivaroxaban. That other drug has a boxed warning mentioning increases. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "rivaroxaban"
+    }
+  },
+  {
+    "id": "FG-9164",
+    "question": "Application NDA020885 is held by a sponsor that also markets one of these drugs: canagliflozin or empagliflozin. That other drug has a boxed warning mentioning lactic. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "canagliflozin"
+    }
+  },
+  {
+    "id": "FG-9165",
+    "question": "Application NDA021515 is held by a sponsor that also markets one of these drugs: buprenorphine or lorazepam. That other drug has a boxed warning mentioning opioids. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "lorazepam"
+    }
+  },
+  {
+    "id": "FG-9166",
+    "question": "Application NDA021515 is held by a sponsor that also markets one of these drugs: lorazepam or zolpidem. That other drug has a boxed warning mentioning result. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "lorazepam"
+    }
+  },
+  {
+    "id": "FG-9167",
+    "question": "Application NDA021997 is held by a sponsor that also markets one of these drugs: duloxetine, lorazepam, or sertraline. That other drug has a boxed warning mentioning antidepressant. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sertraline"
+    }
+  },
+  {
+    "id": "FG-9168",
+    "question": "Application NDA022047 is held by a sponsor that also markets one of these drugs: haloperidol, sumatriptan, or olanzapine. That other drug has a boxed warning mentioning mortality. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "olanzapine"
+    }
+  },
+  {
+    "id": "FG-9169",
+    "question": "Application NDA022173 is held by a sponsor that also markets one of these drugs: zolpidem or quetiapine. That other drug has a boxed warning mentioning behaviors. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "quetiapine"
+    }
+  },
+  {
+    "id": "FG-9170",
+    "question": "Application NDA022239 is held by a sponsor that also markets one of these drugs: buprenorphine, tadalafil, or oxycodone. That other drug has a boxed warning mentioning addiction. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "oxycodone"
+    }
+  },
+  {
+    "id": "FG-9171",
+    "question": "Application NDA022239 is held by a sponsor that also markets one of these drugs: oxycodone or lorazepam. That other drug has a boxed warning mentioning addiction. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "oxycodone"
+    }
+  },
+  {
+    "id": "FG-9172",
+    "question": "Application NDA022410 is held by a sponsor that also markets one of these drugs: risperidone or aripiprazole. That other drug has a boxed warning mentioning mortality. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "risperidone"
+    }
+  },
+  {
+    "id": "FG-9173",
+    "question": "Application NDA050459 is held by a sponsor that also markets one of these drugs: sumatriptan, zolpidem, or olanzapine. That other drug has a boxed warning mentioning cardiovascular. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sumatriptan"
+    }
+  },
+  {
+    "id": "FG-9174",
+    "question": "Application NDA202172 is held by a sponsor that also markets one of these drugs: bosentan, canagliflozin, or pomalidomide. That other drug has a boxed warning mentioning toxicity. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "bosentan"
+    }
+  },
+  {
+    "id": "FG-9175",
+    "question": "Application NDA202172 is held by a sponsor that also markets one of these drugs: nevirapine, pomalidomide, or ambrisentan. That other drug has a boxed warning mentioning toxicity. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "ambrisentan"
+    }
+  },
+  {
+    "id": "FG-9176",
+    "question": "Application NDA204026 is held by a sponsor that also markets one of these drugs: apixaban, bosentan, or nevirapine. That other drug has a boxed warning mentioning discontinuation. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "apixaban"
+    }
+  },
+  {
+    "id": "FG-9177",
+    "question": "Application NDA204820 is held by a sponsor that also markets one of these drugs: venlafaxine or metoclopramide. That other drug has a boxed warning mentioning disorder. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "metoclopramide"
+    }
+  },
+  {
+    "id": "FG-9178",
+    "question": "Application NDA209279 is held by a sponsor that also markets one of these drugs: tadalafil, sertraline, or metoclopramide. That other drug has a boxed warning mentioning precautions. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tadalafil"
+    }
+  },
+  {
+    "id": "FG-9179",
+    "question": "Application NDA210655 is held by a sponsor that also markets one of these drugs: buprenorphine, oxycodone, or tadalafil. That other drug has a boxed warning mentioning addiction. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "buprenorphine"
+    }
+  },
+  {
+    "id": "FG-9180",
+    "question": "Application NDA210655 is held by a sponsor that also markets one of these drugs: oxycodone, buprenorphine, or sertraline. That other drug has a boxed warning mentioning addiction. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "buprenorphine"
+    }
+  },
+  {
+    "id": "FG-9181",
+    "question": "Application NDA213260 is held by a sponsor that also markets one of these drugs: lorazepam, tadalafil, or buprenorphine. That other drug has a boxed warning mentioning precautions. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "tadalafil"
+    }
+  },
+  {
+    "id": "FG-9182",
+    "question": "Application NDA213378 is held by a sponsor that also markets one of these drugs: aripiprazole or haloperidol. That other drug has a boxed warning mentioning mortality. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "aripiprazole"
+    }
+  },
+  {
+    "id": "FG-9183",
+    "question": "Application NDA214826 is held by a sponsor that also markets one of these drugs: quetiapine or duloxetine. That other drug has a boxed warning mentioning suicidal. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-9184",
+    "question": "Application NDA214826 is held by a sponsor that also markets one of these drugs: sertraline or quetiapine. That other drug has a boxed warning mentioning antidepressant. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "sertraline"
+    }
+  },
+  {
+    "id": "FG-9185",
+    "question": "Application NDA215133 is held by a sponsor that also markets one of these drugs: bupropion or venlafaxine. That other drug has a boxed warning mentioning suicidality. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "venlafaxine"
+    }
+  },
+  {
+    "id": "FG-9186",
+    "question": "Application NDA215133 is held by a sponsor that also markets one of these drugs: bupropion or zolpidem. That other drug has a boxed warning mentioning behaviors. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "zolpidem"
+    }
+  },
+  {
+    "id": "FG-9187",
+    "question": "Application NDA215429 is held by a sponsor that also markets one of these drugs: duloxetine or bupropion. That other drug has a boxed warning mentioning suicidal. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-9188",
+    "question": "Application NDA215721 is held by a sponsor that also markets one of these drugs: aripiprazole or duloxetine. That other drug has a boxed warning mentioning suicidal. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "duloxetine"
+    }
+  },
+  {
+    "id": "FG-9189",
+    "question": "Application NDA218230 is held by a sponsor that also markets one of these drugs: olanzapine or bupropion. That other drug has a boxed warning mentioning trials. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "bupropion"
+    }
+  },
+  {
+    "id": "FG-9190",
+    "question": "Application NDA218490 is held by a sponsor that also markets one of these drugs: nevirapine, bosentan, or canagliflozin. That other drug has a boxed warning mentioning hepatotoxicity. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "bosentan"
+    }
+  },
+  {
+    "id": "FG-9191",
+    "question": "Application NDA219131 is held by a sponsor that also markets one of these drugs: aripiprazole or venlafaxine. That other drug has a boxed warning mentioning antidepressant. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "venlafaxine"
+    }
+  },
+  {
+    "id": "FG-9192",
+    "question": "Application NDA220073 is held by a sponsor that also markets one of these drugs: pomalidomide or bosentan. That other drug has a boxed warning mentioning toxicity. What is that drug's most-reported FAERS reaction?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label",
+      "drug/event"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  },
+  {
+    "id": "FG-9193",
+    "question": "Application NDA220073 is held by a sponsor that also markets one of these drugs: pomalidomide, bosentan, or canagliflozin. That other drug has a boxed warning mentioning toxicity. What is that drug?",
+    "type": "sponsor_hop",
+    "sources": [
+      "drug/drugsfda",
+      "drug/label"
+    ],
+    "difficulty": "hard",
+    "entity": {
+      "generic_name": "pomalidomide"
+    }
+  }
+]
