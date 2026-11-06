@@ -10,3 +10,4 @@ data/cache/
 .modal/
 outputs/
 wandb/
+environments/fda-gym/.prime/

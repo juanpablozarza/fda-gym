@@ -8,8 +8,10 @@ Source: [juanpablozarza/fda-gym](https://github.com/juanpablozarza/fda-gym). See
 
 ## Install
 
+[Hub listing](https://app.primeintellect.ai/dashboard/environments/jpzarza/fda-gym).
+
 ```bash
-prime env install juanpablozarza/fda-gym
+prime env install jpzarza/fda-gym
 uv run vf-eval fda-gym --dry-run --no-push
 uv run vf-eval fda-gym --select.include.ids FG-9101
 ```
