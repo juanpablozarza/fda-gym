@@ -38,6 +38,9 @@ gpu = [
     "datasets==3.5.1",
     "vllm==0.8.5",
 ]
+prime = [
+    "verifiers==0.4.0",
+]
 
 [dependency-groups]
 dev = [
@@ -54,6 +57,11 @@ conflicts = [
         { extra = "train" },
         { extra = "gpu" },
     ],
+    # mcp 2.x (verifiers 0.4.0) and the gpu extra's vllm pin disagree on OpenTelemetry.
+    [
+        { extra = "gpu" },
+        { extra = "prime" },
+    ],
 ]
 
 [build-system]
@@ -69,7 +77,7 @@ target-version = "py311"
 
 [tool.pyright]
 include = ["fdagym"]
-exclude = ["**/__pycache__", "fdagym/train"]
+exclude = ["**/__pycache__", "fdagym/train", "fdagym/prime/taskset.py", "fdagym/prime/servers"]
 pythonVersion = "3.11"
 typeCheckingMode = "basic"
 reportMissingImports = false

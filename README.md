@@ -132,7 +132,15 @@ Open [http://localhost:3000](http://localhost:3000). The overview reads the json
 
 ## Verifiers / Environments Hub
 
-A [verifiers](https://github.com/PrimeIntellect-ai/verifiers) v1 / `vf-eval` wrapper is the next packaging step (install `fdagym` as a wheel, expose the five tools, reuse `score()`). Tracking: [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071). Until that lands, the env contract is `FDAEnv.reset` / `FDAEnv.step` above.
+A [verifiers](https://github.com/PrimeIntellect-ai/verifiers) v1 wrapper is in this repo: install `fdagym` with the optional `prime` extra, expose the five tools above, and grade with `fdagym.rewards.score` (grader v5). Default split: [`data/tasks/public.jsonl`](data/tasks/public.jsonl) (`FG-9101`–`FG-9193`). Ids outside that public range are refused. The snapshot is still the committed `2026-10-15` freeze via `FDAGYM_SNAPSHOT_DIR` (the wheel does not ship it). Tracking: [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071). This is the local wrapper only — it is not an Environments Hub listing.
+
+```bash
+uv sync --extra prime
+uv run vf-eval fdagym --dry-run --no-push
+uv run vf-eval @ configs/prime.toml --dry-run --no-push
+```
+
+The optional extra pins `verifiers==0.4.0` so the v1 CLI is `vf-eval` (`uv run vf-eval @ configs/prime.toml`). Point `--select.include.ids` at a public id such as `FG-9101` for a one-task run; do not treat that as a 93-row model baseline. `--extra prime` cannot be combined with `--extra gpu`. The env contract remains `FDAEnv.reset` / `FDAEnv.step` above.
 
 ## Tests and CI
 
