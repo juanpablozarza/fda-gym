@@ -13,6 +13,7 @@ from fdagym.prime.episode import (
     public_snapshot,
 )
 from fdagym.prime.servers.tools import FDAGymState, FDAGymToolset, FDAGymToolsetConfig
+from fdagym.rewards.combine import WEIGHTS
 
 
 class FDAGymTaskData(vf.TaskData):
@@ -32,19 +33,25 @@ class FDAGymTask(vf.Task[FDAGymTaskData, FDAGymState, FDAGymTaskConfig]):
     async def submitted(self, trace: vf.Trace) -> bool:
         return bool(getattr(trace.state, "done", False))
 
-    @vf.reward(weight=1.0)
-    async def score_total(self, trace: vf.Trace) -> float:
-        return float(_grade(self.data.sheet_row, trace.state)["total"])
+    def _parts(self, trace: vf.Trace) -> dict[str, Any]:
+        return _grade(self.data.sheet_row, trace.state)
 
-    @vf.metric()
-    async def fdagym(self, trace: vf.Trace) -> dict[str, float]:
-        reward = _grade(self.data.sheet_row, trace.state)
-        return {
-            "correctness": float(reward["correctness"]),
-            "citation": float(reward["citation"]),
-            "format": float(reward["format"]),
-            "efficiency": float(reward["efficiency"]),
-        }
+    # One returned dict would take a single weight. Each term has its own.
+    @vf.reward(weight=WEIGHTS["correctness"])
+    async def correctness(self, trace: vf.Trace) -> float:
+        return float(self._parts(trace)["correctness"])
+
+    @vf.reward(weight=WEIGHTS["citation"])
+    async def citation(self, trace: vf.Trace) -> float:
+        return float(self._parts(trace)["citation"])
+
+    @vf.reward(weight=WEIGHTS["format"])
+    async def format(self, trace: vf.Trace) -> float:
+        return float(self._parts(trace)["format"])
+
+    @vf.reward(weight=WEIGHTS["efficiency"])
+    async def efficiency(self, trace: vf.Trace) -> float:
+        return float(self._parts(trace)["efficiency"])
 
     async def finalize(self, trace: vf.Trace, runtime) -> None:
         reward = _grade(self.data.sheet_row, trace.state)
