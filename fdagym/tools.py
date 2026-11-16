@@ -22,6 +22,11 @@ _INSERT = re.compile(r"\[insert\b", re.IGNORECASE)
 _PLACEHOLDER = re.compile(r"\[[^\[\]]{0,80}\]")
 _BOILERPLATE = re.compile(r"see full prescribing information for complete boxed warning", re.IGNORECASE)
 _HEADING = re.compile(r"^(?:boxed\s+warning|warning)\b[:.\s]*", re.IGNORECASE)
+_PACKAGING = re.compile(r"\bcontents per (?:bottle|vial|syringe|carton|container)\b", re.IGNORECASE)
+_WARNING_SIGNAL = re.compile(
+    r"\b(?:warning|risk|fatal|death|suicid|hepatotoxic|cardiac|stroke|bleeding|contraindicat)\b",
+    re.IGNORECASE,
+)
 _SKIP_KEYS = {"set_id", "id", "effective_time", "version", "openfda", "brand_names"}
 _SUBMISSION_KEYS = (
     "submission_type",
@@ -526,12 +531,15 @@ def _is_stub_section(text: str, section: str) -> bool:
     A real boxed warning still counts after the heading is stripped. The
     amoxicillin/clavulanate repackager template that is only
     ``[Insert boxed warning highlight title] … [Insert boxed warning highlight text]``
-    does not.
+    does not. A boxed_warning whose text is only a "contents per bottle"
+    quantity, with no warning language, is also a stub.
     """
     if _INSERT.search(text):
         return True
     if section != "boxed_warning":
         return False
+    if _PACKAGING.search(text) and not _WARNING_SIGNAL.search(text):
+        return True
     cleaned = _PLACEHOLDER.sub(" ", text)
     cleaned = _BOILERPLATE.sub(" ", cleaned)
     cleaned = _HEADING.sub(" ", cleaned.strip())

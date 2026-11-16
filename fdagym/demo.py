@@ -35,7 +35,7 @@ PUBLIC_ID_LAST = 9193
 SNAPSHOT_VERSION = "2026-10-15"
 OBS_LIMIT = 600
 HONEST_TOTAL_MIN = 0.99
-SCORE_KEYS = ("correctness", "citation", "format", "efficiency", "total", "grader_version")
+SCORE_KEYS = ("correctness", "citation", "format", "efficiency", "total", "grader_version", "data_version")
 _PUBLIC_ID = re.compile(r"^FG-(\d{4})$")
 _LLM_MODULES = ("litellm", "openai", "anthropic")
 _LLM_PREFIXES = ("fdagym.agents.litellm", "fdagym.agents.chat")
@@ -89,7 +89,7 @@ def format_score(reward: dict) -> str:
     parts = []
     for key in SCORE_KEYS:
         value = reward[key]
-        if key == "grader_version":
+        if key in {"grader_version", "data_version"}:
             parts.append(f"{key}={value}")
         else:
             parts.append(f"{key}={float(value):.4f}")

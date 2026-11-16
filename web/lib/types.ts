@@ -31,6 +31,8 @@ export type Reward = {
   citations_valid: number;
   citations_total: number;
   notes: string[];
+  grader_version?: string;
+  data_version?: string;
 };
 
 export type Trajectory = {
@@ -78,6 +80,7 @@ export type Leaderboard = {
   n_seeds: number;
   temperature: number;
   snapshot_version: string;
+  grader_version?: string;
   env: string;
   n_sources: number;
   kpis: {

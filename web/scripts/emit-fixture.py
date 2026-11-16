@@ -140,6 +140,8 @@ t1 = {
         "efficiency": 1.0,
         "citations_valid": 3,
         "citations_total": 3,
+        "grader_version": "6",
+        "data_version": "2026-11-16",
         "notes": [
             "citation 3/3 valid",
             f"valid: {T1_ID} boxed_warning (quote fuzzy 1.00)",
@@ -229,6 +231,8 @@ t2 = {
         "efficiency": 0.0,
         "citations_valid": 0,
         "citations_total": 1,
+        "grader_version": "6",
+        "data_version": "2026-11-16",
         "notes": [
             f"invalid: {WARFARIN_ID} boxed_warning id not in this trajectory",
             "correctness gated: no valid citation",
@@ -306,6 +310,8 @@ t3 = {
         "efficiency": 0.0,
         "citations_valid": 1,
         "citations_total": 1,
+        "grader_version": "6",
+        "data_version": "2026-11-16",
         "notes": [
             "citation 1/1 valid",
             "valid: step:1 meta.results.total (quote fuzzy 1.00)",
@@ -392,6 +398,7 @@ def main() -> None:
         "n_seeds": 1,
         "temperature": 0.2,
         "snapshot_version": "2026-10-15",
+        "grader_version": "6",
         "env": "openfda-reg-v0.3",
         "n_sources": 3,
         "kpis": {

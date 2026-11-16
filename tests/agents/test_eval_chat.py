@@ -73,7 +73,16 @@ def test_eval_chat_builds_env_from_task_snapshot_and_shared_budget(monkeypatch, 
             self.tool_budget = kwargs.get("tool_budget")
 
     def fake_episode(env, task_id, complete, **kwargs):
-        return {"id": "x", "reward": {"total": 1.0, "correctness": 1.0, "notes": []}}
+        return {
+            "id": "x",
+            "reward": {
+                "total": 1.0,
+                "correctness": 1.0,
+                "notes": [],
+                "grader_version": "6",
+                "data_version": "2026-11-16",
+            },
+        }
 
     monkeypatch.setattr(module, "DiskSnapshot", FakeSnapshot)
     monkeypatch.setattr(module, "FDAEnv", FakeEnv)
@@ -106,7 +115,16 @@ def test_eval_chat_falls_back_when_task_omits_snapshot_version(monkeypatch, tmp_
             self.tool_budget = kwargs.get("tool_budget")
 
     def fake_episode(env, task_id, complete, **kwargs):
-        return {"id": "x", "reward": {"total": 0.1, "correctness": 0.0, "notes": []}}
+        return {
+            "id": "x",
+            "reward": {
+                "total": 0.1,
+                "correctness": 0.0,
+                "notes": [],
+                "grader_version": "6",
+                "data_version": "2026-11-16",
+            },
+        }
 
     monkeypatch.setattr(module, "DiskSnapshot", FakeSnapshot)
     monkeypatch.setattr(module, "FDAEnv", FakeEnv)

@@ -88,6 +88,8 @@
     "efficiency": 1.0,
     "citations_valid": 1,
     "citations_total": 1,
+    "grader_version": "6",
+    "data_version": "2026-11-16",
     "notes": []
   },
   "usage": {

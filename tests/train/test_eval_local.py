@@ -37,6 +37,8 @@ def test_eval_split_gold_generate_scores_one(tmp_path):
     assert summary["models"]["Qwen/Qwen2.5-3B-Instruct"]["mean_reward"] == 1.0
     assert summary["dense_reward"]["mean_reward"] == 1.0
     assert summary["protocol"] == "plan_a_single_turn"
+    assert summary["grader_version"] == traj["reward"]["grader_version"]
+    assert summary["data_version"] == traj["reward"]["data_version"]
     board = json.loads((tmp_path / "baseline-qwen3b" / "summary.json").read_text())
     models = board["models"]
     if isinstance(models, dict):

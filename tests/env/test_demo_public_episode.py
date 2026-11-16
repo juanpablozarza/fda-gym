@@ -129,6 +129,7 @@ def test_demo_script_runs_keyless_on_the_default_public_task():
     assert "correctness=1.0000" in out
     assert "total=1.0000" in out
     assert "grader_version=" in out
+    assert "data_version=" in out
     assert "litellm" not in out.lower()
     assert "openrouter" not in out.lower()
 

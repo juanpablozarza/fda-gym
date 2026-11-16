@@ -1,5 +1,15 @@
 # Changelog
 
+## Hub 0.2.0 (grader 6 version lock)
+
+The Environments Hub package is 0.2.0. It matches grader 6 and data version 2026-11-16. Package 0.1.x was grader 5 and data version 2026-10-28. The snapshot freeze stays `2026-10-15` on both.
+
+`fdagym.grader_version` / `fdagym.data_version` re-export `GRADER_VERSION` and `DATA_VERSION`. Every new summary and leaderboard JSON carries both fields. Mixing grader versions in a leaderboard, baseline comparison, or distill curve is refused. A missing version is treated as legacy grader 5 / data 2026-10-28, with a warning.
+
+The committed OpenRouter run `results/public-haiku-luna-2026-11-05` is still the grader-v5 historical record. Its scores were not rewritten. `summary.json` and `leaderboard.json` now label `grader_version` 5 and `data_version` 2026-10-28, matching the jsonl. The older `results/baseline-2026-10-16` files have no version field; aggregators treat them as legacy v5 and warn.
+
+The Hub `fdagym` git dependency is pinned to an immutable commit SHA. It is not a floating default-branch URL.
+
 ## Grader 6
 
 Grader version 6. Data version 2026-11-16. `snapshot_version` stays `2026-10-15`.

@@ -12,6 +12,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+from fdagym.run_versions import read_grader_version, require_uniform_grader
 from fdagym.train.distill import parse_sizes, size_run_id
 
 
@@ -101,6 +102,7 @@ def collect_curve(
     names = parse_sizes(sizes)
     runs = Path(runs_dir)
     records: list[dict] = []
+    graders: list[str] = []
     for name in names:
         run_id = eval_run_id(prefix, name, split)
         run_dir = runs / run_id
@@ -117,6 +119,7 @@ def collect_curve(
             )
             continue
         summary = load_json(summary_path)
+        graders.append(read_grader_version(summary.get("grader_version"), source=run_id))
         overall = mean_reward_from_summary(summary)
         train_id = size_run_id(prefix, name)
         manifest_path = runs / train_id / "manifest.json"
@@ -148,6 +151,8 @@ def collect_curve(
                     "mean_tools": None,
                 }
             )
+    if graders:
+        require_uniform_grader(graders, action="collect a distill curve")
     return records
 
 

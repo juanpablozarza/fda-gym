@@ -27,6 +27,59 @@ def _scripted_run(
     )
 
 
+def test_summarize_stamps_grader_and_data_version():
+    from fdagym.rewards.version import DATA_VERSION, GRADER_VERSION
+
+    row = {
+        "model": {"name": "scripted-oracle", "kind": "baseline"},
+        "reward": {
+            "total": 1.0,
+            "correctness": 1.0,
+            "citation": 1.0,
+            "grader_version": GRADER_VERSION,
+            "data_version": DATA_VERSION,
+        },
+        "steps": [],
+        "usage": {},
+    }
+    summary = baseline.summarize([row], skipped={"label_open": 0})
+    assert summary["grader_version"] == GRADER_VERSION
+    assert summary["data_version"] == DATA_VERSION
+    assert summary["leaderboard"][0]["grader_version"] == GRADER_VERSION
+    assert summary["leaderboard"][0]["data_version"] == DATA_VERSION
+
+
+def test_summarize_refuses_mixed_grader_versions():
+    from fdagym.run_versions import MixedGraderVersionError
+
+    left = {
+        "model": {"name": "a", "kind": "baseline"},
+        "reward": {
+            "total": 0.5,
+            "correctness": 1.0,
+            "citation": 1.0,
+            "grader_version": "5",
+            "data_version": "2026-10-28",
+        },
+        "steps": [],
+        "usage": {},
+    }
+    right = {
+        "model": {"name": "b", "kind": "baseline"},
+        "reward": {
+            "total": 0.4,
+            "correctness": 0.0,
+            "citation": 0.0,
+            "grader_version": "6",
+            "data_version": "2026-11-16",
+        },
+        "steps": [],
+        "usage": {},
+    }
+    with pytest.raises(MixedGraderVersionError, match="summarize"):
+        baseline.summarize([left, right], skipped={})
+
+
 def test_run_baseline_writes_valid_jsonl_and_leaderboard(tmp_path):
     snapshot = JsonSnapshot()
     calls = _oracle_calls(snapshot, ALL_TASKS, EXAMPLE_TASK)
@@ -40,11 +93,15 @@ def test_run_baseline_writes_valid_jsonl_and_leaderboard(tmp_path):
     assert summary["models"]["scripted-oracle"]["mean_reward"] == 1.0
     assert summary["models"]["scripted-oracle"]["pass_rate"] == 1.0
     board = json.loads((tmp_path / "offline" / "leaderboard.json").read_text())
+    saved = json.loads((tmp_path / "offline" / "summary.json").read_text())
     assert board[0]["name"] == "scripted-oracle"
     assert board[0]["kind"] == "baseline"
     assert board[0]["mean_reward"] == 1.0
     assert board[0]["pass"] == 1.0
     assert "citations" in board[0] and "tools" in board[0]
+    assert saved["grader_version"] == trajectory["reward"]["grader_version"]
+    assert saved["data_version"] == trajectory["reward"]["data_version"]
+    assert board[0]["grader_version"] == saved["grader_version"]
     assert trajectory["id"] == "offline/scripted-oracle/FG-0001/s1"
     assert trajectory["run_id"] == "offline"
 

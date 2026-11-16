@@ -18,6 +18,7 @@ from fdagym.agents.baseline import ROOT, SKIP_TYPES, append_trajectory, load_spl
 from fdagym.agents.chat import run_chat_episode
 from fdagym.env import TOOL_BUDGET, FDAEnv
 from fdagym.openfda import DiskSnapshot
+from fdagym.run_versions import versions_of
 
 load_env()
 
@@ -114,7 +115,16 @@ def _summary(model: str, split: str, rewards: list[dict]) -> dict:
     n = len(rewards)
     mean_reward = round(sum(row["total"] for row in rewards) / n, 4) if n else 0.0
     pass_rate = round(sum(1 for row in rewards if row["correctness"] > 0) / n, 4) if n else 0.0
-    return {"model": model, "split": split, "n": n, "mean_reward": mean_reward, "pass_rate": pass_rate}
+    grader_version, data_version = versions_of(rewards, source="eval_chat summary")
+    return {
+        "model": model,
+        "split": split,
+        "n": n,
+        "mean_reward": mean_reward,
+        "pass_rate": pass_rate,
+        "grader_version": grader_version,
+        "data_version": data_version,
+    }
 
 
 def _parse(argv: list[str] | None) -> argparse.Namespace:

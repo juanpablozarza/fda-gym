@@ -11,6 +11,8 @@ import json
 import math
 from pathlib import Path
 
+from fdagym.run_versions import read_grader_version, require_uniform_grader
+
 MIN_MARGIN = 0.03
 
 
@@ -64,6 +66,13 @@ def compare_summaries(
     trained_name=None,
     min_margin: float = MIN_MARGIN,
 ) -> dict:
+    grader = require_uniform_grader(
+        [
+            read_grader_version(baseline.get("grader_version"), source="baseline summary"),
+            read_grader_version(trained.get("grader_version"), source="trained summary"),
+        ],
+        action="compare summaries",
+    )
     base = _model_row(baseline, baseline_name)
     ours = _model_row(trained, trained_name)
     delta = float(ours["mean_reward"]) - float(base["mean_reward"])
@@ -72,6 +81,7 @@ def compare_summaries(
     if ci is not None:
         beats = beats and ci[0] >= 0
     return {
+        "grader_version": grader,
         "baseline_run": baseline.get("run_id"),
         "trained_run": trained.get("run_id"),
         "baseline_mean_reward": float(base["mean_reward"]),

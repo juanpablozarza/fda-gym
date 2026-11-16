@@ -39,11 +39,15 @@ def _isolate(monkeypatch, tmp_path: Path, site: Path) -> Path:
     return cwd
 
 
-def test_hub_package_is_v1_and_depends_on_fdagym_via_pep508():
+def test_hub_package_is_v2_and_pins_fdagym_to_an_immutable_git_ref():
     text = (HUB / "pyproject.toml").read_text()
     assert 'name = "fda-gym"' in text
+    assert 'version = "0.2.0"' in text
     assert "verifiers==0.4.0" in text
-    assert "fdagym @ git+https://github.com/juanpablozarza/fda-gym.git" in text
+    assert "grader v6" in text
+    assert "data 2026-11-16" in text
+    assert "fdagym @ git+https://github.com/juanpablozarza/fda-gym.git@" in text
+    assert 'fdagym @ git+https://github.com/juanpablozarza/fda-gym.git"' not in text
     assert "allow-direct-references" in text
     assert "[tool.uv.sources]" not in text
     init = (HUB / "fda_gym" / "__init__.py").read_text()
@@ -102,7 +106,7 @@ def test_hub_wheel_install_resolves_public_freeze_and_refuses_nonpublic_ids(tmp_
         names = archive.namelist()
         metadata = next(name for name in names if name.endswith("METADATA"))
         requires = [line for line in archive.read(metadata).decode().splitlines() if line.startswith("Requires-Dist:")]
-    assert any("fdagym @ git+https://github.com/juanpablozarza/fda-gym.git" in line for line in requires)
+    assert any("fdagym @ git+https://github.com/juanpablozarza/fda-gym.git@" in line for line in requires)
     assert any("verifiers==0.4.0" in line for line in requires)
     assert "fda_gym/data/tasks/public.jsonl" in names
     assert any(
@@ -131,4 +135,5 @@ def test_hub_wheel_install_resolves_public_freeze_and_refuses_nonpublic_ids(tmp_
         make_public_env("FG-9194")
     reward = play_public_adapter_episode("FG-9101")
     assert reward["grader_version"] == GRADER_VERSION == "6"
+    assert reward["data_version"] == "2026-11-16"
     assert reward["total"] == 1.0
