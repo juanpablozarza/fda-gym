@@ -187,6 +187,89 @@ def test_approvals_read_brand_from_products_when_openfda_is_missing():
     assert snap.calls[0][1] == query.search
 
 
+_TEMPLATE_BOXED = (
+    "[Insert boxed warning highlight title] See full prescribing information "
+    "for complete boxed warning [Insert boxed warning highlight text]"
+)
+
+
+def test_has_section_skips_template_and_heading_only_boxed_warnings():
+    query = queries.label_search("pagedrug")
+    records = [
+        {
+            "set_id": "stub",
+            "effective_time": "20200101",
+            "boxed_warning": [_TEMPLATE_BOXED],
+            "openfda": {"brand_name": ["Brand"], "manufacturer_name": ["Maker"]},
+        },
+        {
+            "set_id": "real",
+            "effective_time": "20200101",
+            "boxed_warning": ["WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding."],
+            "openfda": {"brand_name": ["Brand"], "manufacturer_name": ["Maker"]},
+        },
+        {
+            "set_id": "heading",
+            "effective_time": "20200101",
+            "boxed_warning": ["BOXED WARNING"],
+            "openfda": {"brand_name": ["Brand"], "manufacturer_name": ["Maker"]},
+        },
+    ]
+    body = {"meta": {"results": {"total": 3}}, "results": records}
+    state = EpisodeState(MapSnapshot({(query.endpoint, query.search, query.count, query.limit): body}))
+    output, error = execute(
+        state,
+        "search_drug_label",
+        {"generic_name": "pagedrug", "has_section": "boxed_warning"},
+        step_index=1,
+    )
+    assert error is None
+    assert [row["set_id"] for row in output["results"]] == ["real"]
+    assert output["meta"]["results"]["total"] == 1
+    assert "stub" not in state.labels
+    assert "heading" not in state.labels
+
+
+def test_stub_boxed_warning_is_absent_from_the_sections_list():
+    query = queries.label_search("pagedrug")
+    records = [
+        {
+            "set_id": "stub",
+            "effective_time": "20200101",
+            "boxed_warning": [_TEMPLATE_BOXED],
+            "indications_and_usage": ["an infection"],
+            "openfda": {"brand_name": ["Brand"], "manufacturer_name": ["Maker"]},
+        }
+    ]
+    body = {"meta": {"results": {"total": 1}}, "results": records}
+    state = EpisodeState(MapSnapshot({(query.endpoint, query.search, query.count, query.limit): body}))
+    output, error = execute(state, "search_drug_label", {"generic_name": "pagedrug"}, step_index=1)
+    assert error is None
+    assert output["results"][0]["set_id"] == "stub"
+    assert "boxed_warning" not in output["results"][0]["sections"]
+    _section, section_error = execute(
+        state, "get_label_section", {"set_id": "stub", "section": "boxed_warning"}, step_index=2
+    )
+    assert section_error
+    assert "boxed_warning" in section_error
+
+
+def test_amoxicillin_template_boxed_warning_is_not_a_has_section_hit():
+    from fdagym.openfda import DiskSnapshot
+
+    state = EpisodeState(DiskSnapshot("2026-10-15"))
+    output, error = execute(
+        state,
+        "search_drug_label",
+        {"generic_name": "amoxicillin", "has_section": "boxed_warning"},
+        step_index=1,
+    )
+    assert error is None
+    assert output["results"] == []
+    assert output["meta"]["results"]["total"] == 0
+    assert "482511ed-4531-45ec-a4eb-c600aeb03325" not in state.labels
+
+
 def test_warfarin_page_two_is_empty_because_the_fixture_keeps_five_labels():
     observations, _reward, _env = drive(
         "FG-0001",

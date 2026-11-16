@@ -37,13 +37,13 @@ uv venv /tmp/fdagym-wheel && uv pip install --python /tmp/fdagym-wheel/bin/pytho
 cd /tmp && /tmp/fdagym-wheel/bin/python -c "import fdagym, fdagym.env, fdagym.rewards"
 ```
 
-The wheel does not ship the 87 MB snapshot. Point at a clone with `FDAGYM_SNAPSHOT_DIR=/path/to/fda-gym/data/snapshots`, or run `python -m fdagym.openfda`. CI's wheel smoke sets that env var from the checkout freeze. It steps the `FG-9101` honest hops from `data/tasks/public.jsonl` and runs `fdagym.rewards.score()` (grader v5) from the installed wheel, not the source tree. Training extras are optional: `uv sync --extra train` (CPU) or `--extra gpu`. CPU dry-run is `uv run python scripts/grpo_singleturn.py --dry-run`. See [docs/train.md](docs/train.md). Pytest, the dashboard, and this README do not need a GPU vendor or Weights & Biases.
+The wheel does not ship the 87 MB snapshot. Point at a clone with `FDAGYM_SNAPSHOT_DIR=/path/to/fda-gym/data/snapshots`, or run `python -m fdagym.openfda`. CI's wheel smoke sets that env var from the checkout freeze. It steps the `FG-9101` honest hops from `data/tasks/public.jsonl` and runs `fdagym.rewards.score()` (grader v6) from the installed wheel, not the source tree. Training extras are optional: `uv sync --extra train` (CPU) or `--extra gpu`. CPU dry-run is `uv run python scripts/grpo_singleturn.py --dry-run`. See [docs/train.md](docs/train.md). Pytest, the dashboard, and this README do not need a GPU vendor or Weights & Biases.
 
 ## Why a grader this strict
 
 A model that already knows the answer can still fail if it does not retrieve the evidence. A model that guesses one of three drugs can still fail if the comparison is not in the trace.
 
-Total: `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency`. Every score includes `grader_version`. Current grader: v5.
+Total: `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency`. Every score includes `grader_version`. Current grader: v6.
 
 | Term | Pays when |
 | --- | --- |
@@ -54,9 +54,9 @@ Total: `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency
 
 `compare` pays correctness only when every named drug was queried (so unique/none is visible) and a valid citation is about the deciding drug. `sponsor_hop` already needed that kind of proof. One tool call and a short quote from `results` is not enough.
 
-### Shortcuts the v5 suite catches
+### Shortcuts the v6 suite catches
 
-From `tests/rewards/test_public_attacks.py` and `tests/rewards/test_compare_proof.py` (grader v5, committed `2026-10-15` freeze):
+From `tests/rewards/test_public_attacks.py` and `tests/rewards/test_compare_proof.py` (grader v6, committed `2026-10-15` freeze):
 
 | Attack | Score |
 | --- | --- |
@@ -72,7 +72,7 @@ The table below is from a committed file under `results/`, labeled with the grad
 
 ### OpenRouter public.jsonl
 
-`results/public-haiku-luna-2026-11-05.jsonl`, split `public`, 93 tasks `FG-9101`–`FG-9193`, 50 compare + 43 sponsor_hop, seed 1. Grader v5, snapshot `2026-10-15`. `TOOL_BUDGET` 8 with the then-current hard cut: 8 non-submit tools, then `submit_answer` is still accepted; a 9th search/get ends as `max_steps`. Started `2026-11-06T03:34:55Z` (9:35 PM America/Mexico_City on Nov 5). Wall ~24 min. Cost cap $1; real cost $0.267374. `summary.status` is `incomplete` only because `failure_count=9`; all 186 trajectories exist and count in n=93. See `results/public-haiku-luna-2026-11-05/summary.json`.
+`results/public-haiku-luna-2026-11-05.jsonl`, split `public`, 93 tasks `FG-9101`–`FG-9193`, 50 compare + 43 sponsor_hop, seed 1. Scored under grader v5, snapshot `2026-10-15`. `TOOL_BUDGET` 8 with the then-current hard cut: 8 non-submit tools, then `submit_answer` is still accepted; a 9th search/get ends as `max_steps`. Started `2026-11-06T03:34:55Z` (9:35 PM America/Mexico_City on Nov 5). Wall ~24 min. Cost cap $1; real cost $0.267374. `summary.status` is `incomplete` only because `failure_count=9`; all 186 trajectories exist and count in n=93. See `results/public-haiku-luna-2026-11-05/summary.json`. The jsonl was not rewritten for grader 6: FG-9118 and FG-9140 gold changed, and dense (training) scores would move. These table numbers stay the v5 historical record.
 
 | Model | n | mean reward (v5) | pass | mean citation | mean tools | cost_usd |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -94,7 +94,7 @@ The model does not send a raw search string. Each call takes a drug name, a sect
 
 | Tool | What it returns |
 | --- | --- |
-| `search_drug_label` | Label summaries for one generic name. `has_section` keeps labels that contain that section. |
+| `search_drug_label` | Label summaries for one generic name. `has_section` keeps labels that contain that section. Unfilled template boxed warnings do not count. |
 | `get_label_section` | One section of a label that `search_drug_label` already returned in this episode. |
 | `query_adverse_events` | FAERS reports for one generic name. `top_reactions` lists MedDRA terms. `count` returns how many reports match. |
 | `search_approvals` | Drugs@FDA records. Pass exactly one of `generic_name`, `application_number`, or `sponsor_name`. |
@@ -128,7 +128,7 @@ Open [http://localhost:3000](http://localhost:3000). The overview reads the json
 
 ## Verifiers / Environments Hub
 
-This repo has a [verifiers](https://github.com/PrimeIntellect-ai/verifiers) wrapper and a Hub package at [`environments/fda-gym/`](environments/fda-gym/). Both expose the five tools above and grade with `fdagym.rewards.score()` (grader v5). The published sheet is [`data/tasks/public.jsonl`](data/tasks/public.jsonl) (`FG-9101`–`FG-9193`, 50 `compare` and 43 `sponsor_hop`). Ids outside that public range are refused. The prompt tells the model it may make 8 tool calls besides `submit_answer`. See [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071).
+This repo has a [verifiers](https://github.com/PrimeIntellect-ai/verifiers) wrapper and a Hub package at [`environments/fda-gym/`](environments/fda-gym/). Both expose the five tools above and grade with `fdagym.rewards.score()` (grader v6). The published sheet is [`data/tasks/public.jsonl`](data/tasks/public.jsonl) (`FG-9101`–`FG-9193`, 50 `compare` and 43 `sponsor_hop`). Ids outside that public range are refused. The prompt tells the model it may make 8 tool calls besides `submit_answer`. See [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071).
 
 The `fdagym` library wheel does not ship the freeze. The Hub environment wheel includes `public.jsonl` and `data/snapshots/2026-10-15`, so a git checkout is not required after `prime env install`. Set `FDAGYM_SNAPSHOT_DIR` or `FDAGYM_PUBLIC_JSONL` to override those files.
 

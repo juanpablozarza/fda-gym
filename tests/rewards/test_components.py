@@ -232,6 +232,21 @@ def test_sponsor_step_citation_stays_about_the_answer_drug():
     assert any("not about zorvetinib" in note for note in reward["notes"])
 
 
+def test_boolean_no_rejects_a_hedge_and_accepts_none():
+    task = {**EXAMPLE_TASK, "gold": {"kind": "boolean", "value": False}}
+    args = {"valid_citations": 1, "format_ok": True, "empty_grounded": False}
+    assert score_correctness("No.", task, **args)[0] == 1
+    assert score_correctness("None", task, **args)[0] == 1
+    assert score_correctness("None of them", task, **args)[0] == 1
+    assert score_correctness("Neither", task, **args)[0] == 1
+    no_but, notes_but = score_correctness("No, but warfarin has a boxed warning.", task, **args)
+    assert no_but == 0
+    assert any("hedges" in note for note in notes_but)
+    no_period, notes_period = score_correctness("No. warfarin has a boxed warning.", task, **args)
+    assert no_period == 0
+    assert any("hedges" in note or "positive" in note for note in notes_period)
+
+
 def test_boolean_needs_the_polarity_first_and_one_keyword():
     task = EXAMPLE_TASK
     args = {"valid_citations": 1, "format_ok": True, "empty_grounded": False}
@@ -369,6 +384,33 @@ def test_sections_list_is_cited_only_when_that_set_id_was_returned():
     assert grounded["citation"] == 1.0
     assert grounded["correctness"] == 1.0
     assert any("polarity match" in note for note in grounded["notes"])
+
+    none_of_them = score(
+        {
+            "steps": steps,
+            "final_answer": {
+                "answer": "None of them",
+                "citations": [{"endpoint": "drug/label", "id": "returned", "field": "sections", "quote": quote}],
+            },
+        },
+        task,
+    )
+    assert none_of_them["correctness"] == 1.0
+    assert none_of_them["citation"] == 1.0
+
+    hedged = score(
+        {
+            "steps": steps,
+            "final_answer": {
+                "answer": "No, but atorvastatin has a boxed warning.",
+                "citations": [{"endpoint": "drug/label", "id": "returned", "field": "sections", "quote": quote}],
+            },
+        },
+        task,
+    )
+    assert hedged["correctness"] == 0.0
+    assert hedged["citation"] == 1.0
+    assert hedged["total"] == 0.35
 
     invented = _scored("never-returned")
     assert invented["citation"] == 0

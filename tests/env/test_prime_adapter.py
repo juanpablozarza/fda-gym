@@ -53,7 +53,7 @@ def test_fg9101_through_adapter_scores_one_via_score():
     assert reward["citation"] == 1.0
     assert reward["format"] == 1.0
     assert reward["efficiency"] == 1.0
-    assert reward["grader_version"] == GRADER_VERSION == "5"
+    assert reward["grader_version"] == GRADER_VERSION == "6"
 
 
 def test_fg9101_adapter_episode_is_three_faers_queries_then_submit():
@@ -85,7 +85,7 @@ def test_fg9101_adapter_episode_is_three_faers_queries_then_submit():
 
 
 def test_every_public_task_replays_through_prime_adapter_to_one():
-    assert GRADER_VERSION == "5"
+    assert GRADER_VERSION == "6"
     tasks = load_public_tasks(PUBLIC)
     expected = [f"FG-{n}" for n in range(PUBLIC_ID_FIRST, PUBLIC_ID_LAST + 1)]
     assert sorted(tasks) == expected

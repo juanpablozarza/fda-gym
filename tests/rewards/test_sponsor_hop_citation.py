@@ -171,6 +171,17 @@ def test_two_hop_wrong_answer_keeps_partial_credit():
     assert faers_only["citation"] == 1.0
 
 
+def test_id_only_citation_caps_dense_correctness_after_the_sponsor_proof():
+    from fdagym.rewards.citation import ID_ONLY
+
+    dense = _dense(_full_steps(), TARGET, quote="nope")
+    assert dense["citations_valid"] == 0
+    assert dense["citation"] == ID_ONLY
+    assert dense["correctness"] == ID_ONLY
+    assert dense["format"] == 1.0
+    assert any("id-only citation caps correctness" in note for note in dense["notes"])
+
+
 def test_full_correct_two_hop_score_is_unchanged():
     """(c) Both hops, right answer, right citation. Dense and strict stay at 1."""
     steps = _full_steps()

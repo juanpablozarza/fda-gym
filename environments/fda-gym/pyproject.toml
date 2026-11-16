@@ -1,7 +1,7 @@
 [project]
 name = "fda-gym"
 version = "0.1.0"
-description = "Public FDA-Gym: 93 openFDA tool-use tasks (FG-9101–FG-9193), grader v5, freeze 2026-10-15."
+description = "Public FDA-Gym: 93 openFDA tool-use tasks (FG-9101–FG-9193), grader v6, freeze 2026-10-15."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"

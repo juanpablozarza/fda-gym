@@ -130,5 +130,5 @@ def test_hub_wheel_install_resolves_public_freeze_and_refuses_nonpublic_ids(tmp_
     with pytest.raises(DemoError, match="published public sheet"):
         make_public_env("FG-9194")
     reward = play_public_adapter_episode("FG-9101")
-    assert reward["grader_version"] == GRADER_VERSION == "5"
+    assert reward["grader_version"] == GRADER_VERSION == "6"
     assert reward["total"] == 1.0
