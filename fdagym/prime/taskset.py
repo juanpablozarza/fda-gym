@@ -62,6 +62,7 @@ class FDAGymTask(vf.Task[FDAGymTaskData, FDAGymState, FDAGymTaskConfig]):
             "efficiency": reward["efficiency"],
             "total": reward["total"],
             "grader_version": reward["grader_version"],
+            "data_version": reward["data_version"],
         }
 
 

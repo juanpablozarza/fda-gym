@@ -407,6 +407,39 @@ function mergePlanA(board: Leaderboard, plan: PlanA | null): Leaderboard {
   };
 }
 
+const LEGACY_GRADER = "5";
+
+function graderOf(traj: Episode): string {
+  const value = traj.reward.grader_version;
+  if (typeof value !== "string" || value.length === 0) return LEGACY_GRADER;
+  return value;
+}
+
+function comparableTrajectories(trajectories: Episode[]): { rows: Episode[]; graderVersion: string | undefined } {
+  if (trajectories.length === 0) return { rows: trajectories, graderVersion: undefined };
+  const missing = trajectories.filter((traj) => !traj.reward.grader_version);
+  if (missing.length > 0) {
+    console.warn("[dashboard] missing grader_version; treating as legacy v5", {
+      count: missing.length,
+      example: missing[0]?.id,
+    });
+  }
+  const counts = new Map<string, number>();
+  for (const traj of trajectories) {
+    const grader = graderOf(traj);
+    counts.set(grader, (counts.get(grader) ?? 0) + 1);
+  }
+  if (counts.size > 1) {
+    const keep = [...counts.entries()].sort((a, b) => b[1] - a[1] || b[0].localeCompare(a[0]))[0][0];
+    console.warn("[dashboard] refusing to mix grader versions on one leaderboard", {
+      versions: [...counts.keys()].sort(),
+      using: keep,
+    });
+    return { rows: trajectories.filter((traj) => graderOf(traj) === keep), graderVersion: keep };
+  }
+  return { rows: trajectories, graderVersion: [...counts.keys()][0] };
+}
+
 function rowsFromTrajectories(trajectories: Episode[]): LeaderboardRow[] {
   const groups = new Map<string, Episode[]>();
   for (const traj of trajectories) {
@@ -438,17 +471,19 @@ function rowsFromTrajectories(trajectories: Episode[]): LeaderboardRow[] {
 }
 
 function defaultLeaderboard(trajectories: Episode[], tasks: TaskMeta[], example: boolean): Leaderboard {
-  const models = rowsFromTrajectories(trajectories);
+  const comparable = comparableTrajectories(trajectories);
+  const models = rowsFromTrajectories(comparable.rows);
   const baseline = models.find((m) => m.kind === "baseline");
   const datasetTasks = tasks.filter((task) => !task.id.startsWith("FG-9")).length || tasks.length;
   return {
     example,
     split: example ? "fixture" : "test",
-    n_tasks: new Set(trajectories.map((t) => t.task_id)).size || datasetTasks,
+    n_tasks: new Set(comparable.rows.map((t) => t.task_id)).size || datasetTasks,
     dataset_tasks: datasetTasks || 96,
-    n_seeds: new Set(trajectories.map((t) => t.seed)).size || 1,
+    n_seeds: new Set(comparable.rows.map((t) => t.seed)).size || 1,
     temperature: 0.2,
-    snapshot_version: trajectories[0]?.snapshot_version ?? "2026-10-15",
+    snapshot_version: comparable.rows[0]?.snapshot_version ?? "2026-10-15",
+    grader_version: comparable.graderVersion,
     env: "openfda-reg-v0.3",
     n_sources: 3,
     kpis: {

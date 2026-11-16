@@ -43,7 +43,14 @@ The wheel does not ship the 87 MB snapshot. Point at a clone with `FDAGYM_SNAPSH
 
 A model that already knows the answer can still fail if it does not retrieve the evidence. A model that guesses one of three drugs can still fail if the comparison is not in the trace.
 
-Total: `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency`. Every score includes `grader_version`. Current grader: v6.
+Total: `0.60 * correctness + 0.25 * citation + 0.10 * format + 0.05 * efficiency`. Every score includes `grader_version` and `data_version`. Current grader: v6. Data version: 2026-11-16. Snapshot freeze: 2026-10-15.
+
+Scores are only comparable when they share a grader version. The Environments Hub package records that mapping:
+
+| Hub package | Grader | Data version | Snapshot freeze |
+| --- | --- | --- | --- |
+| 0.1.x | 5 | 2026-10-28 | 2026-10-15 |
+| 0.2.x | 6 | 2026-11-16 | 2026-10-15 |
 
 | Term | Pays when |
 | --- | --- |
@@ -72,7 +79,7 @@ The table below is from a committed file under `results/`, labeled with the grad
 
 ### OpenRouter public.jsonl
 
-`results/public-haiku-luna-2026-11-05.jsonl`, split `public`, 93 tasks `FG-9101`–`FG-9193`, 50 compare + 43 sponsor_hop, seed 1. Scored under grader v5, snapshot `2026-10-15`. `TOOL_BUDGET` 8 with the then-current hard cut: 8 non-submit tools, then `submit_answer` is still accepted; a 9th search/get ends as `max_steps`. Started `2026-11-06T03:34:55Z` (9:35 PM America/Mexico_City on Nov 5). Wall ~24 min. Cost cap $1; real cost $0.267374. `summary.status` is `incomplete` only because `failure_count=9`; all 186 trajectories exist and count in n=93. See `results/public-haiku-luna-2026-11-05/summary.json`. The jsonl was not rewritten for grader 6: FG-9118 and FG-9140 gold changed, and dense (training) scores would move. These table numbers stay the v5 historical record.
+`results/public-haiku-luna-2026-11-05.jsonl`, split `public`, 93 tasks `FG-9101`–`FG-9193`, 50 compare + 43 sponsor_hop, seed 1. Scored under grader v5, data version 2026-10-28, snapshot `2026-10-15`. `summary.json` and `leaderboard.json` now carry those version fields; the scores were not rewritten. `TOOL_BUDGET` 8 with the then-current hard cut: 8 non-submit tools, then `submit_answer` is still accepted; a 9th search/get ends as `max_steps`. Started `2026-11-06T03:34:55Z` (9:35 PM America/Mexico_City on Nov 5). Wall ~24 min. Cost cap $1; real cost $0.267374. `summary.status` is `incomplete` only because `failure_count=9`; all 186 trajectories exist and count in n=93. See `results/public-haiku-luna-2026-11-05/summary.json`. The jsonl was not rewritten for grader 6: FG-9118 and FG-9140 gold changed, and dense (training) scores would move. These table numbers stay the v5 historical record.
 
 | Model | n | mean reward (v5) | pass | mean citation | mean tools | cost_usd |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -128,7 +135,7 @@ Open [http://localhost:3000](http://localhost:3000). The overview reads the json
 
 ## Verifiers / Environments Hub
 
-This repo has a [verifiers](https://github.com/PrimeIntellect-ai/verifiers) wrapper and a Hub package at [`environments/fda-gym/`](environments/fda-gym/). Both expose the five tools above and grade with `fdagym.rewards.score()` (grader v6). The published sheet is [`data/tasks/public.jsonl`](data/tasks/public.jsonl) (`FG-9101`–`FG-9193`, 50 `compare` and 43 `sponsor_hop`). Ids outside that public range are refused. The prompt tells the model it may make 8 tool calls besides `submit_answer`. See [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071).
+This repo has a [verifiers](https://github.com/PrimeIntellect-ai/verifiers) wrapper and a Hub package at [`environments/fda-gym/`](environments/fda-gym/) (`0.2.x`, grader v6, data 2026-11-16). Both expose the five tools above and grade with `fdagym.rewards.score()` (grader v6). The published sheet is [`data/tasks/public.jsonl`](data/tasks/public.jsonl) (`FG-9101`–`FG-9193`, 50 `compare` and 43 `sponsor_hop`). Ids outside that public range are refused. The prompt tells the model it may make 8 tool calls besides `submit_answer`. See [PrimeIntellect-ai/verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071).
 
 The `fdagym` library wheel does not ship the freeze. The Hub environment wheel includes `public.jsonl` and `data/snapshots/2026-10-15`, so a git checkout is not required after `prime env install`. Set `FDAGYM_SNAPSHOT_DIR` or `FDAGYM_PUBLIC_JSONL` to override those files.
 

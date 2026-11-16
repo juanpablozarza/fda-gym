@@ -16,8 +16,8 @@ Expected layout:
 ```
 web/public/results/
   <run_id>.jsonl          # one trajectory per line (schemas/trajectory.schema.json)
-  <run_id>/summary.json   # per-model mean reward, pass rate, citation validity, mean tool calls, cost_usd
-  leaderboard.json        # optional; Overview derives rows from jsonl if missing
+  <run_id>/summary.json   # per-model mean reward, pass rate, citation validity, mean tool calls, cost_usd, grader_version, data_version
+  leaderboard.json        # optional; Overview derives rows from jsonl if missing. Mixing grader versions is refused.
   tasks.json              # optional catalog (id, question, type, sources, difficulty) for cards and replay titles
 ```
 

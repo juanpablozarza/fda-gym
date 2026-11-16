@@ -131,6 +131,7 @@ def test_oracle_trace_publishes_four_weighted_terms(oracle):
     asyncio.run(oracle["gym_task"].finalize(trace, None))
     info = trace.info["fdagym"]
     assert info["grader_version"] == "6"
+    assert info["data_version"] == graded["data_version"] == "2026-11-16"
     assert info["total"] == graded["total"]
     for name in TERMS:
         assert info[name] == graded[name]

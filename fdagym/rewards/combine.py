@@ -11,7 +11,7 @@ correctness. Partial rates live in ``fdagym/rewards/dense.py`` and
 ``HOP_CAP * hop_rate`` of the correctness slot from tool observations
 (``fdagym/rewards/hops.py``), but only after a schema-valid, non-abstain
 submit. Running tools with no submit, a malformed submit, or an abstain
-(``None`` / ``""`` / ``NOT_FOUND`` / ``unknown``) pays 0 dense correctness.
+(``None`` / ``""`` / ``NOT_FOUND`` / ``unknown`` / ``none`` / ``n/a``) pays 0 dense correctness.
 ``False`` and ``0`` are real answers. Efficiency stays gated on the pre-hop
 correctness. Training turns dense on; eval still stores the strict score on
 the trajectory and reports the dense score beside it.
@@ -159,7 +159,7 @@ def score(trajectory: dict, task: dict, *, judge: Judge | None = None, dense: bo
 
 
 def _abstained(answer) -> bool:
-    """No answer, or an empty / NOT_FOUND / unknown string. ``False`` and ``0`` are real answers."""
+    """No answer, or an empty / NOT_FOUND / unknown / none / n/a string. ``False`` and ``0`` are real answers."""
     if answer is None:
         return True
     return isinstance(answer, str) and answer.strip().lower() in {"", "not_found", "unknown", "none", "n/a"}

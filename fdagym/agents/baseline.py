@@ -12,6 +12,7 @@ from referencing import Registry, Resource
 from fdagym.agents.litellm_agent import LiteLLMAgent
 from fdagym.env import SKIP_TYPES, FDAEnv
 from fdagym.openfda import DiskSnapshot
+from fdagym.run_versions import versions_of
 
 ROOT = Path(__file__).resolve().parents[2]
 TASKS_DIR = ROOT / "data" / "tasks"
@@ -149,6 +150,10 @@ def summarize(
             }
         )
     failures = failures or []
+    grader_version, data_version = versions_of(trajectories, source="summarize")
+    for row in leaderboard:
+        row["grader_version"] = grader_version
+        row["data_version"] = data_version
     payload = {
         "status": "incomplete" if failures or aborted else "complete",
         "complete": not failures and not aborted,
@@ -157,6 +162,8 @@ def summarize(
         "skipped": skipped,
         "models": models,
         "leaderboard": leaderboard,
+        "grader_version": grader_version,
+        "data_version": data_version,
     }
     if aborted:
         payload["aborted"] = aborted

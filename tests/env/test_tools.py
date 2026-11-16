@@ -254,6 +254,35 @@ def test_stub_boxed_warning_is_absent_from_the_sections_list():
     assert "boxed_warning" in section_error
 
 
+def test_contents_per_bottle_boxed_warning_is_a_stub():
+    query = queries.label_search("pagedrug")
+    records = [
+        {
+            "set_id": "azithro-packaging",
+            "effective_time": "20200101",
+            "boxed_warning": ["Azithromycin contents per bottle 600 mg"],
+            "openfda": {"brand_name": ["Brand"], "manufacturer_name": ["Maker"]},
+        },
+        {
+            "set_id": "real",
+            "effective_time": "20200101",
+            "boxed_warning": ["WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding."],
+            "openfda": {"brand_name": ["Brand"], "manufacturer_name": ["Maker"]},
+        },
+    ]
+    body = {"meta": {"results": {"total": 2}}, "results": records}
+    state = EpisodeState(MapSnapshot({(query.endpoint, query.search, query.count, query.limit): body}))
+    output, error = execute(
+        state,
+        "search_drug_label",
+        {"generic_name": "pagedrug", "has_section": "boxed_warning"},
+        step_index=1,
+    )
+    assert error is None
+    assert [row["set_id"] for row in output["results"]] == ["real"]
+    assert "azithro-packaging" not in state.labels
+
+
 def test_amoxicillin_template_boxed_warning_is_not_a_has_section_hit():
     from fdagym.openfda import DiskSnapshot
 

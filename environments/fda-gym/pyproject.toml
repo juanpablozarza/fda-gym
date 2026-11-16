@@ -1,7 +1,7 @@
 [project]
 name = "fda-gym"
-version = "0.1.0"
-description = "Public FDA-Gym: 93 openFDA tool-use tasks (FG-9101–FG-9193), grader v6, freeze 2026-10-15."
+version = "0.2.0"
+description = "Public FDA-Gym 0.2.x: 93 openFDA tool-use tasks (FG-9101–FG-9193), grader v6, data 2026-11-16, freeze 2026-10-15."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
@@ -9,7 +9,11 @@ authors = [{ name = "Juan Pablo Zarza" }]
 keywords = ["eval", "tool-use", "openfda", "rl", "verifiers"]
 dependencies = [
     "verifiers==0.4.0",
-    "fdagym @ git+https://github.com/juanpablozarza/fda-gym.git",
+    # Pin fdagym to an immutable git SHA so a reinstall cannot silently move
+    # from grader 5 to grader 6. Do not float on the default branch.
+    # TODO(JP): after this PR and #23 merge, create and push tag `grader-v6`
+    # on the merge commit, then replace the SHA with `@grader-v6`.
+    "fdagym @ git+https://github.com/juanpablozarza/fda-gym.git@75beac9afcd7a38010e7ff701671c792209a80fe",
 ]
 
 [project.urls]

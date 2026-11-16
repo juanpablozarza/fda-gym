@@ -17,6 +17,7 @@ from datetime import UTC, datetime
 
 from fdagym.rewards import score
 from fdagym.rewards.format import answer_validator
+from fdagym.rewards.version import DATA_VERSION, GRADER_VERSION
 from fdagym.snapshot import Snapshot
 from fdagym.tools import TOOLS, EpisodeState, execute
 
@@ -56,6 +57,15 @@ class FDAEnv:
         self.tool_budget = budget
         self.tool_hard_cap = tool_hard_cap(budget)
         self._ready = False
+
+    @property
+    def metadata(self) -> dict:
+        """Live grader, data sheet, and freeze this env will stamp on a score."""
+        return {
+            "grader_version": GRADER_VERSION,
+            "data_version": DATA_VERSION,
+            "snapshot_version": getattr(self.snapshot, "version", None),
+        }
 
     def reset(self, task_id: str) -> dict:
         try:
@@ -147,7 +157,13 @@ class FDAEnv:
         self.terminated_by = terminated_by
         self._done = True
         last = self.steps[-1]
-        info = {"reward": self._reward, "trajectory": self.trajectory, "tool_calls_used": self.tool_calls}
+        info = {
+            "reward": self._reward,
+            "trajectory": self.trajectory,
+            "tool_calls_used": self.tool_calls,
+            "grader_version": self._reward["grader_version"],
+            "data_version": self._reward["data_version"],
+        }
         return self._obs(last["tool"], last["output"], last["error"]), self._reward["total"], True, info
 
     @property

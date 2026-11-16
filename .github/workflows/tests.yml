@@ -47,11 +47,14 @@ jobs:
           import fdagym
           from fdagym.demo import play_public_task
           from fdagym.rewards import score
-          from fdagym.rewards.version import GRADER_VERSION
+          from fdagym.rewards.version import DATA_VERSION, GRADER_VERSION
 
           pkg = Path(fdagym.__file__).resolve()
           assert "fdagym-wheel-" in str(pkg), pkg
           assert GRADER_VERSION == "6", GRADER_VERSION
+          assert DATA_VERSION == "2026-11-16", DATA_VERSION
+          assert fdagym.grader_version == GRADER_VERSION
+          assert fdagym.data_version == DATA_VERSION
           names = zipfile.ZipFile(os.environ["FDAGYM_WHEEL"]).namelist()
           assert not any("snapshots" in name for name in names), names
 
@@ -67,6 +70,7 @@ jobs:
           text = "\n".join(lines)
           assert "query_adverse_events" in text
           assert reward["grader_version"] == "6"
+          assert reward["data_version"] == "2026-11-16"
           assert float(reward["total"]) >= 0.99
           # score() is the same grader the demo prints after every hop.
           assert score.__module__ == "fdagym.rewards.combine"
