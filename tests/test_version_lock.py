@@ -104,24 +104,32 @@ def test_readme_and_hub_readme_carry_the_release_table():
     assert "Data version `2026-11-16`" in hub_readme
 
 
+def _ensure_commit(ref: str) -> None:
+    """GitHub Actions checks out the PR merge at depth 1, so the pin SHA is often absent."""
+    probed = subprocess.run(
+        ["git", "-C", str(ROOT), "cat-file", "-e", f"{ref}^{{commit}}"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if probed.returncode == 0:
+        return
+    fetched = subprocess.run(
+        ["git", "-C", str(ROOT), "fetch", "--depth=1", "origin", ref],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert fetched.returncode == 0, (
+        f"pinned SHA {ref} is not in this clone and could not be fetched: {fetched.stderr.strip()}"
+    )
+
+
 def test_pinned_fdagym_ref_is_immutable_and_matches_this_grader():
     text = _hub_pyproject()
     ref = _pin_ref(text)
     if SHA.fullmatch(ref):
-        probed = subprocess.run(
-            ["git", "-C", str(ROOT), "cat-file", "-e", f"{ref}^{{commit}}"],
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-        assert probed.returncode == 0, f"pinned SHA {ref} is not a commit in this clone"
-        ancestor = subprocess.run(
-            ["git", "-C", str(ROOT), "merge-base", "--is-ancestor", ref, "HEAD"],
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-        assert ancestor.returncode == 0, f"pinned SHA {ref} is not an ancestor of HEAD"
+        _ensure_commit(ref)
         shown = subprocess.run(
             ["git", "-C", str(ROOT), "show", f"{ref}:fdagym/rewards/version.py"],
             check=True,
