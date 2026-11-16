@@ -65,6 +65,20 @@ def test_strict_score_stays_format_only_when_the_quote_is_wrong():
     assert WEIGHTS["format"] == 0.10
 
 
+def test_dense_id_only_citation_caps_a_strict_answer_match():
+    from fdagym.rewards.citation import ID_ONLY
+
+    task = _approval_task()
+    final = _submit(1998, quote="nope")
+    strict = score({"steps": _steps(), "final_answer": final}, task)
+    dense = score({"steps": _steps(), "final_answer": final}, task, dense=True)
+    assert strict["correctness"] == 0.0
+    assert strict["citation"] == 0.0
+    assert dense["citation"] == ID_ONLY
+    assert dense["correctness"] == ID_ONLY
+    assert any("id-only citation caps correctness" in note for note in dense["notes"])
+
+
 def test_dense_year_and_id_only_citation_beat_format_only():
     task = _approval_task()
     final = _submit(19981217, quote="nope")

@@ -114,7 +114,7 @@ def oracle():
 def test_oracle_trace_publishes_four_weighted_terms(oracle):
     graded = oracle["graded"]
     trace = oracle["trace"]
-    assert graded["grader_version"] == GRADER_VERSION == "5"
+    assert graded["grader_version"] == GRADER_VERSION == "6"
     assert graded["total"] == 1.0
     assert set(trace.rewards) == set(TERMS)
     assert "score_total" not in trace.rewards
@@ -130,7 +130,7 @@ def test_oracle_trace_publishes_four_weighted_terms(oracle):
 
     asyncio.run(oracle["gym_task"].finalize(trace, None))
     info = trace.info["fdagym"]
-    assert info["grader_version"] == "5"
+    assert info["grader_version"] == "6"
     assert info["total"] == graded["total"]
     for name in TERMS:
         assert info[name] == graded[name]

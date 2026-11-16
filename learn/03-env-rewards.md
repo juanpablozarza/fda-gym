@@ -308,6 +308,7 @@ Relative error is 1013/20254, about 0.0500, so the score is about 0.500. The rew
 - **The union search changed the metformin count.** Serious reports in 2025 are 20254, not 18629. Lecanemab in 2020 is still an empty result under the same union. Seven FAERS calls were re-recorded. Approvals were re-keyed to limit 1000 without another download, because all 6 applications were already in the file.
 - **A valid citation still unlocks the full correctness score** even when the quote does not state the answer. JP accepted that for v1. Checking entailment needs the judge, and [correctness.py](../fdagym/rewards/correctness.py) still raises `NotImplementedError` for `kind: judge`.
 - **Atorvastatin has no boxed warning in the pilot.** 0 of 259 labels. The No is cited from `search_drug_label`'s `sections` list, not from a section that is not there. `test_pilot_atorvastatin_absence_is_cited_from_sections`. Metformin page 1 of that same snapshot returns 10 labels and total 365.
+- **An unfilled boxed-warning template is not a boxed warning.** One amoxicillin/clavulanate repackager label is only `[Insert boxed warning highlight title] …`. `has_section=boxed_warning` skips it, so FG-9118 gold is buprenorphine and FG-9140 gold is rivaroxaban. `test_amoxicillin_template_boxed_warning_is_not_a_has_section_hit`.
 
 ---
 

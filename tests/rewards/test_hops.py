@@ -350,3 +350,54 @@ def test_earliest_boxed_interleaved_is_the_same_join():
     interleaved = hop_score(_earliest_join(years_first=False), EARLIEST_TASK)
     assert batched.hits == interleaved.hits == 7
     assert batched.rate == interleaved.rate == 1.0
+
+
+def _compare_event_steps():
+    return [
+        _events("aprocitentan", [{"term": "DYSPNOEA", "count": 1}]),
+        _events("ondansetron", [{"term": "DYSPNOEA", "count": 9}]),
+        _events("sitagliptin", [{"term": "DYSPNOEA", "count": 3}]),
+    ]
+
+
+def test_dense_hop_credit_needs_a_schema_valid_non_abstain_submit():
+    steps = _compare_event_steps()
+    hops = hop_score(steps, COMPARE_TASK)
+    assert hops.applies
+    assert hops.rate == 1.0
+
+    missing = score({"steps": steps, "final_answer": None}, COMPARE_TASK, dense=True)
+    assert missing["format"] == 0.0
+    assert missing["correctness"] == 0.0
+    assert missing["total"] == 0.0
+
+    malformed = score({"steps": steps, "final_answer": {"answer": "sitagliptin"}}, COMPARE_TASK, dense=True)
+    assert malformed["format"] == 0.0
+    assert malformed["correctness"] == 0.0
+    assert malformed["total"] == 0.0
+
+    listed = score({"steps": steps, "final_answer": {"answer": [], "citations": []}}, COMPARE_TASK, dense=True)
+    assert listed["format"] == 0.0
+    assert listed["correctness"] == 0.0
+    assert listed["total"] == 0.0
+
+    for junk in ("", "NOT_FOUND", "unknown", "none", "n/a"):
+        abstain = score(
+            {"steps": steps, "final_answer": {"answer": junk, "citations": []}},
+            COMPARE_TASK,
+            dense=True,
+        )
+        assert abstain["format"] == 1.0, junk
+        assert abstain["correctness"] == 0.0, junk
+        assert abstain["total"] == 0.1, junk
+
+    wrong = score({"steps": steps, "final_answer": _submit("sitagliptin")}, COMPARE_TASK, dense=True)
+    assert wrong["correctness"] == HOP_CAP
+    for real in (False, 0):
+        paid = score(
+            {"steps": steps, "final_answer": {"answer": real, "citations": []}},
+            COMPARE_TASK,
+            dense=True,
+        )
+        assert paid["format"] == 1.0
+        assert paid["correctness"] == HOP_CAP

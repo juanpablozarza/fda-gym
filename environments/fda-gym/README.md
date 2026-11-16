@@ -2,7 +2,7 @@
 
 Public [FDA-Gym](https://github.com/juanpablozarza/fda-gym) eval for Prime Intellect's Environments Hub. An agent answers regulatory questions with five tools over a frozen openFDA snapshot, then `submit_answer`. The grader scores the answer and the trace.
 
-The published sheet is 93 tasks, `FG-9101`–`FG-9193` (50 `compare` and 43 `sponsor_hop`). Grader v5 is `fdagym.rewards.score()`. Freeze `2026-10-15` covers `drug/label`, `drug/event`, and `drug/drugsfda`. The prompt tells the model it may make 8 tool calls besides `submit_answer`. Ids outside the public range are refused.
+The published sheet is 93 tasks, `FG-9101`–`FG-9193` (50 `compare` and 43 `sponsor_hop`). Grader v6 is `fdagym.rewards.score()`. Freeze `2026-10-15` covers `drug/label`, `drug/event`, and `drug/drugsfda`. The prompt tells the model it may make 8 tool calls besides `submit_answer`. Ids outside the public range are refused.
 
 Source: [juanpablozarza/fda-gym](https://github.com/juanpablozarza/fda-gym). See [verifiers Discussion #3071](https://github.com/PrimeIntellect-ai/verifiers/discussions/3071).
 

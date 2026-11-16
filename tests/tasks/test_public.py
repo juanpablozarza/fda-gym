@@ -3,9 +3,12 @@
 from pathlib import Path
 
 from fdagym.agents.baseline import load_split
+from fdagym.env import FDAEnv
 from fdagym.openfda import DiskSnapshot
 from fdagym.tasks.disjoint import assert_disjoint
-from fdagym.tasks.hard_solver import parse_question
+from fdagym.tasks.hard import snapshot_answer
+from fdagym.tasks.hard_solver import parse_question, same_answer, solve
+from tests.integration.test_oracle import gold_answer, play
 
 ROOT = Path(__file__).resolve().parents[2]
 PUBLIC = ROOT / "data" / "tasks" / "public.jsonl"
@@ -62,3 +65,27 @@ def test_published_splits_share_no_entities_or_questions():
 
     public_9171 = next(task["question"] for task in public if task["id"] == "FG-9171")
     assert all(task["question"] != public_9171 for task in [*train, *holdout])
+
+
+def test_fg9118_and_fg9140_are_golded_on_the_real_boxed_warning():
+    """Amoxicillin's snapshot 'boxed warning' is an unfilled template; gold is the other boxed drug."""
+    public = {task["id"]: task for task in load_split("public")}
+    expected = {"FG-9118": "buprenorphine", "FG-9140": "rivaroxaban"}
+    snapshot = DiskSnapshot("2026-10-15")
+    env = FDAEnv(snapshot, list(public.values()), run_id="public-regold", tool_budget=8)
+    for task_id, winner in expected.items():
+        task = public[task_id]
+        assert parse_question(task["question"])["variant"] == "earliest_boxed"
+        assert task["gold"] == {"kind": "exact", "value": winner}
+        assert task["entity"]["generic_name"] == winner
+        assert "482511ed-4531-45ec-a4eb-c600aeb03325" not in {
+            cid for row in task["gold_citations"] for cid in row.get("ids") or []
+        }
+        gold = snapshot_answer(snapshot, task["question"])
+        solution = solve(snapshot, task["question"])
+        assert gold == winner
+        assert same_answer(solution.answer, gold)
+        assert solution.calls == task["oracle_calls"]
+        reward = play(env, task, gold_answer(task))
+        assert reward["total"] == 1.0, (task_id, reward["notes"][:8])
+        assert reward["correctness"] == 1.0

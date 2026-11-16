@@ -13,8 +13,10 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
     (`gold_citations`), and its `quote` fuzzy-matches (≥ 0.9) that field's text. `citation` = valid / total cited, or 0 if none.
     Quotes shorter than 4 characters never count, and a field of 12 characters or fewer needs a full-string match.
   - `correctness` counts only if at least one citation is valid. Invalid format forces correctness to 0.
+    Dense hop credit also requires a schema-valid, non-abstain submit (`False` and `0` are real answers).
   - Boolean answers with a topic (boxed warnings) must match yes/no, hit a gold keyword, and name at most 2 distinct
     boxed-warning topics from the vocabulary derived from the snapshot's labels (blocks keyword stuffing).
+    A no-gold answer may start with `None` / `Neither`; `No, but X has a boxed warning` fails.
   - `efficiency = min(1, min_tool_calls / max(calls, 1))`, counted only if correctness > 0.
   - A `compare` answer keeps correctness only when the trace proves the comparison
     (every named drug queried, unique/none decision visible) and a valid citation is
@@ -26,6 +28,7 @@ The full plan is in [docs/PLAN.md](docs/PLAN.md) (in Spanish). The decisions bel
     `ids: []` and exactly those field names.
   - Absence of a label section ("No, no boxed warning") is cited from `search_drug_label` output: `id` = the label's
     `set_id`, field `sections`. Boolean tasks without a topic have no `keywords`; yes/no alone decides correctness.
+    Unfilled `[Insert boxed warning…]` templates and heading-only stubs are not a boxed section.
 - Difficulty is a structural rubric plus a measured base-model pass rate, scheduled as a curriculum: [docs/difficulty.md](docs/difficulty.md).
 - Models through **OpenRouter** via LiteLLM (`OPENROUTER_API_KEY`). openFDA key in `OPENFDA_API_KEY`.
 - Training: Plan A GRPO + LoRA on **Qwen2.5-3B-Instruct**, then **Qwen2.5-7B-Instruct** only if the 3B adapter beats its own Plan A TEST baseline. Optional extra: [docs/train.md](docs/train.md). Do not start a GPU job from an import, CI, or a training import.

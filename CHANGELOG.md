@@ -1,8 +1,20 @@
 # Changelog
 
+## Grader 6
+
+Grader version 6. Data version 2026-11-16. `snapshot_version` stays `2026-10-15`.
+
+Version 5 paid dense hop credit for running tools without a real submit, treated an id-only citation as a full correctness match, and scored `No, but X has a boxed warning` as a valid no. Two public earliest-boxed questions were golded on an unfilled amoxicillin/clavulanate boxed-warning template.
+
+- `search_drug_label(..., has_section=boxed_warning)` skips unfilled `[Insert …]` templates and heading-only stubs. FG-9118 gold is buprenorphine; FG-9140 gold is rivaroxaban. Downstream private task sets should be regenerated.
+- Dense hop credit requires a schema-valid, non-abstain submit. No submit, a malformed submit, or `NOT_FOUND` / `unknown` / `""` pays 0 correctness. `False` and `0` are real answers.
+- Dense correctness backed only by an id-only citation (right id, bad quote or field) is capped at `ID_ONLY` (0.50).
+- Boolean no accepts `None`, `None of them`, and `Neither`. Hedged or clause-positive answers (`No, but X has a boxed warning`, `No. X has a boxed warning`) fail.
+- Committed OpenRouter traces in `results/public-haiku-luna-2026-11-05.jsonl` stay the grader-v5 historical record. They were not rewritten. Offline `scripts/rescore_runs.py` moves 1 of 186 rows: Haiku FG-9140 0.1625 → 0.8000 (answered rivaroxaban, now gold). Dense-only leaks are not in that jsonl.
+
 ## Dashboard CVE, M1–M6, onboarding
 
-Next.js 15.5.29 (GHSA-9qr9-h5gf-34mp). Env docstring matches the tool budget; invalid JSON is `invalid_action`; `label_open` is rejected on `reset`; `step(..., latency_ms=)` records latency; snapshot manifest rows carry `sha256`; `eval_chat.py --split` lists committed files and refuses overwrite. CI runs ruff, pyright, pytest, the wheel smoke, and `web` lint/build. README covers grader v5, the anti-hacking table, and committed baselines. Training docs are the optional `[train]` extra in `docs/train.md`; onboarding does not require a remote GPU vendor or Weights & Biases.
+Next.js 15.5.29 (GHSA-9qr9-h5gf-34mp). Env docstring matches the tool budget; invalid JSON is `invalid_action`; `label_open` is rejected on `reset`; `step(..., latency_ms=)` records latency; snapshot manifest rows carry `sha256`; `eval_chat.py --split` lists committed files and refuses overwrite. CI runs ruff, pyright, pytest, the wheel smoke, and `web` lint/build. README covers grader v6, the anti-hacking table, and committed baselines. Training docs are the optional `[train]` extra in `docs/train.md`; onboarding does not require a remote GPU vendor or Weights & Biases.
 
 ## Installable wheel
 

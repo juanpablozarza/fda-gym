@@ -9,7 +9,10 @@ cannot dominate a partial citation (0.25 * 0.50 = 0.125) or a near-miss
 correctness. Partial rates live in ``fdagym/rewards/dense.py`` and
 ``citation.ID_ONLY``. On compare / sponsor_hop, a wrong answer still earns
 ``HOP_CAP * hop_rate`` of the correctness slot from tool observations
-(``fdagym/rewards/hops.py``). Efficiency stays gated on the pre-hop
+(``fdagym/rewards/hops.py``), but only after a schema-valid, non-abstain
+submit. Running tools with no submit, a malformed submit, or an abstain
+(``None`` / ``""`` / ``NOT_FOUND`` / ``unknown``) pays 0 dense correctness.
+``False`` and ``0`` are real answers. Efficiency stays gated on the pre-hop
 correctness. Training turns dense on; eval still stores the strict score on
 the trajectory and reports the dense score beside it.
 
@@ -96,7 +99,7 @@ def score(trajectory: dict, task: dict, *, judge: Judge | None = None, dense: bo
         correctness, correctness_notes, answer_correctness = _apply_compare_proof(
             task, correctness, correctness_notes, answer_correctness, hop, steps, citations
         )
-        if correctness <= 0 and hop is not None and hop.applies:
+        if correctness <= 0 and hop is not None and hop.applies and format_score == 1.0 and not _abstained(answer):
             correctness = HOP_CAP * hop.rate
             correctness_notes = [
                 *correctness_notes,
@@ -153,6 +156,13 @@ def score(trajectory: dict, task: dict, *, judge: Judge | None = None, dense: bo
         result["hops"] = hop.rate
         result["answer_correctness"] = answer_correctness
     return result
+
+
+def _abstained(answer) -> bool:
+    """No answer, or an empty / NOT_FOUND / unknown string. ``False`` and ``0`` are real answers."""
+    if answer is None:
+        return True
+    return isinstance(answer, str) and answer.strip().lower() in {"", "not_found", "unknown", "none", "n/a"}
 
 
 def _apply_sponsor_proof(task, correctness, notes, answer_correctness, hop):

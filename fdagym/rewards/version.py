@@ -7,5 +7,5 @@ does not. ``GRADER_VERSION`` bumps when ``score()`` changes what a trace is wort
 A freeze bump does not by itself change either version.
 """
 
-GRADER_VERSION = "5"
-DATA_VERSION = "2026-10-28"
+GRADER_VERSION = "6"
+DATA_VERSION = "2026-11-16"

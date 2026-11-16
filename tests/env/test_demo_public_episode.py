@@ -227,7 +227,7 @@ def test_citations_error_when_nothing_remains_after_filtering():
 
 
 def test_every_public_task_replays_through_demo_to_one():
-    assert GRADER_VERSION == "5"
+    assert GRADER_VERSION == "6"
     tasks = load_public_tasks(PUBLIC)
     expected = [f"FG-{n}" for n in range(PUBLIC_ID_FIRST, PUBLIC_ID_LAST + 1)]
     assert expected[0] == "FG-9101"

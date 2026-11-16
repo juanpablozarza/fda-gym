@@ -106,7 +106,7 @@ class PublicEpisode:
         }
 
     def grade(self, answer=None) -> dict:
-        """Grade this episode with ``score()``. Reward is ``total`` (grader v5)."""
+        """Grade this episode with ``score()``. Reward is ``total`` (grader v6)."""
         if self.env.terminated_by is None:
             payload = coerce_submit_answer(answer)
             if payload is not None:

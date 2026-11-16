@@ -112,7 +112,7 @@ def step_tool(env: FDAEnv, tool: str, arguments: dict) -> tuple[dict, float, boo
 
 
 def grade_episode(task: dict, env: FDAEnv) -> dict:
-    """Grade the adapter episode with ``score()`` (GRADER_VERSION 5)."""
+    """Grade the adapter episode with ``score()`` (GRADER_VERSION 6)."""
     return score({"steps": env.steps, "final_answer": env.final_answer}, task)
 
 

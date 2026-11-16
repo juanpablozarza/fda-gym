@@ -11,7 +11,12 @@ from fdagym.rewards.topics import MAX_TOPICS, topics_named
 
 _OR = re.compile(r"\bor\b", re.IGNORECASE)
 _YES = re.compile(r"^yes\b", re.IGNORECASE)
-_NO = re.compile(r"^no\b", re.IGNORECASE)
+_NO = re.compile(r"^(no|none|neither)\b", re.IGNORECASE)
+# A no-gold answer must not hedge or assert a positive in any clause ("No, but X has one").
+_HEDGE = re.compile(r"\b(but|however|except|although)\b", re.IGNORECASE)
+_CLAUSE = re.compile(r"[.;,:!?]")
+_NEG = re.compile(r"\b(no|not|none|neither|nor|without|never)\b", re.IGNORECASE)
+_POS = re.compile(r"\b(yes|has|have|carries|carry|contains)\b", re.IGNORECASE)
 
 
 class Judge(Protocol):
@@ -124,6 +129,8 @@ def _boolean(answer: object, gold: dict) -> tuple[float, list[str]]:
     if polarity is None:
         expect = "yes" if value else "no"
         return 0.0, [f"boolean: answer does not start with {expect}"]
+    if not value and _contradicts_no(answer):
+        return 0.0, ["boolean: negative answer hedges or asserts a positive"]
     if keywords and not any(k.lower() in answer.lower() for k in keywords):
         return 0.0, [f"boolean: missing keyword, need one of {keywords}"]
     if keywords:
@@ -132,6 +139,12 @@ def _boolean(answer: object, gold: dict) -> tuple[float, list[str]]:
             return 0.0, [f"correctness: answer names {len(named)} boxed-warning topics (max {MAX_TOPICS})"]
         return 1.0, ["boolean: polarity and keyword match"]
     return 1.0, ["boolean: polarity match"]
+
+
+def _contradicts_no(answer: str) -> bool:
+    if _HEDGE.search(answer):
+        return True
+    return any(_POS.search(part) and not _NEG.search(part) for part in _CLAUSE.split(answer))
 
 
 def _judge(answer: object, task: dict, judge: Judge) -> tuple[float, list[str]]:

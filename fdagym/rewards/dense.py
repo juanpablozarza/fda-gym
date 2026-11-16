@@ -17,7 +17,9 @@ Weights, as a fraction of the correctness component (itself 0.60 of the total):
   the punctuation rate. Training only: the strict eval still needs the whole string.
 
 A citation whose id matches gold but whose field or quote does not earns 0.50 of
-the citation component (0.25 of the total). Format stays weighted at 0.10.
+the citation component (0.25 of the total). A strict answer match backed only
+by those id-only citations is capped at the same 0.50 of the correctness
+component. Format stays weighted at 0.10.
 """
 
 from __future__ import annotations
@@ -25,6 +27,7 @@ from __future__ import annotations
 import re
 
 from fdagym.queries import approvals_search, label_search
+from fdagym.rewards.citation import ID_ONLY
 from fdagym.rewards.correctness import _as_number, _is_not_found, _match
 from fdagym.snapshot import Snapshot, SnapshotMiss
 
@@ -147,6 +150,9 @@ def dense_correctness(
         return 0.0, ["correctness gated: cited id does not match a gold citation id"]
     strict, notes = _match(answer, task, empty_grounded=empty_grounded, judge=judge)
     if strict > 0:
+        if valid_citations < 1:
+            # An id-only citation (right id, bad quote or field) may shape, not pay in full.
+            return strict * ID_ONLY, [*notes, f"dense: id-only citation caps correctness at {ID_ONLY:g}"]
         return strict, notes
     composite = composite_halves(answer, task)
     if composite is not None:

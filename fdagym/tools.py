@@ -18,6 +18,10 @@ SECTION_LIMIT = 1500
 APPROVAL_VISIBLE_CHARS = 3500
 _NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9 +-]{0,79}$")
 _SECTION = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
+_INSERT = re.compile(r"\[insert\b", re.IGNORECASE)
+_PLACEHOLDER = re.compile(r"\[[^\[\]]{0,80}\]")
+_BOILERPLATE = re.compile(r"see full prescribing information for complete boxed warning", re.IGNORECASE)
+_HEADING = re.compile(r"^(?:boxed\s+warning|warning)\b[:.\s]*", re.IGNORECASE)
 _SKIP_KEYS = {"set_id", "id", "effective_time", "version", "openfda", "brand_names"}
 _SUBMISSION_KEYS = (
     "submission_type",
@@ -46,6 +50,7 @@ TOOLS: list[dict] = [
         "search_drug_label",
         "List drug-label summaries for one generic name (set_id, brand, manufacturer, effective_time, sections). "
         f"At most {PAGE_SIZE} rows per page. has_section keeps labels that contain that section. "
+        "Unfilled template or heading-only boxed warnings do not count. "
         "Section text is not included; call get_label_section for it.",
         _object(
             {
@@ -184,6 +189,7 @@ def _search_labels(state: EpisodeState, arguments: dict, step_index: int) -> tup
     records = [row for row in body.get("results") or [] if isinstance(row, dict)]
     section = arguments.get("has_section")
     if section:
+        # Stub boxed text (unfilled "[Insert …]" templates, heading-only) is not a section.
         records = [row for row in records if _section_text(row, section) is not None]
     page = int(arguments.get("page", 1))
     start = (page - 1) * PAGE_SIZE
@@ -503,11 +509,34 @@ def _label_summary(record: dict) -> dict:
 def _section_text(record: dict, section: str) -> str | None:
     value = record.get(section)
     if isinstance(value, str) and value.strip():
+        if _is_stub_section(value.strip(), section):
+            return None
         return value
     if isinstance(value, list) and value and all(isinstance(item, str) for item in value):
         text = "\n".join(value).strip()
-        return text or None
+        if not text or _is_stub_section(text, section):
+            return None
+        return text
     return None
+
+
+def _is_stub_section(text: str, section: str) -> bool:
+    """True when the section is an unfilled SPL template or a heading-only stub.
+
+    A real boxed warning still counts after the heading is stripped. The
+    amoxicillin/clavulanate repackager template that is only
+    ``[Insert boxed warning highlight title] … [Insert boxed warning highlight text]``
+    does not.
+    """
+    if _INSERT.search(text):
+        return True
+    if section != "boxed_warning":
+        return False
+    cleaned = _PLACEHOLDER.sub(" ", text)
+    cleaned = _BOILERPLATE.sub(" ", cleaned)
+    cleaned = _HEADING.sub(" ", cleaned.strip())
+    cleaned = re.sub(r"\s+", " ", cleaned).strip(" .:;-")
+    return not any(ch.isalnum() for ch in cleaned)
 
 
 def _application_brands(record: dict) -> list[str]:
