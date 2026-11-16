@@ -13,7 +13,7 @@ dependencies = [
     # from grader 5 to grader 6. Do not float on the default branch.
     # TODO(JP): after this PR and #23 merge, create and push tag `grader-v6`
     # on the merge commit, then replace the SHA with `@grader-v6`.
-    "fdagym @ git+https://github.com/juanpablozarza/fda-gym.git@ebe2fdc3cf842484d8b6cdee1590e1c8cb9c054b",
+    "fdagym @ git+https://github.com/juanpablozarza/fda-gym.git@75beac9afcd7a38010e7ff701671c792209a80fe",
 ]
 
 [project.urls]
